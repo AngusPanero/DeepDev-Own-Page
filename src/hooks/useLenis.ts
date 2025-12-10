@@ -11,7 +11,7 @@ const useLenis = () => {
             infinite: false,      // loop infinito opcional
         });
 
-        function raf(time: number) {
+        const raf = (time: number) => {
             lenis.raf(time);
             requestAnimationFrame(raf);
         }

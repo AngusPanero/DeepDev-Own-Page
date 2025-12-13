@@ -5,7 +5,7 @@ const Home = () => {
     return(
         <>
         <Hero />
-        <Scroll3DSection /> 
+        <Scroll3DSection />
         <Hero />
         </>
     )

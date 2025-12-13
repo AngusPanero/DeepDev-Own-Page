@@ -3,21 +3,22 @@ import "../../styles/hero.css"
 
 const Hero = () => {
     return (
-        <section style={{ height: "100vh", backgroundColor: "black", position: "relative" }}>
+        <section style={{ height: "14.1vh", backgroundColor: "black", position: "relative" }}>
             <div className="nav-promo">
                 🔥 -- Aprovechá un 20% OFF por tiempo limitado -- 🔥
             </div>
 
             <header className="hero-header" style={{ height: "5.5rem", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                 <div className="left-actions" style={{ marginLeft: "2rem" }}>
-                    <img className="img-logo" src={logo} alt="logo" width={150} />
+                    <img className="img-logo" src={logo} alt="logo" width={165} />
                 </div>
                 <nav>
                     <ul style={{ display: "flex", gap: "5rem"}}>
                         <li><a href="#services">Productos</a></li>
                         <li><a href="#portfolio">Cotizaciones</a></li>
-                        <li><a href="#about">Compañia</a></li>
+                        <li><a href="#about">Compañía</a></li>
                         <li><a href="#contact">Sorteos</a></li>
+                        <li><a href="#contact">Reclutadores</a></li>
                     </ul>   
                 </nav>
 

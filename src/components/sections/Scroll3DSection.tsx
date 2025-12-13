@@ -3,6 +3,7 @@ import { useRef } from "react";
 import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
 import VaporPlanet from "../three/VaporPlanet";
+import Banner from "./Banner";
 /* import RenderGrid from "../three/RenderGrid"; */
 
 const Scroll3DSection = () => {
@@ -15,7 +16,7 @@ const Scroll3DSection = () => {
     });
 
     // Entrada y salida del Texto
-    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [400, 0, -400]);
+    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [600, 0, -400]);
     const rawOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
     // Scroll Suavizado 
@@ -36,7 +37,7 @@ const Scroll3DSection = () => {
 
     return (
         <>
-        <section style={{ height: "120vh", background: "#0f0f14", position: "relative" }}>
+        <section style={{ height: "110vh", background: "#0f0f14", position: "relative" }}>
 
             {/* <div style={{ position: "sticky", top: 0, height: "65vh", width: "100%", zIndex: 2 }}>
                 <Scene>
@@ -50,16 +51,27 @@ const Scroll3DSection = () => {
                 </Scene>
             </div>
 
-            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-15vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, backgroundColor: "transparent", }} >
+            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-35vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                backgroundSize: "200% 200%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
                 DeepDev Reinventing Digital<br></br>Experiences.
             </motion.h1>
         </section>
+
+        <Banner />
 
         <section style={{ height: "100vh", background: "#0f0f14", position: "relative" }}>
             
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 3, }}>
 
-                <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "absolute", margin: 0, paddingTop: "50vh", zIndex: 1, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2 }}>
+                <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "absolute", margin: 0, paddingTop: "50vh", zIndex: 1, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2, 
+                    background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                    backgroundSize: "200% 200%",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }} >
                     Expand your business <br></br>With web or mobile Apps
                 </motion.h1>
 

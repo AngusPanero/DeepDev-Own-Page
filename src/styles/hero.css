@@ -1,0 +1,66 @@
+.hero-header{
+    border-bottom: 1px solid white;
+}
+
+li a {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    transition: 0.4s;
+}
+
+li a:hover {
+    color: #7b29ff;
+    transition: 0.4s;
+}
+
+.img-logo{
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.img-logo:hover{
+    border: 1px solid rgb(123, 41, 255);
+    box-shadow: 0 0 15px rgb(123, 41, 255); 
+    transition: 0.4s;
+}
+
+.nav-buttons{
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.4s;   
+}
+
+.nav-buttons:hover{
+    border: 1px solid rgb(123, 41, 255);
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(123, 41, 255);;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.4s;   
+}
+
+.nav-promo{
+    cursor: pointer;
+    text-align: center;;
+    border-bottom: 1px solid white;
+    padding: 7px 15px;
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background-color: rgb(123, 41, 255);
+    cursor: pointer;
+    transition: 0.4s;   
+}

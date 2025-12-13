@@ -3,7 +3,7 @@ import { OrbitControls } from "@react-three/drei";
 
 const Scene = ({ children }: any) => {
     return (
-        <Canvas gl={{ alpha: true }} style={{ background: "transparent" }}>
+        <Canvas gl={{ alpha: true }} style={{ background: "black" }}>
             <ambientLight intensity={0.6} />
             <directionalLight position={[2, 2, 2]} />
 

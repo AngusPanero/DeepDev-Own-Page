@@ -8,7 +8,7 @@ import FbxMacBook from "../ui/macBook";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
-    const text2Ref = useRef(null);
+    /* const text2Ref = useRef(null); */
 
     const { scrollYProgress } = useScroll({
         target: textRef,
@@ -24,7 +24,7 @@ const Scroll3DSection = () => {
     const opacity = useSpring(rawOpacity, { stiffness: 70, damping: 20 });
 
     // TEXTO 2
-    const { scrollYProgress: scroll2 } = useScroll({
+    /* const { scrollYProgress: scroll2 } = useScroll({
         target: text2Ref,
         offset: ["start 70%", "end 30%"]
     });
@@ -33,7 +33,7 @@ const Scroll3DSection = () => {
     const opacity2Raw = useTransform(scroll2, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
-    const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
+    const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 }); */
 
     return (
         <>
@@ -54,10 +54,10 @@ const Scroll3DSection = () => {
             </motion.h1>
         </section>
 
+        <LogoCarrousel />        
         <FbxMacBook />        
-        <LogoCarrousel />
 
-        <section style={{ height: "100vh", background: "#0f0f14", position: "relative" }}>
+        {/* <section style={{ height: "100vh", background: "#0f0f14", position: "relative" }}>
             
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 3, }}>
 
@@ -75,7 +75,7 @@ const Scroll3DSection = () => {
                 </Scene>
             </div>
             
-        </section>
+        </section> */}
         </>
     );
 };

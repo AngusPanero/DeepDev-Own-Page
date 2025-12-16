@@ -3,8 +3,8 @@ import { useRef } from "react";
 import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
 import VaporPlanet from "../three/VaporPlanet";
-import Banner from "./Banner";
-/* import RenderGrid from "../three/RenderGrid"; */
+import LogoCarrousel from "./LogoCarrousel";
+import FbxMacBook from "../ui/macBook";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
@@ -16,7 +16,7 @@ const Scroll3DSection = () => {
     });
 
     // Entrada y salida del Texto
-    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [600, 0, -400]);
+    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [50, 0, -400]);
     const rawOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
     // Scroll Suavizado 
@@ -39,19 +39,13 @@ const Scroll3DSection = () => {
         <>
         <section style={{ height: "110vh", background: "#0f0f14", position: "relative" }}>
 
-            {/* <div style={{ position: "sticky", top: 0, height: "65vh", width: "100%", zIndex: 2 }}>
-                <Scene>
-                    <RenderGrid />
-                </Scene>
-            </div> */}
-
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
                 <Scene>
                     <AetherWaves />
                 </Scene>
             </div>
 
-            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-35vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-45vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                 backgroundSize: "200% 200%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
@@ -60,7 +54,8 @@ const Scroll3DSection = () => {
             </motion.h1>
         </section>
 
-        <Banner />
+        <FbxMacBook />        
+        <LogoCarrousel />
 
         <section style={{ height: "100vh", background: "#0f0f14", position: "relative" }}>
             

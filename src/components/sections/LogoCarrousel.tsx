@@ -72,20 +72,18 @@ const LogoCarrousel = () => {
 
     return (
         <div className="logo-carousel">
-        <div
-            className="logo-track"
-            ref={trackRef}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerLeave={onPointerUp}
-        >
-            {[...logos, ...logos].map((logo, i) => (
-            <div className="logo-item" key={i}>
-                <img src={logo} alt="logo" />
+
+            <h1 style={{ color: "white", fontFamily: 'Montserrat', fontSize: "3rem", textAlign: "center"}}>
+                We boost your design with the best tools
+            </h1>
+
+            <div className="logo-track" ref={trackRef} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerLeave={onPointerUp}>
+                {[...logos, ...logos].map((logo, i) => (
+                <div className="logo-item" key={i}>
+                    <img src={logo} alt="logo" />
+                </div>
+                ))}
             </div>
-            ))}
-        </div>
         </div>
     );
 }

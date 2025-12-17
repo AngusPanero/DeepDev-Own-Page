@@ -13,7 +13,7 @@ export function MacBookModel() {
             if (child.isMesh && child.material) {
             const mat = child.material as THREE.MeshStandardMaterial;
     
-            // 🔧 Corrección GLOBAL del material
+            // Corrección del material
             mat.color.set("#2a2a2a");        // oscurece el conjunto
             mat.envMapIntensity = 0.5;      // quita reflejo azulado
             mat.metalness = 0.35;            // menos metal = menos color raro

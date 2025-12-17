@@ -2,9 +2,10 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
-import VaporPlanet from "../three/VaporPlanet";
+/* import VaporPlanet from "../three/VaporPlanet"; */
 import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
+import AmbientOverlay from "../ui/AmbientOverlat";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
@@ -38,7 +39,7 @@ const Scroll3DSection = () => {
     return (
         <>
         <section style={{ height: "110vh", background: "#0f0f14", position: "relative" }}>
-
+            <AmbientOverlay />
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
                 <Scene>
                     <AetherWaves />

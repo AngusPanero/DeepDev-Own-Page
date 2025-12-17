@@ -2,10 +2,12 @@
     width: 100%;
     height: 30vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
     place-content: center;
     padding: 3rem 0;
     background: #000000;
-
     cursor: grab;
 }
 

@@ -2,14 +2,14 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
-/* import VaporPlanet from "../three/VaporPlanet"; */
 import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
 import AmbientOverlay from "../ui/AmbientOverlat";
+import NeuralWaveDome from "../three/NeuralWaveDome";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
-    /* const text2Ref = useRef(null); */
+    const text2Ref = useRef(null);
 
     const { scrollYProgress } = useScroll({
         target: textRef,
@@ -25,16 +25,16 @@ const Scroll3DSection = () => {
     const opacity = useSpring(rawOpacity, { stiffness: 70, damping: 20 });
 
     // TEXTO 2
-    /* const { scrollYProgress: scroll2 } = useScroll({
+    const { scrollYProgress: scroll2 } = useScroll({
         target: text2Ref,
         offset: ["start 70%", "end 30%"]
     });
 
-    const x2Raw = useTransform(scroll2, [0, 0.5, 1], [-300, 0, 2200]);
+    const x2Raw = useTransform(scroll2, [0, 0.5, 1], [-300, 0, 500]);
     const opacity2Raw = useTransform(scroll2, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
-    const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 }); */
+    const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
 
     return (
         <>
@@ -58,25 +58,20 @@ const Scroll3DSection = () => {
         <LogoCarrousel />        
         <FbxMacBook />        
 
-        {/* <section style={{ height: "100vh", background: "#0f0f14", position: "relative" }}>
-            
-            <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 3, }}>
+        <div style={{ height: "100vh", width: "100%", zIndex: 2 }}>
+            <Scene>
+                    <NeuralWaveDome />
+            </Scene>
 
-                <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "absolute", margin: 0, paddingTop: "50vh", zIndex: 1, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2, 
-                    background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
-                    backgroundSize: "200% 200%",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }} >
-                    Expand your business <br></br>With web or mobile Apps
-                </motion.h1>
+            <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                backgroundSize: "200% 200%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
+                AI-Enhanced <br /> User experiences
+            </motion.h1>
+        </div>
 
-                <Scene>
-                    <VaporPlanet />
-                </Scene>
-            </div>
-            
-        </section> */}
         </>
     );
 };

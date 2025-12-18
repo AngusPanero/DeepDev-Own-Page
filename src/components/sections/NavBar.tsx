@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import logo from "../../../public/images/DeepDev Logo.jpg"
-import "../../styles/hero.css"
+import "../../styles/navBar.css"
 
-const Hero = () => {
+const NavBar = () => {
     return (
         <section style={{ height: "14.1vh", backgroundColor: "black", position: "relative" }}>
             <div className="nav-promo">
@@ -14,21 +15,21 @@ const Hero = () => {
                 </div>
                 <nav>
                     <ul style={{ display: "flex", gap: "5rem"}}>
-                        <li><a href="#services">Productos</a></li>
-                        <li><a href="#portfolio">Cotizaciones</a></li>
-                        <li><a href="#about">Compañía</a></li>
-                        <li><a href="#contact">Sorteos</a></li>
-                        <li><a href="#contact">Reclutadores</a></li>
+                        <li><a href="/services">Productos</a></li>
+                        <li><a href="/portfolio">Cotizaciones</a></li>
+                        <li><a href="/about">Compañía</a></li>
+                        <li><a href="/lottery">Sorteos</a></li>
+                        <li><a href="/recluiters">Reclutadores</a></li>
                     </ul>   
                 </nav>
 
                 <div className="right-actions" style={{ marginRight: "2rem", display: "flex", gap: "1rem" }}>
-                    <button className="nav-buttons">Contacto</button>
-                    <button className="nav-buttons">Inicio</button>
+                    <Link to="/contact" className="nav-buttons">Contacto</Link>
+                    <Link to="/login" className="nav-buttons">Inicio</Link>
                 </div>
             </header>
         </section>
     );
 }
 
-export default Hero;
+export default NavBar;

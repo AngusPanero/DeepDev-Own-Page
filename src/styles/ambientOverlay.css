@@ -16,6 +16,7 @@
         ),
         radial-gradient(
             30rem 30rem at 20% 80%,
+            
             rgba(255, 80, 180, 0.12),
             transparent 60%
         );

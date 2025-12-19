@@ -46,10 +46,10 @@ const ContactForm = () => {
                 <label htmlFor="email">Email:</label>
                 <input type="email" value={form.email} name="email" id="email" onChange={(e) => setForm({ ...form, email: e.target.value })} required/>
 
-                <label htmlFor="phone">Phone / WhatsApp:</label>
+                <label htmlFor="phone">Phone/WhatsApp:</label>
                 <input type="tel" value={form.phone} name="phone" id="phone" onChange={(e) => setForm({ ...form, phone: e.target.value })} required/>
 
-                <label htmlFor="projectOption">Project option</label>
+                <label htmlFor="projectOption">Project option:</label>
                 <select id="projectOption" name="projectOption" value={form.projectOption} onChange={(e) => setForm({ ...form, projectOption: e.target.value })} required>
                     <option value="" disabled>Select an option</option>
                     <option value="new">New project</option>
@@ -59,12 +59,12 @@ const ContactForm = () => {
 
                 {form.projectOption && form.projectOption !== "new" && (
                 <div className="input-animate">
-                    <label htmlFor="currentUrl">Current Web/App</label>
+                    <label htmlFor="currentUrl">Current Web/App:</label>
                     <input className="input-animate-field" type="url" name="currentUrl" id="currentUrl" value={form.currentUrl} placeholder="https://example.com" onChange={(e) => setForm({ ...form, currentUrl: e.target.value })} required/>
                 </div>
                 )}
 
-                <label htmlFor="typeOfWork">Type of Web/App</label>
+                <label htmlFor="typeOfWork">Type of Web/App:</label>
                 <select id="typeOfWork" name="typeOfWork" value={form.typeOfWork} onChange={(e) => setForm({ ...form, typeOfWork: e.target.value })} required>
                     <option value="" disabled>Select a type</option>
                     <option value="landing">Landing Page</option>
@@ -77,7 +77,7 @@ const ContactForm = () => {
                     <option value="unsure">Not sure yet</option>
                 </select>
 
-                <label htmlFor="projectGoal">Project goal</label>
+                <label htmlFor="projectGoal">Project Goal:</label>
                 <select id="projectGoal" name="projectGoal" value={form.projectGoal} onChange={(e) => setForm({ ...form, projectGoal: e.target.value })} required>
                     <option value="" disabled>Select a goal</option>
                     <option value="leads">Receive inquiries / leads</option>
@@ -87,7 +87,7 @@ const ContactForm = () => {
                     <option value="other">Other</option>
                 </select>
 
-                <label htmlFor="budgetRange">Budget range</label>
+                <label htmlFor="budgetRange">Budget Range:</label>
                 <select id="budgetRange" name="budgetRange" value={form.budgetRange} onChange={(e) => setForm({ ...form, budgetRange: e.target.value })} required>
                     <option value="" disabled>Select a range</option>
                     <option value="under-500">Less than U$S 500</option>

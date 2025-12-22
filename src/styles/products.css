@@ -1,0 +1,20 @@
+body{
+    background-color: black;
+}
+
+.products-section{
+    height: 300vh;
+    margin-top: 10rem;
+}
+
+.web-apps-section{
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-icons-section{
+    display: flex;
+    flex-direction: row;
+    gap: 22rem;
+}

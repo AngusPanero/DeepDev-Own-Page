@@ -15,9 +15,10 @@ const Footer = () => {
                     <h4 className="footer-title">Navigation</h4>
                     <ul className="footer-list">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/work">Work</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/products">Products</a></li>
+                    <li><a href="/quotes">Quotes</a></li>
+                    <li><a href="/raffles">Raffles</a></li>
+                    <li><a href="/recruiters">Recruiters</a></li>
                     </ul>
                 </div>
         
@@ -34,10 +35,13 @@ const Footer = () => {
                 <div className="footer-section">
                     <h4 className="footer-title">Connect</h4>
                     <ul className="footer-list">
-                        <li><a href="mailto:contact@deepdev.dev">contact@deepdev.dev</a></li>
-                        <li><a href="https://github.com/deepdev" target="_blank">GitHub</a></li>
-                        <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                        <li className="footer-location">Argentina · Remote</li>
+                        <li><a href="mailto:contact@deepdev.dev">deepdevsolutions@gmail.com</a></li>
+                        <li><a href="https://www.linkedin.com/in/agustin-panero-41b91b31a/" target="_blank">LinkedIn</a></li>
+                        <li className="footer-location"><strong>Argentina</strong> · Global Remote</li>
+                        <li className="footer-location">Phone: +54 9 11-7118-7463</li>
+                        
+                        <li className="footer-location"><strong>Spain</strong> · Global Remote</li>
+                        <li className="footer-location">Phone: +34 622-777-426</li>
                     </ul>
                 </div>
             </div>

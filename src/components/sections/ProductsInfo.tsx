@@ -52,6 +52,7 @@ const ProductsInfo = () => {
                         <FloatingIcon src="../../../public/logos/edge.svg" delay={1.8} translateX={-50} translateY={120} />
                     </div>
                 </div> 
+
             </div>
         </div>
     )

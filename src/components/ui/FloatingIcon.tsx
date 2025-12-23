@@ -15,8 +15,8 @@ const FloatingIcon = ({ src, delay, translateX, translateY }: any) => {
     });
     
     // Entrada y salida del IMG
-    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [400, 0, 400]);
-    const rawOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+    const rawX = useTransform(scrollYProgress, [0, 0.5, 1], [400, 0, 0]);
+    const rawOpacity = useTransform(scrollYProgress, [0, 1, 0.9, 1], [0, 1, 1, 0]);
     
     // Scroll Suavizado 
     const x = useSpring(rawX, { stiffness: 50, damping: 20, mass: 0.2 });
@@ -29,7 +29,7 @@ const FloatingIcon = ({ src, delay, translateX, translateY }: any) => {
             filter: "grayscale(0%) brightness(1.15)",
             translateX: translateX,
             translateY: translateY,
-            opacity, 
+            opacity,
             x
         }}
     />

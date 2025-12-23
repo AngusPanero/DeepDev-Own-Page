@@ -7,6 +7,7 @@ const LogoCarrousel = () => {
         "../../../public/logos/android.svg",
         "../../../public/logos/aws.svg",
         "../../../public/logos/azure.svg",
+        "../../../public/logos/react.svg",
         "../../../public/logos/css.svg",
         "../../../public/logos/html.svg",
         "../../../public/logos/illustrator.svg",

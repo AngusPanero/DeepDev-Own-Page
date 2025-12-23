@@ -71,7 +71,7 @@ const FbxMacBook = () => {
             <OrbitControls enableRotate enableZoom={false} enablePan={false} />
         </Canvas>
 
-        <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginLeft: "4rem", marginTop: "-50vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Inter, Poppins, sans-serif", opacity, y, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+        <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginLeft: "4rem", marginTop: "-50vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, y, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                 backgroundSize: "200% 200%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}

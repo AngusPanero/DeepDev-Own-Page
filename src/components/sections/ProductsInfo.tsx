@@ -22,7 +22,7 @@ const ProductsInfo = () => {
     return(
         <div className="products-section">
             <div className="web-apps-section">
-                <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Monserrat, Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                     backgroundSize: "200% 200%",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
@@ -31,7 +31,7 @@ const ProductsInfo = () => {
                 </motion.h1>
 
                 <div className="text-icons-section">
-                    <motion.p style={{ margin: 0, width: "50rem", marginLeft: "3rem", textAlignLast: "start", color: "#ffffff", fontSize: "25px", fontWeight: "300", textAlign: "center", fontFamily: "Monserrat, Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                    <motion.p style={{ margin: 0, width: "50rem", marginLeft: "3rem", textAlignLast: "start", color: "#ffffff", fontSize: "25px", fontWeight: "300", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                         backgroundSize: "200% 200%",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}

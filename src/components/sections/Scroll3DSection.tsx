@@ -46,7 +46,7 @@ const Scroll3DSection = () => {
                 </Scene>
             </div>
 
-            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-33vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-33vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                 backgroundSize: "200% 200%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
@@ -63,7 +63,7 @@ const Scroll3DSection = () => {
                     <NeuralWaveDome />
             </Scene>
 
-            <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+            <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity2, x: x2, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
                 backgroundSize: "200% 200%",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}

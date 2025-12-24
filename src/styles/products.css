@@ -13,8 +13,15 @@ body{
     flex-direction: column;
 }
 
-.text-icons-section{
+.web-text-icons-section{
     display: flex;
     flex-direction: row;
     gap: 22rem;
+}
+
+.app-text-icons-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 20rem;
 }

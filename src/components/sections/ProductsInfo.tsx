@@ -23,8 +23,8 @@ const ProductsInfo = () => {
         target: textRef2,
         offset: ["start 70%", "end 30%"]
     });
-    const x2Raw = useTransform(scroll2, [0, 0.5, 1], [800, 0, -150]);
-    const opacity2Raw = useTransform(scroll2, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+    const x2Raw = useTransform(scroll2, [0, 0.5, 1], [600, 0, -150]);
+    const opacity2Raw = useTransform(scroll2, [0, 0.1, 0.9, 1], [0, 1, 2, 0]);
 
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
     const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
@@ -56,7 +56,7 @@ const ProductsInfo = () => {
                         Whether you need to showcase your brand, sell products online or<br/>manage information and users through a custom platform,<br/>web applications provide a scalable and accessible solution available<br/>from any device.
                     </motion.p>
 
-                    <div className="web-apps-icons" style={{ marginTop: "2rem" }}>
+                    <div className="web-apps-icons" style={{ marginTop: "1rem" }}>
                         <FloatingIcon src="../../../public/logos/chrome.svg" delay={0} translateX={20} translateY={50}  />
                         <FloatingIcon src="../../../public/logos/safari2.svg" delay={1.2} translateX={20} translateY={240} />
                         <FloatingIcon src="../../../public/logos/firefox.svg" delay={0.6} translateX={-60} translateY={-50} />
@@ -67,7 +67,7 @@ const ProductsInfo = () => {
 
             
             <div className="apps-section">
-                <motion.h1 ref={textRef2} style={{ marginTop: "4rem", textAlignLast: "end", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)", opacity: opacity2, x: x2,
+                <motion.h1 ref={textRef2} style={{ marginTop: "3rem", textAlignLast: "end", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)", opacity: opacity2, x: x2,
                         backgroundSize: "200% 200%",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}

@@ -1,0 +1,275 @@
+:root {
+    --violet-main: #8e2de2;
+    --violet-soft: #a855f7;
+    --violet-glow: rgba(142, 45, 226, 0.7);
+    --bg-dark: #0b0b14;
+    --bg-soft: #141428;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ============================== */
+/* 🌌 Container                   */
+/* ============================== */
+
+.dev-sorteo-container {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #1b1b3a, var(--bg-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    font-family: "Montserrat", "Inter", "Poppins", sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* ============================== */
+/* 🧊 Glass Card Base              */
+/* ============================== */
+
+.dev-card,
+.loading-stage,
+.winner-card {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.12),
+        rgba(255,255,255,0.03)
+    );
+    border-radius: 18px;
+    padding: 28px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    box-shadow:
+        0 0 40px rgba(142, 45, 226, 0.25),
+        inset 0 0 25px rgba(255,255,255,0.06);
+}
+
+/* ============================== */
+/* 🖥️ Terminal Header             */
+/* ============================== */
+
+.dev-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.terminal-title {
+    margin-left: auto;
+    font-size: 13px;
+    opacity: 0.7;
+    font-family: "Inter", monospace;
+}
+
+/* ============================== */
+/* 🧠 Titles                      */
+/* ============================== */
+
+.dev-card h2 {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(
+        90deg,
+        var(--violet-main),
+        var(--violet-soft)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 15px;
+    opacity: 0.85;
+    margin-bottom: 26px;
+    line-height: 1.5;
+}
+
+/* ============================== */
+/* 📝 Form                        */
+/* ============================== */
+
+.dev-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dev-form input,
+.dev-form textarea {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 14px 16px;
+    color: white;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.dev-form textarea {
+    min-height: 100px;
+    resize: none;
+}
+
+.dev-form input:focus,
+.dev-form textarea:focus {
+    border-color: var(--violet-main);
+    box-shadow: 0 0 0 2px rgba(142,45,226,0.25);
+}
+
+/* ============================== */
+/* 🔥 Glow Button                 */
+/* ============================== */
+
+.btn-glow {
+    margin-top: 10px;
+    padding: 16px;
+    border-radius: 999px;
+    border: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(
+        135deg,
+        var(--violet-main),
+        var(--violet-soft)
+    );
+    box-shadow:
+        0 0 25px var(--violet-glow),
+        inset 0 0 15px rgba(255,255,255,0.25);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+}
+
+.btn-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.btn-glow:hover::after {
+    transform: translateX(100%);
+}
+
+.btn-glow:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 40px rgba(142,45,226,0.9);
+}
+
+/* ============================== */
+/* ⏳ Loading Stage               */
+/* ============================== */
+
+.loading-stage {
+    text-align: center;
+}
+
+.spinner-dev {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.15);
+    border-top-color: var(--violet-main);
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.typing-text {
+    font-family: "Inter", monospace;
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: #e9d5ff;
+}
+
+.console-log {
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 14px;
+    color: #27c93f;
+    font-family: "Inter", monospace;
+    font-size: 13px;
+    text-align: left;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* ============================== */
+/* 🏆 Winner Card                 */
+/* ============================== */
+
+.winner-card {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 42px;
+    filter: drop-shadow(0 0 20px var(--violet-glow));
+    margin-bottom: 10px;
+}
+
+.winner-card h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.ticket-summary {
+    margin: 18px 0;
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.35);
+    font-family: "Inter", monospace;
+    font-size: 14px;
+}
+
+.btn-back {
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid var(--violet-main);
+    color: white;
+    padding: 12px 26px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background: var(--violet-main);
+    box-shadow: 0 0 20px var(--violet-glow);
+}
+

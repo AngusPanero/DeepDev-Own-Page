@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import "../../styles/products.css"
-import FloatingIcon from "../ui/FloatingIcon";
+import FloatingIcon from "../ui/FloatingIcon"
 
 const ProductsInfo = () => {
     // WEB APPS
@@ -80,7 +80,7 @@ const ProductsInfo = () => {
                         <FloatingIcon src="../../../public/logos/appstore.svg" delay={0} translateX={20} translateY={50}  />
                         <FloatingIcon src="../../../public/logos/playstore.svg" delay={1.2} translateX={20} translateY={240} />
                         <FloatingIcon src="../../../public/logos/apple.svg" delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/android.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="../../../public/logos/android2.svg" delay={1.8} translateX={-50} translateY={120} />
                     </div>
 
                     <motion.p style={{ margin: 0, width: "50rem", marginRight: "3rem", textAlignLast: "end", color: "#ffffff", fontSize: "25px", fontWeight: "300", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2,

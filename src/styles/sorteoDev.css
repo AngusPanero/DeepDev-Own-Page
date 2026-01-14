@@ -17,9 +17,10 @@
 /* ============================== */
 
 .dev-sorteo-container {
-    min-height: 100vh;
+    margin-top: 4rem;
+    min-height: 100vh;/* 
     background:
-        radial-gradient(circle at top, #1b1b3a, var(--bg-dark));
+        radial-gradient(circle at top, #1b1b3a, var(--bg-dark)); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,6 +86,7 @@
 /* ============================== */
 
 .dev-card h2 {
+    text-align: center;
     font-size: 26px;
     font-weight: 700;
     background: linear-gradient(
@@ -98,6 +100,7 @@
 }
 
 .subtitle {
+    text-align: center;
     font-size: 15px;
     opacity: 0.85;
     margin-bottom: 26px;
@@ -145,18 +148,15 @@
 .btn-glow {
     margin-top: 10px;
     padding: 16px;
-    border-radius: 999px;
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
     border: none;
+    border-radius: 16px;
     font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
     color: white;
     font-family: "Montserrat", sans-serif;
-    background: linear-gradient(
-        135deg,
-        var(--violet-main),
-        var(--violet-soft)
-    );
+   
     box-shadow:
         0 0 25px var(--violet-glow),
         inset 0 0 15px rgba(255,255,255,0.25);
@@ -212,7 +212,7 @@
 
 .typing-text {
     font-family: "Inter", monospace;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 16px;
     color: #e9d5ff;
 }
@@ -223,7 +223,7 @@
     padding: 14px;
     color: #27c93f;
     font-family: "Inter", monospace;
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
     line-height: 1.6;
     opacity: 0.9;
@@ -244,6 +244,7 @@
 }
 
 .winner-card h1 {
+    color: #a855f7;
     font-size: 28px;
     margin-bottom: 10px;
 }
@@ -254,7 +255,7 @@
     border-radius: 14px;
     background: rgba(0,0,0,0.35);
     font-family: "Inter", monospace;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .btn-back {
@@ -273,3 +274,26 @@
     box-shadow: 0 0 20px var(--violet-glow);
 }
 
+/* SHAKE */
+.checkbox-warning {
+    color: #ef4444; 
+    font-size: 15px;
+    margin-top: 6px;
+}
+
+.animate-shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+}
+
+.animate-shake .checkmark {
+    border-color: #ef4444 !important; 
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}

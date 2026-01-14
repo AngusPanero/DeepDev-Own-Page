@@ -30,7 +30,7 @@ const NavBar = () => {
         <>
         <section className={"nav-wrapper"}>
             <div className={`nav-promo ${showPromo ? "open" : "closed"}`}>
-                🔥 -- Take advantage of a 20% OFF for a limited time -- 🔥
+                🔥 -- Check out our sweepstakes section to participate in prize draws and get great discounts on our products. -- 🔥
             </div>
 
             <header className="hero-header" style={{ height: "5.5rem", display: "flex", alignItems: "center", justifyContent: "space-between"}}>

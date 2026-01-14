@@ -29,6 +29,19 @@ const ProductsInfo = () => {
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
     const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
 
+    // CUSTOM SOFTWARE
+    const textRef3 = useRef(null);
+    const { scrollYProgress: scroll3 } = useScroll({
+        target: textRef3,
+        offset: ["start 80%", "end 20%"]
+    });
+
+    const rawX3 = useTransform(scroll3, [0, 0.5, 1], [-500, 0, -50]);
+    const rawOpacity3 = useTransform(scroll3, [0, 0.1, 0.9, 1], [0, 1, 2, 0]);
+
+    const x3 = useSpring(rawX3, { stiffness: 50, damping: 20, mass: 0.2 });
+    const opacity3 = useSpring(rawOpacity3, { stiffness: 70, damping: 20 });
+
     return(
         // WEB APLICATIONS:
         <div className="products-section">
@@ -65,7 +78,7 @@ const ProductsInfo = () => {
                 </div> 
             </div>
 
-            
+            {/* Mobile Apps Section */}
             <div className="apps-section">
                 <motion.h1 ref={textRef2} style={{ marginTop: "3rem", textAlignLast: "end", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)", opacity: opacity2, x: x2,
                         backgroundSize: "200% 200%",
@@ -97,6 +110,38 @@ const ProductsInfo = () => {
                     </motion.p>
                 </div> 
             </div>
+            {/* CUSTOM SOFTWARE: */}
+            <div className="apps-section">
+                <motion.h1 ref={textRef3} style={{ marginTop: "-2rem", textAlignLast: "end", position: "relative", zIndex: 3, color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "2px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)", opacity: opacity3, x: x3,
+                        backgroundSize: "200% 200%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
+                        Custom Software Solutions.
+                </motion.h1>
+
+                <div className="app-text-icons-section">
+                    <div className="web-apps-icons" style={{ marginTop: "2rem" }}>
+                        <FloatingIcon src="../../../public/logos/soft.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="../../../public/logos/graf.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src="../../../public/logos/ingenieria.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="../../../public/logos/flow.svg" delay={1.8} translateX={-50} translateY={120} />
+                    </div>
+
+                    <motion.p style={{ margin: 0, width: "50rem", marginRight: "3rem", textAlignLast: "start", color: "#ffffff", fontSize: "25px", fontWeight: "300", textAlign: "center", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity3, x: x3,
+                        background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+                        backgroundSize: "200% 200%",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
+                        We design and develop fully customized software solutions tailored to<br></br>your business needs. From management and control systems to<br></br>internal platforms and process automation, we transform ideas into<br></br>scalabledigital tools that empower your company.
+
+                        Every business has<br></br>unique workflows, challenges, and goals.<br></br><br></br>That’s why off-the-shelf solutions often fall short. Custom software<br></br>allows you to centralize information, automate processes, improve<br></br>decision-making, and gain full control over your operations.
+
+                        Whether<br></br>you need a management system, a control panel, a custom dashboard,<br></br>or a platform built around your specific idea, we create flexible and<br></br>scalable solutions designed to grow with your business.
+                    </motion.p>
+                </div> 
+            </div>            
         </div>
     )
 }

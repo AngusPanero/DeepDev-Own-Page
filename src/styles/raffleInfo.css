@@ -1,0 +1,91 @@
+.raffle-info-container {
+    max-width: 550px;
+    padding: 20px;
+    z-index: 2;
+}
+
+.badge-new {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+    border: 1px solid var(--violet-soft);
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.hero-title {
+    width: 550px;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 24px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.hero-title span {
+    background: linear-gradient(90deg, #fff, var(--violet-soft));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 40px;
+    font-family: "Montserrat", "Inter", sans-serif;
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.feature-item .icon {
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+.feature-item h4 {
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.feature-item p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .raffle-info-container {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .feature-item {
+        justify-content: center;
+        text-align: left;
+    }
+}

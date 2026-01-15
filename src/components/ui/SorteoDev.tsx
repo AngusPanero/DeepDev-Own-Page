@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Confetti from 'react-confetti'; 
 import '../../styles/sorteoDev.css';
 import ParticleButton from './ParticleButton';
+import RaffleInfo from '../sections/RaffleInfo';
+import CountDown from './CountDown';
 
 const SorteoDev: React.FC = () => {
     const [ status, setStatus ] = useState<'idle' | 'registered' | 'winner'>('idle');
@@ -11,6 +13,29 @@ const SorteoDev: React.FC = () => {
     const [ hoverParticles, setHoverParticles ] = useState(false);
     const [ check, setCheck ] = useState(false)
     const [ shake, setShake ] = useState(false);
+    const [ timeLeft, setTimeLeft ] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+    useEffect(() => {
+            const target = new Date("2026-02-15T00:00:00").getTime();
+
+            const timer = setInterval(() => {
+                const now = Date.now();
+                const distance = target - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                } else {
+                    setTimeLeft({
+                        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+                    });
+                }
+            }, 1000);
+
+            return () => clearInterval(timer);
+        }, []);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,7 +55,7 @@ const SorteoDev: React.FC = () => {
     return (
         <div className="dev-sorteo-container">
             {showConfetti && <Confetti numberOfPieces={1200} recycle={false} />}
-            
+
             <AnimatePresence mode="wait">
                 {status === 'idle' && (
                     <motion.div key="form" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, x: -100 }} className={`dev-card ${shake ? 'animate-shake' : ''}`} >
@@ -38,12 +63,13 @@ const SorteoDev: React.FC = () => {
                             <span className="dot red"></span>
                             <span className="dot yellow"></span>
                             <span className="dot green"></span>
-                            <p className="terminal-title">new_raffle_entry.jsx</p>
+                            <p className="terminal-title">new_{user.nombre === "" ? "raffle" : user.nombre.toLowerCase().replace(" ", "_")}_entry.jsx</p>
                         </div>
                         
                         <h2>&lt;FullStack_Raffle /&gt;</h2>
+                        
                         <p className="subtitle">Enter for a chance to win a complete professional website built by DeepDev.</p>
-
+                        <CountDown timeLeft={timeLeft} />
                         <form onSubmit={handleSubmit} className="dev-form">
                             <input required placeholder="Your Name" onChange={e => setUser({...user, nombre: e.target.value})} />
                             <input required type="email" placeholder="Your Email" onChange={e => setUser({...user, email: e.target.value})} />
@@ -104,6 +130,7 @@ const SorteoDev: React.FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+            <RaffleInfo />
         </div>
     );
 };

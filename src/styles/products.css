@@ -3,7 +3,7 @@ body{
 }
 
 .products-section{
-    height: 300vh;
+    height: 365vh;
     margin-top: 10rem;
 }
 
@@ -16,12 +16,45 @@ body{
 .web-text-icons-section{
     display: flex;
     flex-direction: row;
-    gap: 22rem;
+    gap: 18rem;
 }
 
 .app-text-icons-section{
     display: flex;
     flex-direction: row;
     justify-content: end;
-    gap: 20rem;
+    gap: 15rem;
 }
+
+.custom-icons-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 13rem;
+}
+
+.ai-section{
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-icons-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 18rem;
+}
+
+.automation-section{
+    display: flex;
+    flex-direction: column;
+}
+
+.automation-icons-section{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 10rem;
+}
+
+

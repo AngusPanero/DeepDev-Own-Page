@@ -11,11 +11,7 @@ const RaffleInfo: React.FC = () => {
       className="raffle-info-container"
     >
       <div className="badge-new">PREMIERE 2026</div>
-      
-      <h1 className="hero-title">
-        We take your idea to the<br />
-        <span>Next Level</span>
-      </h1>
+      <h1 className="hero-title">We take your idea to the<span> Next Level</span></h1>
       <p className="hero-description">
         To celebrate the launch of <strong>DeepDev</strong>, we're giving away a complete Full Stack development project. We want your project to have the digital presence it deserves, with cutting-edge technology and high-impact design.
       </p>

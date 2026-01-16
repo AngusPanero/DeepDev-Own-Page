@@ -3,12 +3,12 @@ body{
 }
 
 .products-section{
-    height: 370vh;
+    height: 400vh;
     margin-top: 10rem;
 }
 
 .web-apps-section{
-    margin-left: 3rem;
+    margin-left: 6rem;
     margin-bottom: 4rem;
     margin-top: 8vh;
     display: flex;
@@ -23,6 +23,7 @@ body{
 
 .apps-section{
     margin-right: 4rem;
+    margin-bottom: 8rem;
 }
 
 .app-text-icons-section{

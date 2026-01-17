@@ -121,7 +121,6 @@
 }
 
 .cta-button:hover {
-  background: var(--violet-soft);
   color: white;
   transform: translateY(-3px);
 }

@@ -54,14 +54,14 @@ const ProductsInfo = () => {
 
     // Estilo de gradiente animado reutilizable
     const gradientBase = {
-        background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
+        background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
         backgroundSize: "200% 200%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
     };
 
     const gradientAnim = {
-        backgroundPosition: ["0% 50%", "100% 50%"],
+        backgroundPosition: ["100% 50%", "100% 50%"],
         transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
     };
 

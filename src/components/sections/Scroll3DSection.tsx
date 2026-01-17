@@ -36,6 +36,18 @@ const Scroll3DSection = () => {
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
     const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
 
+    /* const gradientBase = {
+        background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
+        backgroundSize: "200% 200%",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+    };
+
+    const gradientAnim = {
+        backgroundPosition: ["100% 50%", "100% 50%"],
+        transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
+    }; */
+
     return (
         <>
         <section style={{ height: "110vh", background: "#0f0f14", position: "relative" }}>

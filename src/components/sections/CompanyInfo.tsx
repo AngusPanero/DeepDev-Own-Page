@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom'; // O el sistema de rutas que uses
+import { Link } from 'react-router-dom';
 import "../../styles/company.css";
 
 const Company: React.FC = () => {
@@ -24,13 +24,7 @@ const Company: React.FC = () => {
 
   return (
     <section className="company-section">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }} 
-        whileInView={{ opacity: 1, y: 0 }} 
-        viewport={{ once: true }} 
-        transition={{ duration: 0.8 }} 
-        className="company-header"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
         <div className="badge-new">OUR DNA</div>
         <h2 className="hero-title">Commitment to<br></br><span>Excellence</span></h2>
         <p className="hero-description">
@@ -99,7 +93,7 @@ const Company: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <motion.div className="company-cta" whileHover={{ scale: 1.02 }}>
+      <motion.div className="company-cta">
         <p>Ready to start your transformation?</p>
         <Link to="/contact" className="cta-button">Let's talk about your project</Link>
       </motion.div>

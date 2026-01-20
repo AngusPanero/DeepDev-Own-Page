@@ -14,7 +14,7 @@ const NavBar = () => {
     const [ isDarkMode, setIsDarkMode ] = useState(true);
 
     const lastScrollY = useRef(0);  
-    const { language, setLanguage, texts } = useLanguage()
+    const { language, handleLanguage, texts } = useLanguage()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,8 +55,8 @@ const NavBar = () => {
                     <button className="nav-buttons" onClick={() => setIsDarkMode(!isDarkMode)}>{<img style={{ backgroundColor: "transparent" }} src={isDarkMode? sun : moon} alt="moon" width={22} />}</button>
                         
                     <div>
-                        <select className="nav-buttons" onChange={(e) => setLanguage(e.target.value)} style={{ cursor: 'pointer', width: '110px' }}>
-                            <option value="es">🌎 Lan</option> 
+                        <select className="nav-buttons lan" onChange={(e) => handleLanguage(e.target.value)} style={{ cursor: 'pointer', width: '110px'}}>
+                            <option value="es">🌎 {texts[language].language}</option> 
                             <option value="es">🇪🇸 Es</option>
                             <option value="en">🇺🇸 En</option>
                             <option value="it">🇮🇹 It</option>

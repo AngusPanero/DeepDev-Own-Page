@@ -12,7 +12,7 @@ const RaffleInfo: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="raffle-info-container"
     >
-      <div className="badge-new">{texts[language].raffles.premiere}</div>
+      <div className="badge-new">{texts[language].raffles.premiere.toUpperCase()}</div>
       <h1 className="hero-title"><span>{texts[language].raffles.premiereTitle}</span></h1>
       <p className="hero-description">
         {texts[language].raffles.premiereText}

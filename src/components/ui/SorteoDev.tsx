@@ -102,11 +102,11 @@ const SorteoDev: React.FC = () => {
                             <p className="terminal-title">new_{user.nombre}_entry.jsx</p>
                         </div>
                         <div className="spinner-dev"></div>
-                        <p className="typing-text">Processing entry_{user.nombre.toLowerCase().replace(" ", "_")}...</p>
+                        <p className="typing-text">{texts[language].raffles.processing}</p>
                         <div className="console-log">
-                            <p>{`> Verifying email: ${user.email}`}</p>
-                            <p>{`> Analyzing project: "${user.proyecto.substring(0, 20)}..."`}</p>
-                            <p>{`> Status: Compiling luck...`}</p>
+                            <p>{texts[language].raffles.analyzing}</p>
+                            <p>{texts[language].raffles.verify}: {user.email}</p>
+                            <p>{texts[language].raffles.status}</p>
                         </div>
                     </motion.div>
                 )}
@@ -120,16 +120,16 @@ const SorteoDev: React.FC = () => {
                             <p className="terminal-title">new_{user.nombre}_entry.jsx</p>
                         </div>
                         
-                        <h1>¡Ticket Registered!</h1>
+                        <h1>{texts[language].raffles.registered}</h1>
                         <div className="success-icon">✨</div>
-                        <p>Thanks <strong>{user.nombre}</strong>. Your entry has been saved.<br></br>Good Luck!</p>
+                        <p style={{ whiteSpace: "pre-line" }} >{texts[language].raffles.thanks.before} <strong>{user.nombre}</strong>. {texts[language].raffles.thanks.after}</p>
 
                         <div className="ticket-summary">
                             <p><strong>ID:</strong> {Math.random().toString(36).substring(7).toUpperCase()}</p>
-                            <p><strong>Prize:</strong> FullStack Web Development</p>
+                            <p>{texts[language].raffles.premio}</p>
                         </div>
 
-                        <button onClick={() => window.location.reload()} className="btn-glow">GO BACK</button>
+                        <button onClick={() => window.location.reload()} className="btn-glow">{texts[language].raffles.buttonBack.toUpperCase()}</button>
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const LanguageContext = createContext()
 
@@ -61,6 +61,15 @@ export interface Translation {
         email: string;
         project: string;
         conditions: object;
+        error: string
+        processing: string
+        verify: string
+        analyzing: string
+        status: string
+        registered: string,
+        thanks: object,
+        premio: string,
+        buttonBack: string,
         button: string;
     };
     contact: {
@@ -110,6 +119,7 @@ export interface Translation {
         expertiseTitle: string,
         connectTitle: string,
     };
+    language: string
 }
 
 export interface TextsConfig {
@@ -118,12 +128,20 @@ export interface TextsConfig {
 
 export interface LanguageContextType {
     language: string;
-    texts: any; // Usamos 'any' para que no chille con la estructura gigante
+    texts: any; 
     setLanguage: (lang: string) => void;
 }
 export const LanguageProvider = ({ children }) => {
-    const [ language, setLanguage ] = useState("es");
+    const [ language, setLanguage ] = useState(localStorage.getItem("userLanguage") || "es");
 
+    useEffect(() => {
+        localStorage.setItem('userLanguage', language);
+    }, [language]);
+
+    const handleLanguage = (e: string) => {
+        setLanguage(e)
+        localStorage.setItem("userLanguage", language)
+    }
     const texts: TextsConfig = {
     en: {
         home: {
@@ -169,7 +187,8 @@ export const LanguageProvider = ({ children }) => {
         },
         company: {
             dna: `Our DNA`,
-            dnaTitle: `Commitment to Excellence`,
+            dnaTitle: `Commitment 
+            to Excellence`,
             dnaText: `At DeepDev, we don't just write code; we build the foundation for your next success. Our journey is defined by technical precision and the confidence of delivering world-class products.`,
             projects: `Projects Delivered`,
             uptime: `Guaranteed Uptime`,
@@ -210,6 +229,18 @@ export const LanguageProvider = ({ children }) => {
                 link: `terms and conditions`,
                 after: ` of the raffle.`
             },
+            error: `You must accept the terms and conditions to continue.`,
+            processing: `Generating ticket...`,
+            verify: `Verifying email...`,
+            analyzing: `Analyzing request...`,
+            status: `Status: Processing...`,
+            registered: `Ticket Registered!`,
+            thanks: {
+                before: `Thank you. `,
+                after: `Your entry has been saved. Good luck!`
+            },
+            premio: `Prize at Stake: Professional Web Development`,
+            buttonBack: `Back`,
             button: `GENERATE RAFFLE TICKET`
         },
         contact: {
@@ -261,7 +292,8 @@ export const LanguageProvider = ({ children }) => {
             rights: `All rights reserved.`,
             privacy: `Privacy Policy`,
             terms: `Terms`
-        }
+        },
+        language: `Lan`
     },
     es: {
         home: {
@@ -351,6 +383,19 @@ export const LanguageProvider = ({ children }) => {
                 link: `términos y condiciones`,
                 after: ` del sorteo.`
             },
+            error: `Debes aceptar los términos y condiciones para continuar.`,
+            processing: `Generando ticket...`,
+            verify: `Verificando email`,
+            analyzing: `Analizando solicitud...`,
+            status: `Estado: Procesando...`,
+            registered: `¡Ticket Registrado!`,
+            thanks: {
+                before: `Gracias`,
+                after: `Tu entrada ha sido guardada. 
+                ¡Buena suerte!`
+            },
+            premio: `Premio en Juego: Desarrollo Web Profesional`,
+            buttonBack: `Regresar`,
             button: `GENERAR TICKET DE SORTEO`
         },
         contact: {
@@ -403,27 +448,55 @@ export const LanguageProvider = ({ children }) => {
             rights: `Todos los derechos reservados.`,
             privacy: `Política de Privacidad`,
             terms: `Términos y Condiciones`
-        }
+        },
+        language: `Len`
     },
     it: {
         home: {
-            reinventing: `DeepDev: Reinventando le Esperienze Digitali.`,
+            reinventing: `DeepDev: Reinventando le 
+            Esperienze Digitali.`,
             boost: `Potenziamo il tuo design con i migliori strumenti.`,
             real: `Interazione 3D in tempo reale.`,
-            ai: `Esperienze utente potenziate dall'IA.`,
+            ai: `Esperienze utente 
+            potenziate dall'IA.`,
             automate: `Automatizza il tuo lavoro, un clic e il gioco è fatto.`,
         },
         products: {
-            webTitle: `Sviluppiamo Applicazioni Web.`,
-            webText: `Soluzioni web moderne su misura per i tuoi obiettivi: da landing page ad alto impatto e siti aziendali a piattaforme eCommerce e sistemi web completamente personalizzati. La presenza sul web è spesso il primo punto di contatto tra il tuo brand e i tuoi utenti. Un sito web ben costruito non solo comunica chi sei, ma converte i visitatori in clienti, centralizza i tuoi servizi e permette al tuo business di crescere con flessibilità e controllo.`,
+            webTitle: `Sviluppiamo Applicazioni Web`,
+            webText: `Offriamo soluzioni web moderne progettate per i tuoi obiettivi. Dalle landing page ai sistemi eCommerce e piattaforme personalizzate, trasformiamo ogni tua idea in uno strumento digitale potente, funzionale e pronto a scalare.
+
+            La presenza online è il primo contatto tra brand e utenti. Un sito web ben costruito comunica la tua identità e lavora per convertire i visitatori in clienti, centralizzando i servizi e permettendo al tuo business di crescere con controllo.
+
+            Sviluppiamo infrastrutture sicure e veloci utilizzando le tecnologie più avanzate. Garantiamo un'esperienza utente impeccabile su ogni dispositivo, ottimizzando i processi digitali per mantenere il tuo business sempre un passo avanti rispetto alla concorrenza.`,
+
             appTitle: `App Mobile iOS e Android.`,
-            appText: `Progettiamo e sviluppiamo applicazioni mobili per iOS e Android: da app aziendali focalizzate e MVP a prodotti completi pronti per utenti reali. Le app mobili permettono al tuo brand di essere presente dove gli utenti trascorrono la maggior parte del loro tempo.`,
+            appText: `Progettiamo applicazioni mobili per iOS e Android adattate alle tue esigenze. Dai prodotti MVP per validare la tua idea fino ad app aziendali complesse, creiamo strumenti digitali pronti a offrire prestazioni eccellenti e scalabili per utenti reali in tutto il mondo.
+
+            Le app permettono al tuo brand di essere presente dove gli utenti trascorrono la maggior parte del tempo. Un software ben progettato rafforza la fedeltà del cliente, offrendo accesso immediato ai tuoi servizi e migliorando l'autorità del tuo business nel mercato digitale.
+
+            Creiamo interfacce intuitive che garantiscono un'interazione fluida e naturale. Utilizziamo tecnologie moderne per assicurare che la tua applicazione sia veloce e sicura, trasformando ogni tocco sullo schermo in un'opportunità strategica di crescita per la tua azienda.`,
+
             customTitle: `Soluzioni Software su Misura.`,
-            customText: `Progettiamo e sviluppiamo soluzioni software completamente personalizzate in base alle esigenze della tua azienda. Dai sistemi di gestione e controllo alle piattaforme interne e all'automazione dei processi, trasformiamo le idee in strumenti digitali scalabili che potenziano la tua impresa. Ogni business ha flussi di lavoro, sfide e obiettivi unici; per questo le soluzioni standard spesso non bastano.`,
-            AiTitle: `Integrazione di Intelligenza Artificiale.`,
-            AiText: `Progettiamo e integriamo soluzioni basate sull'IA adattate alle reali esigenze aziendali. Dai chatbot personalizzati e assistenti virtuali a flussi decisionali intelligenti, aiutiamo le aziende a migliorare i propri prodotti digitali con un'intelligenza artificiale pratica e affidabile.`,
-            automationTitle: `Automazione e Flussi di Lavoro.`,
-            automationText: `Progettiamo e implementiamo flussi di lavoro automatizzati che connettono i sistemi, ottimizzano le operazioni ed eliminano le attività manuali ripetitive. Integrando il tuo sito web, le tue applicazioni e i tuoi strumenti interni, aiutiamo le aziende a migliorare l'efficienza e a mantenere il pieno controllo sui propri processi.`,
+            customText: `Sviluppiamo soluzioni software personalizzate in base alle esigenze specifiche della tua azienda. Dai sistemi gestionali all'automazione dei processi, trasformiamo le tue idee in strumenti digitali scalabili che potenziano l'efficienza operativa e la crescita della tua impresa.
+
+            Ogni business ha obiettivi unici per i quali i software standard non bastano. Una soluzione su misura offre la flessibilità necessaria per adattarsi ai tuoi processi interni, eliminando i limiti dei sistemi generici e fornendo un vantaggio competitivo reale nel tuo settore.
+
+            Creiamo architetture solide e sicure progettate per integrarsi con le tue tecnologie attuali. Ci assicuriamo che ogni software sia intuitivo e pronto a evolversi, trasformando la complessità tecnica in strumenti semplici che ottimizzano le prestazioni e il ritorno sull'investimento.`,
+
+            AiTitle: `Integrazione di Intelligenza 
+            Artificiale.`,
+            AiText: `Progettiamo soluzioni di intelligenza artificiale adattate alle reali esigenze della tua azienda. Dai chatbot agli assistenti virtuali e sistemi decisionali, aiutiamo le imprese a potenziare i prodotti digitali con un'IA pratica, affidabile e orientata ai risultati.
+
+            L'integrazione dell'IA ottimizza tempo e risorse automatizzando compiti complessi e analizzando dati in tempo reale. Implementiamo algoritmi avanzati per offrire precisione operativa, permettendo al tuo team di concentrarsi su attività ad alto valore strategico.
+
+            Creiamo strumenti sicuri e scalabili che si evolvono con il tuo business trasformando i dati in intuizioni chiare. Il nostro approccio garantisce un'IA facile da usare che migliora l'esperienza utente e porta l'efficienza della tua impresa a un livello superiore.`,
+            
+            automationTitle: `Automazione dei flussi`,
+            automationText: `Progettiamo e implementiamo flussi di lavoro automatizzati che connettono i tuoi sistemi, ottimizzano le operazioni ed eliminano le attività manuali ripetitive. Trasformiamo i processi frammentati in ecosistemi fluidi, riducendo gli errori e i costi operativi della tua azienda.
+
+Integrando il tuo sito web e i tuoi strumenti interni, aiutiamo le imprese a migliorare l'efficienza e a mantenere il pieno controllo sui processi. Creiamo soluzioni che liberano tempo prezioso, permettendo al tuo team di concentrarsi sulle attività che generano vero valore.
+
+Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al momento giusto. Automatizzare significa costruire una struttura digitale agile e reattiva, capace di adattarsi alle sfide del mercato e di massimizzare la produttività complessiva del tuo business.`,
         },
         company: {
             dna: `Il Nostro DNA`,
@@ -468,6 +541,18 @@ export const LanguageProvider = ({ children }) => {
                 link: `termini e le condizioni`,
                 after: ` del sorteggio.`
             },
+            error: `Devi accettare i termini e le condizioni per continuare.`,
+            processing: `Generazione del ticket...`,
+            verify: `Verifica e-mail...`,
+            analyzing: `Analisi della richiesta...`,
+            status: `Stato: In elaborazione...`,
+            registered: `Ticket Registrato!`,
+            thanks: {
+                before: `Grazie. `,
+                after: `La tua iscrizione è stata salvata. Buona fortuna!`
+            },
+            premio: `Premio in Palio: Sviluppo Web Professionale`,
+            buttonBack: `Indietro`,
             button: `GENERA BIGLIETTO DEL SORTEGGIO`
         },
         contact: {
@@ -519,27 +604,51 @@ export const LanguageProvider = ({ children }) => {
             rights: `Tutti i diritti riservati.`,
             privacy: `Informativa sulla Privacy`,
             terms: `Termini e Condizioni`
-        }
+        },
+        language: `Lin`
     },
     fr: {
         home: {
-            reinventing: `DeepDev : Réinventer les Expériences Numériques.`,
+            reinventing: `DeepDev : Réinventer les 
+            Expériences Numériques.`,
             boost: `Boostez votre design avec les meilleurs outils.`,
             real: `Interaction 3D en temps réel.`,
-            ai: `Expériences utilisateur optimisées par l'IA.`,
+            ai: `Expériences utilisateur 
+            optimisées par l'IA.`,
             automate: `Automatisez votre travail, un clic et c'est fait.`,
         },
         products: {
-            webTitle: `Nous Construisons des Applications Web.`,
-            webText: `Des solutions web modernes adaptées à vos objectifs : des landing pages à fort impact aux sites institutionnels, en passant par les plateformes eCommerce et les systèmes web sur mesure. Une présence web est souvent le premier point de contact entre votre marque et vos utilisateurs. Un site bien conçu ne se contente pas de communiquer qui vous êtes ; il convertit les visiteurs en clients, centralise vos services et permet à votre entreprise de croître avec flexibilité.`,
+            webTitle: `Développement d'apps web`,
+            webText: `Des solutions adaptées à vos objectifs : des landing pages à fort impact aux sites institutionnels, en passant par l’e-commerce et les systèmes web sur mesure. Votre présence en ligne est souvent le premier point de contact avec vos clients.
+
+            Un site bien conçu ne se contente pas de présenter votre marque ; il convertit vos visiteurs, centralise vos services et soutient votre croissance avec flexibilité. Que vous souhaitiez vendre en ligne, promouvoir votre image ou gérer des données via une plateforme dédiée, nos applications web offrent une solution évolutive et accessible sur tous les supports.`,
             appTitle: `Apps Mobiles iOS & Android.`,
-            appText: `Nous concevons et développons des applications mobiles pour iOS et Android : des apps métier ciblées et MVPs aux produits complets prêts pour vos utilisateurs. Les applications mobiles permettent à votre marque d'être présente là où les utilisateurs passent le plus clair de leur temps.`,
-            customTitle: `Solutions Logicielles sur Mesure.`,
-            customText: `Nous développons des solutions logicielles entièrement personnalisées selon vos besoins métier. Des systèmes de gestion aux plateformes internes et à l'automatisation des processus, nous transformons vos idées en outils numériques évolutifs qui renforcent votre entreprise.`,
-            AiTitle: `Intégration d'Intelligence Artificielle.`,
-            AiText: `Nous concevons des solutions basées sur l'IA adaptées aux besoins réels de l'entreprise. Des chatbots personnalisés aux flux décisionnels intelligents, nous aidons les entreprises à améliorer leurs produits numériques avec une IA pratique et fiable.`,
-            automationTitle: `Automatisation & Workflows.`,
-            automationText: `Nous implémentons des flux de travail automatisés qui connectent vos systèmes, rationalisent les opérations et éliminent les tâches manuelles répétitives. En intégrant votre site web et vos outils internes, nous aidons les entreprises à gagner en efficacité.`,
+            appText: `Nous concevons et développons des applications mobiles pour iOS et Android, des MVP ciblés aux produits complets prêts pour le marché.
+
+            Une application mobile permet à votre marque d'être présente là où vos utilisateurs passent le plus clair de leur temps. Une application performante offre rapidité, efficacité et une expérience utilisateur fluide, créant ainsi un lien direct et constant entre votre produit et votre audience.
+
+            Que vous souhaitiez lancer une nouvelle idée, adapter votre produit au format mobile ou offrir une expérience dédiée, nos solutions mobiles sont puissantes, évolutives et offrent un ressenti natif sur tous les appareils.`,
+
+            customTitle: `Software sur mesure.`,
+            customText: `Nous concevons des solutions logicielles adaptées à vos besoins : des systèmes de gestion à l'automatización de processus. Nous transformons vos idées en outils numériques évolutifs pour renforcer votre entreprise.
+
+            Les solutions génériques sont souvent limitées face à vos défis uniques. Le logiciel sur mesure permet de centraliser vos données, d'automatiser vos tâches et de garder le contrôle total sur vos opérations.
+
+            Qu'il s'agisse d'un système de gestion ou d'un tableau de bord personnalisé, nous créons des solutions flexibles conçues para accompagner votre croissance.`,
+
+            AiTitle: `Intégration d'IA`,
+            AiText: `Nous concevons et intégrons des solutions d'IA adaptées aux besoins réels de votre entreprise. Des chatbots personnalisés aux flux de décision intelligents, nous renforçons vos produits avec une intelligence artificielle pratique et fiable.
+
+            Notre approche repose sur une IA contrôlée, sécurisée et parfaitement intégrée à vos systèmes, données et flux de travail existants.
+
+            Plutôt que des solutions génériques, nous créons des intégrations sur mesure qui améliorent l'expérience utilisateur, réduisent la charge opérationnelle et permettent une automatisation intelligente à grande échelle.`,
+
+            automationTitle: `Automatisation Process`,
+            automationText: `Nous concevons et implémentons des flux de travail automatisés qui connectent intelligemment vos systèmes, simplifient vos opérations quotidiennes et éliminent les tâches manuelles répétitives. En intégrant votre site web, vos applications et vos outils internes, nous aidons votre entreprise à gagner en efficacité tout en conservant un contrôle total sur chaque processus.
+
+            Nos solutions d'automatisation permettent de relier des plateformes hétérogènes — telles que vos CRM, services de messagerie, API et systèmes propriétaires — pour assurer une circulation fluide des données et le déclenchement automatique d'actions stratégiques.
+
+            Cette architecture se traduit par une réactivité accrue, une réduction drastique des erreurs humaines et une cohérence opérationnelle parfaite sur l'ensemble de votre organisation. Qu'il s'agisse de synchronisation de données ou de processus multi-étapes complexes, nous bâtissons des workflows évolutifs adaptés à vos besoins spécifiques.`,
         },
         company: {
             dna: `Notre ADN`,
@@ -584,6 +693,18 @@ export const LanguageProvider = ({ children }) => {
                 link: `termes et conditions`,
                 after: ` du tirage au sort.`
             },
+            error: `Vous devez accepter les termes et conditions pour continuer.`,
+            processing: `Génération du ticket...`,
+            verify: `Vérification de l'e-mail...`,
+            analyzing: `Analyse de la demande...`,
+            status: `État : En cours...`,
+            registered: `Ticket Enregistré !`,
+            thanks: {
+                before: `Merci. `,
+                after: `Votre participation a été enregistrée. Bonne chance !`
+            },
+            premio: `Prix en Jeu : Développement Web Professionnel`,
+            buttonBack: `Retour`,
             button: `GÉNÉRER MON TICKET`
         },
         contact: {
@@ -636,31 +757,55 @@ export const LanguageProvider = ({ children }) => {
             rights: `Tous droits réservés.`,
             privacy: `Politique de Confidentialité`,
             terms: `Conditions Générales`
-        }
+        },
+        language: `Lan`
     },
     de: {
         home: {
-            reinventing: `DeepDev: Digitale Erlebnisse neu definiert.`,
+            reinventing: `DeepDev: Digitale Erlebnisse 
+            neu definiert.`,
             boost: `Wir optimieren Ihr Design mit den besten Tools.`,
             real: `3D-Interaktion in Echtzeit.`,
-            ai: `KI-gestützte Benutzererlebnisse.`,
+            ai: `KI-gestützte 
+            Benutzererlebnisse.`,
             automate: `Automatisieren Sie Ihre Arbeit – ein Klick genügt.`,
         },
         products: {
             webTitle: `Wir bauen Webanwendungen.`,
-            webText: `Moderne Weblösungen, die auf Ihre Ziele zugeschnitten sind: von hochwirksamen Landingpages und Unternehmenswebsites bis hin zu E-Commerce-Plattformen und maßgeschneiderten Websystemen.`,
+            webText: `Wir entwickeln moderne Weblösungen, die strategisch auf Ihre Ziele zugeschnitten sind. Von Landingpages bis zu E-Commerce-Plattformen verwandeln wir Ihre Ideen in leistungsstarke digitale Werkzeuge, die flexibel mit Ihrem Unternehmen mitwachsen.
+
+            Ihre Website ist der zentrale Kontaktpunkt zu Ihren Kunden. Ein gut strukturiertes System kommuniziert Ihre Identität, konvertiert Besucher effektiv und ermöglicht Ihnen die volle Kontrolle über Ihr digitales Wachstum.
+
+            Wir setzen auf modernste Technologien für maximale Leistung und Sicherheit. Dies garantiert eine einwandfreie Benutzererfahrung auf allen Geräten und optimiert Ihre Prozesse, damit Sie dem Wettbewerb immer einen Schritt voraus bleiben.`,
             appTitle: `Mobile Apps für iOS & Android.`,
-            appText: `Wir entwerfen und entwickeln mobile Anwendungen für iOS und Android – von fokussierten Business-Apps und MVPs bis hin zu voll ausgestatteten Produkten für echte Nutzer.`,
+            appText: `Wir entwickeln fortschrittliche Apps für iOS und Android, passgenau für Ihre Bedürfnisse. Von MVPs bis zu komplexen Business-Lösungen schaffen wir digitale Werkzeuge, die durch exzellente Leistung und weltweite Skalierbarkeit überzeugen.
+
+            Apps stärken Ihre Markenpräsenz dort, wo Ihre Kunden sind. Als direkter Kommunikationskanal verbessern sie die Kundenbindung, bieten sofortigen Zugang zu Ihren Diensten und erhöhen Ihre Autorität im digitalen Markt.
+
+            Unser Fokus liegt auf intuitiven Interfaces für eine flüssige User Experience. Mit moderner Technologie stellen wir sicher, dass Ihre Anwendung schnell und sicher bleibt – so wird jede Interaktion zu einer strategischen Wachstumschance.`,
+
             customTitle: `Maßgeschneiderte Softwarelösungen.`,
-            customText: `Wir entwickeln individuell angepasste Softwarelösungen, die exakt auf Ihre Geschäftsanforderungen zugeschnitten sind. Von Management- und Kontrollsystemen bis hin zu internen Plattformen und Prozessautomatisierung.`,
-            AiTitle: `Integration Künstlicher Intelligenz.`,
-            AiText: `Wir konzipieren KI-gestützte Lösungen für reale geschäftliche Anforderungen. Von individuellen Chatbots bis hin zu intelligenten Entscheidungsflüssen helfen wir Unternehmen, ihre digitalen Produkte mit praktischer und zuverlässiger KI zu verbessern.`,
-            automationTitle: `Automatisierung & Workflows.`,
-            automationText: `Wir implementieren automatisierte Workflows, die Systeme verbinden, Abläufe rationalisieren und repetitive manuelle Aufgaben eliminieren.`,
+            customText: `Wir entwickeln maßgeschneiderte Softwarelösungen, die exakt auf Ihre Anforderungen zugeschnitten sind. Von Managementsystemen bis zur Prozessautomatisierung schaffen wir skalierbare digitale Werkzeuge, die Ihre betriebliche Effizienz und das Wachstum Ihres Unternehmens nachhaltig steigern.
+
+            Da Standardsoftware oft an ihre Grenzen stößt, bietet Individualsoftware die nötige Flexibilität für Ihre einzigartigen Abläufe. So eliminieren Sie die Einschränkungen generischer Systeme und gewinnen einen echten Wettbewerbsvorteil in Ihrer Branche.
+
+            Wir setzen auf sichere Architekturen, die sich nahtlos in Ihre Infrastruktur integrieren. Unsere intuitiven Lösungen wachsen mit Ihrem Unternehmen und verwandeln technische Komplexität in einfache Werkzeuge, die Ihre Leistung und Ihren Erfolg maximieren.`,
+
+            AiTitle: `KI-Systemintegration.`,
+            AiText: `Wir konzipieren maßgeschneiderte KI-Lösungen von Chatbots bis zu Entscheidungssystemen. So optimieren wir Ihre digitalen Produkte mit einer praktischen und zuverlässigen KI, die echten geschäftlichen Mehrwert bietet.
+
+            Die Integration automatisiert komplexe Aufgaben und analysiert Daten in Echtzeit. Das spart wertvolle Ressourcen und ermöglicht es Ihrem Team, sich auf strategische Aktivitäten mit hoher Priorität zu konzentrieren.
+
+            Unsere skalierbaren KI-Tools verwandeln Informationen in klare Erkenntnisse. Wir schaffen intuitive Systeme, die das Nutzererlebnis verbessern und die Effizienz Ihres Unternehmens nachhaltig auf ein neues Niveau heben.`,
+            automationTitle: `Prozess-Automation.`,
+            automationText: `Wir implementieren automatisierte Workflows, die Ihre Systeme nahtlos verbinden, Abläufe rationalisieren und repetitive manuelle Aufgaben eliminieren. So schaffen wir effiziente digitale Prozesse, die menschliche Fehler reduzieren und die Betriebskosten senken.
+
+Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu steigern und die volle Kontrolle über alle Arbeitsabläufe zu behalten. Das Ergebnis ist eine agile Struktur, die wertvolle Zeit für strategische Aufgaben freisetzt und Ihr Wachstum beschleunigt.`,
         },
         company: {
             dna: `Unsere DNA`,
-            dnaTitle: `Verpflichtung zu Exzellenz`,
+            dnaTitle: `Verpflichtung 
+            zu Exzellenz`,
             dnaText: `Bei DeepDev schreiben wir nicht nur Code; wir bauen das Fundament für Ihren nächsten Erfolg. Unser Weg ist geprägt von technischer Präzision und dem Vertrauen, erstklassige Produkte zu liefern.`,
             projects: `Abgeschlossene Projekte`,
             uptime: `Garantierte Verfügbarkeit`,
@@ -681,7 +826,7 @@ export const LanguageProvider = ({ children }) => {
         },
         raffles: {
             premiere: `Gewinnspiel 2026`,
-            premiereTitle: `Wir bringen Ihre Idee auf das nächste Level`,
+            premiereTitle: `Wir bringen Ihre Idee auf das nächste`,
             premiereText: `Zur Feier des Launchs von DeepDev verlosen wir ein komplettes Full-Stack-Entwicklungsprojekt. Wir möchten, dass Ihr Projekt die digitale Präsenz erhält, die es verdient.`,
             performance: `Pro Performance`,
             performanceText: `Optimierte und ultraschnelle Websites.`,
@@ -701,6 +846,18 @@ export const LanguageProvider = ({ children }) => {
                 link: `Teilnahmebedingungen`,
                 after: ` des Gewinnspiels.`
             },
+            error: `Sie müssen die Teilnahmebedingungen akzeptieren, um fortzufahren.`,
+            processing: `Ticket wird generiert...`,
+            verify: `E-Mail wird verifiziert...`,
+            analyzing: `Anfrage wird analysiert...`,
+            status: `Status: In Bearbeitung...`,
+            registered: `Ticket Registriert!`,
+            thanks: {
+                before: `Danke. `,
+                after: `Dein Eintrag wurde gespeichert. Viel Glück!`
+            },
+            premio: `Gewinnspiel-Preis: Professionelle Webentwicklung`,
+            buttonBack: `Zurück`,
             button: `GEWINNSPIEL-TICKET GENERIEREN`
         },
         contact: {
@@ -752,27 +909,50 @@ export const LanguageProvider = ({ children }) => {
             rights: `Alle Rechte vorbehalten.`,
             privacy: `Datenschutzerklärung`,
             terms: `AGB`
-        }
+        },
+        language: `Spr`
     },
     ru: {
         home: {
-            reinventing: `DeepDev: Переосмысление цифрового опыта.`,
+            reinventing: `DeepDev: Переосмысление 
+            цифрового опыта.`,
             boost: `Мы улучшаем ваш дизайн с помощью лучших инструментов.`,
             real: `3D-взаимодействие в реальном времени.`,
-            ai: `Пользовательский опыт на базе ИИ.`,
+            ai: `Пользовательский опыт 
+            на базе ИИ.`,
             automate: `Автоматизируйте свою работу — один клик, и готово.`,
         },
         products: {
-            webTitle: `Мы создаем веб-приложения.`,
-            webText: `Современные веб-решения, адаптированные под ваши цели: от высокоэффективных лендингов и корпоративных сайтов до eCommerce-платформ и индивидуальных веб-систем.`,
+            webTitle: `Разработка веб-систем`,
+            webText: `От высокоэффективных лендингов и корпоративных сайтов до eCommerce-платформ и сложных заказных систем.
+
+            Веб-ресурс — это зачастую первый контакт бренда с пользователем. Качественный сайт не только рассказывает о вас, но и превращает посетителей в клиентов, централизует сервисы и позволяет вашему бизнесу гибко расти под полным контролем.
+
+            Нужно ли вам представить бренд, продавать товары онлайн или управлять данными через уникальную платформу — веб-приложения станут масштабируемым и доступным решением на любом устройстве.`,
             appTitle: `Мобильные приложения для iOS и Android.`,
-            appText: `Мы проектируем и разрабатываем мобильные приложения: от специализированных бизнес-решений и MVP до полнофункциональных продуктов.`,
+            appText: `От целевых бизнес-приложений и MVP до полнофункциональных продуктов, готовых к выходу на рынок.
+
+            Мобильные приложения позволяют вашему бренду присутствовать там, где пользователи проводят больше всего времени. Качественное приложение обеспечивает скорость, производительность и безупречный пользовательский опыт, создавая прямую и постоянную связь между вашим продуктом и аудиторией.
+
+            Хотите ли вы запустить новую идею, расширить цифровой продукт или предложить пользователям выделенный сервис — мобильные приложения станут мощным и масштабируемым решением с нативным интерфейсом для любого устройства.`,
             customTitle: `Индивидуальные программные решения.`,
-            customText: `Мы разрабатываем программное обеспечение, полностью адаптированное под нужды вашего бизнеса. От систем управления и контроля до внутренних платформ и автоматизации процессов.`,
-            AiTitle: `Интеграция искусственного интеллекта.`,
-            AiText: `Мы проектируем и внедряем решения на базе ИИ, адаптированные к реальным потребностям бизнеса. От кастомных чат-ботов до интеллектуальных потоков принятия решений.`,
-            automationTitle: `Автоматизация и рабочие процессы.`,
-            automationText: `Мы внедряем автоматизированные рабочие процессы, которые соединяют системы, оптимизируют операции и устраняют повторяющиеся ручные задачи.`,
+            customText: `Мы создаем программные решения под ваши задачи: от систем управления до автоматизации процессов. Превращаем ваши идеи в масштабируемые инструменты для развития компании.
+
+            Готовых решений часто недостаточно для уникальных процессов. Заказное ПО помогает централизовать данные, автоматизировать задачи и получить полный контроль над операциями.
+
+            Нужна ли вам панель управления или сложная платформа — мы создаем гибкие решения, которые будут расти вместе с вашим бизнесом.`,
+            AiTitle: `Интеграция ИИ.`,
+            AiText: `Мы внедряем ИИ, адаптированный под ваши задачи: от умных чат-ботов до систем принятия решений. Помогаем компаниям усилить их продукты с помощью надежного и практичного искусственного интеллекта.
+
+            Наш приоритет — создание безопасного ИИ, который легко интегрируется в ваши текущие системы, данные и рабочие процессы.
+
+            Вместо шаблонов мы предлагаем решения, которые улучшают опыт пользователей, снижают нагрузку на персонал и обеспечивают умную автоматизацию любого масштаба.`,
+            automationTitle: `Поток задач.`,
+            automationText: `Мы создаем автоматизированные рабочие процессы, которые объединяют системы и устраняют рутину. Интеграция сайтов, приложений и внутренних инструментов повышает эффективность и обеспечивает полный контроль над бизнесом.
+
+            Наши решения связывают CRM, почту и API, обеспечивая бесшовный обмен данными. Это ускоряет работу, минимизирует ошибки и делает бизнес-процессы стабильными.
+
+            Нужна ли вам синхронизация данных или сложные многоступенчатые сценарии — мы строим масштабируемые процессы, адаптированные под ваши задачи.`,
         },
         company: {
             dna: `Наш ДНК`,
@@ -817,6 +997,18 @@ export const LanguageProvider = ({ children }) => {
                 link: `условия и положения`,
                 after: ` розыгрыша.`
             },
+            error: `Вы должны принять условия и положения, чтобы продолжить.`,
+            processing: `Генерация билета...`,
+            verify: `Проверка email...`,
+            analyzing: `Анализ запроса...`,
+            status: `Статус: В процессе...`,
+            registered: `Билет зарегистрирован!`,
+            thanks: {
+                before: `Спасибо. `,
+                after: `Ваша заявка сохранена. Удачи!`
+            },
+            premio: `Приз в игре: Профессиональная веб-разработка`,
+            buttonBack: `Назад`,
             button: `ПОЛУЧИТЬ БИЛЕТ УЧАСТНИКА`
         },
         contact: {
@@ -869,11 +1061,12 @@ export const LanguageProvider = ({ children }) => {
             rights: `Все права защищены.`,
             privacy: `Политика конфиденциальности`,
             terms: `Условия использования`
-        }
+        },
+        language: `Язы`
     }
 };
     return(
-        <LanguageContext.Provider value={{ texts, language, setLanguage }}>
+        <LanguageContext.Provider value={{ texts, language, handleLanguage }}>
             {children}
         </LanguageContext.Provider>
     )

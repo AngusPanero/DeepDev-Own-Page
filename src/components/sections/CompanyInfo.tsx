@@ -28,7 +28,7 @@ const Company: React.FC = () => {
     <section className="company-section">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
         <div className="badge-new">{texts[language].company.dna}</div>
-        <h2 className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
+        <h2 style={{ whiteSpace: "pre-line" }} className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
         <p className="hero-description">
           {texts[language].company.dnaText}
         </p>

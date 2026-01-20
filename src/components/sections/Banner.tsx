@@ -1,7 +1,9 @@
+import useLanguage from "../../contexts/LanguageContext"
 import "../../styles/banner.css"
 import WorkflowN8NFlow from "../ui/WorkFlowN8N"
 
 const Banner = () => {
+    const { language, texts } = useLanguage()
     return(
         <section className="banner-section">
             <div className="banner-carrousel">
@@ -9,7 +11,7 @@ const Banner = () => {
             </div>
 
             <div className="banner-click">
-                Automate your work, click and you're done.
+                {texts[language].home.automate}
             </div>
         </section>
     )

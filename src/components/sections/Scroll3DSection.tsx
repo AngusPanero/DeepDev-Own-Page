@@ -6,10 +6,12 @@ import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
 import AmbientOverlay from "../ui/AmbientOverlat";
 import NeuralWaveDome from "../three/NeuralWaveDome";
+import useLanguage from "../../contexts/LanguageContext";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
     const text2Ref = useRef(null);
+    const { language, texts } = useLanguage()
 
     const { scrollYProgress } = useScroll({
         target: textRef,
@@ -36,7 +38,7 @@ const Scroll3DSection = () => {
     const x2 = useSpring(x2Raw, { stiffness: 50, damping: 20, mass: 0.2 });
     const opacity2 = useSpring(opacity2Raw, { stiffness: 70, damping: 20 });
 
-    /* const gradientBase = {
+    const gradientBase = {
         background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
         backgroundSize: "200% 200%",
         WebkitBackgroundClip: "text",
@@ -46,7 +48,7 @@ const Scroll3DSection = () => {
     const gradientAnim = {
         backgroundPosition: ["100% 50%", "100% 50%"],
         transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
-    }; */
+    };
 
     return (
         <>
@@ -58,12 +60,8 @@ const Scroll3DSection = () => {
                 </Scene>
             </div>
 
-            <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-33vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, x, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
-                backgroundSize: "200% 200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
-                DeepDev Reinventing Digital<br></br>Experiences.
+            <motion.h1 ref={textRef} animate={gradientAnim} style={{ ...gradientBase, whiteSpace: "pre-line", textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-33vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, x}}>
+                {texts[language].home.reinventing}
             </motion.h1>
         </section>
 
@@ -75,12 +73,8 @@ const Scroll3DSection = () => {
                     <NeuralWaveDome />
             </Scene>
 
-            <motion.h1 ref={text2Ref} style={{ textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity2, x: x2, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
-                backgroundSize: "200% 200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
-                AI-Enhanced <br /> User experiences
+            <motion.h1 ref={text2Ref} animate={gradientAnim} style={{ ...gradientBase, whiteSpace: "pre-line", textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity2, x: x2}}>
+                {texts[language].home.ai}
             </motion.h1>
         </div>
 

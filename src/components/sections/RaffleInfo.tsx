@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import "../../styles/raffleInfo.css"
+import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
 
 const RaffleInfo: React.FC = () => {
+    const { language, texts } = useLanguage() as LanguageContextType
   return (
     <motion.div 
       initial={{ opacity: 0, x: -30 }}
@@ -10,25 +12,25 @@ const RaffleInfo: React.FC = () => {
       transition={{ duration: 0.8 }}
       className="raffle-info-container"
     >
-      <div className="badge-new">PREMIERE 2026</div>
-      <h1 className="hero-title">We take your idea to the<span> Next Level</span></h1>
+      <div className="badge-new">{texts[language].raffles.premiere}</div>
+      <h1 className="hero-title"><span>{texts[language].raffles.premiereTitle}</span></h1>
       <p className="hero-description">
-        To celebrate the launch of <strong>DeepDev</strong>, we're giving away a complete Full Stack development project. We want your project to have the digital presence it deserves, with cutting-edge technology and high-impact design.
+        {texts[language].raffles.premiereText}
       </p>
       
       <div className="features-list">
         <div className="feature-item">
           <span className="icon">🚀</span>
           <div>
-            <h3>Performance Pro</h3>
-            <p>Optimized and ultra-fast websites.</p>
+            <h3>{texts[language].raffles.performance}</h3>
+            <p>{texts[language].raffles.performanceText}</p>
           </div>
         </div>
         <div className="feature-item">
           <span className="icon">🎨</span>
           <div>
-            <h3>Exclusive Design</h3>
-            <p>UI/UX designed for your brand.</p>
+            <h3>{texts[language].raffles.design}</h3>
+            <p>{texts[language].raffles.designText}</p>
           </div>
         </div>
       </div>

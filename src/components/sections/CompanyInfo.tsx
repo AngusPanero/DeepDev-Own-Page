@@ -2,33 +2,35 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import "../../styles/company.css";
+import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
 
 const Company: React.FC = () => {
+    const { language, texts } = useLanguage() as LanguageContextType
   const milestones = [
     {
       year: "2022",
-      title: "The Origin",
-      description: "Founded in Argentina with the vision of transforming complex ideas into high-performance digital products."
+      title: texts[language].company.title2022,
+      description: texts[language].company.text2022
     },
     {
       year: "2024",
-      title: "European Expansion & AI",
-      description: "Established our base in Spain and integrated AI models into our developments, raising the standard for automation."
+      title: texts[language].company.title2024,
+      description: texts[language].company.text2024
     },
     {
       year: "2026",
-      title: "Today: DeepDev Global",
-      description: "Consolidated as an international boutique studio, specializing in custom software and scalable digital ecosystems."
+      title: texts[language].company.title2024,
+      description: texts[language].company.text2024
     }
   ];
 
   return (
     <section className="company-section">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
-        <div className="badge-new">OUR DNA</div>
-        <h2 className="hero-title">Commitment to<br></br><span>Excellence</span></h2>
+        <div className="badge-new">{texts[language].company.dna}</div>
+        <h2 className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
         <p className="hero-description">
-          At <strong>DeepDev</strong>, we don't just write code; we build the foundation for your next success. Our journey is defined by technical precision and the confidence of delivering world-class products.
+          {texts[language].company.dnaText}
         </p>
       </motion.div>
 
@@ -37,15 +39,15 @@ const Company: React.FC = () => {
         <div className="metrics-grid">
           <div className="metric-card">
             <span className="metric-number">+70</span>
-            <span className="metric-label">Projects Delivered</span>
+            <span className="metric-label">{texts[language].company.projects}</span>
           </div>
           <div className="metric-card">
             <span className="metric-number">99%</span>
-            <span className="metric-label">Guaranteed Uptime</span>
+            <span className="metric-label">{texts[language].company.uptime}</span>
           </div>
           <div className="metric-card">
             <span className="metric-number">24/7</span>
-            <span className="metric-label">Technical Support</span>
+            <span className="metric-label">{texts[language].company.support}</span>
           </div>
         </div>
 
@@ -72,20 +74,18 @@ const Company: React.FC = () => {
         {/* Global Presence */}
         <div className="presence-container">
           <div className="presence-content">
-            <div className="badge-new">GLOBAL PRESENCE</div>
-            <h3>Talent Without Borders</h3>
+            <div className="badge-new">{texts[language].company.global}</div>
+            <h3>{texts[language].company.globalTitle}</h3>
             <p>
-              We operate strategically from <strong>Spain</strong> and <strong>Argentina</strong>, combining European innovation with the ingenuity and resilience of Latin American talent. This duality allows us to offer exceptional time-zone coverage and a global market perspective.
+              {texts[language].company.globalText}
             </p>
             
             <div className="location-tags">
               <div className="location-tag">
-                <span className="flag">🇪🇸</span>
-                <span>Spain</span>
+                <span>{texts[language].company.flagSpain}</span>
               </div>
               <div className="location-tag">
-                <span className="flag">🇦🇷</span>
-                <span>Argentina</span>
+                <span>{texts[language].company.flagArgentina}</span>
               </div>
             </div>
           </div>
@@ -94,8 +94,8 @@ const Company: React.FC = () => {
 
       {/* CTA Section */}
       <motion.div className="company-cta">
-        <p>Ready to start your transformation?</p>
-        <Link to="/contact" className="cta-button">Let's talk about your project</Link>
+        <p>{texts[language].company.talk}</p>
+        <Link to="/contact" className="cta-button">{texts[language].company.talkButton}</Link>
       </motion.div>
     </section>
   );

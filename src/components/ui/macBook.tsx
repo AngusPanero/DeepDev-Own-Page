@@ -4,6 +4,7 @@ import { Environment } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import useLanguage from "../../contexts/LanguageContext";
 
 export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
@@ -29,6 +30,20 @@ export function MacBookModel() {
     }
 
 const FbxMacBook = () => {
+    const { language, texts } = useLanguage()
+
+    const gradientBase = {
+        background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
+        backgroundSize: "200% 200%",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+    };
+
+    const gradientAnim = {
+        backgroundPosition: ["100% 50%", "100% 50%"],
+        transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
+    };
+
     const textRef = useRef(null);
 
     const { scrollYProgress } = useScroll({
@@ -71,12 +86,8 @@ const FbxMacBook = () => {
             <OrbitControls enableRotate enableZoom={false} enablePan={false} />
         </Canvas>
 
-        <motion.h1 ref={textRef} style={{ textAlignLast: "start", position: "relative", zIndex: 3, marginLeft: "4rem", marginTop: "-50vh", color: "#ffffff", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, y, background: "linear-gradient(90deg, #38BDF8, #8B5CF6, #38BDF8)",
-                backgroundSize: "200% 200%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent", }} animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "backInOut" }}>
-            Real-Time 3D interaction
+        <motion.h1 ref={textRef} animate={gradientAnim} style={{ ...gradientBase, textAlignLast: "start", position: "relative", zIndex: 3, marginLeft: "4rem", marginTop: "-50vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, y }}>
+            {texts[language].home.real}
         </motion.h1>
         </section>
     );

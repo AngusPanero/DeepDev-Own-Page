@@ -5,7 +5,7 @@ import "../../styles/navBar.css"
 import Login from "./Login";
 import moon from "../../../public/logos/moon2.svg"
 import sun from "../../../public/logos/sun.svg"
-import world from "../../../public/logos/world.svg"
+import useLanguage from "../../contexts/LanguageContext";
 
 // z-Index 999
 const NavBar = () => {
@@ -14,6 +14,7 @@ const NavBar = () => {
     const [ isDarkMode, setIsDarkMode ] = useState(true);
 
     const lastScrollY = useRef(0);  
+    const { language, setLanguage, texts } = useLanguage()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -28,13 +29,13 @@ const NavBar = () => {
         }
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [])
+    }, [language])
 
     return (
         <>
         <section className={"nav-wrapper"}>
             <div className={`nav-promo ${showPromo ? "open" : "closed"}`}>
-                🔥 -- Check out our sweepstakes section to participate in prize draws and get great discounts on our products. -- 🔥
+                {texts[language].nav.promo}
             </div>
 
             <header className="hero-header" style={{ height: "5.5rem", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
@@ -43,11 +44,10 @@ const NavBar = () => {
                 </div>
                 <nav>
                     <ul style={{ display: "flex", gap: "5rem"}}>
-                        <li><a href="/products">Products</a></li>
-                        <li><a href="/quotes">Quotes</a></li>
-                        <li><a href="/company">Company</a></li>
-                        <li><a href="/raffles">Raffles</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/products">{texts[language].nav.products}</a></li>
+                        <li><a href="/company">{texts[language].nav.company}</a></li>
+                        <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
+                        <li><a href="/contact">{texts[language].nav.contact}</a></li>
                     </ul>   
                 </nav>
 
@@ -55,14 +55,18 @@ const NavBar = () => {
                     <button className="nav-buttons" onClick={() => setIsDarkMode(!isDarkMode)}>{<img style={{ backgroundColor: "transparent" }} src={isDarkMode? sun : moon} alt="moon" width={22} />}</button>
                         
                     <div>
-                        <select className="nav-buttons" defaultValue="en" style={{ cursor: 'pointer', minWidth: '120px' }}>
-                            <option value="" disabled>🌎 Lan</option> 
-                            <option value="en">🇺🇸 En</option>
+                        <select className="nav-buttons" onChange={(e) => setLanguage(e.target.value)} style={{ cursor: 'pointer', width: '110px' }}>
+                            <option value="es">🌎 Lan</option> 
                             <option value="es">🇪🇸 Es</option>
+                            <option value="en">🇺🇸 En</option>
+                            <option value="it">🇮🇹 It</option>
+                            <option value="de">🇩🇪 De</option>
+                            <option value="ru">🇷🇺 Ru</option>
+                            <option value="fr">🇫🇷 Fr</option>
                         </select>
                     </div>
 
-                    <button onClick={() => setLoginOpen(true)} className="nav-buttons">Login</button>
+                    <button onClick={() => setLoginOpen(true)} className="nav-buttons">{texts[language].nav.login}</button>
                 </div>
             </header>
         </section>

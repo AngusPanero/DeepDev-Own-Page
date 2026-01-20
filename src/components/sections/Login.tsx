@@ -2,8 +2,11 @@ import { useState } from "react";
 import logo from "../../../public/images/DeepDev Logo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
+import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
 
 const Login = ({ closeLogin }: any) => {
+    const { language, texts } = useLanguage() as LanguageContextType
+
     const [hoverParticles, setHoverParticles] = useState(false);
     const [exit, setExit] = useState(false);
     const [email, setEmail] = useState("");
@@ -25,25 +28,25 @@ const Login = ({ closeLogin }: any) => {
 
             <img className="img-logo-login" src={logo} alt="logo" width={200} />
             
-            <h2 className="login-title">Welcome back!</h2>
+            <h2 className="login-title">{texts[language].login.title}</h2>
             
-            <p className="login-subtitle">Access your DeepDev account</p>
+            <p className="login-subtitle">{texts[language].login.text}</p>
 
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="input-group">
-                    <label htmlFor="email">Email:</label>
+                    <label htmlFor="email">{texts[language].login.email}</label>
                     <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
 
                 <div className="input-group">
-                    <label htmlFor="password">Password:</label>
+                    <label htmlFor="password">{texts[language].login.password}</label>
                     <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
 
-                <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>Sign In</button>
+                <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>{texts[language].login.button}</button>
             </form>
 
-            <p className="login-footer">New to DeepDev?<span className="login-link">Create an account</span></p>
+            <p className="login-footer" style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>
             <ParticleButton active={hoverParticles} />
         </div>
     );

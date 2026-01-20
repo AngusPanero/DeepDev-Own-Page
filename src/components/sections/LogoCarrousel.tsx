@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import "../../styles/logoCarrousel.css"
+import useLanguage from "../../contexts/LanguageContext";
 
 const LogoCarrousel = () => {
+    const { language, texts } = useLanguage()
+
     const logos = [
         "../../../public/logos/aftereffects.svg",
         "../../../public/logos/android.svg",
@@ -75,7 +78,7 @@ const LogoCarrousel = () => {
         <div className="logo-carousel">
 
             <h1 style={{ color: "white", fontFamily: 'Montserrat', fontSize: "3rem", textAlign: "center"}}>
-                We boost your design with the best tools
+                {texts[language].home.boost}
             </h1>
 
             <div className="logo-track" ref={trackRef} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerLeave={onPointerUp}>

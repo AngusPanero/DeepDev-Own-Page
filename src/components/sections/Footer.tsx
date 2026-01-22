@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom"; // Importación necesaria
 import "../../styles/footer.css";
 import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const Footer = () => {
     const { language, texts } = useLanguage() as LanguageContextType
+    const { theme } = useTheme()
     return (
-        <footer className="footer">
+        <footer className="footer" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
             <div className="footer-grid">
 
                 <div className="footer-brand">

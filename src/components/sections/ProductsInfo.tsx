@@ -3,9 +3,11 @@ import { useRef } from "react";
 import "../../styles/products.css"
 import FloatingIcon from "../ui/FloatingIcon"
 import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const ProductsInfo = () => {
     const { language, texts } = useLanguage() as LanguageContextType
+    const { theme } = useTheme()
     // Configuración de suavizado
     const springConfig = { stiffness: 50, damping: 25, mass: 0.5 };
 
@@ -68,7 +70,7 @@ const ProductsInfo = () => {
     };
 
     return (
-        <div className="products-section">
+        <div className="products-section" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
             {/* WEB APPLICATIONS */}
             <div className="web-apps-section" ref={textRef}>
                 <motion.h1 style={{ ...gradientBase, textAlignLast: "start", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity, x: x }} 

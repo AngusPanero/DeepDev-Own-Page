@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import "../../styles/logoCarrousel.css"
 import useLanguage from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const LogoCarrousel = () => {
     const { language, texts } = useLanguage()
+    const { theme } = useTheme()
 
     const logos = [
         "../../../public/logos/aftereffects.svg",
@@ -75,7 +77,7 @@ const LogoCarrousel = () => {
     };
 
     return (
-        <div className="logo-carousel">
+        <div className="logo-carousel" style={{ background: theme === "dark" ? "black" : "#f4f2ff", }}>
 
             <h1 style={{ color: "white", fontFamily: 'Montserrat', fontSize: "3rem", textAlign: "center"}}>
                 {texts[language].home.boost}

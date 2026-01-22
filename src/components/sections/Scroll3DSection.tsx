@@ -7,11 +7,13 @@ import FbxMacBook from "../ui/macBook";
 import AmbientOverlay from "../ui/AmbientOverlat";
 import NeuralWaveDome from "../three/NeuralWaveDome";
 import useLanguage from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
     const text2Ref = useRef(null);
     const { language, texts } = useLanguage()
+    const { theme, handleTheme } = useTheme()
 
     const { scrollYProgress } = useScroll({
         target: textRef,
@@ -52,10 +54,10 @@ const Scroll3DSection = () => {
 
     return (
         <>
-        <section style={{ height: "110vh", background: "#0f0f14", position: "relative" }}>
+        <section style={{ height: "110vh", position: "relative" }}>
             <AmbientOverlay />
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
-                <Scene>
+                <Scene> {/*En scene tengo el background them del AetherWaves*/}
                     <AetherWaves />
                 </Scene>
             </div>

@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import useLanguage from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
@@ -31,6 +32,7 @@ export function MacBookModel() {
 
 const FbxMacBook = () => {
     const { language, texts } = useLanguage()
+    const { theme } = useTheme()
 
     const gradientBase = {
         background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
@@ -62,7 +64,7 @@ const FbxMacBook = () => {
     return (
         <section style={{ display: "flex", flexDirection: "column" }}>
         <Canvas camera={{ position: [0, 2, 5], fov: 45 }}
-            style={{ cursor: "grab", width: "100%", height: "120vh", background: "black", pointerEvents: "auto", }}
+            style={{ cursor: "grab", width: "100%", height: "120vh", background: theme === "dark" ? "black" : "#f4f2ff", pointerEvents: "auto", }}
             gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 6, }}>
             
             <Environment preset="studio" />

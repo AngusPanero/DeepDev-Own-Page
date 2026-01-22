@@ -6,15 +6,16 @@ import Login from "./Login";
 import moon from "../../../public/logos/moon2.svg"
 import sun from "../../../public/logos/sun.svg"
 import useLanguage from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 // z-Index 999
 const NavBar = () => {
     const [ loginOpen, setLoginOpen ] = useState(false);    
-    const [ showPromo, setShowPromo ] = useState(true); 
-    const [ isDarkMode, setIsDarkMode ] = useState(true);
+    const [ showPromo, setShowPromo ] = useState(true);
 
     const lastScrollY = useRef(0);  
     const { language, handleLanguage, texts } = useLanguage()
+    const { theme, handleTheme } = useTheme()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -52,7 +53,7 @@ const NavBar = () => {
                 </nav>
 
                 <div className="right-actions" style={{ marginRight: "1.5rem", display: "flex", gap: "1rem" }}>
-                    <button className="nav-buttons" onClick={() => setIsDarkMode(!isDarkMode)}>{<img style={{ backgroundColor: "transparent" }} src={isDarkMode? sun : moon} alt="moon" width={22} />}</button>
+                    <button className="nav-buttons" onClick={() => handleTheme(theme === "dark" ? "light" : "dark")}>{<img style={{ backgroundColor: "transparent" }} src={theme === "dark" ? sun : moon} alt="moon" width={22} />}</button>
                         
                     <div>
                         <select className="nav-buttons lan" onChange={(e) => handleLanguage(e.target.value)} style={{ cursor: 'pointer', width: '110px'}}>

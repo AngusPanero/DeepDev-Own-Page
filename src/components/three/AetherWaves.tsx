@@ -1,19 +1,21 @@
 import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import useTheme from "../../contexts/ThemeContext";
 
 interface AetherWavesProps {
     position?: [number, number, number];
     rotation?: [number, number, number];
 }
 
-const AetherWaves = ({  position = [0.9, 0.6, 0], rotation = [3, 0.5, 0.3] }: AetherWavesProps) => {
+const AetherWaves = ({  position = [0.6, 0.8, 0], rotation = [3, 0.5, 0.3] }: AetherWavesProps) => {
+    const { theme } = useTheme()
     const pointsRef = useRef<THREE.Points>(null!);
 
     const texture = useLoader(THREE.TextureLoader, "../../textures/particle.png");
 
-    const width = 150;   // cuántos puntos a lo ancho
-    const depth = 180;   // cuántos puntos hacia el fondo
+    const width = 120;   // cuántos puntos a lo ancho
+    const depth = 120;   // cuántos puntos hacia el fondo
     const count = width * depth;
 
     const positions = useMemo(() => {
@@ -57,12 +59,12 @@ const AetherWaves = ({  position = [0.9, 0.6, 0], rotation = [3, 0.5, 0.3] }: Ae
     
         pointsRef.current.geometry.attributes.position.needsUpdate = true;
     
-        // 🔥 ROTACIÓN INICIAL (props)
+        // ROTACIÓN INICIAL (props)
         pointsRef.current.rotation.x = rotation[0];
         pointsRef.current.rotation.y = rotation[1];
         pointsRef.current.rotation.z = rotation[2];
     
-        // 🔥 ANIMACIÓN SUAVE (sumamos)
+        // ANIMACIÓN SUAVE (sumamos)
         pointsRef.current.rotation.x += Math.sin(t * 0.2) * 0.05;
         pointsRef.current.rotation.y += Math.sin(t * 0.15) * 0.05;
         pointsRef.current.rotation.z += Math.sin(t * 0.1) * 0.05;
@@ -81,7 +83,7 @@ const AetherWaves = ({  position = [0.9, 0.6, 0], rotation = [3, 0.5, 0.3] }: Ae
             opacity={0.65}
             alphaTest={0.1}
             depthWrite={false}
-            color="#cde0ff"
+            color={theme === "dark" ? "#cde0ff" : "#253c3d"}
             blending={THREE.AdditiveBlending}
         />
         </points>

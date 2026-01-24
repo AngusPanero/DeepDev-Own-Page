@@ -9,6 +9,10 @@
     padding: 1rem;
 }
 
+.banner-section.theme-light {
+    background: #F0F4F8;
+}
+
 .banner-click{
     display: flex;
     justify-content: center;
@@ -35,51 +39,63 @@
     backdrop-filter: blur(14px);
 }
 
-  /* SVG */
+/* SVG */
 .n8n-flow {
     width: 100%;
     height: 120px;
 }
 
-  /* Líneas */
+/* Líneas */
 .n8n-line-base {
-    stroke: rgba(255, 255, 255, 0.607);
+    /* Un azul muy oscuro y traslúcido para el camino inactivo */
+    stroke: rgba(16, 42, 67, 0.2); 
     stroke-width: 7;
     stroke-linecap: round;
 }
 
 .n8n-line-progress {
-    stroke: #3fe0ff;
+    /* Azul eléctrico vibrante para el progreso */
+    stroke: #0062FF;
     stroke-width: 7;
     stroke-linecap: round;
 }
 
-  /* Puntos */
+/* Puntos */
 .n8n-dot {
-    fill: rgba(255, 255, 255, 0.892);
+    /* Gris azulado sutil */
+    fill: #B0C4DE; 
 }
 
 .n8n-dot-active {
-    fill: #7b29ff;
+    /* Cian neón para los puntos activos */
+    fill: #00D1FF;
 }
 
-  /* Nodos */
+/* Nodos */
 .n8n-node {
-    fill: rgba(255, 255, 255, 0.06);
-    stroke: rgba(255, 255, 255, 0.18);
+    /* Fondo de nodo en modo claro: blanco casi sólido */
+    fill: rgba(255, 255, 255, 0.8);
+    stroke: rgba(0, 98, 255, 0.15);
 }
 
 .n8n-node-active {
-    fill: #7b29ff;
-    stroke: #9a5cff;
-    stroke-width: 1.5;
+    /* Nodo activo con gradiente visual azul */
+    fill: #0062FF;
+    stroke: #00D1FF;
+    stroke-width: 2;
     transition: opacity 420ms cubic-bezier(0.4, 0, 0.2, 1),
-    transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+                transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-  /* Icono */
+/* Icono */
 .n8n-node-icon {
-    fill: rgba(255, 255, 255, 0.85);
+    /* Iconos en blanco para que resalten sobre el nodo azul activo */
+    fill: #FFFFFF;
     transition: opacity 300ms ease;
     transform: scaleX(1.6) scaleY(1.4);  
+}
+
+/* Ajuste para los iconos dentro de nodos INACTIVOS (Opcional) */
+.n8n-node:not(.n8n-node-active) .n8n-node-icon {
+    fill: #102A43; /* Azul oscuro para ver el icono sobre fondo blanco */
 }

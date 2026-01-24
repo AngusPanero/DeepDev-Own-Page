@@ -2,9 +2,11 @@ import { useState } from "react"
 import "../../styles/contactForm.css"
 import ParticleButton from "../ui/ParticleButton";
 import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const ContactForm = () => {
     const { language, texts } = useLanguage() as LanguageContextType
+    const { theme } = useTheme()
 
     const [hoverParticles, setHoverParticles] = useState(false);
     const [ form, setForm ] = useState({
@@ -31,8 +33,10 @@ const ContactForm = () => {
     }
 
     return(
-        <div className="contact-box">
-            <form className="contact-form" onSubmit={handleSubmit}>
+        <>
+        {/* <TubesCursor /> */}
+        <div className="contact-box" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+            <form className="contact-form" /* style={{ background: theme === "dark" ? "black" : "#f4f2ff" }} */ onSubmit={handleSubmit}>
 
                 <label htmlFor="name">{texts[language].contact.name}</label> 
                 <input type="text" value={form.name} name="name" id="name" onChange={(e) => setForm({...form, name: e.target.value})} required/>
@@ -118,6 +122,7 @@ const ContactForm = () => {
                 <ParticleButton active={hoverParticles} />
             </form>
         </div>
+        </>
     )
 }
 

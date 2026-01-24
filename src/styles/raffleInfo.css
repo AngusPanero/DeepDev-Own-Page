@@ -1,3 +1,7 @@
+.dev-sorteo-container{
+    padding-top: 130px;
+}
+
 .raffle-info-container {
     max-width: 550px;
     padding: 20px;
@@ -28,6 +32,12 @@
 
 .hero-title span {
     background: linear-gradient(90deg, #fff, var(--violet-soft));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme='light'] {
+    background: linear-gradient(90deg, #4F46E5 0%, #4F46E5 50%, #C026D3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

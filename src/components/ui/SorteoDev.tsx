@@ -6,9 +6,11 @@ import ParticleButton from './ParticleButton';
 import RaffleInfo from '../sections/RaffleInfo';
 import CountDown from './CountDown';
 import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
+import useTheme from '../../contexts/ThemeContext';
 
 const SorteoDev: React.FC = () => {
     const { language, texts } = useLanguage() as LanguageContextType
+    const { theme } = useTheme()
 
     const [ status, setStatus ] = useState<'idle' | 'registered' | 'winner'>('idle');
     const [ user, setUser ] = useState({ nombre: '', email: '', proyecto: '' });
@@ -56,7 +58,9 @@ const SorteoDev: React.FC = () => {
     };
 
     return (
-        <div className="dev-sorteo-container">
+        <>
+        {/* <TubesCursor /> */}
+        <div className="dev-sorteo-container" style={{ marginTop: 0, background: theme === "dark" ? "black" : "#f4f2ff" }}>
             {showConfetti && <Confetti numberOfPieces={1200} recycle={false} />}
 
             <AnimatePresence mode="wait">
@@ -135,6 +139,7 @@ const SorteoDev: React.FC = () => {
             </AnimatePresence>
             <RaffleInfo />
         </div>
+        </>
     );
 };
 

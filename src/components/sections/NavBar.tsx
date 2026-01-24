@@ -34,21 +34,21 @@ const NavBar = () => {
 
     return (
         <>
-        <section className={"nav-wrapper"}>
+        <section className={`nav-wrapper ${theme === "light" ? "theme-light" : "theme-dark"}`}>
             <div className={`nav-promo ${showPromo ? "open" : "closed"}`}>
                 {texts[language].nav.promo}
             </div>
 
-            <header className="hero-header" style={{ height: "5.5rem", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
+            <header className="hero-header" style={{ background: theme === "dark" ? "#00000095" : "rgba(186, 174, 233, 0.64)" }}>
                 <div className="left-actions" style={{ marginLeft: "2rem" }}>
                     <Link to="/"><img className="img-logo" src={logo} alt="logo" width={165} /></Link>
                 </div>
                 <nav>
                     <ul style={{ display: "flex", gap: "5rem"}}>
-                        <li><a href="/products">{texts[language].nav.products}</a></li>
-                        <li><a href="/company">{texts[language].nav.company}</a></li>
-                        <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
-                        <li><a href="/contact">{texts[language].nav.contact}</a></li>
+                        <li><Link to="/products">{texts[language].nav.products}</Link></li>
+                        <li><Link to="/company">{texts[language].nav.company}</Link></li>
+                        <li><Link to="/raffles">{texts[language].nav.raffles}</Link></li>
+                        <li><Link to="/contact">{texts[language].nav.contact}</Link></li>
                     </ul>   
                 </nav>
 

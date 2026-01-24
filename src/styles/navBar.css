@@ -73,7 +73,11 @@
 
 /* HEADER */
 .hero-header {
-    background: rgba(0, 0, 0, 0.584);
+    display: "flex";
+    align-items: center;
+    justify-content: space-between;
+    height: 5.5rem;
+    background: #00000095;
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -113,3 +117,57 @@ li a:hover {
     transition: 0.4s;
 }
 
+/* LIGHT */
+
+/* Fondo del Header: Blanco azulado sutil */
+.theme-light .hero-header {
+    background: rgba(244, 247, 250, 0.8) !important;
+    border-bottom: 1px solid rgb(0, 98, 255);
+    backdrop-filter: blur(12px);
+}
+
+/* Links de navegación: Azul medianoche para máxima legibilidad */
+.theme-light nav ul li a {
+    color: #0A192F;
+}
+
+.theme-light nav ul li a:hover {
+    color: #0062FF; /* Azul Eléctrico */
+}
+
+/* Botones (Login, Idioma, Tema) */
+.theme-light .nav-buttons {
+    color: #0062FF;
+    border: 1px solid #0062FF;
+}
+
+.theme-light .nav-buttons:hover {
+    background-color: rgba(0, 98, 255, 0.08);
+    color: #0052D9;
+    border-color: #00D1FF; /* Resalte en Cian */
+}
+
+/* Ajuste del Select de idioma (Flecha en Azul Eléctrico) */
+.theme-light .lan {
+    color: #0062FF;
+    /* Cambiado fill='%230062FF' para que la flecha sea azul */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230062FF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+}
+
+/* Logo en modo claro */
+.theme-light .img-logo {
+    border: 1px solid rgba(0, 98, 255, 0.2);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.theme-light .img-logo:hover {
+    border-color: #00D1FF;
+    box-shadow: 0 0 12px rgba(0, 209, 255, 0.3);
+}
+
+/* La promo: Usamos un degradado azul/cian más tecnológico */
+.theme-light .nav-promo {
+    background: linear-gradient(135deg, #0062FF, #00D1FF);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; /* El texto en la promo siempre blanco para que resalte */
+}

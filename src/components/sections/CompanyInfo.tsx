@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import "../../styles/company.css";
 import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
 import useTheme from '../../contexts/ThemeContext';
+import TubesCursor from '../ui/TubesCursor';
 
 const Company: React.FC = () => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
+    
   const milestones = [
     {
       year: "2022",
@@ -27,10 +29,12 @@ const Company: React.FC = () => {
   ];
 
   return (
-    <section style={{ background: theme === "dark" ? "black" : "#f4f2ff" }} className="company-section">
+    <>
+    {/* <TubesCursor /> */}
+    <section className={`company-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
         <div className="badge-new">{texts[language].company.dna}</div>
-        <h2 style={{ whiteSpace: "pre-line" }} className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
+        <h2  style={{ whiteSpace: "pre-line" }} className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
         <p style={{ whiteSpace: "pre-line" }} className="hero-description">
           {texts[language].company.dnaText}
         </p>
@@ -100,6 +104,7 @@ const Company: React.FC = () => {
         <Link to="/contact" className="cta-button">{texts[language].company.talkButton}</Link>
       </motion.div>
     </section>
+    </>
   );
 };
 

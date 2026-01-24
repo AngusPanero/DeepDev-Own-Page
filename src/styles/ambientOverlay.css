@@ -24,3 +24,33 @@
     mix-blend-mode: screen;
     transition: none;
 }
+
+.ambient-overlay-light {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    background:
+        /* Un gris azulado muy tenue que da textura al fondo */
+        radial-gradient(
+            35rem 35rem at calc(var(--nx, 0.5) * 100%) 20%,
+            rgba(148, 163, 184, 0.08), 
+            transparent 70%
+        ),
+        /* Un brillo plateado para dar nitidez */
+        radial-gradient(
+            30rem 30rem at 80% calc(var(--ny, 0.5) * 100%),
+            rgba(203, 213, 225, 0.06),
+            transparent 65%
+        ),
+        /* Sombra de profundidad acero */
+        radial-gradient(
+            40rem 40rem at 20% 80%,
+            rgba(71, 85, 105, 0.04),
+            transparent 60%
+        );
+
+    /* Multiply es perfecto para neutros porque genera sombras elegantes, no manchas */
+    mix-blend-mode: multiply; 
+    opacity: 0.6;
+}

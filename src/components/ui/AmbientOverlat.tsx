@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import "../../styles/ambientOverlay.css";
+import useTheme from "../../contexts/ThemeContext";
 
 const AmbientOverlay = () => {
+    const { theme } = useTheme()
+
     const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -27,7 +30,7 @@ const AmbientOverlay = () => {
         return () => window.removeEventListener("pointermove", onMove);
     }, []);
 
-    return <div className="ambient-overlay" ref={ref} />;
+    return <div className={theme === "dark" ? "ambient-overlay" : "ambient-overlay-light"} ref={ref} />;
 };
 
 export default AmbientOverlay;

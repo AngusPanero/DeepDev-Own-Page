@@ -12,7 +12,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
 /* Reutilizando tus clases de título para consistencia */
@@ -23,6 +23,7 @@
 
 .hero-description{
   width: 600px;
+  font-size: 20px;
 }
 
 /* Grid de Métricas */
@@ -34,6 +35,9 @@
 }
 
 .metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   max-width: 300px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--glass-border);
@@ -103,7 +107,7 @@
 /* Call to Action */
 .company-cta {
   margin: 20px auto;
-  width: 730px;
+  width: 800px;
   text-align: center;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--glass-border);
@@ -184,6 +188,111 @@
 
 .location-tag .flag {
     font-size: 1.5rem;
+}
+
+/* LIGHT */
+.theme-light {
+  background: #F4F7FA; /* El blanco azulado que elegimos */
+  color: #0A192F; /* Azul marino profundo en vez de negro */
+}
+
+/* Títulos y Descripciones */
+.theme-light h2.hero-title span {
+  background: linear-gradient(90deg, #afcfff, #0076FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Reset por si acaso para navegadores antiguos */
+    background-clip: text;
+}
+
+.theme-light .hero-description {
+  color: #334E68; /* Un gris azulado equilibrado */
+}
+
+/* Cards de Métricas */
+.theme-light .metric-card {
+  background: #ffffff1c; /* Blanco sólido para que resalte sobre el fondo F4F7FA */
+  border: 1px solid rgba(0, 98, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 98, 255, 0.05);
+}
+
+.theme-light span.metric-number {
+  color: #0062FF 
+}
+
+.theme-light .metric-label {
+  color: #0062FF;
+}
+
+/* Timeline */
+.theme-light .timeline-container {
+  border-left: 2px solid rgba(0, 98, 255, 0.2);
+}
+
+.theme-light .timeline-content h4 {
+  color: #0A192F;
+}
+
+.theme-light .timeline-content p {
+  color: #476582;
+}
+
+.theme-light .timeline-year {
+    color: #0062FF; /* Tu nuevo azul eléctrico */
+    font-weight: 700;
+}
+
+/* Presence & CTA Containers */
+.theme-light .presence-container,
+.theme-light .company-cta {
+  background: #ffffff41;
+  border: 1px solid rgba(0, 98, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(10, 25, 47, 0.06);
+  color: #0A192F;
+}
+
+.theme-light .presence-content p {
+  color: #476582;
+}
+
+/* Location Tags */
+.theme-light .location-tag {
+  background: #ffffff3a;
+  border: 1px solid rgba(0, 98, 255, 0.3);
+  color: #0062FF; /* Azul en vez de violeta */
+  transition: all 0.3s ease;
+}
+
+.theme-light .location-tag:hover {
+  background: rgba(0, 98, 255, 0.05);
+  border-color: #00D1FF; /* Toque cian al hover */
+}
+
+/* --- CONFIGURACIÓN DARK MODE --- */
+.theme-dark {
+    background: #000000;
+    color: #ffffff;
+}
+
+.theme-light .badge-new {
+  background: linear-gradient(135deg, #0062FF 0%, #00D1FF 100%);
+  border: 1px solid #0062ff9c;
+}
+
+.theme-light .cta-button {
+  background: linear-gradient(135deg, #0062FF 0%, #00D1FF 100%);
+  border: 1px solid #0062ff9c;
+}
+
+.theme-light .timeline-dot {
+  position: absolute;
+  left: -37px;
+  top: 5px;
+  width: 12px;
+  height: 12px;
+  background: #0062FF;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #2d7ee2;
 }
 
 /* Responsive */

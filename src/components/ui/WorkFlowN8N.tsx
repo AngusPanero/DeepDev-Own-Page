@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 const WorkflowN8NFlow = ({ nodes = 4, durationMs = 3000, loop = true,}) => {
-    const [progress, setProgress] = useState(0);
+    const [ progress, setProgress ] = useState(0);
 
   // Layout
     const W = 900;

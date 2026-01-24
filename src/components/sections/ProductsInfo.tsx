@@ -58,7 +58,8 @@ const ProductsInfo = () => {
 
     // Estilo de gradiente animado reutilizable
     const gradientBase = {
-        background: "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)",
+        background: theme === "dark" ? "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)" :
+        "linear-gradient(90deg, #102A43 0%, #0062FF 50%, #00D1FF 100%)",
         backgroundSize: "200% 200%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
@@ -70,7 +71,9 @@ const ProductsInfo = () => {
     };
 
     return (
-        <div className="products-section" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <>
+        {/* <TubesCursor /> */}
+        <div className="products-section" style={{ background: theme === "dark" ? "black" : "#F0F4F8" }}>
             {/* WEB APPLICATIONS */}
             <div className="web-apps-section" ref={textRef}>
                 <motion.h1 style={{ ...gradientBase, textAlignLast: "start", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity, x: x }} 
@@ -104,7 +107,7 @@ const ProductsInfo = () => {
                     <motion.div className="web-apps-icons" style={{ marginTop: "2rem" }}>
                         <FloatingIcon src="../../../public/logos/appstore.svg" delay={0} translateX={20} translateY={50}  />
                         <FloatingIcon src="../../../public/logos/playstore.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src="../../../public/logos/apple.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src={`../../../public/logos/${theme === "dark" ? "apple" : "apple2"}.svg`} delay={0.6} translateX={-60} translateY={-50} />
                         <FloatingIcon src="../../../public/logos/android2.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
 
@@ -181,6 +184,7 @@ const ProductsInfo = () => {
                 </div> 
             </div>  
         </div>
+        </>
     );
 };
 

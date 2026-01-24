@@ -3,9 +3,11 @@ import logo from "../../../public/images/DeepDev Logo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
 import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
+import useTheme from "../../contexts/ThemeContext";
 
 const Login = ({ closeLogin }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
+    const { theme } = useTheme()
 
     const [hoverParticles, setHoverParticles] = useState(false);
     const [exit, setExit] = useState(false);
@@ -23,7 +25,7 @@ const Login = ({ closeLogin }: any) => {
     };
 
     return (
-        <div className={`section-login ${exit ? "exit" : ""}`}>
+        <div className={`section-login ${exit ? "exit" : ""}`} style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
 
             <img className="img-logo-login" src={logo} alt="logo" width={200} />

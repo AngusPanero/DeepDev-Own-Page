@@ -7,8 +7,16 @@
     gap: 4rem;
     place-content: center;
     padding: 3rem 0;
-    background: #000000;
     cursor: grab;
+    transition: background 0.4s ease; 
+}
+
+.logo-carousel.theme-dark {
+    background: #000000;
+}
+
+.logo-carousel.theme-light {
+    background: #F0F4F8; 
 }
 
 .logo-carousel:active {
@@ -117,3 +125,39 @@
     text-decoration: underline;
 }
 
+.theme-light .carousel-title {
+    color: #102A43; /* Azul medianoche */
+}
+
+.theme-light .logo-item img {
+    filter: invert(81%) sepia(94%) saturate(4101%) hue-rotate(215deg) brightness(154%) contrast(106%);
+}
+
+/* --- CHECKBOX CUSTOM (BLUE TECH) --- */
+.theme-light .checkmark {
+    background-color: #E2E8F0;
+    border: 2px solid #CBD5E0;
+}
+
+.theme-light .checkbox-wrapper:hover input ~ .checkmark {
+    border-color: #0062FF;
+}
+
+/* Estado Marcado - Azul DeepDev */
+.checkbox-wrapper input:checked ~ .checkmark {
+    background-color: #0062FF;
+    border-color: #0062FF;
+    box-shadow: 0 0 10px rgba(0, 98, 255, 0.4);
+}
+
+.theme-light .label-text {
+    color: #334E68;
+}
+
+.theme-light .label-text a {
+    color: #0062FF;
+}
+
+.theme-light .label-text a:hover {
+    color: #00D1FF;
+}

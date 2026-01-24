@@ -83,7 +83,7 @@ const AetherWaves = ({  position = [0.6, 0.8, 0], rotation = [3, 0.5, 0.3] }: Ae
             opacity={0.65}
             alphaTest={0.1}
             depthWrite={false}
-            color={theme === "dark" ? "#cde0ff" : "#253c3d"}
+            color={theme === "dark" ? "#cde0ff" : "#306ac8"}
             blending={THREE.AdditiveBlending}
         />
         </points>

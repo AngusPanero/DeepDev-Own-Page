@@ -97,6 +97,60 @@
     text-decoration: none;
 }
 
+/* --- FOOTER LIGHT MODE --- */
+
+.footer.theme-light {
+    background: #F0F4F8;
+    color: #1a1a1a;
+    border-top: 0.5px solid rgba(0, 98, 255, 0.216);
+}
+
+.footer.theme-light .footer-logo {
+    color: #1a1a1a;
+}
+
+.footer.theme-light .footer-title {
+    color: #000000; /* Un toque de color para los títulos */
+    opacity: 1;
+}
+
+.footer.theme-light .footer-tagline,
+.footer.theme-light .footer-description {
+    color: #444444;
+    opacity: 0.8;
+}
+
+.footer.theme-light .footer-list a,
+.footer.theme-light .footer-list li {
+    color: #000000;
+    opacity: 0.9;
+}
+
+.footer.theme-light .footer-list a:hover {
+    color: #8e2de2; /* Hover con el color de tu marca */
+}
+
+.footer.theme-light .footer-location {
+    color: #000000;
+    opacity: 1;
+}
+
+.footer.theme-light .footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    color: #000000;
+}
+
+.footer.theme-light .footer-legal a {
+    color: #000000;
+}
+
+/* --- FOOTER DARK MODE (Reset) --- */
+.footer.theme-dark {
+    background: black;
+    color: #eaeaea;
+    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Reducido un poco para que no sea tan fuerte */
+}
+
 @media (max-width: 900px) {
     .footer-grid {
         grid-template-columns: 1fr 1fr;

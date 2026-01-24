@@ -6,12 +6,12 @@ import "../styles/contactForm.css"
 
 const Contact = () => {
     return(
-        <div className="contact-page">
+        <>
             <AmbientOverlay />
             <NavBar />
             <ContactForm />
             <Footer />
-        </div>
+        </>
     )
 }
 

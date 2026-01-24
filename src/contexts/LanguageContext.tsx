@@ -342,8 +342,9 @@ export const LanguageProvider = ({ children }) => {
         },
         company: {
             dna: `Nuestro ADN`,
-            dnaTitle: `Compromiso con la Excelencia`,
-            dnaText: `En DeepDev, no solo escribimos código; construimos los cimientos de tu próximo éxito. Nuestro camino se define por la precisión técnica y la confianza de entregar productos de clase mundial.`,
+            dnaTitle: `Compromiso 
+            con la Excelencia`,
+            dnaText: `En DeepDev, no solo escribimos código, construimos los cimientos de tu próximo éxito. Nuestro camino se define por la precisión técnica y la confianza de entregar productos de clase mundial.`,
             projects: `Proyectos Entregados`,
             uptime: `Disponibilidad Garantizada`,
             support: `Soporte 24/7`,

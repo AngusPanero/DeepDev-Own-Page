@@ -7,12 +7,12 @@ const Banner = () => {
     const { language, texts } = useLanguage()
     const { theme } = useTheme()
     return(
-        <section className="banner-section" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <section className={`banner-section ${theme === "light" ? "theme-light" : "theme-dark"}`}>
             <div className="banner-carrousel">
                 <WorkflowN8NFlow />
             </div>
 
-            <div className="banner-click">
+            <div className="banner-click" style={{ color: theme === "dark" ? "white" : "#0062FF" }}>
                 {texts[language].home.automate}
             </div>
         </section>

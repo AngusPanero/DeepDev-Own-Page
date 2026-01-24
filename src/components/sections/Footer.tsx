@@ -7,7 +7,7 @@ const Footer = () => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
     return (
-        <footer className="footer" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <footer className="footer" className={`footer ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
             <div className="footer-grid">
 
                 <div className="footer-brand">

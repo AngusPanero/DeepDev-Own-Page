@@ -12,7 +12,7 @@ const RaffleInfo: React.FC = () => {
       initial={{ opacity: 0, x: -30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8 }}
-      className="raffle-info-container"
+      className={`raffle-info-container ${theme === 'light' ? 'theme-light' : 'theme-dark'}`}
     >
       <div className="badge-new">{texts[language].raffles.premiere.toUpperCase()}</div>
       <h1 data-theme={theme} className="hero-title"><span>{texts[language].raffles.premiereTitle}</span></h1>

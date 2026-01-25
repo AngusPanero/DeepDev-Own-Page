@@ -1,3 +1,4 @@
+import useTheme from "../../contexts/ThemeContext";
 import "../../styles/particleButton.css";
 
 type CSSVars = React.CSSProperties & {
@@ -9,6 +10,8 @@ type ParticleButtonProps = {
 };
 
 const ParticleButton = ({ active }: ParticleButtonProps) => {
+    const { theme } = useTheme()
+
     if (!active) return null;
 
     return (
@@ -16,7 +19,7 @@ const ParticleButton = ({ active }: ParticleButtonProps) => {
         {Array.from({ length: 500 }).map((_, i) => (
             <span
             key={i}
-            className="particle"
+            className={theme === "dark" ? "particle" : "particle-light-theme"}
             style={
                 {
                 '--x': `${Math.random() * 200 - 100}px`,

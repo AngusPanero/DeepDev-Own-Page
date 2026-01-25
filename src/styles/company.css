@@ -216,8 +216,10 @@
   box-shadow: 0 10px 30px rgba(0, 98, 255, 0.05);
 }
 
-.theme-light span.metric-number {
-  color: #0062FF 
+.metric-number-light {
+  color: #0062FF; 
+  font-size: 2.5rem;
+  font-weight: 800;
 }
 
 .theme-light .metric-label {
@@ -276,7 +278,7 @@
 
 .theme-light .badge-new {
   background: linear-gradient(135deg, #0062FF 0%, #00D1FF 100%);
-  border: 1px solid #0062ff9c;
+  border: 1px solid #b9d4ffbb;
 }
 
 .theme-light .cta-button {

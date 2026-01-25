@@ -296,3 +296,118 @@
     30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
     40%, 60% { transform: translate3d(4px, 0, 0); }
 }
+
+Para transformar toda la sección de sorteos al Light Theme con la paleta de azules, debemos ajustar las variables de color, los fondos de las tarjetas "Glass" (que en modo oscuro son negros transparentes) y los gradientes de los botones.
+
+Aquí tienes el CSS actualizado. He añadido una sección específica para el modo claro que sobrescribe los estilos de la tarjeta y el formulario:
+
+1. Actualización de sorteoDev.css
+Copia este bloque al final de tu archivo CSS actual:
+
+CSS
+/* ============================== */
+/* 🟦 LIGHT THEME OVERRIDES       */
+/* ============================== */
+
+.theme-light.dev-sorteo-container {
+    color: #1e293b; /* Texto principal oscuro */
+}
+
+/* Tarjeta Glass en Light Mode */
+.theme-light .dev-card,
+.theme-light .loading-stage,
+.theme-light .winner-card {
+    background: rgba(255, 255, 255, 0.47);
+    border: 1px solid rgba(0, 98, 255, 0.15);
+    box-shadow: 
+        0 20px 40px rgba(0, 98, 255, 0.08),
+        inset 0 0 0px rgba(255,255,255,1);
+    backdrop-filter: blur(20px);
+}
+
+/* Títulos con gradiente azul */
+.theme-light .dev-card h2, 
+.theme-light .winner-card h1 {
+    background: linear-gradient(90deg, #0052D1, #0076FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.theme-light .subtitle, 
+.theme-light .terminal-title {
+    color: #475569;
+    opacity: 1;
+}
+
+/* Inputs y Textarea */
+.theme-light .dev-form input,
+.theme-light .dev-form textarea {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+.theme-light .dev-form input::placeholder,
+.theme-light .dev-form textarea::placeholder {
+    color: #94a3b8;
+}
+
+.theme-light .dev-form input:focus,
+.theme-light .dev-form textarea:focus {
+    border-color: #0062FF;
+    box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.1);
+}
+
+/* Botón con gradiente azul */
+.theme-light .btn-glow {
+    background: linear-gradient(135deg, #0062FF, #0041cb);
+    box-shadow: 0 10px 20px rgba(0, 98, 255, 0.2);
+}
+
+.theme-light .btn-glow:hover {
+    box-shadow: 0 15px 30px rgba(0, 98, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Checkbox y labels */
+.theme-light .label-text {
+    color: #475569;
+}
+
+.theme-light .label-text a {
+    color: #0062FF;
+}
+
+.theme-light .checkmark {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+}
+
+/* Loading stage y Consola */
+.theme-light .spinner-dev {
+    border: 4px solid rgba(0, 98, 255, 0.1);
+    border-top-color: #0062FF;
+}
+
+.theme-light .typing-text {
+    color: #0052D1;
+}
+
+.theme-light .console-log {
+    background: #0f172a; /* Mantenemos la consola oscura para estilo dev */
+    color: #38bdf8;
+}
+
+.theme-light .ticket-summary {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+.theme-light span{
+    color: #0062FF
+}
+
+.theme-light small{
+    color: #0062FF
+}

@@ -44,15 +44,15 @@ const Company: React.FC = () => {
         {/* Metrics / Numbers */}
         <div className="metrics-grid">
           <div className="metric-card">
-            <span className="metric-number">+70</span>
+            <span className={theme === "dark" ? "metric-number" : "metric-number-light"}>+70</span>
             <span className="metric-label">{texts[language].company.projects}</span>
           </div>
           <div className="metric-card">
-            <span className="metric-number">99%</span>
+            <span className={theme === "dark" ? "metric-number" : "metric-number-light"}>99%</span>
             <span className="metric-label">{texts[language].company.uptime}</span>
           </div>
           <div className="metric-card">
-            <span className="metric-number">24/7</span>
+            <span className={theme === "dark" ? "metric-number" : "metric-number-light"}>24/7</span>
             <span className="metric-label">{texts[language].company.support}</span>
           </div>
         </div>

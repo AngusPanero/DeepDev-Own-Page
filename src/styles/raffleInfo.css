@@ -85,6 +85,51 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
+/* LIGHT */
+
+.raffle-info-container.theme-light{
+    background-color: transparent;
+}
+
+.theme-light .hero-title span {
+    background: linear-gradient(90deg, #0052D1 0%, #0076FF 50%, #4F46E5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Descripción en gris azulado para mejor contraste en fondo blanco */
+.theme-light .hero-description {
+    color: #475569;
+}
+
+/* Badge con degradado azul vibrante */
+.theme-light .badge-new {
+    background: linear-gradient(135deg, #0062FF, #4F46E5);
+    border: 1px solid #e2e8f0;
+    color: #ffffff;
+}
+
+/* Estilos de las Features (Iconos y Textos) */
+.theme-light .feature-item .icon {
+    background: rgba(0, 98, 255, 0.08); /* Azul muy tenue de fondo */
+    border: 1px solid rgba(0, 98, 255, 0.15);
+    color: #0062FF; /* Emoji o icono azul */
+}
+
+.theme-light .feature-item h3 {
+    color: #1e293b; /* Título casi negro */
+}
+
+.theme-light .feature-item p {
+    color: #64748b; /* Texto secundario gris */
+}
+
+/* --- REGLA CRÍTICA PARA EL LOGO DE APPLE (Si sigue en este componente) --- */
+.theme-light img[src*="apple.svg"] {
+    filter: invert(1) brightness(0); /* Lo vuelve negro puro */
+}
+
 /* Responsive */
 @media (max-width: 968px) {
     .raffle-info-container {

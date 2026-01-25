@@ -14,6 +14,15 @@
     animation: particleFloat ease-out forwards;
 }
 
+.particle-light-theme{
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #2d6ce2, transparent);
+    border-radius: 50%;
+    animation: particleFloat ease-out forwards;
+}
+
     @keyframes particleFloat {
         from {
         opacity: 1;

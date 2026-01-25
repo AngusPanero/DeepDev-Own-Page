@@ -60,7 +60,7 @@ const SorteoDev: React.FC = () => {
     return (
         <>
         {/* <TubesCursor /> */}
-        <div className="dev-sorteo-container" style={{ marginTop: 0, background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <div className={`dev-sorteo-container ${theme === "light" ? "theme-light" : "theme-dark"}`} style={{ marginTop: 0, background: theme === "dark" ? "black" : "#f4f2ff" }}>
             {showConfetti && <Confetti numberOfPieces={1200} recycle={false} />}
 
             <AnimatePresence mode="wait">

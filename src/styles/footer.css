@@ -127,7 +127,7 @@
 }
 
 .footer.theme-light .footer-list a:hover {
-    color: #8e2de2; /* Hover con el color de tu marca */
+    color: #0062FF; /* Hover con el color de tu marca */
 }
 
 .footer.theme-light .footer-location {
@@ -144,6 +144,10 @@
     color: #000000;
 }
 
+.footer.theme-light span {
+    color: black;
+}
+
 /* --- FOOTER DARK MODE (Reset) --- */
 .footer.theme-dark {
     background: black;
@@ -151,20 +155,80 @@
     border-top: 1px solid rgba(255, 255, 255, 0.15); /* Reducido un poco para que no sea tan fuerte */
 }
 
+@media (max-width: 1024px) {
+    .footer {
+        padding: 4rem 1.5rem; /* Reducimos padding lateral */
+    }
+    
+    .footer-grid {
+        gap: 2rem; /* Estrechamos un poco las columnas */
+    }
+}
+
 @media (max-width: 900px) {
     .footer-grid {
-        grid-template-columns: 1fr 1fr;
+        /* Pasamos de 4 a 2 columnas */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2rem;
     }
 }
 
 @media (max-width: 600px) {
+    .footer {
+        padding: 3rem 1.2rem;
+        text-align: center; /* Centramos todo para móviles pequeños */
+    }
+
     .footer-grid {
-    grid-template-columns: 1fr;
+        /* Una sola columna */
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    /* Centramos la descripción y el logo */
+    .footer-logo, .footer-tagline, .footer-description {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-description {
+        max-width: 300px; /* Evita que el texto se estire demasiado hacia los lados */
+        margin: 1rem auto;
+    }
+
+    /* Alineamos las listas al centro */
+    .footer-list {
+        align-items: center; 
+        padding: 0;
     }
 
     .footer-bottom {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
+        flex-direction: column-reverse; /* El copyright suele ir abajo de los links legales */
+        gap: 1.5rem;
+        margin-top: 3rem;
+        align-items: center;
+    }
+
+    .footer-legal {
+        justify-content: center;
+        flex-wrap: wrap; /* Por si los links legales son largos */
+        gap: 1rem;
+    }
+
+    .footer-section{
+        ;
+    }
+}
+
+/* Ajuste para móviles MUY pequeños (iPhone SE / Watch) */
+@media (max-width: 360px) {
+    .footer-logo {
+        font-size: 1.4rem;
+    }
+    
+    .footer-legal {
+        gap: 0.8rem;
+        font-size: 0.75rem;
     }
 }

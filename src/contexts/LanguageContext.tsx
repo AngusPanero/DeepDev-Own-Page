@@ -202,8 +202,8 @@ export const LanguageProvider = ({ children }) => {
             global: `GLOBAL PRESENCE`,
             globalTitle: `Talent Without Borders`,
             globalText: `We operate strategically from Spain and Argentina, combining European innovation with the ingenuity and resilience of Latin American talent. This duality allows us to offer exceptional time-zone coverage and a global market perspective.`,
-            flagSpain: `🇪🇸 Spain`,
-            flagArgentina: `🇦🇷 Argentina`,
+            flagSpain: `Spain 🇪🇸`,
+            flagArgentina: `Argentina 🇦🇷`,
             talk: `Ready to start your transformation?`,
             talkButton: `Let's talk about your project`
         },
@@ -317,7 +317,7 @@ export const LanguageProvider = ({ children }) => {
             Las aplicaciones móviles permiten que tu marca esté presente donde los usuarios pasan la mayor parte de su tiempo. Una app bien lograda ofrece velocidad, rendimiento y una experiencia de usuario fluida, creando una conexión directa y constante entre tu producto y tu audiencia.
             
             Ya sea que necesites lanzar una nueva idea, extender tu producto digital al móvil o brindar a los usuarios una experiencia dedicada, las aplicaciones móviles ofrecen una solución potente, escalable y con una sensación nativa en todos los dispositivos.`,
-            customTitle: `Software Web Customizado.`,
+            customTitle: `Software Customizado.`,
             customText: `Diseñamos y desarrollamos soluciones de software completamente personalizadas y adaptadas a las necesidades de tu negocio. Desde sistemas de gestión y control hasta plataformas internas y automatización de procesos, transformamos ideas en herramientas digitales escalables que potencian a tu empresa. 
             
             Cada negocio tiene flujos de trabajo, desafíos y objetivos únicos. Es por eso que las soluciones genéricas a menudo se quedan cortas. El software a medida te permite centralizar la información, automatizar procesos, mejorar la toma de decisiones y obtener un control total sobre tus operaciones. 
@@ -357,8 +357,8 @@ export const LanguageProvider = ({ children }) => {
             global: `PRESENCIA GLOBAL`,
             globalTitle: `Talento sin Fronteras`,
             globalText: `Operamos estratégicamente desde España y Argentina, combinando la innovación europea con el ingenio y la resiliencia del talento latinoamericano. Esta dualidad nos permite ofrecer una cobertura excepcional de zona horaria y una perspectiva de mercado global.`,
-            flagSpain: `🇪🇸 España`,
-            flagArgentina: `🇦🇷 Argentina`,
+            flagSpain: `España 🇪🇸`,
+            flagArgentina: `Argentina 🇦🇷`,
             talk: `¿Listo para empezar tu transformación?`,
             talkButton: `Hablemos de tu proyecto`
         },
@@ -515,8 +515,8 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
             global: `PRESENZA GLOBALE`,
             globalTitle: `Talento Senza Confini`,
             globalText: `Operiamo strategicamente da Spagna e Argentina, unendo l'innovazione europea con l'ingegno e la resilienza del talento latinoamericano.`,
-            flagSpain: `🇪🇸 Spagna`,
-            flagArgentina: `🇦🇷 Argentina`,
+            flagSpain: `Spagna 🇪🇸`,
+            flagArgentina: `Argentina 🇦🇷`,
             talk: `Pronto a iniziare la tua trasformazione?`,
             talkButton: `Parliamo del tuo progetto`
         },
@@ -667,8 +667,8 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
             global: `PRÉSENCE GLOBALE`,
             globalTitle: `Le Talent sans Frontières`,
             globalText: `Nous opérons stratégiquement depuis l'Espagne et l'Argentine, alliant l'innovation européenne à l'ingéniosité et la résilience du talent latino-américain.`,
-            flagSpain: `🇪🇸 Espagne`,
-            flagArgentina: `🇦🇷 Argentine`,
+            flagSpain: `Espagne 🇪🇸`,
+            flagArgentina: `Argentine 🇦🇷`,
             talk: `Prêt à commencer votre transformation ?`,
             talkButton: `Parlons de votre projet`
         },
@@ -820,8 +820,8 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
             global: `GLOBALE PRÄSENZ`,
             globalTitle: `Talent ohne Grenzen`,
             globalText: `Wir agieren strategisch von Spanien und Argentinien aus und kombinieren europäische Innovation mit dem Scharfsinn und der Resilienz lateinamerikanischer Talente.`,
-            flagSpain: `🇪🇸 Spanien`,
-            flagArgentina: `🇦🇷 Argentinien`,
+            flagSpain: `Spanien 🇪🇸`,
+            flagArgentina: `Argentinien 🇦🇷`,
             talk: `Bereit für Ihre Transformation?`,
             talkButton: `Lassen Sie uns über Ihr Projekt sprechen`
         },
@@ -971,8 +971,8 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
             global: `ГЛОБАЛЬНОЕ ПРИСУТСТВИЕ`,
             globalTitle: `Талант без границ`,
             globalText: `Мы работаем из Испании и Аргентины, сочетая европейские инновации с изобретательностью и стойкостью латиноамериканских талантов.`,
-            flagSpain: `🇪🇸 Испания`,
-            flagArgentina: `🇦🇷 Аргентина`,
+            flagSpain: `Испания 🇪🇸`,
+            flagArgentina: `Аргентина 🇦🇷`,
             talk: `Готовы начать трансформацию?`,
             talkButton: `Обсудить ваш проект`
         },

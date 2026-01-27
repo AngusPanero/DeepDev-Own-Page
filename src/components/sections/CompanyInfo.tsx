@@ -30,7 +30,7 @@ const Company: React.FC = () => {
 
   return (
     <>
-    {/* <TubesCursor /> */}
+    <TubesCursor />
     <section className={`company-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
         <div className="badge-new">{texts[language].company.dna}</div>
@@ -88,10 +88,10 @@ const Company: React.FC = () => {
             
             <div className="location-tags">
               <div className="location-tag">
-                <span>{texts[language].company.flagSpain}</span>
+                <a href={import.meta.env.VITE_WHATSAPP_ESP} target="_blank" rel="noopener noreferrer"><span>WhatsApp: {texts[language].company.flagSpain}</span></a>
               </div>
               <div className="location-tag">
-                <span>{texts[language].company.flagArgentina}</span>
+                <a href={import.meta.env.VITE_WHATSAPP_ARG} target="_blank" rel="noopener noreferrer"><span>WhatsApp: {texts[language].company.flagArgentina}</span></a>
               </div>
             </div>
           </div>

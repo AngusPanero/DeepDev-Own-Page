@@ -198,3 +198,138 @@
     padding-right: 44px;
     transition: 2s;
 }
+
+/* LIGHT */
+.theme-light .contact-form {
+    background: rgba(255, 255, 255, 0.365);
+    border: 2px solid #0062FF;
+    box-shadow: 
+        0 30px 80px rgba(0, 98, 255, 0.1),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+/* Etiquetas (Labels) */
+.theme-light .contact-form label {
+    color: #0062FF;
+}
+
+/* Inputs, Textareas y Selects */
+.theme-light .contact-form input,
+.theme-light .contact-form textarea,
+.theme-light .contact-form select {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+}
+
+.theme-light .contact-form input::placeholder,
+.theme-light .contact-form textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* Estado Focus */
+.theme-light .contact-form input:focus,
+.theme-light .contact-form textarea:focus,
+.theme-light .contact-form select:focus {
+    border-color: #0062FF;
+    background: #ffffff;
+    box-shadow:
+        0 0 0 1px rgba(0, 98, 255, 0.3),
+        0 0 20px rgba(0, 98, 255, 0.1);
+}
+
+/* Select - Opciones y Flecha */
+.theme-light .contact-form select option {
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.theme-light .contact-form select {
+    /* Flecha en color azul #0062FF */
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230062FF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 20px;
+    padding-right: 44px;
+    transition: 2s;
+}
+
+.theme-light .contact-form select:has(option[value=""]:checked) {
+    color: #94a3b8;
+}
+
+/* Botón de envío */
+.theme-light .contact-form button {
+    background: linear-gradient(135deg, #0062FF, #0041cb);
+    box-shadow: 0 10px 25px rgba(0, 98, 255, 0.2);
+    color: #ffffff;
+}
+
+.theme-light .contact-form button:hover {
+    box-shadow: 0 15px 35px rgba(0, 98, 255, 0.4);
+    transform: translateY(-2px) scale(1.02);
+}
+
+/* Ajuste para el texto dentro de la animación de URL actual */
+.theme-light .input-animate label {
+    color: #0062FF;
+}
+
+@media (max-width: 768px) {
+    .contact-box {
+        padding: 4rem 1rem; /* Reducimos el espacio superior en tablets/móvil */
+    }
+
+    .contact-form {
+        margin-top: 10rem;
+        margin-bottom: 4rem;
+        padding: 2rem 1.5rem; /* Reducimos el padding interno para ganar espacio */
+        gap: 1.2rem;
+        width: 100%;
+        max-width: 100%; /* Asegura que ocupe el ancho disponible */
+    }
+
+    .contact-form label {
+        font-size: 1rem; /* Etiquetas un poco más pequeñas */
+    }
+
+    .contact-form textarea {
+        /* ¡IMPORTANTE! Eliminamos el ancho fijo de 603px */
+        width: 100% !important; 
+        min-height: 120px;
+    }
+
+    .contact-form button {
+        padding: 14px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-box {
+        padding: 2rem 0.8rem;
+    }
+
+    .contact-form {
+        margin-top: 2rem;
+        padding: 1.5rem 1rem;
+        border-radius: 18px; /* Bordes un poco más simples para pantallas pequeñas */
+        border-width: 1px; /* Un borde de 2px puede verse muy grueso en móviles */
+    }
+
+    .input-animate-field {
+        margin-top: 1rem;
+    }
+
+    /* Animación más sutil en móvil para evitar saltos visuales raros */
+    @keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

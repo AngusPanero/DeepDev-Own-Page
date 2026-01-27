@@ -25,7 +25,7 @@ const Login = ({ closeLogin }: any) => {
     };
 
     return (
-        <div className={`section-login ${exit ? "exit" : ""}`} style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <div className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
 
             <img className="img-logo-login" src={logo} alt="logo" width={200} />

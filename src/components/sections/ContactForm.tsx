@@ -35,7 +35,7 @@ const ContactForm = () => {
     return(
         <>
         {/* <TubesCursor /> */}
-        <div className="contact-box" style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <div className={`contact-box ${theme === "light" ? "theme-light" : "theme-dark"}`}>
             <form className="contact-form" /* style={{ background: theme === "dark" ? "black" : "#f4f2ff" }} */ onSubmit={handleSubmit}>
 
                 <label htmlFor="name">{texts[language].contact.name}</label> 
@@ -59,9 +59,8 @@ const ContactForm = () => {
                 <label htmlFor="projectOption">{texts[language].contact.project}</label>
                 <select id="projectOption" name="projectOption" value={form.projectOption} onChange={(e) => setForm({ ...form, projectOption: e.target.value })} required>
                     <option value="" disabled>{texts[language].contact.projectOption}</option>
-                    <option value="new">New project</option>
-                    <option value="redesign">Redesign existing website</option>
-                    <option value="improvement">Improve / scale existing website</option>
+                    <option value="new">{texts[language].contact.projectNew}</option>
+                    <option value="redesign">{texts[language].contact.projectRedisign}</option>
                 </select>
 
                 {form.projectOption && form.projectOption !== "new" && (

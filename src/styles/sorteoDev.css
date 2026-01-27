@@ -38,17 +38,13 @@
 .winner-card {
     width: 100%;
     max-width: 480px;
-    background: linear-gradient(
-        145deg,
-        rgba(255,255,255,0.12),
-        rgba(255,255,255,0.03)
-    );
+    
     border-radius: 18px;
     padding: 28px;
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(16px);
     box-shadow:
-        0 0 40px rgba(142, 45, 226, 0.25),
+        0 0 20px rgba(142, 45, 226, 0.25),
         inset 0 0 25px rgba(255,255,255,0.06);
 }
 
@@ -410,4 +406,90 @@ CSS
 
 .theme-light small{
     color: #0062FF
+}
+
+@media (max-width: 1024px) {
+    .dev-sorteo-container {
+        gap: 4rem; /* Reducimos el espacio abismal de 13rem en tablets */
+        flex-direction: column; /* Apilamos la info del sorteo y la card */
+        padding: 40px 20px;
+        height: auto;
+        min-height: 100vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .dev-sorteo-container {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        gap: 2rem;
+    }
+
+    .dev-card,
+    .loading-stage,
+    .winner-card {
+        padding: 20px; /* Reducimos el padding interno para ganar espacio */
+        border-radius: 14px;
+        max-width: 100%; /* La tarjeta ahora fluye con el ancho del móvil */
+    }
+
+    .dev-card h2 {
+        font-size: 22px; /* Título un poco más pequeño */
+    }
+
+    .subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* Ajuste para que los inputs no se sientan tan apretados */
+    .dev-form input,
+    .dev-form textarea {
+        padding: 12px;
+        font-size: 16px; /* Evita el zoom automático en iOS */
+    }
+}
+
+@media (max-width: 480px) {
+    .dev-sorteo-container {
+        padding: 15px;
+    }
+
+    .dev-header {
+        margin-bottom: 15px;
+    }
+
+    .terminal-title {
+        display: none; /* Ocultamos el título de la terminal en móviles muy pequeños para ahorrar espacio */
+    }
+
+    .btn-glow {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+
+    .console-log {
+        font-size: 13px; /* Consola un poco más compacta */
+        padding: 10px;
+    }
+
+    .success-icon {
+        font-size: 32px;
+    }
+
+    .winner-card h1 {
+        font-size: 22px;
+    }
+}
+
+/* Soporte para móviles en horizontal */
+@media (max-height: 500px) and (orientation: landscape) {
+    .dev-sorteo-container {
+        margin-top: 1rem;
+        height: auto;
+    }
+    
+    .dev-card {
+        margin: 20px 0;
+    }
 }

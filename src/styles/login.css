@@ -157,3 +157,144 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+/* LIGHT */
+.theme-light.section-login {
+    border-left: 2px solid #0062FF;
+    color: #1e293b;
+}
+
+/* Títulos y Subtítulos */
+.theme-light .login-title {
+    color: #1e293b;
+}
+
+.theme-light .login-subtitle {
+    color: #64748b;
+}
+
+/* Botón de cerrar */
+.theme-light .close-button {
+    color: #64748b;
+}
+
+.theme-light .close-button:hover {
+    color: #0062FF;
+}
+
+/* Logo */
+.theme-light .img-logo-login {
+    border: 2px solid #0062FF;
+}
+
+/* Grupo de Input */
+.theme-light .input-group label {
+    color: #475569;
+}
+
+.theme-light .input-group input {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1e293b;
+}
+
+.theme-light .input-group input:focus {
+    border-color: #0062FF;
+    box-shadow: 0 0 0 1px rgba(0, 98, 255, 0.2);
+}
+
+/* Botón Login */
+.theme-light .login-btn {
+    background: linear-gradient(135deg, #0062FF, #0041cb);
+    box-shadow: 0 4px 15px rgba(0, 98, 255, 0.2);
+}
+
+/* Footer y Enlace */
+.theme-light .login-footer {
+    color: #64748b;
+}
+
+.theme-light .login-link {
+    color: #0062FF;
+}
+
+.theme-light .login-link:hover {
+    color: #0041cb;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .section-login {
+        width: 100%;       /* En tablets y móviles ocupa todo el ancho */
+        min-width: 100%;   /* Eliminamos el problema de los 360px */
+        border-left: none; /* Ya no es un panel lateral, es una pantalla completa */
+        padding: 2.5rem 2rem;
+    }
+
+    .login-title {
+        font-size: 2.2rem; /* Reducimos el tamaño para que no quiebre */
+    }
+
+    .login-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .login-footer {
+        margin-top: 3rem;
+        font-size: 1rem;
+    }
+
+    .close-button {
+        top: 1rem;
+        left: 1rem;
+        font-size: 1.8rem; /* Un poco más grande para que sea fácil de tocar */
+    }
+}
+
+@media (max-width: 480px) {
+    .section-login {
+        padding: 2rem 1.5rem;
+        justify-content: flex-start; /* En móviles pequeños, mejor empezar desde arriba con scroll */
+        overflow-y: auto;           /* Permite scroll si el teclado del móvil tapa los campos */
+    }
+
+    .img-logo-login {
+        width: 60px; /* Logo un poco más pequeño en móviles */
+        margin-top: 2rem;
+    }
+
+    .login-title {
+        font-size: 1.8rem;
+    }
+
+    .input-group label {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group input {
+        padding: 0.7rem; /* Inputs un poco más compactos */
+    }
+
+    .login-btn {
+        padding: 0.8rem;
+    }
+}
+
+/* Ajuste para cuando sale el teclado en el móvil (Landscape o pantallas cortas) */
+@media (max-height: 600px) {
+    .section-login {
+        justify-content: flex-start;
+        overflow-y: scroll;
+    }
+    
+    .login-subtitle {
+        margin-bottom: 1.5rem;
+    }
+    
+    .login-footer {
+        margin-top: 1.5rem;
+        padding-bottom: 2rem; /* Espacio extra al final para que no quede pegado */
+    }
+}

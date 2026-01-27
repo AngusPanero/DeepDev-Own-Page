@@ -161,3 +161,73 @@
 .theme-light .label-text a:hover {
     color: #00D1FF;
 }
+
+@media (max-width: 768px) {
+    .logo-carousel {
+        height: auto; /* Dejamos que el padding mande sobre la altura */
+        padding: 2.5rem 0;
+        gap: 2rem;
+    }
+
+    .logo-item {
+        width: 120px; /* Reducimos el ancho del contenedor del logo */
+        padding: 0 1.5rem;
+    }
+
+    .logo-item img {
+        max-width: 70px; /* Logo un poco más pequeño para que quepan más en la visual */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-carousel {
+        padding: 2rem 0;
+    }
+
+    .logo-item {
+        width: 100px;
+        padding: 0 1rem;
+    }
+
+    .logo-item img {
+        max-width: 60px;
+    }
+}
+
+/* --- RESPONSIVE: CHECKBOXES --- */
+
+@media (max-width: 768px) {
+    .dev-checkbox-group {
+        margin: 15px 0;
+    }
+
+    .checkbox-wrapper {
+        font-size: 14px; /* Aumentamos un punto para legibilidad móvil */
+        gap: 15px;
+        padding: 8px 0; /* Aumentamos el área táctil vertical */
+    }
+
+    .checkmark {
+        height: 22px; /* Checkbox más grande para facilitar el toque con el dedo */
+        width: 22px;
+        top: 0; /* Centrado mejor con el texto más grande */
+    }
+
+    .checkmark:after {
+        /* Re-centramos la "V" dentro del checkbox más grande */
+        left: 7px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .label-text {
+        line-height: 1.5; /* Más espacio entre líneas si el texto legal es largo y se quiebra */
+    }
+    
+    .checkbox-wrapper {
+        align-items: center; /* En móvil queda mejor centrado si el texto es de una sola línea */
+    }
+}

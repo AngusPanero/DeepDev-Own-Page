@@ -1,3 +1,4 @@
+import AmbientOverlay from "./components/ui/AmbientOverlat";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import useLenis from "./hooks/useLenis"; 
@@ -10,8 +11,9 @@ const App = () => {
   return(
     <LanguageProvider>
       <ThemeProvider>
+        <AmbientOverlay />
         <AppRouter>
-          
+    
         </AppRouter>
       </ThemeProvider>
     </LanguageProvider>

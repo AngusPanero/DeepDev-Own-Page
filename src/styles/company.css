@@ -180,6 +180,11 @@
     transition: 0.3s ease;
 }
 
+.location-tag span{
+
+  color: white;
+}
+
 .location-tag:hover {
     background: rgba(142, 45, 226, 0.2);
     transform: translateY(-5px);
@@ -188,6 +193,11 @@
 
 .location-tag .flag {
     font-size: 1.5rem;
+}
+
+a{
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* LIGHT */
@@ -313,4 +323,103 @@
   .company-header .hero-title {
       font-size: 2.2rem;
   }
+}
+
+@media (max-width: 1024px) {
+    .company-section {
+        padding: 80px 20px; /* Reducimos el padding exagerado de 170px */
+    }
+
+    .hero-description, 
+    .presence-container, 
+    .company-cta {
+        width: 100%; /* Dejamos de usar pixeles fijos */
+        max-width: 90%; /* Les damos un margen para que no toquen el borde */
+    }
+}
+
+@media (max-width: 768px) {
+    /* 1. Header y Texto */
+    .hero-description {
+        width: 100%;
+        font-size: 18px; /* Un poco más pequeña para legibilidad */
+    }
+
+    .company-header .hero-title {
+        font-size: 2.2rem;
+        padding: 0 10px;
+    }
+
+    /* 2. Grid de Métricas (De 3 columnas a 1) */
+    .metrics-grid {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        width: 100%;
+        max-width: 320px; /* Para que las cards no sean gigantes a lo ancho */
+    }
+
+    /* 3. Timeline (Ajuste de espacio) */
+    .timeline-container {
+        margin-left: 10px; /* Le damos aire para que no se pegue al borde izquierdo */
+        padding-left: 25px;
+    }
+
+    .timeline-content h4 {
+        font-size: 1.3rem;
+    }
+
+    /* 4. Presence & CTA (Contenedores) */
+    .presence-container, 
+    .company-cta {
+        width: 100%;
+        max-width: 100%;
+        padding: 30px 15px;
+        border-radius: 20px; /* Bordes un poco más suaves en móvil */
+    }
+
+    .presence-content h3 {
+        font-size: 1.6rem;
+    }
+
+    /* 5. Tags de Ubicación (Acomodarlos para que no se amontonen) */
+    .location-tags {
+        display: flex;
+        flex-wrap: wrap; /* Permite que bajen si no caben */
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .location-tag {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 6. Ajustes finos para móviles pequeños (iPhone SE / Samsung J series) */
+    .company-section {
+        padding: 60px 15px;
+    }
+
+    .metric-number {
+        font-size: 2rem;
+    }
+
+    .company-cta p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        width: 100%; /* Botón ancho completo para facilitar el click con el pulgar */
+        text-align: center;
+    }
+
+    .location-tags {
+        flex-direction: column; /* Un tag debajo de otro */
+        align-items: stretch; /* Que todos midan lo mismo */
+    }
+
+    .location-tag {
+        justify-content: center;
+    }
 }

@@ -59,7 +59,7 @@ const ProductsInfo = () => {
     // Estilo de gradiente animado reutilizable
     const gradientBase = {
         background: theme === "dark" ? "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)" :
-        "linear-gradient(90deg, #102A43 0%, #0062FF 50%, #00D1FF 100%)",
+        "linear-gradient(90deg, #102A43 0%, #0062FF 50%, #0099bbff 100%)",
         backgroundSize: "200% 200%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",

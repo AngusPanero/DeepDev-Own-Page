@@ -132,9 +132,20 @@
 
 /* Responsive */
 @media (max-width: 968px) {
+    .dev-sorteo-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        padding-top: 80px; 
+    }
+
     .raffle-info-container {
         text-align: center;
+        margin-top: 8rem;
         margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .hero-title {
         font-size: 2.5rem;
@@ -142,5 +153,75 @@
     .feature-item {
         justify-content: center;
         text-align: left;
+    }
+    .feature-item{
+        display: flex;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .dev-sorteo-container {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        padding-top: 80px; /* Reducimos el espacio superior en móvil */
+    }
+
+    .raffle-info-container {
+        max-width: 100%; /* Eliminamos el límite rígido */
+        padding: 15px;
+        margin-top: 8rem;
+        text-align: center; /* Centramos para mejorar la estética móvil */
+    }
+
+    .hero-title {
+        width: 100%; /* ¡Importante! Antes estaba en 550px */
+        font-size: clamp(2rem, 10vw, 2.8rem); /* Tipografía dinámica */
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    .features-list {
+        gap: 20px;
+        align-items: center; /* Centramos la lista de beneficios */
+    }
+
+    .feature-item {
+        flex-direction: column; /* Icono arriba, texto abajo */
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+        max-width: 300px; /* Evita que el texto se estire demasiado */
+    }
+
+    .feature-item .icon {
+        width: 56px; /* Un poco más grandes para que sean fáciles de ver */
+        height: 56px;
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .badge-new {
+        font-size: 14px;
+        padding: 4px 12px;
+    }
+
+    .hero-title {
+        font-size: 1.8rem; /* Tamaño final para teléfonos pequeños */
+    }
+
+    .feature-item h4 {
+        font-size: 15px;
+    }
+    
+    .feature-item p {
+        font-size: 13px;
     }
 }

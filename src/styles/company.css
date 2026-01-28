@@ -307,6 +307,14 @@ a{
   box-shadow: 0 0 15px #2d7ee2;
 }
 
+.location-tag-theme-light{
+  color: black;
+}
+
+.location-tag-theme-dark{
+  color: black;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .location-tags {
@@ -317,11 +325,33 @@ a{
 
 /* Responsive */
 @media (max-width: 768px) {
-  .metrics-grid {
-      grid-template-columns: 1fr;
+  .company-section{
+    margin-top: 10rem;
   }
+
+  .theme-light span {
+    color: #0062FF; /* Tu nuevo azul eléctrico */
+    font-weight: 700;
+}
+
+  .company-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .metrics-grid {
+    align-self: center;
+    grid-template-columns: 1fr;
+    margin-left: 20px;
+  }
+
+  .timeline-dot{
+    margin-left: 5px;
+  }
+
   .company-header .hero-title {
-      font-size: 2.2rem;
+    font-size: 2.2rem;
   }
 }
 

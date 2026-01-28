@@ -263,7 +263,7 @@ export const LanguageProvider = ({ children }) => {
             button: `Send`,
         },
         nav: {
-            promo: `🔥 -- Check out our sweepstakes section to participate in prize draws and get great discounts on our products. -- 🔥`,
+            promo: `Check out our sweepstakes section to participate in prize draws and get great discounts on our products.`,
             products: `Products`,
             company: `Company`,
             raffles: `Raffles`,
@@ -419,7 +419,7 @@ export const LanguageProvider = ({ children }) => {
             button: `Enviar`,
         },
         nav: {
-            promo: `🔥 -- Visita nuestra sección de sorteos para participar por premios y obtener grandes descuentos en nuestros productos. -- 🔥`,
+            promo: `Visita nuestra sección de sorteos para participar por premios y obtener grandes descuentos en nuestros productos.`,
             products: `Productos`,
             company: `Compañía`,
             raffles: `Sorteos`,
@@ -576,7 +576,7 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
             button: `Invia Messaggio`,
         },
         nav: {
-            promo: `🔥 -- Visita la nostra sezione sorteggi per partecipare all'estrazione di premi e ottenere grandi sconti sui nostri prodotti. -- 🔥`,
+            promo: `Visita la nostra sezione sorteggi per partecipare all'estrazione di premi e ottenere grandi sconti sui nostri prodotti.`,
             products: `Prodotti`,
             company: `Azienda`,
             raffles: `Sorteggi`,
@@ -728,7 +728,7 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
             button: `Envoyer le Message`,
         },
         nav: {
-            promo: `🔥 -- Consultez notre section concours pour participer aux tirages au sort et obtenir des réductions. -- 🔥`,
+            promo: `Consultez notre section concours pour participer aux tirages au sort et obtenir des réductions.`,
             products: `Produits`,
             company: `Entreprise`,
             raffles: `Concours`,
@@ -881,7 +881,7 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
             button: `Nachricht Senden`,
         },
         nav: {
-            promo: `🔥 -- Besuchen Sie unseren Gewinnspiel-Bereich und gewinnen Sie tolle Preise oder Rabatte auf unsere Produkte. -- 🔥`,
+            promo: `Besuchen Sie unseren Gewinnspiel-Bereich und gewinnen Sie tolle Preise oder Rabatte auf unsere Produkte.`,
             products: `Produkte`,
             company: `Unternehmen`,
             raffles: `Gewinnspiele`,
@@ -1032,7 +1032,7 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
             button: `Отправить сообщение`,
         },
         nav: {
-            promo: `🔥 -- Загляните в раздел розыгрышей, чтобы выиграть призы и получить скидки. -- 🔥`,
+            promo: `Загляните в раздел розыгрышей, чтобы выиграть призы и получить скидки.`,
             products: `Продукты`,
             company: `Компания`,
             raffles: `Розыгрыши`,

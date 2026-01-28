@@ -11,8 +11,6 @@
     flex-direction: column;
     justify-content: center;
     padding: 3.5rem 3rem;
-
-    background: rgba(12, 12, 25, 0.7);
     backdrop-filter: blur(20px);
     border-left: 2px solid #7b29ff;
 
@@ -70,6 +68,7 @@
 
 /*Img*/
 .img-logo-login{
+    width: 200px;
     align-self: center  ;
     border: 2px solid white;
     border-radius: 5px;
@@ -255,12 +254,12 @@
 @media (max-width: 480px) {
     .section-login {
         padding: 2rem 1.5rem;
-        justify-content: flex-start; /* En móviles pequeños, mejor empezar desde arriba con scroll */
-        overflow-y: auto;           /* Permite scroll si el teclado del móvil tapa los campos */
+        justify-content: center;
+        overflow-y: auto;       
     }
 
     .img-logo-login {
-        width: 60px; /* Logo un poco más pequeño en móviles */
+        width: 15rem; 
         margin-top: 2rem;
     }
 

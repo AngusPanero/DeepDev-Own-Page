@@ -2,7 +2,9 @@
     background-color: black;
 }
 
-.contact-box {
+.contact-box {/* 
+    display: flex;
+    flex-direction: column; */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -277,7 +279,8 @@
 
 @media (max-width: 768px) {
     .contact-box {
-        padding: 4rem 1rem; /* Reducimos el espacio superior en tablets/móvil */
+        margin-top: 10rem;
+        padding: 4rem 1rem;
     }
 
     .contact-form {

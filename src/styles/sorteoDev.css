@@ -26,7 +26,6 @@
     padding: 24px;
     font-family: "Montserrat", "Inter", "Poppins", sans-serif;
     color: white;
-    overflow: hidden;
 }
 
 /* ============================== */
@@ -269,6 +268,76 @@
     box-shadow: 0 0 20px var(--violet-glow);
 }
 
+/* El nuevo checkbox personalizado */
+.checkmark {
+    position: relative;
+    top: 2px;
+    height: 18px;
+    width: 18px;
+    background-color: #0f172a;
+    border: 2px solid #334155;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    flex-shrink: 0; /* Evita que se encoja si el texto es largo */
+}
+
+/* Al pasar el mouse */
+.checkbox-wrapper:hover input ~ .checkmark {
+    border-color: #6366f1;
+}
+
+/* Cuando está marcado */
+.checkbox-wrapper input:checked ~ .checkmark {
+    background-color: #6366f1;
+    border-color: #6366f1;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+/* El check (la forma de V) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Mostrar el check cuando está marcado */
+.checkbox-wrapper input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* CHECKBOX */
+.dev-checkbox-group {
+    margin: 10px 0;
+    text-align: left;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.4;
+    user-select: none;
+}
+
+/* Escondemos el checkbox original */
+.checkbox-wrapper input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
 /* SHAKE */
 .checkbox-warning {
     color: #ef4444; 
@@ -408,6 +477,35 @@ CSS
     color: #0062FF
 }
 
+/* --- CHECKBOX CUSTOM (BLUE TECH) --- */
+.theme-light .checkmark {
+    background-color: #E2E8F0;
+    border: 2px solid #CBD5E0;
+}
+
+.theme-light .checkbox-wrapper:hover input ~ .checkmark {
+    border-color: #0062FF;
+}
+
+/* Estado Marcado - Azul DeepDev */
+.checkbox-wrapper input:checked ~ .checkmark {
+    background-color: #0062FF;
+    border-color: #0062FF;
+    box-shadow: 0 0 10px rgba(0, 98, 255, 0.4);
+}
+
+.theme-light .label-text {
+    color: #334E68;
+}
+
+.theme-light .label-text a {
+    color: #0062FF;
+}
+
+.theme-light .label-text a:hover {
+    color: #00D1FF;
+}
+
 @media (max-width: 1024px) {
     .dev-sorteo-container {
         gap: 4rem; /* Reducimos el espacio abismal de 13rem en tablets */
@@ -421,7 +519,6 @@ CSS
 @media (max-width: 768px) {
     .dev-sorteo-container {
         margin-top: 2rem;
-        margin-bottom: 3rem;
         gap: 2rem;
     }
 

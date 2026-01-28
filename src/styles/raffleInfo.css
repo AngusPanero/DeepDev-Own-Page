@@ -1,11 +1,13 @@
 .dev-sorteo-container{
     padding-top: 130px;
+    position: relative;
+    z-index: 0;
 }
 
 .raffle-info-container {
     max-width: 550px;
     padding: 20px;
-    z-index: 2;
+    z-index: 1;
 }
 
 .badge-new {

@@ -79,7 +79,7 @@ const LogoCarrousel = () => {
     return (
         <div className={`logo-carousel ${theme === "light" ? "theme-light" : "theme-dark"}`}>
 
-            <h1 style={{ color: theme === "dark" ? "white" : "#0062FF", fontFamily: 'Montserrat', fontSize: "3rem", textAlign: "center"}}>
+            <h1 className="h1-boost" style={{ color: theme === "dark" ? "white" : "#3b82f6" }}>
                 {texts[language].home.boost}
             </h1>
 

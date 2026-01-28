@@ -8,6 +8,7 @@ import AmbientOverlay from "../ui/AmbientOverlat";
 import NeuralWaveDome from "../three/NeuralWaveDome";
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
+import "../../styles/scroll3D.css"
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
@@ -63,7 +64,7 @@ const Scroll3DSection = () => {
                 </Scene>
             </div>
 
-            <motion.h1 ref={textRef} animate={gradientAnim} style={{ ...gradientBase, whiteSpace: "pre-line", textAlignLast: "start", position: "relative", zIndex: 3, marginTop: "-33vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, x}}>
+            <motion.h1 className="h1-reinventing" ref={textRef} animate={gradientAnim} style={{ ...gradientBase, opacity, x}}>
                 {texts[language].home.reinventing}
             </motion.h1>
         </section>
@@ -76,7 +77,7 @@ const Scroll3DSection = () => {
                     <NeuralWaveDome />
             </Scene>
 
-            <motion.h1 ref={text2Ref} animate={gradientAnim} style={{ ...gradientBase, whiteSpace: "pre-line", textAlignLast: "end", position: "relative", zIndex: 3, marginTop: "-45vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity2, x: x2}}>
+            <motion.h1 className="h1-ai" ref={text2Ref} animate={gradientAnim} style={{ ...gradientBase, opacity: opacity2, x: x2}}>
                 {texts[language].home.ai}
             </motion.h1>
         </div>

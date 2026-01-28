@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
+import "../../styles/scroll3D.css"
 
 export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
@@ -89,7 +90,7 @@ const FbxMacBook = () => {
             <OrbitControls enableRotate enableZoom={false} enablePan={false} />
         </Canvas>
 
-        <motion.h1 ref={textRef} animate={gradientAnim} style={{ ...gradientBase, textAlignLast: "start", position: "relative", zIndex: 3, marginLeft: "4rem", marginTop: "-50vh", fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity, y }}>
+        <motion.h1 ref={textRef} className="real-3d" animate={gradientAnim} style={{ ...gradientBase, opacity, y }}>
             {texts[language].home.real}
         </motion.h1>
         </section>

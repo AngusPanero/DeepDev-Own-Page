@@ -26,17 +26,26 @@ const ContactForm = () => {
         extraServices: [],
     })
 
-    
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
     }
 
     return(
         <>
-        {/* <TubesCursor /> */}
         <div className={`contact-box ${theme === "light" ? "theme-light" : "theme-dark"}`}>
-            <form className="contact-form" /* style={{ background: theme === "dark" ? "black" : "#f4f2ff" }} */ onSubmit={handleSubmit}>
+
+            {/* <div className="footer-section">
+                <ul className="footer-list">
+                    <li><a href="mailto:contact@deepdev.dev">deepdevsolutions@gmail.com</a></li>
+                    <li style={{ marginTop: "10px" }} className="footer-location"><strong>Argentina</strong> · {texts[language].footer.connect[0]}</li>
+                    <li style={{ marginLeft: "10px" }} className="footer-location">{texts[language].footer.connect[1]}: +54 9 11-7118-7463</li>
+                    
+                    <li className="footer-location"><strong>Spain</strong> · {texts[language].footer.connect[0]}</li>
+                    <li style={{ marginLeft: "10px" }} className="footer-location">{texts[language].footer.connect[1]}: +34 622-777-426</li>
+                </ul>
+            </div> */}
+
+            <form className="contact-form" onSubmit={handleSubmit}>
 
                 <label htmlFor="name">{texts[language].contact.name}</label> 
                 <input type="text" value={form.name} name="name" id="name" onChange={(e) => setForm({...form, name: e.target.value})} required/>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import logo from "../../../public/images/DeepDev Logo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
@@ -8,16 +8,28 @@ import useTheme from "../../contexts/ThemeContext";
 const Login = ({ closeLogin }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
+    const loginRef = useRef<HTMLDivElement>(null);
 
-    const [hoverParticles, setHoverParticles] = useState(false);
-    const [exit, setExit] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [ hoverParticles, setHoverParticles ] = useState(false);
+    const [ exit, setExit ] = useState(false);
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
 
     const handleClose = () => {
         setExit(true);
         setTimeout(closeLogin, 600);
     };
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (loginRef.current && !loginRef.current.contains(e.target as Node)) {
+                handleClose();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -25,10 +37,10 @@ const Login = ({ closeLogin }: any) => {
     };
 
     return (
-        <div className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "black" : "#f4f2ff" }}>
+        <div ref={loginRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
 
-            <img className="img-logo-login" src={logo} alt="logo" width={200} />
+            <img className="img-logo-login" src={logo} alt="logo" />
             
             <h2 className="login-title">{texts[language].login.title}</h2>
             

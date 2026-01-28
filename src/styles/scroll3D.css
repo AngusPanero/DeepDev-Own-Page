@@ -1,0 +1,49 @@
+.h1-reinventing {
+    white-space: pre-line;
+    text-align-last: start;
+    position: relative; 
+    z-index: 3; 
+    margin-top: -33vh; 
+    font-size: 7rem; 
+    font-weight: 800; 
+    letter-spacing: -1px; 
+    text-align: center; 
+    font-family: "Montserrat", "Inter", "Poppins", sans-serif;
+}
+
+.h1-ai{
+    white-space: pre-line;
+    text-align-last: end;
+    position: relative; 
+    z-index: 3; 
+    margin-top: -45vh; 
+    font-size: 7rem; 
+    font-weight: 800; 
+    letter-spacing: -1px; 
+    text-align: center; 
+    font-family: "Montserrat", "Inter", "Poppins", sans-serif;
+}
+
+.real-3d{
+    text-align-last: start; 
+    position: relative; 
+    z-index: 3; 
+    margin-left: 4rem; 
+    margin-top: -50vh; 
+    font-size: 7rem; 
+    font-weight: 800; 
+    letter-spacing: -1px; 
+    font-family: "Montserrat", "Inter", "Poppins", "sans-serif";
+}
+
+@media (max-width: 767px) {
+    .h1-reinventing {
+        font-size: 2rem; 
+    }
+    .h1-ai{
+        font-size: 2rem;
+    }
+    .real-3d{
+        font-size: 2.8rem;
+    }
+}

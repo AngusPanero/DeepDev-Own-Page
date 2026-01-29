@@ -15,7 +15,7 @@ export function MacBookModel() {
 
     const objectSettings = width >= 768 
         ? { scale: 0.048, position: [0.9, 0.6, 0], rotation: [0, 2, 0] } 
-        : { scale: 0.035, position: [0.3, 0.8, 0], rotation: [0, 2, 0] };
+        : { scale: 0.03, position: [0.2, 1.2, 0], rotation: [-0.1, 2.1, 0] };
 
     useEffect(() => {
         model.traverse((child: any) => {
@@ -40,6 +40,7 @@ export function MacBookModel() {
 const FbxMacBook = () => {
     const { language, texts } = useLanguage()
     const { theme } = useTheme()
+    const { width } = useWidth()
 
     const gradientBase = {
         background: theme === "dark" ? "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)" :
@@ -72,7 +73,7 @@ const FbxMacBook = () => {
     return (
         <section style={{ display: "flex", flexDirection: "column" }}>
             <Canvas camera={{ position: [0, 2, 5], fov: 45 }}
-                style={{ cursor: "grab", width: "100%", height: "120vh", background: theme === "dark" ? "black" : "#f4f2ff", pointerEvents: "auto", }}
+                style={{ cursor: "grab", width: "100%", height: width >= 768 ? "120vh" : "110vh", background: theme === "dark" ? "black" : "#f4f2ff", pointerEvents: "auto", }}
                 gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 6, }}>
                 
                 <Environment preset="studio" />

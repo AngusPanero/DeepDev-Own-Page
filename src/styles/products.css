@@ -44,14 +44,14 @@ body{
 }
 
 .h1-apps{
-  position: relative;
-  z-index: 3;
-  margin-top: 3rem;
-  text-align: end;
-  font-size: 7rem;
-  font-weight: 800;
-  letter-spacing: -1px;
-  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+    position: relative;
+    z-index: 3;
+    margin-top: 3rem;
+    text-align: end;
+    font-size: 7rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
 }
 
 .p-apps{
@@ -219,9 +219,10 @@ body{
     }
 
     .h1-apps{
+        width: 100%;
         text-align: start;
         font-size: 2.2rem;
-        margin-right: 4rem;
+        margin-left: -3rem;
     }
 
     .p-apps{
@@ -230,7 +231,7 @@ body{
         overflow-wrap: break-word; 
         word-break: break-word;
         font-size: 1rem;
-        margin-right: 8rem;
+        margin-right: 5rem;
     }
 
     .products-section {
@@ -245,7 +246,7 @@ body{
 
     .h1-custom{
         width: 100%;
-        margin-left: 7rem;
+        margin-left: 6rem;
         text-align: start;
         font-size: 2.2rem;
     }
@@ -256,13 +257,13 @@ body{
         overflow-wrap: break-word; 
         word-break: break-word;
         font-size: 1rem;
-        margin-left: 8rem;
+        margin-left: 13rem;
     }
 
     .h1-ai{
         width: 100%;
         font-size: 2rem;
-        text-align: end;
+        text-align: start;
     }    
 
     .p-ai{
@@ -287,6 +288,7 @@ body{
     .p-autom{
         font-size: 1rem;
         width: 90%;
+        margin-right: 3rem;
         display: block;
         overflow-wrap: break-word; 
         word-break: break-word;

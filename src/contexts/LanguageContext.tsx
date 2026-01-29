@@ -298,11 +298,11 @@ export const LanguageProvider = ({ children }) => {
     es: {
         home: {
             reinventing: `DeepDev Reinventando
-             Experiencias Digitales.`,
+             Experiencias Digitales`,
             boost: `Potenciamos tu diseño con las mejores herramientas.`,
-            real: `Interacción 3D en tiempo real.`,
-            ai: `Experiencias de usuario
-             mejoradas con IA.`,
+            real: `Interacción 3D en tiempo real`,
+            ai: `Experiencias
+             mejoradas con IA`,
             automate: `Automatiza tu trabajo, un clic y listo.`,
         },
         products: {

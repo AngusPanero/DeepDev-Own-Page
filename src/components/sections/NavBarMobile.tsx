@@ -7,6 +7,7 @@ const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleThem
     return (
         <div className={`mobile-menu-container ${theme}`} ref={ref}>
             <nav className="mobile-nav-links">
+                <Link to="/" onClick={closeMenu}> {texts[language].footer.navigation[0]}</Link>
                 <Link to="/products" onClick={closeMenu}>{texts[language].nav.products}</Link>
                 <Link to="/company" onClick={closeMenu}>{texts[language].nav.company}</Link>
                 <Link to="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</Link>

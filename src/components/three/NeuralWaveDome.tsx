@@ -107,10 +107,10 @@ const NeuralWaveDome = () => {
     });
 
     return (
-        <group ref={groupRef} position={width >= 768 ? [-3, -1, 0] : [-1.5, -1, 0] }>
+        <group ref={groupRef} position={width >= 768 ? [-3, -1, 0] : [-1.5, 0, 0] }>
             {materials.map((mat, i) => (
                 <mesh key={i} material={mat}>
-                    <sphereGeometry args={width >= 768 ? [1.5 + i * 0.15, 64, 64] : [1 + i * 0.15, 64, 64] } /> 
+                    <sphereGeometry args={width >= 768 ? [1.5 + i * 0.15, 64, 64] : [1.2 + i * 0.15, 64, 64] } /> 
                 </mesh>
             ))}
         </group>

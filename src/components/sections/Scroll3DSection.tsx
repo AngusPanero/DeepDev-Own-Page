@@ -4,15 +4,16 @@ import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
 import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
-/* import AmbientOverlay from "../ui/AmbientOverlat"; */
 import NeuralWaveDome from "../three/NeuralWaveDome";
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
 import "../../styles/scroll3D.css"
+import { useWidth } from "../../contexts/WidthContext";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
     const text2Ref = useRef(null);
+    const { width } = useWidth();
     const { language, texts } = useLanguage()
     const { theme, handleTheme } = useTheme()
 
@@ -57,7 +58,6 @@ const Scroll3DSection = () => {
     return (
         <>
         <section style={{ height: "110vh", position: "relative" }}>
-            {/* <AmbientOverlay /> */}
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
                 <Scene> {/*En scene tengo el background them del AetherWaves*/}
                     <AetherWaves />
@@ -72,7 +72,7 @@ const Scroll3DSection = () => {
         <LogoCarrousel />        
         <FbxMacBook />        
 
-        <div style={{ height: "100vh", width: "100%", position: "relative", zIndex: 2 }}>
+        <div style={{ display: "flex", flexDirection: "column", height: width >= 768 ? "100vh" : "70vh", width: "100%", position: "relative", zIndex: 2 }}>
             <Scene>
                     <NeuralWaveDome />
             </Scene>

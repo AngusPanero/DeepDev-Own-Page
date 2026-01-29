@@ -6,7 +6,7 @@ const Scene = ({ children }: any) => {
     const { theme } = useTheme()
     
     return (
-        <Canvas gl={{ alpha: true }} style={{ background: theme === "dark" ? "black" : "#F0F4F8", position: "relative", zIndex: 2 }}>
+        <Canvas gl={{ alpha: true }} style={{ pointerEvents: "none", background: theme === "dark" ? "black" : "#F0F4F8", position: "relative", zIndex: 2 }}>
             <ambientLight intensity={0.6} />
             <directionalLight position={[2, 2, 2]} />
 

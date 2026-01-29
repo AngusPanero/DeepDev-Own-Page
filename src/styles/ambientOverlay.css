@@ -6,18 +6,18 @@
     background:
         radial-gradient(
             30rem 30rem at calc(var(--nx, 0.5) * 100%) 20%,
-            rgba(142, 45, 226, 0.18),
+            rgba(141, 45, 226, 0.321),
             transparent 60%
         ),
         radial-gradient(
             30rem 30rem at 80% calc(var(--ny, 0.5) * 100%),
-            rgba(0, 180, 255, 0.15),
+            rgba(0, 179, 255, 0.192),
             transparent 65%
         ),
         radial-gradient(
             30rem 30rem at 20% 80%,
             
-            rgba(255, 80, 180, 0.12),
+            rgba(255, 80, 179, 0.257),
             transparent 60%
         );
 

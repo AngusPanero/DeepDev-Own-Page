@@ -7,6 +7,28 @@ body{
     padding-top: 2rem;
 }
 
+.h1-web{
+  text-align: center;
+  text-align-last: start;
+  position: relative;
+  z-index: 3;
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+}
+
+.p-web{
+  white-space: pre-line;
+  margin: 0;
+  margin-left: 3rem;
+  width: 50rem;
+  font-size: 25px;
+  font-weight: 300;
+  text-align: start;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+
 .web-apps-section{
     margin-left: 6rem;
     margin-bottom: 4rem;
@@ -21,6 +43,28 @@ body{
     gap: 15rem;
 }
 
+.h1-apps{
+  position: relative;
+  z-index: 3;
+  margin-top: 3rem;
+  text-align: end;
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+}
+
+.p-apps{
+  white-space: pre-line;
+  margin: 0;
+  margin-right: 3rem;
+  width: 50rem;
+  text-align: start;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+
 .apps-section{
     margin-right: 4rem;
     margin-bottom: 8rem;
@@ -32,6 +76,29 @@ body{
     justify-content: end;
     gap: 15rem;
 }
+
+.h1-custom{
+  position: relative;
+  z-index: 3;
+  margin-top: 5rem;
+  text-align: end;
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+}
+
+.p-custom{
+  white-space: pre-line;
+  margin: 0;
+  margin-left: 10rem;
+  width: 50rem;
+  text-align: start;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+
 
 .custom-section{
     margin-right: 4rem;
@@ -45,6 +112,33 @@ body{
     gap: 13rem;
 }
 
+.h1-ai{
+  position: relative;
+  z-index: 3;
+  margin-top: 3rem;
+  margin-right: 3rem;
+  width: auto; 
+  white-space: pre-line;
+  text-align: center;
+  text-align-last: end;
+  font-size: 6rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+}
+
+.p-ai{
+  white-space: pre-line;
+  margin: 0;
+  margin-top: 2rem;
+  margin-right: 3rem;
+  width: 45rem;
+  text-align: start;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+
 .ai-section{
     margin-bottom: 5rem;
     display: flex;
@@ -56,6 +150,31 @@ body{
     flex-direction: row;
     justify-content: end;
     gap: 18rem;
+}
+
+.h1-autom{
+  position: relative;
+  z-index: 3;
+  margin-top: 3rem;
+  white-space: pre-line;
+  text-align: center;
+  text-align-last: end;
+  font-family: 'Montserrat', 'Inter', 'Poppins', sans-serif;
+  font-size: 7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.p-autom{
+  white-space: pre-line;
+  margin: 0;
+  margin-left: 10rem;
+  width: 50rem;
+  text-align: start;
+  text-align-last: start;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: 'Inter', 'Poppins', sans-serif;
 }
 
 .automation-section{
@@ -84,30 +203,113 @@ body{
 }
 
 @media (max-width: 768px) {
+    .h1-web{
+        text-align: start;
+        margin-left: 1rem;
+        margin-top: 10rem;
+        font-size: 2.2rem;
+    }
+
+    .p-web{
+        width: 90%;
+        display: block;
+        overflow-wrap: break-word; 
+        word-break: break-word;
+        font-size: 1rem;
+    }
+
+    .h1-apps{
+        text-align: start;
+        font-size: 2.2rem;
+        margin-right: 4rem;
+    }
+
+    .p-apps{
+        width: 90%;
+        display: block;
+        overflow-wrap: break-word; 
+        word-break: break-word;
+        font-size: 1rem;
+        margin-right: 8rem;
+    }
+
     .products-section {
-        height: auto; /* ¡VITAL! Eliminamos el 425vh para que no haya kilómetros de scroll vacío */
+        height: auto; 
         padding: 4rem 1.5rem;
     }
 
-    /* Reseteamos todos los márgenes forzados */
+    div.custom-icons-section{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .h1-custom{
+        width: 100%;
+        margin-left: 7rem;
+        text-align: start;
+        font-size: 2.2rem;
+    }
+
+    .p-custom{
+        width: 90%;
+        display: block;
+        overflow-wrap: break-word; 
+        word-break: break-word;
+        font-size: 1rem;
+        margin-left: 8rem;
+    }
+
+    .h1-ai{
+        width: 100%;
+        font-size: 2rem;
+        text-align: end;
+    }    
+
+    .p-ai{
+        font-size: 1rem;
+        width: 90%;
+        display: block;
+        overflow-wrap: break-word; 
+        word-break: break-word;
+    }
+
+    div.automation-icons-section{
+        display: flex;
+        flex-direction: column-reverse
+    }
+
+    .h1-autom{
+        width: 100%;
+        text-align: end;
+        font-size: 2rem;
+    }
+
+    .p-autom{
+        font-size: 1rem;
+        width: 90%;
+        display: block;
+        overflow-wrap: break-word; 
+        word-break: break-word;
+    }
+    
     .web-apps-section,
     .apps-section,
     .custom-section,
     .ai-section,
     .automation-section {
-        margin: 0 0 4rem 0 !important; /* Centramos y damos espacio abajo */
+        margin: 0 0 4rem 0 !important;
         align-items: center;
         text-align: center;
     }
 
-    /* Convertimos todas las filas en columnas */
+   
     .web-text-icons-section,
     .app-text-icons-section,
     .custom-icons-section,
     .ai-icons-section,
     .automation-icons-section {
-        flex-direction: column; /* Iconos debajo del texto */
-        gap: 2rem; /* Espacio moderado entre texto e iconos */
+        flex-direction: column; 
+        gap: 2rem; 
         justify-content: center;
         align-items: center;
     }
@@ -118,14 +320,12 @@ body{
         padding-top: 2rem;
     }
 
-    /* Si tienes títulos grandes dentro de estas secciones, dales aire */
     .web-apps-section h2, 
     .apps-section h2 {
         font-size: 1.8rem;
         margin-bottom: 1rem;
     }
     
-    /* Reducimos el margen entre bloques de productos */
     .ai-section, .automation-section {
         margin-bottom: 3rem !important;
     }

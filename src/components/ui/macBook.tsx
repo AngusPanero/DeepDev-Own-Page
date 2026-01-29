@@ -7,9 +7,15 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
 import "../../styles/scroll3D.css"
+import { useWidth } from "../../contexts/WidthContext";
 
 export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
+    const { width } = useWidth()
+
+    const objectSettings = width >= 768 
+        ? { scale: 0.048, position: [0.9, 0.6, 0], rotation: [0, 2, 0] } 
+        : { scale: 0.035, position: [0.3, 0.8, 0], rotation: [0, 2, 0] };
 
     useEffect(() => {
         model.traverse((child: any) => {
@@ -28,7 +34,7 @@ export function MacBookModel() {
         });
         }, [model]);
         // Posición y escala del modelo 3D
-        return <primitive object={model} scale={0.048} position={[0.9, 0.6, 0]} rotation={[0, 2, 0]} />;
+        return <primitive object={model} {...objectSettings} />;
     }
 
 const FbxMacBook = () => {
@@ -65,34 +71,34 @@ const FbxMacBook = () => {
 
     return (
         <section style={{ display: "flex", flexDirection: "column" }}>
-        <Canvas camera={{ position: [0, 2, 5], fov: 45 }}
-            style={{ cursor: "grab", width: "100%", height: "120vh", background: theme === "dark" ? "black" : "#f4f2ff", pointerEvents: "auto", }}
-            gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 6, }}>
-            
-            <Environment preset="studio" />
+            <Canvas camera={{ position: [0, 2, 5], fov: 45 }}
+                style={{ cursor: "grab", width: "100%", height: "120vh", background: theme === "dark" ? "black" : "#f4f2ff", pointerEvents: "auto", }}
+                gl={{ toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 6, }}>
+                
+                <Environment preset="studio" />
 
-            <ambientLight intensity={0.9} />
+                <ambientLight intensity={0.9} />
 
-            {/* Arriba */}
-            <directionalLight position={[-1, 5, -6]} intensity={0.7} />
+                {/* Arriba */}
+                <directionalLight position={[-1, 5, -6]} intensity={0.7} />
 
-            {/* Abajo (muy suave) */}
-            <directionalLight position={[0, -5, 0]} intensity={0.15} />
+                {/* Abajo (muy suave) */}
+                <directionalLight position={[0, -5, 0]} intensity={0.15} />
 
-            {/* Derecha */}
-            <directionalLight position={[5, 2, 0]} intensity={0.4} />
+                {/* Derecha */}
+                <directionalLight position={[5, 2, 0]} intensity={0.4} />
 
-            {/* Izquierda */}
-            <directionalLight position={[-5, 2, 0]} intensity={0.4} />
+                {/* Izquierda */}
+                <directionalLight position={[-5, 2, 0]} intensity={0.4} />
 
-            <MacBookModel />
+                <MacBookModel />
 
-            <OrbitControls enableRotate enableZoom={false} enablePan={false} />
-        </Canvas>
+                <OrbitControls enableRotate enableZoom={false} enablePan={false} />
+            </Canvas>
 
-        <motion.h1 ref={textRef} className="real-3d" animate={gradientAnim} style={{ ...gradientBase, opacity, y }}>
-            {texts[language].home.real}
-        </motion.h1>
+            <motion.h1 ref={textRef} className="real-3d" animate={gradientAnim} style={{ ...gradientBase, opacity, y }}>
+                {texts[language].home.real}
+            </motion.h1>
         </section>
     );
 };

@@ -11,12 +11,12 @@
     font-family: "Montserrat", "Inter", "Poppins", sans-serif;
 }
 
-.h1-ai{
+.h1-ai-3d{
     white-space: pre-line;
     text-align-last: end;
     position: relative; 
     z-index: 3; 
-    margin-top: -45vh; 
+    margin-top: -40vh;
     font-size: 7rem; 
     font-weight: 800; 
     letter-spacing: -1px; 
@@ -40,10 +40,11 @@
     .h1-reinventing {
         font-size: 2rem; 
     }
-    .h1-ai{
+    .h1-ai-3d{
         font-size: 2rem;
     }
     .real-3d{
         font-size: 2.8rem;
+        margin-top: -65vh; 
     }
 }

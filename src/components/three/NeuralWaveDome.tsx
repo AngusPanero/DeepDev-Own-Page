@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { useMemo, useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import useTheme from "../../contexts/ThemeContext";
+import { useWidth } from "../../contexts/WidthContext";
 
 const DomeShaderSource = {
     vertexShader: `
@@ -44,6 +45,7 @@ const DomeShaderSource = {
 
 const NeuralWaveDome = () => {
     const { theme } = useTheme();
+    const { width } = useWidth()
     const groupRef = useRef<THREE.Group>(null);
     const layers = 4;
 
@@ -105,10 +107,10 @@ const NeuralWaveDome = () => {
     });
 
     return (
-        <group ref={groupRef} position={[-3, -1, 0]}>
+        <group ref={groupRef} position={width >= 768 ? [-3, -1, 0] : [-1.5, -1, 0] }>
             {materials.map((mat, i) => (
                 <mesh key={i} material={mat}>
-                    <sphereGeometry args={[1.5 + i * 0.15, 64, 64]} /> 
+                    <sphereGeometry args={width >= 768 ? [1.5 + i * 0.15, 64, 64] : [1 + i * 0.15, 64, 64] } /> 
                 </mesh>
             ))}
         </group>

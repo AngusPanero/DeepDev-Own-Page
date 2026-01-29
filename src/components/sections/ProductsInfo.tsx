@@ -72,17 +72,16 @@ const ProductsInfo = () => {
 
     return (
         <>
-        {/* <TubesCursor /> */}
         <div className="products-section" style={{ background: theme === "dark" ? "black" : "#F0F4F8" }}>
             {/* WEB APPLICATIONS */}
             <div className="web-apps-section" ref={textRef}>
-                <motion.h1 style={{ ...gradientBase, textAlignLast: "start", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity, x: x }} 
+                <motion.h1 className="h1-web" style={{ ...gradientBase, opacity: opacity, x: x }} 
                     animate={gradientAnim}>
                     {texts[language].products.webTitle}
                 </motion.h1>
 
                 <div className="web-text-icons-section">
-                    <motion.p style={{ ...gradientBase, whiteSpace: "pre-line", margin: 0, width: "50rem", marginLeft: "3rem", fontSize: "25px", fontWeight: "300", textAlign: "start", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity, x: x }} 
+                    <motion.p className="p-web" style={{ ...gradientBase, opacity: opacity, x: x }} 
                         animate={gradientAnim}>
                         {texts[language].products.webText}
                     </motion.p>
@@ -98,7 +97,7 @@ const ProductsInfo = () => {
 
             {/* MOBILE APPS */}
             <div className="apps-section" ref={textRef2}>
-                <motion.h1 style={{ ...gradientBase, marginTop: "3rem", textAlign: "end", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "-1px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity2, x: x2 }} 
+                <motion.h1 className="h1-apps" style={{ ...gradientBase, opacity: opacity2, x: x2 }} 
                     animate={gradientAnim}>
                         {texts[language].products.appTitle}
                 </motion.h1>
@@ -111,7 +110,7 @@ const ProductsInfo = () => {
                         <FloatingIcon src="../../../public/logos/android2.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
 
-                    <motion.p style={{ ...gradientBase, whiteSpace: "pre-line", margin: 0, width: "50rem", marginRight: "3rem", textAlign: "start", fontSize: "25px", fontWeight: "300", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity2, x: x2 }} 
+                    <motion.p className="p-apps" style={{ ...gradientBase, opacity: opacity2, x: x2 }} 
                         animate={gradientAnim}>
                         {texts[language].products.appText}
                     </motion.p>
@@ -120,13 +119,13 @@ const ProductsInfo = () => {
 
             {/* CUSTOM SOFTWARE */}
             <div className="custom-section" ref={textRef3}>
-                <motion.h1 style={{ ...gradientBase, marginTop: "5rem", textAlign: "end", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "2px", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity3, x: x3 }} 
+                <motion.h1 className="h1-custom" style={{ ...gradientBase, opacity: opacity3, x: x3 }} 
                     animate={gradientAnim}>
                         {texts[language].products.customTitle}
                 </motion.h1>
 
                 <div className="custom-icons-section">
-                    <motion.p style={{ ...gradientBase, whiteSpace: "pre-line", margin: 0, width: "50rem", marginLeft: "10rem", textAlign: "start", fontSize: "25px", fontWeight: "300", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity3, x: x3 }} 
+                    <motion.p className="p-custom" style={{ ...gradientBase, opacity: opacity3, x: x3 }} 
                         animate={gradientAnim}>
                         {texts[language].products.customText}
                     </motion.p>
@@ -142,7 +141,7 @@ const ProductsInfo = () => {
 
             {/* AI INTEGRATION */}
             <div className="ai-section" ref={textRef4} style={{ marginRight: "3rem" }}>
-                <motion.h1 style={{ ...gradientBase, whiteSpace: "pre-line", marginRight: "3rem", marginTop: "3rem", textAlignLast: "end", position: "relative", zIndex: 3, fontSize: "6rem", fontWeight: "800", letterSpacing: "1px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity4, x: x4 }} 
+                <motion.h1 className="h1-ai" style={{ ...gradientBase, opacity: opacity4, x: x4 }} 
                     animate={gradientAnim}>
                         {texts[language].products.AiTitle}
                 </motion.h1>
@@ -155,7 +154,7 @@ const ProductsInfo = () => {
                         <FloatingIcon src="../../../public/logos/chat.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
 
-                    <motion.p style={{ ...gradientBase, whiteSpace: "pre-line", margin: 0, width: "45rem", marginTop: "2rem", marginRight: "3rem", textAlign: "start", fontSize: "25px", fontWeight: "300", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity4, x: x4 }} 
+                    <motion.p className="p-ai" style={{ ...gradientBase, opacity: opacity4, x: x4 }} 
                         animate={gradientAnim}>
                         {texts[language].products.AiText}
                     </motion.p>
@@ -164,13 +163,13 @@ const ProductsInfo = () => {
 
             {/* AUTOMATION */}
             <div className="automation-section" ref={textRef5}>
-                <motion.h1 style={{ ...gradientBase, marginTop: "3rem", textAlignLast: "end", position: "relative", zIndex: 3, fontSize: "7rem", fontWeight: "800", letterSpacing: "2px", textAlign: "center", fontFamily: "Montserrat, Inter, Poppins, sans-serif", opacity: opacity5, x: x5 }} 
+                <motion.h1 className="h1-autom" style={{ ...gradientBase, opacity: opacity5, x: x5 }} 
                     animate={gradientAnim}>
                         {texts[language].products.automationTitle}
                 </motion.h1>
 
                 <div className="automation-icons-section">
-                    <motion.p style={{ ...gradientBase, whiteSpace: "pre-line", margin: 0, width: "50rem", marginLeft: "10rem", textAlignLast: "start", fontSize: "25px", fontWeight: "300", textAlign: "start", fontFamily: "Inter, Poppins, sans-serif", opacity: opacity5, x: x5 }} 
+                    <motion.p className="p-autom" style={{ ...gradientBase, opacity: opacity5, x: x5 }} 
                         animate={gradientAnim}>
                         {texts[language].products.automationText}
                     </motion.p>

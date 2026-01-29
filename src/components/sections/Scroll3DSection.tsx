@@ -4,7 +4,7 @@ import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
 import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
-import AmbientOverlay from "../ui/AmbientOverlat";
+/* import AmbientOverlay from "../ui/AmbientOverlat"; */
 import NeuralWaveDome from "../three/NeuralWaveDome";
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
@@ -57,7 +57,7 @@ const Scroll3DSection = () => {
     return (
         <>
         <section style={{ height: "110vh", position: "relative" }}>
-            <AmbientOverlay />
+            {/* <AmbientOverlay /> */}
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
                 <Scene> {/*En scene tengo el background them del AetherWaves*/}
                     <AetherWaves />
@@ -72,12 +72,12 @@ const Scroll3DSection = () => {
         <LogoCarrousel />        
         <FbxMacBook />        
 
-        <div style={{ height: "100vh", width: "100%", zIndex: 2 }}>
+        <div style={{ height: "100vh", width: "100%", position: "relative", zIndex: 2 }}>
             <Scene>
                     <NeuralWaveDome />
             </Scene>
 
-            <motion.h1 className="h1-ai" ref={text2Ref} animate={gradientAnim} style={{ ...gradientBase, opacity: opacity2, x: x2}}>
+            <motion.h1 className="h1-ai-3d" ref={text2Ref} animate={gradientAnim} style={{ ...gradientBase, opacity: opacity2, x: x2}}>
                 {texts[language].home.ai}
             </motion.h1>
         </div>

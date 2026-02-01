@@ -21,7 +21,9 @@ export const SessionProvider = ({ children }) => {
             setError(null)
             setLoading(true)
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/register`, { email, password })
-            if(response.status === 200){
+            if(response.status === 201){
+                console.log(`User created successfully! 🟢`);
+                
                 registerOpen(false)
                 loginOpen(true)
             }

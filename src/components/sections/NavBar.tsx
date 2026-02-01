@@ -27,6 +27,11 @@ const NavBar = () => {
         setOpenRegister(true);
     };
 
+    const openLoginFromRegister = () => {
+        setLoginOpen(true);
+        setOpenRegister(false);
+    };
+
     // Lógica para cerrar menú mobile al hacer clic fuera o scroll fuerte
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -122,7 +127,7 @@ const NavBar = () => {
         </section>
 
         { loginOpen && <Login openRegister={openRegisterFromLogin} closeLogin={() => setLoginOpen(false)} /> }
-        { openRegister && <Register closeRegister={() => setOpenRegister(false)} /> }   
+        { openRegister && <Register openLogin={openLoginFromRegister} closeRegister={() => setOpenRegister(false)} /> }   
         </>
     );
 }

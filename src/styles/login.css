@@ -35,6 +35,61 @@
     to{ transform: translateX(100%); opacity: 0; }
 }
 
+/*PASSWORD*/
+.password-requirements-box::before {
+    content: "Seguridad de la Contraseña";
+    display: block;
+    font-size: 1.3rem;
+    font-family: "Montserrat", sans-serif;
+    color: #8a2be2; 
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.password-requirements-box{
+    text-align: center;
+}
+
+.password-requirements-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.password-requirements-box li {
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 8px;
+    color: #e0e0e0;
+    transition: 0.3s ease;
+    padding-left: 6rem;
+}
+
+/* Cuando el requisito está CUMPLIDO */
+.requirement-met {
+    color: #00ffaa !important; /* Verde neón/Cian */
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* Cuando el requisito FALTA */
+.requirement-unmet {
+    color: #ff4d6d !important; /* Rojo/Rosado vibrante */
+}
+
+/* Animación de entrada */
+.password-requirements-box {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .div-password {
     position: relative; 
     display: flex;
@@ -61,7 +116,10 @@ span.check-password{
     font-family: "Montserrat";
     color: red;
     font-weight: 600;
+}
 
+.pass-group-2{
+    margin-top: 1rem;
 }
 
 /* Close */
@@ -251,6 +309,27 @@ span.check-password{
     text-decoration: underline;
 }
 
+.theme-light .password-requirements-box::before {
+        color: #0062FF; 
+}
+
+.theme-dark .password-requirements-box::before {
+        color: #a600ff; 
+}
+
+.theme-light .eye-password {
+    /* Invert hace que el blanco pase a negro. 
+       Brightness y Contrast ajustan el tono para que sea un gris elegante */
+    filter: invert(1) brightness(0.2); 
+    opacity: 0.7; /* Para que no sea un negro tan agresivo */
+}
+
+/* Si quieres que tenga el color azul/púrpura de DeepDev Light: */
+.theme-light .eye-password:hover {
+    filter: invert(40%) sepia(100%) saturate(1500%) hue-rotate(200deg);
+    opacity: 1;
+}
+
 @media (max-width: 768px) {
     .section-login {
         width: 100%;       /* En tablets y móviles ocupa todo el ancho */
@@ -277,6 +356,23 @@ span.check-password{
         top: 1rem;
         left: 1rem;
         font-size: 1.8rem; /* Un poco más grande para que sea fácil de tocar */
+    }
+
+    .password-requirements-box {
+        position: static; 
+        width: 100%;
+        margin-bottom: 1rem;
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .password-requirements-box li {
+        padding-left: 0;
+        justify-content: center; /* Centrado para móviles */
+    }
+
+    .login-title {
+        font-size: 2.2rem;
     }
 }
 

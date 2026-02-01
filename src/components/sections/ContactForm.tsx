@@ -23,7 +23,6 @@ const ContactForm = () => {
         projectGoal: "",
         budgetRange: "",
         availableTime: "",
-        extraServices: [],
     })
 
     const handleSubmit = (e: React.FormEvent) => {

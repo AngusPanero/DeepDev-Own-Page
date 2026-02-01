@@ -6,13 +6,8 @@
     height: 100%;
     pointer-events: none;
     z-index: 10;
-    
-    /* Si tu web es oscura, 'screen' es perfecto. */
-    /* Si tu web es clara, 'multiply' o 'darken' NO funcionarán para luces. */
-    /* Usaremos 'exclusion' o simplemente 'opacity' si no aparecen. */
     mix-blend-mode: screen; 
     
-    /* Forzamos que el canvas no se oculte */
     opacity: 1 !important;
     display: block !important;
     background: transparent !important;

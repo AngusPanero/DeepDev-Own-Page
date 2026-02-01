@@ -7,25 +7,26 @@ import useTheme from "../../contexts/ThemeContext";
 import eyeClose from "../../../public/logos/eye-close.svg"
 import eyeOpen from "../../../public/logos/eye-open.svg"
 
-const Login = ({ closeLogin, openRegister }: any) => {
+const Register = ({ closeRegister }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
-    const loginRef = useRef<HTMLDivElement>(null);
+    const registerRef = useRef<HTMLDivElement>(null);
 
     const [ hoverParticles, setHoverParticles ] = useState(false);
     const [ exit, setExit ] = useState(false);
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    const [ password2, setPassword2 ] = useState("");
     const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false)
 
     const handleClose = () => {
         setExit(true);
-        setTimeout(closeLogin, 600);
+        setTimeout(closeRegister, 600);
     };
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (loginRef.current && !loginRef.current.contains(e.target as Node)) {
+            if (registerRef.current && !registerRef.current.contains(e.target as Node)) {
                 handleClose();
             }
         };
@@ -40,14 +41,14 @@ const Login = ({ closeLogin, openRegister }: any) => {
     };
 
     return (
-        <div ref={loginRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
+        <div ref={registerRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
 
             <img className="img-logo-login" src={logo} alt="logo" />
             
-            <h2 className="login-title">{texts[language].login.title}</h2>
+            <h2 className="login-title">Bienvenido!</h2>
             
-            <p className="login-subtitle">{texts[language].login.text}</p>
+            <p className="login-subtitle">Crea tu cuenta DeepDev</p>
 
             <form className="login-form" onSubmit={handleSubmit}>
                 <div className="input-group">
@@ -57,19 +58,31 @@ const Login = ({ closeLogin, openRegister }: any) => {
 
                 <div className="input-group">
                     <label htmlFor="password">{texts[language].login.password}</label>
+
                     <div className="div-password">
                         <input id="password" type={visiblePassword === true ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
                         <img className="eye-password" src={visiblePassword === false ? eyeOpen : eyeClose} alt="eye_password_svg" onClick={() => setVisiblePassword(!visiblePassword)}/>
                     </div>
                 </div>
 
-                <button type="submit" className="login-btn" onClick={openRegister} onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>{texts[language].login.button}</button>
+                <div className="input-group">
+                    <label htmlFor="password2">Repetir Contraseña:</label>
+                    
+                    <div className="div-password">    
+                        <input id="password2" type={visiblePassword === true ? "text" : "password"} value={password2} onChange={(e) => setPassword2(e.target.value)} required />
+                        <img className="eye-password" src={visiblePassword === false ? eyeOpen : eyeClose} alt="eye_password_svg" onClick={() => setVisiblePassword(!visiblePassword)}/>
+                    </div>    
+                </div>
+
+                {password === password2 ? "" : <span className="check-password">Las contraseñas no coinciden!</span>}
+
+                <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>Registrarse</button>
             </form>
 
-            <p className="login-footer" onClick={openRegister} style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>
+            <p className="login-footer" style={{ whiteSpace: "pre-line" }}>Ya eres usuario DeepDev?<span className="login-link">Iniciar Sesión</span></p>
             <ParticleButton active={hoverParticles} />
         </div>
     );
 };
 
-export default Login;
+export default Register;

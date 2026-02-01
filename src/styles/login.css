@@ -35,6 +35,35 @@
     to{ transform: translateX(100%); opacity: 0; }
 }
 
+.div-password {
+    position: relative; 
+    display: flex;
+    width: 100%;
+}
+
+.div-password input {
+    width: 100%; 
+}
+
+.eye-password {
+    position: absolute; 
+    right: 15px;        
+    top: 50%;           
+    transform: translateY(-50%); 
+    width: 25px;
+    height: auto;
+    cursor: pointer;
+    z-index: 10;        
+}
+
+span.check-password{
+    align-self: center;
+    font-family: "Montserrat";
+    color: red;
+    font-weight: 600;
+
+}
+
 /* Close */
 .close-button{
     position: absolute;

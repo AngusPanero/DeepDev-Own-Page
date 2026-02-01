@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import Tubes from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js';
 import "../../styles/tubesCursor.css";
+import { useWidth } from '../../contexts/WidthContext';
 
 const TubesCursor: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const appRef = useRef<any>(null);
+  const { width } = useWidth()
 
   useEffect(() => {
     if (canvasRef.current && !appRef.current) {
@@ -14,7 +16,7 @@ const TubesCursor: React.FC = () => {
           segments: 64,
           colors: ['#f967fb', '#53bc28', '#6958d5'],
           lights: {
-            intensity: 80,
+            intensity: width >= 768 ? 60 : 20,
             colors: ['#83f36e', '#fe8a2e', '#ff008a', '#60aed5'],
           },
         },
@@ -38,7 +40,7 @@ const TubesCursor: React.FC = () => {
   }, []);
   
   return (
-    <canvas id="tubes-cursor-canvas" ref={canvasRef}></canvas>
+    <canvas id="tubes-cursor-canvas"  ref={canvasRef}></canvas>
   );
 };
 

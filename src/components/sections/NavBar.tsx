@@ -8,8 +8,10 @@ import sun from "../../../public/logos/sun.svg"
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
 import NavBarMobile from "./NavBarMobile";
+import Register from "./Register";
 
 const NavBar = () => {
+    const [ openRegister, setOpenRegister ] = useState<boolean>(false)
     const [ loginOpen, setLoginOpen ] = useState(false);    
     const [ showPromo, setShowPromo ] = useState(true);
     const [ menuOpen, setMenuOpen ] = useState(false);
@@ -19,6 +21,11 @@ const NavBar = () => {
 
     const { language, handleLanguage, texts } = useLanguage()
     const { theme, handleTheme } = useTheme()
+
+    const openRegisterFromLogin = () => {
+        setLoginOpen(false);
+        setOpenRegister(true);
+    };
 
     // Lógica para cerrar menú mobile al hacer clic fuera o scroll fuerte
     useEffect(() => {
@@ -114,7 +121,8 @@ const NavBar = () => {
             )}
         </section>
 
-        { loginOpen && <Login closeLogin={() => setLoginOpen(false)} /> }
+        { loginOpen && <Login openRegister={openRegisterFromLogin} closeLogin={() => setLoginOpen(false)} /> }
+        { openRegister && <Register closeRegister={() => setOpenRegister(false)} /> }   
         </>
     );
 }

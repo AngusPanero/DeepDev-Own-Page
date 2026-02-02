@@ -118,6 +118,15 @@ span.check-password{
     font-weight: 600;
 }
 
+p.error-password{
+    white-space: pre-line;
+    text-align: center;
+    align-self: center;
+    font-family: "Montserrat";
+    color: red;
+    font-weight: 600;
+}
+
 .pass-group-2{
     margin-top: 1rem;
 }

@@ -6,8 +6,9 @@ import Raffles from "../pages/Raffles";
 import Company from "../pages/Company";
 import NavBar from "../components/sections/NavBar";
 import Footer from "../components/sections/Footer";
-import Error from "../components/sections/Error";
-import Loader from "../components/sections/Loader";
+import Dashboard from "../pages/Dashboard";
+import AdminDashboard from "../pages/AdminDashboard";
+import PrivateRoute from "./PrivateRoute";
 import { SessionProvider } from "../contexts/SessionContext";
 
 const AppRouter = () => {
@@ -21,8 +22,8 @@ const AppRouter = () => {
                     <Route path="/products" element={<Products />} />
                     <Route path="/raffles" element={<Raffles />} />
                     <Route path="/company" element={<Company />} />
-                    <Route path="/error" element={<Error errorMessage="Error en el Servidor"/>} />
-                    <Route path="/loader" element={<Loader />} />
+                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                    <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
                 </Routes>
                 <Footer />
             </SessionProvider>

@@ -4,7 +4,6 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import Loader from "../components/sections/Loader.js";
 
 const SessionContext = createContext()
 
@@ -40,20 +39,21 @@ export const SessionProvider = ({ children }) => {
     }
 
     // Login
-    const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>, email: string, password: string) => {
-        e.preventDefault()
+    const handleLogin = async ( email: string, password: string, ) => {
         try {
             setLoading(true)
             setError(null)
-
+            console.log(email, password);
+            
             const userCredentials = await signInWithEmailAndPassword(auth, email, password)
             setUser(userCredentials.user)
 
-            const idToken = await userCredentials.user.getIdToken()
+            const idToken = await userCredentials.user.getIdToken(true) // El true obliga a buscar siempre tokens nuevas no antiguas que no hayan expirado
 
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { idToken })
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { idToken }, { withCredentials: true })
             if(response.status === 200){
-                navigate("/dashboard")
+                navigate("/admin")
+                return true
             }
         } catch (error) {
             if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
@@ -77,9 +77,16 @@ export const SessionProvider = ({ children }) => {
                 return;
             }
                     if (error.response?.status === 403) {
-                        await auth.signOut()
-                        setUser(null)
-                        navigate("/banned");
+                        const idToken = await auth.currentUser?.getIdToken();
+                        try {
+                            await axios.post(`${import.meta.env.VITE_API_URL}/logout`, { idToken }, { withCredentials: true });
+                        } catch (error) 
+                            { console.error("Error limpiando cookie:", error) 
+                        }
+
+                        await auth.signOut(); 
+                        setUser(null); 
+                        setError("Tu cuenta está baneada. Contactate con soporte.");
                         return;
                     }
                     console.error("Login error:", error);
@@ -113,6 +120,8 @@ export const SessionProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if(firebaseUser){
+                console.log("refresh:", firebaseUser);
+                
                 setUser(firebaseUser)
                 await firebaseUser.getIdToken()
                 
@@ -124,8 +133,8 @@ export const SessionProvider = ({ children }) => {
         return () => unSubscribe()
     }, [])
 
-    // Inactivity Context
-    const AutoLogout = (timeout: number = 15 *60 * 1000) => {
+    // Inactivity Context 15 min
+    const AutoLogout = (timeout: number = 15 * 60 * 1000) => {
         const timeRef = useRef<unknown>(null)
 
         const resetTimer = () => {
@@ -158,51 +167,8 @@ export const SessionProvider = ({ children }) => {
         }, [user, timeout]);
     }
 
-    // Private Route
-    const PrivateRoute = ({ children }) => {
-        const [ status, setStatus ] = useState<string>("loading")
-
-        useEffect(() => {
-            if(loading) return
-
-            if(!user){
-                setStatus("unauth")
-                return
-            }
-
-            const checkSession = async () => {
-                const idToken = await auth.currentUser.getIdToken()
-                try {
-                    await axios.get(`${import.meta.env.VITE_API_URL}/me`, { headers: { Authorization: `Bearer ${idToken}` } }, { withCredentials: true })
-                    setStatus("ok")
-                } catch (error) {
-                    if (error.response?.status === 403) {
-                        setStatus("banned");
-                        } else {
-                        setStatus("unauth");
-                    }
-                }
-            }
-            checkSession()
-        }, [ user, loading ])
-
-        if (loading || status === "loading") {
-            return <Loader />;
-        }
-
-        if (status === "banned") {
-            return setError("Usuario Baneado, contactate con deepdevsolutions@gmail.com");
-        }
-
-        if (status === "unauth") {
-            return navigate("/");
-        }
-
-        return children;
-    }
-
     return(
-        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, AutoLogout, PrivateRoute, error, setError, loading, setLoading, user, setUser }}>
+        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, AutoLogout, error, setError, loading, setLoading, user, setUser }}>
             { children }
         </SessionContext.Provider>
     )

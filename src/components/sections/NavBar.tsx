@@ -9,6 +9,7 @@ import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
 import NavBarMobile from "./NavBarMobile";
 import Register from "./Register";
+import useSession from "../../contexts/SessionContext";
 
 const NavBar = () => {
     const [ openRegister, setOpenRegister ] = useState<boolean>(false)
@@ -18,6 +19,7 @@ const NavBar = () => {
 
     const lastScrollY = useRef(0);
     const menuRef = useRef(); 
+    const { user, handleLogout } = useSession()
 
     const { language, handleLanguage, texts } = useLanguage()
     const { theme, handleTheme } = useTheme()
@@ -79,6 +81,7 @@ const NavBar = () => {
                         <li><Link to="/company">{texts[language].nav.company}</Link></li>
                         <li><Link to="/raffles">{texts[language].nav.raffles}</Link></li>
                         <li><Link to="/contact">{texts[language].nav.contact}</Link></li>
+                        {user && <li><Link to="/dashboard">Dashboard</Link></li>}
                     </ul>   
                 </nav>
 
@@ -98,8 +101,12 @@ const NavBar = () => {
                             <option value="ru">🇷🇺 Ru</option>
                             <option value="fr">🇫🇷 Fr</option>
                         </select>
-
+                        {/* BOTÓN LOGIN LOGOUT */}
+                        {user ? 
+                        <button onClick={() => handleLogout()} className="nav-buttons login-mobile-btn">Cerrar Sesión</button>
+                        :
                         <button onClick={() => setLoginOpen(true)} className="nav-buttons">{texts[language].nav.login}</button>
+                        }
                     </div>
 
                     {/* BOTÓN HAMBURGUESA (Solo Mobile) */}

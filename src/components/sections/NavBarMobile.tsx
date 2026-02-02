@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { forwardRef } from "react";
 import moon from "../../../public/logos/moon2.svg"
 import sun from "../../../public/logos/sun.svg"
+import useSession from "../../contexts/SessionContext";
 
 const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }, ref) => {
+    const { user, handleLogout } = useSession()
+
     return (
         <div className={`mobile-menu-container ${theme}`} ref={ref}>
             <nav className="mobile-nav-links">
@@ -12,6 +15,7 @@ const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleThem
                 <Link to="/company" onClick={closeMenu}>{texts[language].nav.company}</Link>
                 <Link to="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</Link>
                 <Link to="/contact" onClick={closeMenu}>{texts[language].nav.contact}</Link>
+                {user && <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>}
             </nav>
 
             <div className="mobile-extra-actions">
@@ -25,15 +29,22 @@ const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleThem
                         <option value="ru">🇷🇺 Ru</option>
                         <option value="fr">🇫🇷 Fr</option>
                     </select>
-
+                    
                     <button className="nav-buttons" onClick={handleTheme}>
                         <img style={{ backgroundColor: "transparent" }} src={theme === "dark" ? sun : moon} alt="theme-icon" width={22} />
                     </button>
                 </div>
-
+                {/* BOTÓN LOGIN LOGOUT */}
+                {user ? 
+                <button onClick={() => handleLogout()} className="nav-buttons login-mobile-btn">
+                    Cerrar Sesión
+                </button>
+                :
                 <button onClick={() => {openLogin(); closeMenu();}} className="nav-buttons login-mobile-btn">
                     {texts[language].nav.login}
                 </button>
+                }
+                
             </div>
         </div>
     );

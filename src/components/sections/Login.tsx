@@ -6,10 +6,14 @@ import useLanguage, { type LanguageContextType } from "../../contexts/LanguageCo
 import useTheme from "../../contexts/ThemeContext";
 import eyeClose from "../../../public/logos/eye-close.svg"
 import eyeOpen from "../../../public/logos/eye-open.svg"
+import useSession from "../../contexts/SessionContext";
+import Loader from "./Loader";
+import Error from "./Error";
 
 const Login = ({ closeLogin, openRegister }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
+    const { handleLogin, loading, error } = useSession()
     const loginRef = useRef<HTMLDivElement>(null);
 
     const [ hoverParticles, setHoverParticles ] = useState(false);
@@ -34,10 +38,17 @@ const Login = ({ closeLogin, openRegister }: any) => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const loginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ email, password });
-    };
+        const response = await handleLogin(email, password); 
+                
+        if (response) {
+            closeLogin();
+        }
+    }
+
+    if(loading) return <Loader />
+    /* if(error)return <Error errorMessage={"Error al iniciar sesión."} /> */
 
     return (
         <div ref={loginRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
@@ -49,12 +60,14 @@ const Login = ({ closeLogin, openRegister }: any) => {
             
             <p className="login-subtitle">{texts[language].login.text}</p>
 
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={loginSubmit}>
+                {/* EMAIL */}
                 <div className="input-group">
                     <label htmlFor="email">{texts[language].login.email}</label>
                     <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
 
+                {/* PASSWORD */}
                 <div className="input-group">
                     <label htmlFor="password">{texts[language].login.password}</label>
                     <div className="div-password">
@@ -62,8 +75,10 @@ const Login = ({ closeLogin, openRegister }: any) => {
                         <img className="eye-password" src={visiblePassword === false ? eyeOpen : eyeClose} alt="eye_password_svg" onClick={() => setVisiblePassword(!visiblePassword)}/>
                     </div>
                 </div>
-
-                <button type="submit" className="login-btn" onClick={openRegister} onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>{texts[language].login.button}</button>
+                {/* ERROR MSJ */}
+                {error && <p className="error-password">{error}</p>}
+                {/* BOTÓN */}
+                <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>{texts[language].login.button}</button>
             </form>
 
             <p className="login-footer" onClick={openRegister} style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>

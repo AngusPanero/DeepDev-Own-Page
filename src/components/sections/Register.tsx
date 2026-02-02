@@ -7,10 +7,12 @@ import useTheme from "../../contexts/ThemeContext";
 import eyeClose from "../../../public/logos/eye-close.svg"
 import eyeOpen from "../../../public/logos/eye-open.svg"
 import useSession from "../../contexts/SessionContext";
+import Loader from "./Loader";
+import Error from "./Error";
 
 const Register = ({ openLogin, closeRegister }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
-    const { handleRegister } = useSession()
+    const { handleRegister, loading, error } = useSession()
     const { theme } = useTheme()
     const registerRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +44,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
     const validatePassword = (pass: string) => {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
     if (!regex.test(pass)) {
-        setPasswordError("La contraseña debe tener 10+ caracteres, una mayúscula, un número y un carácter especial.");
+        setPasswordError("Error en la codificación de la contraseña.");
         return false;
     }
     setPasswordError("");
@@ -59,6 +61,9 @@ const Register = ({ openLogin, closeRegister }: any) => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    if(loading) return <Loader />
+    if(error)return <Error errorMessage={"Error al registrar usuario."} />
 
     return (
         <div ref={registerRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
@@ -117,7 +122,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
                 {/*COINCIDEN*/}
                 {password === password2 ? "" : <span className="check-password">Las contraseñas no coinciden!</span>}
                 {/*REGEX*/}
-                {passwordError && <span className="check-password">asasas</span>}
+                {passwordError && <span className="check-password">{passwordError}</span>}
                 { password === password2 && <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)} disabled={!isFormValid}>Registrarse</button>}
             </form>
 

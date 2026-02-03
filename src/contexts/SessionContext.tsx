@@ -43,12 +43,21 @@ export const SessionProvider = ({ children }) => {
         try {
             setLoading(true)
             setError(null)
-            console.log(email, password);
             
             const userCredentials = await signInWithEmailAndPassword(auth, email, password)
             setUser(userCredentials.user)
-
+        
             const idToken = await userCredentials.user.getIdToken(true) // El true obliga a buscar siempre tokens nuevas no antiguas que no hayan expirado
+
+            {/* CUSTOM CLAIMS */}
+            const customClaims = await userCredentials.user.getIdTokenResult();
+
+            if(customClaims.claims.banned){
+                await auth.signOut(); 
+                setUser(null);
+                setError("Usuario baneado. Contactate con DeepDev.");    
+                return
+            }
 
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { idToken }, { withCredentials: true })
             if(response.status === 200){
@@ -56,41 +65,28 @@ export const SessionProvider = ({ children }) => {
                 return true
             }
         } catch (error) {
-            if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
-                try {
-                    const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`,{ email });
-                    
-                    if (data.banned) {
-                        setError("Tu cuenta fue bloqueada por demasiados intentos fallidos.");
-                        return;
-                    }
-                    if (data.attempts < 5) {
-                        setError(`Credenciales inválidas. Te quedan ${5 - data.attempts} intento(s).`);
-                    } else {
-                        setError("Credenciales inválidas.");
-                    }
-
-                } catch (error){
-                    setError("Credenciales inválidas.");
-                    console.error("Login error:", error);
-                }
-                return;
-            }
-                    if (error.response?.status === 403) {
-                        const idToken = await auth.currentUser?.getIdToken();
-                        try {
-                            await axios.post(`${import.meta.env.VITE_API_URL}/logout`, { idToken }, { withCredentials: true });
-                        } catch (error) 
-                            { console.error("Error limpiando cookie:", error) 
+                if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
+                    try {
+                        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`,{ email });
+                        
+                        if (data.banned) {
+                            setError("Tu cuenta fue bloqueada por demasiados intentos fallidos.");
+                            return;
+                        }
+                        if (data.attempts < 5) {
+                            setError(`Credenciales inválidas. Te quedan ${5 - data.attempts} intento(s).`);
+                        } else {
+                            setError("Credenciales inválidas.");
                         }
 
-                        await auth.signOut(); 
-                        setUser(null); 
-                        setError("Tu cuenta está baneada. Contactate con soporte.");
-                        return;
+                    } catch (error){
+                        setError("Credenciales inválidas.");
+                        console.error("Login error:", error);
                     }
-                    console.error("Login error:", error);
-                    setError("Error al iniciar sesión. Intentá más tarde.");
+                    return;
+                }
+            console.error("Login error:", error);
+            setError("Error al iniciar sesión. Intentá más tarde.");
         } finally {
             setLoading(false)
         }

@@ -92,7 +92,7 @@ const NavBar = () => {
                             <img style={{ backgroundColor: "transparent" }} src={theme === "dark" ? sun : moon} alt="theme-icon" width={22} />
                         </button>
                             
-                        <select className="nav-buttons lan" value={language} onChange={(e) => handleLanguage(e.target.value)} style={{ cursor: 'pointer', width: '110px'}}>
+                        <select className="nav-buttons lan" value={language} onChange={(e) => handleLanguage(e.target.value)} style={{ cursor: 'pointer'}}>
                             <option value="es">🌎 {texts[language].language}</option> 
                             <option value="es">🇪🇸 Es</option>
                             <option value="en">🇺🇸 En</option>

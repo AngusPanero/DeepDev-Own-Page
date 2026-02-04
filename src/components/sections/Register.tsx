@@ -31,11 +31,11 @@ const Register = ({ openLogin, closeRegister }: any) => {
     };
     // Pass Requerida
     const passwordRequirements = [
-    { label: "Mínimo 10 caracteres", test: (pass: string) => pass.length >= 10 },
-    { label: "Una mayúscula", test: (pass: string) => /[A-Z]/.test(pass) },
-    { label: "Un número", test: (pass: string) => /\d/.test(pass) },
-    { label: "Carácter especial (@$!%*?&)", test: (pass: string) => /[@$!%*?&]/.test(pass) },
-];
+        { label: "Mínimo 10 caracteres", test: (pass: string) => pass.length >= 10 },
+        { label: "Una mayúscula", test: (pass: string) => /[A-Z]/.test(pass) },
+        { label: "Un número", test: (pass: string) => /\d/.test(pass) },
+        { label: "Carácter especial (@$!%*?&)", test: (pass: string) => /[@$!%*?&]/.test(pass) },
+    ];
 
     // Form Válido
     const isFormValid = email.includes("@") && password.length >= 10 && password === password2 && !passwordError;
@@ -71,7 +71,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
 
             <img className="img-logo-login" src={logo} alt="logo" />
             
-            <h2 className="login-title">Crea tu sesión</h2>
+            <h2 className="login-title">Crear Sesión</h2>
 
             <form className="login-form" onSubmit={(e) => {e.preventDefault(); if (!validatePassword(password)) return; handleRegister(email, password, openLogin, closeRegister)}}>
                 {/*EMAIL*/}

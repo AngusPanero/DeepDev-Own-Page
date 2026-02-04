@@ -13,7 +13,7 @@ import Error from "./Error";
 const Login = ({ closeLogin, openRegister }: any) => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
-    const { handleLogin, loading, error } = useSession()
+    const { handleLogin, loading, error, handleResetPassword } = useSession()
     const loginRef = useRef<HTMLDivElement>(null);
 
     const [ hoverParticles, setHoverParticles ] = useState(false);
@@ -48,7 +48,6 @@ const Login = ({ closeLogin, openRegister }: any) => {
     }
 
     if(loading) return <Loader />
-    /* if(error)return <Error errorMessage={"Error al iniciar sesión."} /> */
 
     return (
         <div ref={loginRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
@@ -82,6 +81,9 @@ const Login = ({ closeLogin, openRegister }: any) => {
             </form>
 
             <p className="login-footer" onClick={openRegister} style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>
+            
+            {/* RESET PASSWORD */}
+            <p className="reset-password" onClick={() => handleResetPassword(email)} style={{ whiteSpace: "pre-line" }}>¿Olvidó su contraseña?</p>
             <ParticleButton active={hoverParticles} />
         </div>
     );

@@ -72,7 +72,7 @@ const SorteoDev: React.FC = () => {
                             <p className="terminal-title">new_{user.nombre === "" ? "raffle" : user.nombre.toLowerCase().replace(" ", "_")}_entry.jsx</p>
                         </div>
                         
-                        <h2>&lt;{texts[language].raffles.raffleTitle} /&gt;</h2>
+                        <h2 className='title-raffle'>&lt;{texts[language].raffles.raffleTitle} /&gt;</h2>
                         
                         <p className="subtitle">{texts[language].raffles.raffleText}</p>
                         <CountDown timeLeft={timeLeft} />

@@ -18,6 +18,7 @@
     cursor: pointer;
     transition: 0.8s;   
 }
+
 .lan{
     appearance: none; /* Quita la flecha original en Chrome, Safari y Firefox */
     -webkit-appearance: none;
@@ -26,7 +27,6 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
     background-size: 25px;
-    
 }
 
 .nav-buttons{

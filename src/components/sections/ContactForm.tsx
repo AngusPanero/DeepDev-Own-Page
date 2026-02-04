@@ -3,31 +3,43 @@ import "../../styles/contactForm.css"
 import ParticleButton from "../ui/ParticleButton";
 import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
+import Error from "./Error";
+import axios from "axios";
+import ProcessOk from "./processOk";
+import Loader from "./Loader";
 
 const ContactForm = () => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
 
-    const [hoverParticles, setHoverParticles] = useState(false);
-    const [ form, setForm ] = useState({
-        name: "",
-        lastName: "",
-        companyName: "",
-        contactRole: "",
-        email: "",
-        phone: "",
-        projectOption: "",
-        typeOfWork: "",
-        currentUrl: "",
-        description: "",
-        projectGoal: "",
-        budgetRange: "",
-        availableTime: "",
-    })
+    const [ form, setForm ] = useState({ name: "", lastName: "", companyName: "", contactRole: "", email: "", phone: "", projectOption: "", typeOfWork: "", currentUrl: "", description: "", projectGoal: "", budgetRange: "", availableTime: "",})
+    const [ hoverParticles, setHoverParticles ] = useState(false);
+    const [ error, setError ] = useState<boolean>(false);
+    const [ loading, setLoading ] = useState<boolean>(false);
+    const [ process, setProcess ] = useState<string>("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        try {
+            setError(false)
+            setLoading(true)
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/contact`, form)
+            if(response.status === 201){
+                await axios.post(`${import.meta.env.VITE_API_URL}/send-email`, form)
+                setProcess("ok")
+            }
+        } catch (error) {
+            setError(true)
+            console.error("Error submitting the form:", error)
+        } finally {
+            setLoading(false)
+            setError(false)
+        }
     }
+
+    if(loading) return <Loader />
+    if(process === "ok") return <ProcessOk processMessage={"Contacto Enviado Exitosamente."} />
+    if(error) return <Error errorMessage={"Error en el Envío, Intenta Nuevamente."} />
 
     return(
         <>
@@ -74,7 +86,7 @@ const ContactForm = () => {
                 {form.projectOption && form.projectOption !== "new" && (
                 <div className="input-animate">
                     <label htmlFor="currentUrl">{texts[language].contact.current}</label>
-                    <input className="input-animate-field" type="url" name="currentUrl" id="currentUrl" value={form.currentUrl} placeholder="https://example.com" onChange={(e) => setForm({ ...form, currentUrl: e.target.value })} required/>
+                    <input className="input-animate-field" type="text" name="currentUrl" id="currentUrl" value={form.currentUrl} placeholder="https://example.com" onChange={(e) => setForm({ ...form, currentUrl: e.target.value })} required/>
                 </div>
                 )}
 

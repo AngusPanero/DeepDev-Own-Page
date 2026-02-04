@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { auth } from "../firebase/firebase.js"
+import { sendPasswordResetEmail } from "firebase/auth";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +52,8 @@ export const SessionProvider = ({ children }) => {
 
             {/* CUSTOM CLAIMS */}
             const customClaims = await userCredentials.user.getIdTokenResult();
-
+            console.log("Admin: ", customClaims.claims.admin);
+            
             if(customClaims.claims.banned){
                 await auth.signOut(); 
                 setUser(null);
@@ -61,9 +63,15 @@ export const SessionProvider = ({ children }) => {
 
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { idToken }, { withCredentials: true })
             if(response.status === 200){
-                navigate("/admin")
-                return true
+                if(customClaims.claims.admin === true){
+                    navigate("/admin")
+                    return true
+                } else {
+                    navigate("/dashboard")
+                    return true
+                }
             }
+
         } catch (error) {
                 if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
                     try {
@@ -112,11 +120,41 @@ export const SessionProvider = ({ children }) => {
             setLoading(false)
         }
     }
+
+    // Reset Password
+    const handleResetPassword = async (email) => {
+        try {
+            if(!email){
+                alert("Por favor, ingresa tu email para restablecer la contraseña.");
+                return;
+            } else {
+                await sendPasswordResetEmail(auth, email);
+                alert("¡Email enviado! Revisa tu bandeja de entrada.");
+            }
+            
+        } catch (error) {
+            console.error("Error al enviar el email:", error.code);
+
+            switch (error.code) {
+                case "auth/user-not-found":
+                    alert("No existe ninguna cuenta vinculada a este correo electrónico.");
+                    break;
+                case "auth/invalid-email":
+                    alert("El formato del correo no es válido.");
+                    break;
+                case "auth/too-many-requests":
+                    alert("Demasiados intentos. Por favor, intenta más tarde.");
+                    break;
+                default:
+                    alert("Ocurrió un error inesperado. Inténtalo de nuevo.");
+            }
+        }
+    }
+
     // Refresh
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if(firebaseUser){
-                console.log("refresh:", firebaseUser);
                 
                 setUser(firebaseUser)
                 await firebaseUser.getIdToken()
@@ -164,7 +202,7 @@ export const SessionProvider = ({ children }) => {
     }
 
     return(
-        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, AutoLogout, error, setError, loading, setLoading, user, setUser }}>
+        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, AutoLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser }}>
             { children }
         </SessionContext.Provider>
     )

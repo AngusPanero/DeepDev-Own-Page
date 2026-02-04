@@ -10,11 +10,15 @@ import Dashboard from "../pages/Dashboard";
 import AdminDashboard from "../pages/AdminDashboard";
 import PrivateRoute from "./PrivateRoute";
 import { SessionProvider } from "../contexts/SessionContext";
+import Error404 from "../pages/Error404";
+import PoliticaCookies from "../pages/PoliticaCookies";
+import Cookies from "../components/sections/Cookies";
 
 const AppRouter = () => {
     return (
         <Router>
             <SessionProvider>
+                <Cookies />
                 <NavBar />
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -22,8 +26,11 @@ const AppRouter = () => {
                     <Route path="/products" element={<Products />} />
                     <Route path="/raffles" element={<Raffles />} />
                     <Route path="/company" element={<Company />} />
+                    <Route path="/policy" element={<PoliticaCookies />} />
+                    <Route path="/*" element={<Error404 errorMessage404={"404 - Página no encontrada."} />} />
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                    <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+                    {/* Tiene Acceso solo el admin con la prop pasada */}
+                    <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
                 </Routes>
                 <Footer />
             </SessionProvider>

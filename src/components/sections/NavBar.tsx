@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import logo from "../../../public/images/DeepDev Logo.jpg"
+import logo from "/images/DeepDev Logo.jpg"
 import "../../styles/navBar.css"
 import Login from "./Login";
-import moon from "../../../public/logos/moon2.svg"
-import sun from "../../../public/logos/sun.svg"
+import moon from "/logos/moon2.svg"
+import sun from "/logos/sun.svg"
 import useLanguage from "../../contexts/LanguageContext";
 import useTheme from "../../contexts/ThemeContext";
 import NavBarMobile from "./NavBarMobile";
@@ -78,6 +78,7 @@ const NavBar = () => {
                 <nav className="nav-desktop">
                     <ul style={{ display: "flex", gap: "5rem"}}>
                         <li><Link to="/products">{texts[language].nav.products}</Link></li>
+                        <li><Link to="/sales">Ventas</Link></li>
                         <li><Link to="/company">{texts[language].nav.company}</Link></li>
                         <li><Link to="/raffles">{texts[language].nav.raffles}</Link></li>
                         <li><Link to="/contact">{texts[language].nav.contact}</Link></li>

@@ -87,10 +87,10 @@ const ProductsInfo = () => {
                     </motion.p>
 
                     <motion.div className="web-apps-icons" style={{ marginTop: "1rem" }}>
-                        <FloatingIcon src="../../../public/logos/chrome.svg" delay={0} translateX={20} translateY={50}  />
-                        <FloatingIcon src="../../../public/logos/safari2.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src="../../../public/logos/firefox.svg" delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/edge.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="/logos/chrome.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="/logos/safari2.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src="/logos/firefox.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="/logos/edge.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
                 </div> 
             </div>
@@ -104,10 +104,10 @@ const ProductsInfo = () => {
 
                 <div className="app-text-icons-section">
                     <motion.div className="web-apps-icons" style={{ marginTop: "2rem" }}>
-                        <FloatingIcon src="../../../public/logos/appstore.svg" delay={0} translateX={20} translateY={50}  />
-                        <FloatingIcon src="../../../public/logos/playstore.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src={`../../../public/logos/${theme === "dark" ? "apple" : "apple2"}.svg`} delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/android2.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="/logos/appstore.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="/logos/playstore.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src={`/logos/${theme === "dark" ? "apple" : "apple2"}.svg`} delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="/logos/android2.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
 
                     <motion.p className="p-apps" style={{ ...gradientBase, opacity: opacity2, x: x2 }} 
@@ -131,10 +131,10 @@ const ProductsInfo = () => {
                     </motion.p>
 
                     <motion.div className="web-apps-icons" style={{ marginTop: "2rem" }}>
-                        <FloatingIcon src="../../../public/logos/soft.svg" delay={0} translateX={20} translateY={50}  />
-                        <FloatingIcon src="../../../public/logos/graf.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src="../../../public/logos/ingenieria.svg" delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/flow.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="/logos/soft.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="/logos/graf.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src="/logos/ingenieria.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="/logos/flow.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
                 </div> 
             </div>     
@@ -148,10 +148,10 @@ const ProductsInfo = () => {
 
                 <div className="ai-icons-section">
                     <motion.div className="web-apps-icons" style={{ marginTop: "2rem" }}>
-                        <FloatingIcon src="../../../public/logos/brain.svg" delay={0} translateX={20} translateY={50}  />
-                        <FloatingIcon src="../../../public/logos/cubo.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src="../../../public/logos/platform.svg" delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/chat.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="/logos/brain.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="/logos/cubo.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src="/logos/platform.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="/logos/chat.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
 
                     <motion.p className="p-ai" style={{ ...gradientBase, opacity: opacity4, x: x4 }} 
@@ -175,10 +175,10 @@ const ProductsInfo = () => {
                     </motion.p>
 
                     <motion.div className="web-apps-icons" style={{ marginTop: "2rem"}}>
-                        <FloatingIcon src="../../../public/logos/recycle.svg" delay={0} translateX={20} translateY={50}  />
-                        <FloatingIcon src="../../../public/logos/work.svg" delay={1.2} translateX={20} translateY={240} />
-                        <FloatingIcon src="../../../public/logos/ingenieria.svg" delay={0.6} translateX={-60} translateY={-50} />
-                        <FloatingIcon src="../../../public/logos/flow.svg" delay={1.8} translateX={-50} translateY={120} />
+                        <FloatingIcon src="/logos/recycle.svg" delay={0} translateX={20} translateY={50}  />
+                        <FloatingIcon src="/logos/work.svg" delay={1.2} translateX={20} translateY={240} />
+                        <FloatingIcon src="/logos/ingenieria.svg" delay={0.6} translateX={-60} translateY={-50} />
+                        <FloatingIcon src="/logos/flow.svg" delay={1.8} translateX={-50} translateY={120} />
                     </motion.div>
                 </div> 
             </div>  

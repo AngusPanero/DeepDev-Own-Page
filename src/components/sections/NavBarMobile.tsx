@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { forwardRef } from "react";
-import moon from "../../../public/logos/moon2.svg"
-import sun from "../../../public/logos/sun.svg"
+import moon from "/logos/moon2.svg"
+import sun from "/logos/sun.svg"
 import useSession from "../../contexts/SessionContext";
 
 const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }, ref) => {
@@ -12,6 +12,7 @@ const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleThem
             <nav className="mobile-nav-links">
                 <Link to="/" onClick={closeMenu}> {texts[language].footer.navigation[0]}</Link>
                 <Link to="/products" onClick={closeMenu}>{texts[language].nav.products}</Link>
+                <Link to="/sales" onClick={closeMenu}>Ventas</Link>
                 <Link to="/company" onClick={closeMenu}>{texts[language].nav.company}</Link>
                 <Link to="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</Link>
                 <Link to="/contact" onClick={closeMenu}>{texts[language].nav.contact}</Link>

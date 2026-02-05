@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import "../../styles/company.css";
 import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
 import useTheme from '../../contexts/ThemeContext';
-import TubesCursor from '../ui/TubesCursor';
 
 const Company: React.FC = () => {
     const { language, texts } = useLanguage() as LanguageContextType
@@ -29,8 +28,6 @@ const Company: React.FC = () => {
   ];
 
   return (
-    <>
-    <TubesCursor />
     <section className={`company-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
         <div className="badge-new">{texts[language].company.dna}</div>
@@ -104,7 +101,6 @@ const Company: React.FC = () => {
         <Link to="/contact" className="cta-button">{texts[language].company.talkButton}</Link>
       </motion.div>
     </section>
-    </>
   );
 };
 

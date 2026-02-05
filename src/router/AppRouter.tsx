@@ -13,6 +13,7 @@ import { SessionProvider } from "../contexts/SessionContext";
 import Error404 from "../pages/Error404";
 import PoliticaCookies from "../pages/PoliticaCookies";
 import Cookies from "../components/sections/Cookies";
+import Sales from "../pages/Sales";
 
 const AppRouter = () => {
     return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/sales" element={<Sales />} />
                     <Route path="/raffles" element={<Raffles />} />
                     <Route path="/company" element={<Company />} />
                     <Route path="/policy" element={<PoliticaCookies />} />

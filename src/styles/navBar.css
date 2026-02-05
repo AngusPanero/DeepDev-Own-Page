@@ -25,8 +25,12 @@
     -moz-appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 2px center;
     background-size: 25px;
+}
+
+select.nav-buttons.lan{
+    width: 105px;
 }
 
 .nav-buttons{
@@ -195,6 +199,16 @@ li a:hover {
     height: 3px;
     background-color: white;
     transition: 0.3s;
+}
+
+select.nav-buttons.lan{
+    width: 105px;
+}
+
+@media (max-width: 768px) {
+    select.nav-buttons.lan{
+    width: 100%;
+}
 }
 
 @media (max-width: 1024px) {

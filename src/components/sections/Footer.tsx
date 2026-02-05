@@ -21,6 +21,7 @@ const Footer = () => {
                     <ul className="footer-list">
                     <li><Link to="/">{texts[language].footer.navigation[0]}</Link></li>
                     <li><Link to="/products">{texts[language].footer.navigation[1]}</Link></li>
+                    <li><Link to="/sales">Ventas</Link></li>
                     <li><Link to="/company">{texts[language].footer.navigation[2]}</Link></li>
                     <li><Link to="/raffles">{texts[language].footer.navigation[3]}</Link></li>
                     <li><Link to="/contact">{texts[language].footer.navigation[4]}</Link></li>

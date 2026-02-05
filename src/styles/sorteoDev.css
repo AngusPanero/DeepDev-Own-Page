@@ -79,6 +79,11 @@
 /* 🧠 Titles                      */
 /* ============================== */
 
+h2.title-raffle{
+    margin: 0;
+    padding-left: 3rem;
+}
+
 .dev-card h2 {
     text-align: center;
     font-size: 26px;

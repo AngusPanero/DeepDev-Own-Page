@@ -1,3 +1,4 @@
+import CheckoutPayment from "../components/sections/CheckoutPayment";
 import SalesCard from "../components/sections/SalesCard";
 import TubesCursor from "../components/ui/TubesCursor";
 import useTheme from "../contexts/ThemeContext";
@@ -67,9 +68,8 @@ const Sales = () => {
                     <SalesCard key={index} {...plan} />
                 ))}
             </div>
-            <TubesCursor />
+            {/* <TubesCursor /> */}
         </div>
-        
         </>
     );
 };

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import useTheme from '../../contexts/ThemeContext';
+import CheckoutPayment from './CheckoutPayment';
 import "../../styles/sales.css"
 
 interface Feature {
@@ -19,8 +20,10 @@ interface SalesCardProps {
 
 const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, features, buttonText, isFeatured }) => {
     const { theme } = useTheme();
+    const [ openCheck, setOpenCheck ] = useState<boolean>(false)
 
     return (
+        <>
         <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             whileInView={{ opacity: 1, y: 0 }}
@@ -54,11 +57,11 @@ const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, featur
                     ))}
                 </div>
 
-                <button className="sales-action-btn">
-                    {buttonText}
-                </button>
+                <button className="sales-action-btn" onClick={() => setOpenCheck(!openCheck)}>{buttonText}</button>
             </div>
         </motion.div>
+        { openCheck && <CheckoutPayment productData={{ name: title, price: price }} openPayment={() => setOpenCheck(false)} /> }
+        </>
     );
 };
 

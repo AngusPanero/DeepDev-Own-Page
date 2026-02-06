@@ -1,27 +1,54 @@
-.section-checkout {
+.checkout-container{
     position: fixed;
     top: 0;
     right: 0;
     width: 25vw;
-    min-width: 380px; /* Un poquito más ancho para los campos de tarjeta */
+    min-width: 360px;
     height: 100vh;
     z-index: 1000;
+
     display: flex;
     flex-direction: column;
-    padding: 3.5rem 2rem;
+    justify-content: center;
+    padding: 3.5rem 3rem;
     backdrop-filter: blur(20px);
     border-left: 2px solid #7b29ff;
+
     color: #fff;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
+
     animation: slideInRight 0.6s ease-out forwards;
-    overflow-y: auto; /* Por si el contenido es largo en pantallas bajas */
 }
 
-.section-checkout.exit {
+.checkout-container.exit{
     animation: slideOutRight 0.6s ease-in forwards;
 }
 
-/* Reutilizamos tus clases del form */
+/* Animations */
+@keyframes slideInRight{
+    from{ transform: translateX(100%); opacity: 0; }
+    to{ transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight{
+    from{ transform: translateX(0); opacity: 1; }
+    to{ transform: translateX(100%); opacity: 0; }
+}
+
+/* Close */
+.close-button{
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-button:hover{ color: #fff; }
+
 .checkout-form {
     display: flex;
     flex-direction: column;
@@ -35,10 +62,14 @@
     width: 100%;
 }
 
+.card-row .numbers{
+    width: 100%
+}
+
 .checkout-title {
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
+    font-size: 3rem;
     font-weight: 700;
     margin-bottom: 0.3rem;
     color: #fff;
@@ -47,12 +78,11 @@
 .checkout-subtitle {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     color: #b3b3b3;
     margin-bottom: 2rem;
 }
 
-/* Estilo para los inputs (basado en tu .input-group input) */
 .checkout-input-group {
     display: flex;
     flex-direction: column;
@@ -60,9 +90,14 @@
 }
 
 .checkout-input-group label {
-    font-size: 0.9rem;
-    color: #cfcfcf;
+    font-size: 1rem;
+    color: #c0c0c0;
     margin-left: 0.5rem;
+}
+
+.checkout-input::placeholder {
+    font-size: 15px;
+    color: #e2e2e2a9;
 }
 
 .checkout-input {
@@ -81,7 +116,7 @@
     box-shadow: 0 0 0 1px rgba(142,45,226,0.4);
 }
 
-.checkout-btn {
+button.checkout-btn {
     font-family: 'Montserrat', sans-serif;
     margin-top: 1.5rem;
     padding: 1rem;
@@ -98,18 +133,132 @@
 .checkout-btn:hover { filter: brightness(1.1); box-shadow: 0 0 15px rgba(142,45,226,0.4); }
 .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* Mensajes de Éxito */
-.success-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    text-align: center;
+
+/* LIGHT */
+.theme-light.checkout-container {
+    border-left: 2px solid #0062ff;
+    color: #1e293b;
 }
 
-.check-mark {
-    font-size: 4rem;
-    color: #00ffaa;
-    margin-bottom: 1rem;
+.theme-light .checkout-title {
+    color: #0062ff; /* Azul eléctrico para el título principal */
+}
+
+.theme-light .checkout-subtitle {
+    color: #292e35; /* Gris intermedio */
+}
+
+/* Etiquetas e Inputs */
+.theme-light .checkout-input-group label {
+    color: #334155;
+    font-weight: 500;
+}
+
+.theme-light .checkout-input {
+    background: rgba(0, 98, 255, 0.05); /* Fondo blanco con un toque de azul */
+    border: 1px solid rgba(0, 98, 255, 0.2);
+    color: #000;
+}
+
+.theme-light .checkout-input::placeholder {
+    font-size: 15px;
+    color: #474e57;
+}
+
+.theme-light .checkout-input:focus {
+    border-color: #0062ff;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(0, 98, 255, 0.2);
+}
+
+/* Botón de cierre */
+.theme-light .close-button {
+    color: #64748b;
+}
+
+.theme-light .close-button:hover {
+    color: #0062ff;
+}
+
+/* Botón de Pago (Azul Eléctrico) */
+.theme-light .checkout-btn {
+    background: linear-gradient(135deg, #0062ff, #0041ab);
+    box-shadow: 0 4px 12px rgba(0, 98, 255, 0.3);
+}
+
+.theme-light .checkout-btn:hover {
+    box-shadow: 0 6px 18px rgba(0, 98, 255, 0.4);
+}
+
+/* --- MEDIA QUERIES --- */
+
+@media (max-width: 1024px) {
+    .checkout-container {
+        width: 50vw;
+        padding: 2.5rem 2rem;
+    }
+
+    .checkout-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        width: 100vw;      
+        height: 100vh;     
+        min-width: 100vw;
+        border-left: none; 
+        
+        
+        justify-content: flex-start; 
+        overflow-y: auto;          
+        padding: 4rem 1.5rem 2rem 1.5rem;
+    }
+
+
+    .theme-light.checkout-container {
+        border-left: none;
+    }
+
+    .checkout-title {
+        font-size: 2.2rem;
+        margin-top: 1rem;
+    }
+
+    .checkout-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+
+    .visual-card-container {
+        max-width: 100%;
+        height: 170px;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-number-display {
+        font-size: 1.2rem;
+    }
+
+    .checkout-input {
+        height: 40px;
+        padding: 1rem;
+        font-size: 16px;
+    }
+
+    .card-row {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-container {
+        padding: 3.5rem 1rem 1rem 1rem;
+    }
+
+    .checkout-title {
+        font-size: 1.8rem;
+    }
 }

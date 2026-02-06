@@ -12,12 +12,12 @@ const PoliticaCookies = () => {
                 </p>
 
                 <div className="cookies-content-body">
-                    <h2>¿Qué son las cookies?</h2>
+                    <h3>¿Qué son las cookies?</h3>
                     <p className="cookies-text">
                         Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitás un sitio web. Sirven para recordar tus preferencias y ayudarte a tener una experiencia más fluida.
                     </p>
 
-                    <h2>¿Qué tipos de cookies usamos?</h2>
+                    <h3>¿Qué tipos de cookies usamos?</h3>
                     <ul className="cookies-list">
                         <li><strong>Cookies esenciales:</strong> Necesarias para que el sitio funcione.</li>
                         <li><strong>Cookies de rendimiento:</strong> Analizan el uso del sitio.</li>
@@ -25,7 +25,7 @@ const PoliticaCookies = () => {
                         <li><strong>Cookies de terceros:</strong> Servicios externos como redes sociales.</li>
                     </ul>
 
-                    <h2>¿Cómo puedo gestionar las cookies?</h2>
+                    <h3>¿Cómo puedo gestionar las cookies?</h3>
                     <p className="cookies-text">
                         Podés configurar tu navegador para aceptar o rechazar cookies. Tené en cuenta que desactivar ciertas cookies puede afectar la funcionalidad del sitio.
                     </p>

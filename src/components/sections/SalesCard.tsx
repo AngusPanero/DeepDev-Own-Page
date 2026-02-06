@@ -44,7 +44,7 @@ const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, featur
             <div className="sales-card-body">
                 <h3 className="sales-plan-name">{title}</h3>
                 <div className="sales-price-section">
-                    <span className="sales-amount">${price},.</span>
+                    <span className="sales-amount">${price},-</span>
                 </div>
                 <p className="sales-description">{description}</p>
 

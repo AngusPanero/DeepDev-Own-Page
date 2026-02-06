@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 
+declare global {
+    interface Window {
+        MercadoPago: any;
+    }
+}
+
 const useMercadoPago = () => {
     const [ mp, setMp ] = useState<any>(null);
 

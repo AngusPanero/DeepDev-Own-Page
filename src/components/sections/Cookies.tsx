@@ -8,7 +8,6 @@ const Cookies = () => {
     const { theme } = useTheme()
 
     useEffect(() => {
-        localStorage.clear()
         const accepted = localStorage.getItem("cookiesAccepted");
         if (!accepted) {
             const timer = setTimeout(() => setVisible(true), 4000);

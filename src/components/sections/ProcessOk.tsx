@@ -4,7 +4,7 @@ import "../../styles/error.css";
 import useTheme from "../../contexts/ThemeContext";
 import useSession from "../../contexts/SessionContext";
 
-const ProcessOk = ({processMessage}) => {
+const ProcessOk = ({ processMessage }) => {
     const { theme } = useTheme()
     const navigate = useNavigate();
 

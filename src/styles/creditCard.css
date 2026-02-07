@@ -27,7 +27,6 @@
     padding: 25px;
     color: #fff;
     
-    /* Fondo animado de 4 colores */
     background: linear-gradient(-45deg, #0062ff, #4a00e0, #7b29ff, #00d4ff);
     background-size: 400% 400%;
     animation: gradientMovement 8s ease infinite;

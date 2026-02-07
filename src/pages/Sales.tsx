@@ -9,45 +9,62 @@ const Sales = () => {
 
     const plans = [
     {
-        title: "Landing Basic",
+        title: "Plan Landing Basic",
         price: "199000",
         subtitle: "Tu primera huella digital",
         buttonText: "Contratar Ahora",
         features: [
-            { text: "Diseño One-Page moderno", included: true },
+            { text: "Interfaz de usuario moderna", included: true },
+            { text: "Acceso a catálogo 3D", included: true },
+            { text: "Mailing profesional", included: false },
+            { text: "Experiencia de usuario pro", included: true },
+            { text: "Optimización SEO básica", included: true },
+            { text: "Hasta 4 secciones personalizadas", included: true },
             { text: "Optimización SEO básica", included: true },
             { text: "Formulario de contacto", included: true },
-            { text: "Panel de administración", included: false },
+            { text: "Panel de administrador", included: false },
+            { text: "Modo claro/oscuro", included: false },
+            { text: "Chat-Bot Inteligencia Artificial", included: false },
+            { text: "Reseñas de Google", included: false },
         ]
     },
     {
-        title: "Landing Pro",
-        price: "299000",
+        title: "Plan Landing Pro",
+        price: "249000",
         subtitle: "Enfocada en conversiones",
         isPopular: true,
         buttonText: "Contratar Ahora",
         features: [
+            { text: "Interfaz de usuario moderna", included: true },
+            { text: "Responsive para celulares", included: true },
+            { text: "Acceso a catálogo 3D", included: true },
+            { text: "Mailing profesional", included: true },
+            { text: "Experiencia de usuario pro", included: true },
             { text: "Hasta 5 secciones personalizadas", included: true },
-            { text: "Copywriting persuasivo", included: true },
+            { text: "Optimización SEO avanzada", included: true },
             { text: "Integración con Analytics/Pixel", included: true },
-            { text: "Blog o sección de noticias", included: true },
+            { text: "Formulario de contacto", included: true },
+            { text: "Panel de administrador", included: true },
+            { text: "Modo Claro-Oscuro", included: true },
+            { text: "Chat-Bot Inteligencia Artificial", included: true },
+            { text: "Reseñas de Google", included: true },
         ]
     },
     {
-        title: "E-shop Lite",
+        title: "Plan E-Commerce Lite",
         price: "299000",
         subtitle: "Empieza a vender online",
         buttonText: "Contratar Ahora",
         features: [
             { text: "Carrito de compras", included: true },
             { text: "Gestión de hasta 50 productos", included: true },
-            { text: "Pasarela de pagos (Stripe/PayPal)", included: true },
+            { text: "Pasarela de pagos Mercado Pago", included: true },
             { text: "Sincronización de stock real", included: false },
         ]
     },
     {
-        title: "E-shop Full",
-        price: "399000",
+        title: "Plan E-Commerce Full",
+        price: "349000",
         subtitle: "Un ecosistema de ventas",
         buttonText: "Contratar Ahora",
         features: [
@@ -68,7 +85,7 @@ const Sales = () => {
                     <SalesCard key={index} {...plan} />
                 ))}
             </div>
-            {/* <TubesCursor /> */}
+            <TubesCursor />
         </div>
         </>
     );

@@ -4,19 +4,9 @@ import useTheme from '../../contexts/ThemeContext';
 import CheckoutPayment from './CheckoutPayment';
 import "../../styles/sales.css"
 
-interface Feature {
-    text: string;
-    included: boolean;
-}
+interface Feature { text: string;included: boolean; }
 
-interface SalesCardProps {
-    title: string;
-    price: string;
-    description: string;
-    features: Feature[];
-    buttonText: string;
-    isFeatured?: boolean;
-}
+interface SalesCardProps { title: string; price: string; description: string; features: Feature[]; buttonText: string; isFeatured?: boolean; }
 
 const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, features, buttonText, isFeatured }) => {
     const { theme } = useTheme();
@@ -42,11 +32,11 @@ const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, featur
             </div>
 
             <div className="sales-card-body">
-                <h3 className="sales-plan-name">{title}</h3>
+                <h2 className="sales-plan-name">{title}</h2>
                 <div className="sales-price-section">
                     <span className="sales-amount">${price},-</span>
                 </div>
-                <p className="sales-description">{description}</p>
+                <p className="sales-description">{description}6 Cuotas sin Interes</p>
 
                 <div className="sales-features-list">
                     {features.map((item, index) => (

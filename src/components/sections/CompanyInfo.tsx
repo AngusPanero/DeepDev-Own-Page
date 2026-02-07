@@ -78,7 +78,7 @@ const Company: React.FC = () => {
         <div className="presence-container">
           <div className="presence-content">
             <div className="badge-new">{texts[language].company.global}</div>
-            <h3>{texts[language].company.globalTitle}</h3>
+            <h2>{texts[language].company.globalTitle}</h2>
             <p>
               {texts[language].company.globalText}
             </p>

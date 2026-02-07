@@ -120,10 +120,11 @@ const CheckoutPayment = ({ openPayment, productData }) => {
     return(
         <div ref={checkoutRef} className={`checkout-container ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
-            {/* <h2 className="checkout-title">Checkout</h2>
-            <p className="checkout-subtitle">{productData.name} — ${productData.price}</p> */}
-
+            {/* <h2 className="checkout-title">Checkout</h2> */}
+        
             <CreditCard data={formData} isFlipped={isFlipped} />
+
+            <p className="checkout-subtitle">{productData.name} — ${productData.price}</p>
 
             <form className="checkout-form" onSubmit={makePayment}>
                 
@@ -143,11 +144,11 @@ const CheckoutPayment = ({ openPayment, productData }) => {
                         <input name="dni" placeholder="Número" onChange={handleChange} className="checkout-input" required />
                     </div>
                     <div className="checkout-input-group" style={{ flex: 1 }}>
-                        <label>Cuotas</label>
+                        <label>Cuotas sin interes</label>
                         <select name="cuotas" onChange={handleChange} className="checkout-input">
-                            <option value="1">1</option>
-                            <option value="3">3</option>
-                            <option value="6">6</option>
+                            <option value="1">1 Pago ${productData.price}</option>
+                            <option value="3">3 Pagos ${Math.round(productData.price / 3)}</option>
+                            <option value="6">6 Pagos ${Math.round(productData.price / 6)}</option>
                         </select>
                     </div>
                 </div>

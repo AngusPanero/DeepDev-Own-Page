@@ -76,11 +76,11 @@
 }
 
 .checkout-subtitle {
+    margin: 0;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     font-size: 1.3rem;
     color: #b3b3b3;
-    margin-bottom: 2rem;
 }
 
 .checkout-input-group {

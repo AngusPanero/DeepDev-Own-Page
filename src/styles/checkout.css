@@ -5,7 +5,7 @@
     width: 25vw;
     min-width: 360px;
     height: 100vh;
-    z-index: 1000;
+    z-index: 10000;
 
     display: flex;
     flex-direction: column;
@@ -133,6 +133,13 @@ button.checkout-btn {
 .checkout-btn:hover { filter: brightness(1.1); box-shadow: 0 0 15px rgba(142,45,226,0.4); }
 .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+
+/*SELECT OPTIONS*/
+.checkout-input option {
+    font-family: 'Montserrat', sans-serif;
+    background: transparent;
+    color: black;
+}
 
 /* LIGHT */
 .theme-light.checkout-container {

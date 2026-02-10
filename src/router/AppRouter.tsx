@@ -14,6 +14,8 @@ import Error404 from "../pages/Error404";
 import PoliticaCookies from "../pages/PoliticaCookies";
 import Cookies from "../components/sections/Cookies";
 import Sales from "../pages/Sales";
+import RaffleTerms from "../pages/RaffleTerms";
+import GTMHandler from "../utils/GTMHandler";
 
 const AppRouter = () => {
     return (
@@ -21,6 +23,7 @@ const AppRouter = () => {
             <SessionProvider>
                 <Cookies />
                 <NavBar />
+                <GTMHandler />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/contact" element={<Contact />} />
@@ -29,6 +32,7 @@ const AppRouter = () => {
                     <Route path="/raffles" element={<Raffles />} />
                     <Route path="/company" element={<Company />} />
                     <Route path="/policy" element={<PoliticaCookies />} />
+                    <Route path="/raffle-terms" element={<RaffleTerms />} />
                     <Route path="/*" element={<Error404 errorMessage404={"404 - Página no encontrada."} />} />
                     <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                     {/* Tiene Acceso solo el admin con la prop pasada */}

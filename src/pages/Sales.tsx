@@ -1,4 +1,3 @@
-import CheckoutPayment from "../components/sections/CheckoutPayment";
 import SalesCard from "../components/sections/SalesCard";
 import TubesCursor from "../components/ui/TubesCursor";
 import useTheme from "../contexts/ThemeContext";
@@ -19,7 +18,7 @@ const Sales = () => {
             { text: "Mailing profesional", included: false },
             { text: "Experiencia de usuario pro", included: true },
             { text: "Optimización SEO básica", included: true },
-            { text: "Hasta 4 secciones personalizadas", included: true },
+            { text: "4 secciones personalizadas", included: true },
             { text: "Optimización SEO básica", included: true },
             { text: "Formulario de contacto", included: true },
             { text: "Panel de administrador", included: false },
@@ -40,7 +39,7 @@ const Sales = () => {
             { text: "Acceso a catálogo 3D", included: true },
             { text: "Mailing profesional", included: true },
             { text: "Experiencia de usuario pro", included: true },
-            { text: "Hasta 5 secciones personalizadas", included: true },
+            { text: "5 secciones personalizadas", included: true },
             { text: "Optimización SEO avanzada", included: true },
             { text: "Integración con Analytics/Pixel", included: true },
             { text: "Formulario de contacto", included: true },
@@ -79,7 +78,7 @@ const Sales = () => {
     return (
         <>
         <div className={`sales-page-container ${theme === "light" ? "theme-light" : "theme-dark"}`}>
-            <h1 className="sales-title">Aplicaciones Webs Disponibles:</h1>
+            {/* <h1 className="sales-title">Aplicaciones Webs Disponibles:</h1> */}
             <div className="sales-grid">
                 {plans.map((plan, index) => (
                     <SalesCard key={index} {...plan} />

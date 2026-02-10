@@ -8,22 +8,22 @@ const LogoCarrousel = () => {
     const { theme } = useTheme()
 
     const logos = [
-        "../../../public/logos/aftereffects.svg",
-        "../../../public/logos/android.svg",
-        "../../../public/logos/aws.svg",
-        "../../../public/logos/azure.svg",
-        "../../../public/logos/react.svg",
-        "../../../public/logos/css.svg",
-        "../../../public/logos/html.svg",
-        "../../../public/logos/illustrator.svg",
-        "../../../public/logos/ios.svg",
-        "../../../public/logos/microsoft.svg",
-        "../../../public/logos/mongo.svg",
-        "../../../public/logos/photoshop.svg",
-        "../../../public/logos/postman.svg",
-        "../../../public/logos/premiere.svg",
-        "../../../public/logos/python.svg",
-        "../../../public/logos/typescript.svg",
+        "/logos/aftereffects.svg",
+        "/logos/android.svg",
+        "/logos/aws.svg",
+        "/logos/azure.svg",
+        "/logos/react.svg",
+        "/logos/css.svg",
+        "/logos/html.svg",
+        "/logos/illustrator.svg",
+        "/logos/ios.svg",
+        "/logos/microsoft.svg",
+        "/logos/mongo.svg",
+        "/logos/photoshop.svg",
+        "/logos/postman.svg",
+        "/logos/premiere.svg",
+        "/logos/python.svg",
+        "/logos/typescript.svg",
     ]
 
     const trackRef = useRef<HTMLDivElement>(null);

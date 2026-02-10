@@ -102,6 +102,7 @@ const CheckoutPayment = ({ openPayment, productData }) => {
                 
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
                 if (response.data.status === "approved") {
+                    await axios.post(`${import.meta.env.VITE_API_URL}/ticket-order`, { name: formData.nombre, plan: productData.title, price: productData.price, email: formData.email });
                     setStatus("ok");
                 } else {
                     setError("El pago fue rechazado. Verifique sus fondos o tarjeta.");
@@ -144,7 +145,7 @@ const CheckoutPayment = ({ openPayment, productData }) => {
                         <input name="dni" placeholder="Número" onChange={handleChange} className="checkout-input" required />
                     </div>
                     <div className="checkout-input-group" style={{ flex: 1 }}>
-                        <label>Cuotas sin interes</label>
+                        <label>Cuotas</label>
                         <select name="cuotas" onChange={handleChange} className="checkout-input">
                             <option value="1">1 Pago ${productData.price}</option>
                             <option value="3">3 Pagos ${Math.round(productData.price / 3)}</option>

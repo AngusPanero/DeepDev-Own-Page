@@ -7,18 +7,23 @@ import RaffleInfo from '../sections/RaffleInfo';
 import CountDown from './CountDown';
 import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
 import useTheme from '../../contexts/ThemeContext';
+import axios from 'axios';
+import Error from '../sections/Error';
+import Loader from '../sections/Loader';
 
 const SorteoDev: React.FC = () => {
     const { language, texts } = useLanguage() as LanguageContextType
     const { theme } = useTheme()
 
-    const [ status, setStatus ] = useState<'idle' | 'registered' | 'winner'>('idle');
-    const [ user, setUser ] = useState({ nombre: '', email: '', proyecto: '' });
+    const [ status, setStatus ] = useState<string>('');
+    const [ user, setUser ] = useState({ fullName: '', email: '', telefono: '', description: '' });
     const [ showConfetti, setShowConfetti ] = useState(false);
     const [ hoverParticles, setHoverParticles ] = useState(false);
     const [ check, setCheck ] = useState(false)
     const [ shake, setShake ] = useState(false);
     const [ timeLeft, setTimeLeft ] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [ error, setError ] = useState<boolean>(false)
+    const [ loading, setLoading ] = useState<boolean>(false)
 
     useEffect(() => {
             const target = new Date("2026-02-15T00:00:00").getTime();
@@ -42,20 +47,32 @@ const SorteoDev: React.FC = () => {
             return () => clearInterval(timer);
         }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!check) {
             setShake(true);
             setTimeout(() => setShake(false), 10000); 
             return; 
         }
-        setStatus('registered');
+        try {
+            setStatus("")
+            setError(false)
+            setLoading(true)
 
-        setTimeout(() => {
-            setStatus('winner');
-            setShowConfetti(true);
-        }, 3500);
+            await axios.post(`${import.meta.env.VITE_API_URL}/raffle`, { fullName: user.fullName, email: user.email, phone: user.telefono, description: user.description});
+            
+        } catch (error) {
+            setError(true)
+            console.error("Error al generar ticket de sorteo! 🔴")
+        } finally {
+            setStatus("logged")
+            setShowConfetti(true)
+            setLoading(false)
+        }
     };
+
+    if(error) return <Error errorMessage={"Error al inscribirse en el sorteo."} />
+    if(loading) return <Loader />
 
     return (
         <>
@@ -63,13 +80,13 @@ const SorteoDev: React.FC = () => {
             {showConfetti && <Confetti numberOfPieces={1200} height={document.documentElement.scrollHeight} recycle={false} />}
 
             <AnimatePresence mode="wait">
-                {status === 'idle' && (
+                {status === '' && (
                     <motion.div key="form" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, x: -100 }} className={`dev-card ${shake ? 'animate-shake' : ''}`} >
                         <div className="dev-header">
                             <span className="dot red"></span>
                             <span className="dot yellow"></span>
                             <span className="dot green"></span>
-                            <p className="terminal-title">new_{user.nombre === "" ? "raffle" : user.nombre.toLowerCase().replace(" ", "_")}_entry.jsx</p>
+                            <p className="terminal-title">new_{user.fullName === "" ? "raffle" : user.fullName.toLowerCase().replace(" ", "_")}_entry.jsx</p>
                         </div>
                         
                         <h2 className='title-raffle'>&lt;{texts[language].raffles.raffleTitle} /&gt;</h2>
@@ -77,15 +94,19 @@ const SorteoDev: React.FC = () => {
                         <p className="subtitle">{texts[language].raffles.raffleText}</p>
                         <CountDown timeLeft={timeLeft} />
                         <form onSubmit={handleSubmit} className="dev-form">
-                            <input required placeholder={texts[language].raffles.name} onChange={e => setUser({...user, nombre: e.target.value})} />
-                            <input required type="email" placeholder={texts[language].raffles.email} onChange={e => setUser({...user, email: e.target.value})} />
-                            <textarea required placeholder={texts[language].raffles.project} onChange={e => setUser({...user, proyecto: e.target.value})} />
+                            {/* nombre */}
+                            <input name='fullName' required placeholder={texts[language].raffles.name} onChange={e => setUser({...user, fullName: e.target.value})} />
+                            {/* email */}
+                            <input name='email' required type="email" placeholder={texts[language].raffles.email} onChange={e => setUser({...user, email: e.target.value})} />
+                            {/* telefono */}
+                            <input name="phone" required type="number" placeholder="Teléfono" onChange={e => setUser({...user, telefono: e.target.value})} />
+                            <textarea name='description' required placeholder={texts[language].raffles.project} onChange={e => setUser({...user, description: e.target.value})} />
 
                             <div className={`dev-checkbox-group`}>
                                 <label className="checkbox-wrapper">
                                     <input type="checkbox" checked={check} onChange={(e) => setCheck(e.target.checked)} />
                                     <span className="checkmark"></span>
-                                    <span className="label-text">{texts[language].raffles.conditions.before}<a href="/terms" target="_blank" rel="noopener noreferrer">{texts[language].raffles.conditions.link}</a>{texts[language].raffles.conditions.after}</span>
+                                    <span className="label-text">{texts[language].raffles.conditions.before}<a href="/raffle-terms" target="_blank" rel="noopener noreferrer">{texts[language].raffles.conditions.link}</a>{texts[language].raffles.conditions.after}</span>
                                 </label>
                             </div>
                             {shake && <p className="checkbox-warning">You must agree to the terms and conditions to proceed.</p>}
@@ -96,39 +117,20 @@ const SorteoDev: React.FC = () => {
                     </motion.div>
                 )}
 
-                {status === 'registered' && (
-                    <motion.div  key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="loading-stage">
-                        <div className="dev-header">
-                            <span className="dot red"></span>
-                            <span className="dot yellow"></span>
-                            <span className="dot green"></span>
-                            <p className="terminal-title">new_{user.nombre}_entry.jsx</p>
-                        </div>
-                        <div className="spinner-dev"></div>
-                        <p className="typing-text">{texts[language].raffles.processing}</p>
-                        <div className="console-log">
-                            <p>{texts[language].raffles.analyzing}</p>
-                            <p>{texts[language].raffles.verify}: {user.email}</p>
-                            <p>{texts[language].raffles.status}</p>
-                        </div>
-                    </motion.div>
-                )}
-
-                {status === 'winner' && (
+                {status === 'logged' && (
                     <motion.div key="winner" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} className="winner-card" >
                         <div className="dev-header">
                             <span className="dot red"></span>
                             <span className="dot yellow"></span>
                             <span className="dot green"></span>
-                            <p className="terminal-title">new_{user.nombre}_entry.jsx</p>
+                            <p className="terminal-title">new_{user.fullName}_entry.jsx</p>
                         </div>
                         
                         <h1>{texts[language].raffles.registered}</h1>
                         <div className="success-icon">✨</div>
-                        <p style={{ whiteSpace: "pre-line" }} >{texts[language].raffles.thanks.before} <strong>{user.nombre}</strong>. {texts[language].raffles.thanks.after}</p>
+                        <p style={{ whiteSpace: "pre-line" }} >{texts[language].raffles.thanks.before} <strong>{user.fullName}</strong>. {texts[language].raffles.thanks.after}</p>
 
                         <div className="ticket-summary">
-                            <p><strong>ID:</strong> {Math.random().toString(36).substring(7).toUpperCase()}</p>
                             <p>{texts[language].raffles.premio}</p>
                         </div>
 

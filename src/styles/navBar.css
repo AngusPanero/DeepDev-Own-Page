@@ -82,7 +82,7 @@ select.nav-buttons.lan{
     align-items: center;
     justify-content: space-between;
     height: 5.5rem;
-    background: #00000095;
+    background: rgba(0, 0, 0, 0.584);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -155,7 +155,6 @@ li a:hover {
 /* Ajuste del Select de idioma (Flecha en Azul Eléctrico) */
 .theme-light .lan {
     color: #0062FF;
-    /* Cambiado fill='%230062FF' para que la flecha sea azul */
     background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230062FF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
 }
 

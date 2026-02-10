@@ -89,9 +89,9 @@
 .sales-card-body { padding: 25px; }
 .sales-plan-name { font-size: 1.2rem; margin: 0; font-weight: 700; }
 .sales-price-section { margin: 15px 0; font-weight: 800; }
-.sales-amount { font-size: 2.5rem; }
+.sales-amount { font-size: 2.2rem; }
 .sales-period { opacity: 0.6; font-size: 0.9rem; }
-.sales-description { font-size: 0.9rem; opacity: 0.8; margin-bottom: 20px; min-height: 40px; }
+.sales-description { font-size: 1rem; opacity: 0.8; margin-bottom: 2rem; }
 
 /* --- FEATURES --- */
 .sales-features-list { margin-bottom: 25px; }

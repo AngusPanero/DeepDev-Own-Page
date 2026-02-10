@@ -59,8 +59,9 @@
 }
 
 .feature-item {
+    height: 7rem;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
 }
 
@@ -195,6 +196,7 @@
     }
 
     .feature-item {
+        height: 15rem;
         flex-direction: column; /* Icono arriba, texto abajo */
         align-items: center;
         text-align: center;

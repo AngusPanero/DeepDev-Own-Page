@@ -5,8 +5,9 @@ import useLanguage, { type LanguageContextType } from "../../contexts/LanguageCo
 import useTheme from "../../contexts/ThemeContext";
 import Error from "./Error";
 import axios from "axios";
-import ProcessOk from "./processOk";
+import ProcessOk from "./ProcessOk";
 import Loader from "./Loader";
+import TagManager from "react-gtm-module";
 
 const ContactForm = () => {
     const { language, texts } = useLanguage() as LanguageContextType
@@ -25,6 +26,9 @@ const ContactForm = () => {
             setLoading(true)
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/contact`, form)
             if(response.status === 201){
+               TagManager.dataLayer({
+                    event: 'form_contacto_deepdev'
+                });
                 await axios.post(`${import.meta.env.VITE_API_URL}/send-email`, form)
                 setProcess("ok")
             }

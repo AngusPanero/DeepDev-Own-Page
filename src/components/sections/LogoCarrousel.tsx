@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 import "../../styles/logoCarrousel.css"
-import useLanguage from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 const LogoCarrousel = () => {
-    const { language, texts } = useLanguage()
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage()
+    const { theme } = UseTheme()
 
     const logos = [
         "/logos/aftereffects.svg",

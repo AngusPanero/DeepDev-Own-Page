@@ -1,8 +1,8 @@
 import { useState } from "react"
 import "../../styles/contactForm.css"
 import ParticleButton from "../ui/ParticleButton";
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import Error from "./Error";
 import axios from "axios";
 import ProcessOk from "./ProcessOk";
@@ -10,8 +10,8 @@ import Loader from "./Loader";
 import TagManager from "react-gtm-module";
 
 const ContactForm = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage() 
+    const { theme } = UseTheme()
 
     const [ form, setForm ] = useState({ name: "", lastName: "", companyName: "", contactRole: "", email: "", phone: "", projectOption: "", typeOfWork: "", currentUrl: "", description: "", projectGoal: "", budgetRange: "", availableTime: "",})
     const [ hoverParticles, setHoverParticles ] = useState(false);
@@ -28,7 +28,8 @@ const ContactForm = () => {
             if(response.status === 201){
                TagManager.dataLayer({
                     event: 'form_contacto_deepdev'
-                });
+                }as any);
+                
                 await axios.post(`${import.meta.env.VITE_API_URL}/send-email`, form)
                 setProcess("ok")
             }
@@ -48,7 +49,7 @@ const ContactForm = () => {
     return(
         <>
         <div className={`contact-box ${theme === "light" ? "theme-light" : "theme-dark"}`}>
-
+        <div className={`dd-grid-overlay ${theme}`}></div> 
             {/* <div className="footer-section">
                 <ul className="footer-list">
                     <li><a href="mailto:contact@deepdev.dev">deepdevsolutions@gmail.com</a></li>

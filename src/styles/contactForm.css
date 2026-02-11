@@ -11,7 +11,25 @@
     padding: 6rem 1rem;
 }
 
+.dd-grid-overlay.dark{
+    pointer-events: none;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(#1f1f1f 1px, transparent 1px), 
+                      linear-gradient(90deg, #1f1f1f 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.2; z-index: 2;
+}
+
+.dd-grid-overlay.light{
+    pointer-events: none;
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(0, 98, 255, 0.1) 1px, transparent 1px), 
+                      linear-gradient(90deg, rgba(0, 98, 255, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.2; z-index: 2;
+}
+
 .contact-form {
+    position: relative;
+    z-index: 5;
     margin-top: 8rem;
     width: 100%;
     max-width: 720px;

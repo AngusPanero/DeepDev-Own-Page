@@ -5,15 +5,27 @@ import '../../styles/sorteoDev.css';
 import ParticleButton from './ParticleButton';
 import RaffleInfo from '../sections/RaffleInfo';
 import CountDown from './CountDown';
-import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
-import useTheme from '../../contexts/ThemeContext';
+import { UseLanguage }   from '../../contexts/LanguageContext';
+import { UseTheme } from '../../contexts/ThemeContext';
 import axios from 'axios';
 import Error from '../sections/Error';
 import Loader from '../sections/Loader';
 
+interface RaffleTexts {
+  conditions: {
+    before: string;
+  };
+}
+
+interface ITexts {
+  [key: string]: {
+    raffles: RaffleTexts;
+  };
+}
+
 const SorteoDev: React.FC = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage() as { texts: Record<string, any>, language: string }; 
+    const { theme } = UseTheme()
 
     const [ status, setStatus ] = useState<string>('');
     const [ user, setUser ] = useState({ fullName: '', email: '', telefono: '', description: '' });
@@ -63,7 +75,7 @@ const SorteoDev: React.FC = () => {
             
         } catch (error) {
             setError(true)
-            console.error("Error al generar ticket de sorteo! 🔴")
+            console.error("Error al generar ticket de sorteo! 🔴", error)
         } finally {
             setStatus("logged")
             setShowConfetti(true)
@@ -77,6 +89,7 @@ const SorteoDev: React.FC = () => {
     return (
         <>
         <div className={`dev-sorteo-container ${theme === "light" ? "theme-light" : "theme-dark"}`} style={{ marginTop: 0, background: theme === "dark" ? "black" : "#f4f2ff" }}>
+            <div className={`dd-grid-overlay ${theme}`}></div> 
             {showConfetti && <Confetti numberOfPieces={1200} height={document.documentElement.scrollHeight} recycle={false} />}
 
             <AnimatePresence mode="wait">

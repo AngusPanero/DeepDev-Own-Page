@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/error.css"
-import useTheme from "../contexts/ThemeContext";
-import useSession from "../contexts/SessionContext";
+import { UseTheme } from "../contexts/ThemeContext";
+import { UseSession } from "../contexts/SessionContext";
 import "../../public/images/DeepDev Logo.jpg"
 
+interface errorProps{
+    errorMessage404: string
+}
 
-const Error404 = ({ errorMessage404 }) => {
-    const { theme } = useTheme()
-    const { setError } = useSession()
+const Error404 = ({ errorMessage404 }: errorProps) => {
+    const { theme } = UseTheme()
+    const { setError } = UseSession()
     const navigate = useNavigate();
 
     useEffect(() => {

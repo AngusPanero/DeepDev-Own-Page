@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+interface MercadoPagoInstance {
+    checkout: (options: any) => any;
+    bricks: () => any;
+}
 declare global {
     interface Window {
         MercadoPago: any;
@@ -7,7 +11,7 @@ declare global {
 }
 
 const useMercadoPago = () => {
-    const [ mp, setMp ] = useState<any>(null);
+    const [ mp, setMp ] = useState<MercadoPagoInstance|null>(null);
 
     useEffect(() => {
         // Accedemos al objeto que cargaste en el index.html

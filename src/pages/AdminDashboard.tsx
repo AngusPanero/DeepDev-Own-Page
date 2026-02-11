@@ -1,7 +1,7 @@
-import useSession from "../contexts/SessionContext";
+import { UseSession } from "../contexts/SessionContext";
 
 const AdminDashboard = () => {
-    const { AutoLogout } = useSession()
+    const { AutoLogout } = UseSession()
     AutoLogout()
     return(
         <h1 style={{ color: "white", marginTop: "10rem" }}>ADMIN DASHBOARD</h1>

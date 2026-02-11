@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/error.css";
-import useTheme from "../../contexts/ThemeContext";
-import useSession from "../../contexts/SessionContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
-const ProcessOk = ({ processMessage }) => {
-    const { theme } = useTheme()
+interface ProcessProps {
+  processMessage: string;
+}
+
+const ProcessOk = ({ processMessage }: ProcessProps) => {
+    const { theme } = UseTheme()
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -158,8 +158,8 @@ p.error-password{
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     font-size: 1.4rem;
-    color: #b3b3b3;
-    margin-bottom: 4rem;
+    color: #b3b3b3;/* 
+    margin-bottom: 4rem; */
 }
 
 /*Img*/

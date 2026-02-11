@@ -1,14 +1,24 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 
-const ShoppingContext = createContext()
+interface ShoppingContextType {
+    purchased: any;
+    error: boolean|string;
+    loading: boolean;
+    getPurchased: any;
+}
+const ShoppingContext = createContext<ShoppingContextType|undefined>(undefined)
 
-export const ShoppingProvider = ({ children }) => {
+interface ProviderProps {
+  children: ReactNode;
+}
+
+export const ShoppingProvider = ({ children }: ProviderProps) => {
     const [ purchased, setPurchased ] = useState("")
     const [ error, setError ] = useState<boolean>(false)
     const [ loading, setLoading ] = useState<boolean>(false)
 
-    const getPurchased = async (user) => {
+    const getPurchased = async (user:string) => {
         try {
             setError(false)
             setLoading(true)
@@ -19,7 +29,7 @@ export const ShoppingProvider = ({ children }) => {
             }
         } catch (error) {
             setError(true)
-            console.error("Error al conseguir tickets! 🔴")
+            console.error("Error al conseguir tickets! 🔴", error)
         } finally {
             setLoading(false)
         }
@@ -32,7 +42,12 @@ export const ShoppingProvider = ({ children }) => {
     )
 }
 
-const useShopping = () => useContext(ShoppingContext)
+export const UseShopping = () => {
+  const context = useContext(ShoppingContext);
 
-export default useShopping
+  if (!context) {
+    throw new Error("useShopping debe ser usado dentro de un ThemeProvider");
+  }
+  return context; 
+};
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+/* import React, { useEffect, useRef, useState } from 'react';
 import "../../styles/roulette.css"
 
 interface RouletteProps {
@@ -102,4 +102,4 @@ const Roulette: React.FC<RouletteProps> = ({
     );
 };
 
-export default Roulette;
+export default Roulette; */

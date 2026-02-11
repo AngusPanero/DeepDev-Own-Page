@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/error.css";
-import useTheme from "../../contexts/ThemeContext";
-import useSession from "../../contexts/SessionContext";
+import { UseTheme } from "../../contexts/ThemeContext";
+import { UseSession } from "../../contexts/SessionContext";
 
-const Error = ({errorMessage}) => {
-    const { theme } = useTheme()
-    const { setError } = useSession()
+interface ErrorProps {
+errorMessage: string 
+}
+
+const Error = ({errorMessage}: ErrorProps) => {
+    const { theme } = UseTheme()
+    const { setError } = UseSession()
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,7 +19,7 @@ const Error = ({errorMessage}) => {
             navigate("/");
         }, 5000);
         return () => clearTimeout(timer);
-    }, [navigate]);
+    }, [ navigate, setError ]);
 
     return (
         <>

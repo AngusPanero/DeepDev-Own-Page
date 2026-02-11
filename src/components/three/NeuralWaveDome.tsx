@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { useMemo, useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import useTheme from "../../contexts/ThemeContext";
-import { useWidth } from "../../contexts/WidthContext";
+import { UseTheme } from "../../contexts/ThemeContext";
+import { UseWidth } from "../../contexts/WidthContext";
 
 const DomeShaderSource = {
     vertexShader: `
@@ -44,8 +44,8 @@ const DomeShaderSource = {
 };
 
 const NeuralWaveDome = () => {
-    const { theme } = useTheme();
-    const { width } = useWidth()
+    const { theme } = UseTheme();
+    const { width } = UseWidth()
     const groupRef = useRef<THREE.Group>(null);
     const layers = 4;
 

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import useTheme from '../../contexts/ThemeContext';
+import { UseTheme } from '../../contexts/ThemeContext';
 import CheckoutPayment from './CheckoutPayment';
 import "../../styles/sales.css"
 
 interface Feature { text: string;included: boolean; }
 
-interface SalesCardProps { title: string; price: string; description: string; features: Feature[]; buttonText: string; isFeatured?: boolean; }
+interface SalesCardProps { title: string; price: any; description?: string; features: Feature[]; buttonText: string; isFeatured?: boolean; }
 
 const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, features, buttonText, isFeatured }) => {
-    const { theme } = useTheme();
+    const { theme } = UseTheme();
     const [ openCheck, setOpenCheck ] = useState<boolean>(false)
 
     return (

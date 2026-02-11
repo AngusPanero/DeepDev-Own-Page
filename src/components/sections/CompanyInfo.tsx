@@ -2,12 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import "../../styles/company.css";
-import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
-import useTheme from '../../contexts/ThemeContext';
+import { UseLanguage } from '../../contexts/LanguageContext';
+import { UseTheme } from '../../contexts/ThemeContext';
 
 const Company: React.FC = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage()
+    const { theme } = UseTheme()
     
   const milestones = [
     {
@@ -29,7 +29,11 @@ const Company: React.FC = () => {
 
   return (
     <section className={`company-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
+      
+      <div className={`dd-grid-overlay ${theme}`}></div> 
+      
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="company-header">
+        
         <div className="badge-new">{texts[language].company.dna}</div>
         <h2  style={{ whiteSpace: "pre-line" }} className="hero-title"><span>{texts[language].company.dnaTitle}</span></h2>
         <p style={{ whiteSpace: "pre-line" }} className="hero-description">

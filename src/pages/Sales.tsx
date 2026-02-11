@@ -1,10 +1,10 @@
 import SalesCard from "../components/sections/SalesCard";
 import TubesCursor from "../components/ui/TubesCursor";
-import useTheme from "../contexts/ThemeContext";
+import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/sales.css"
 
 const Sales = () => {
-    const { theme } = useTheme();
+    const { theme } = UseTheme();
 
     const plans = [
     {
@@ -77,8 +77,10 @@ const Sales = () => {
 
     return (
         <>
+        
         <div className={`sales-page-container ${theme === "light" ? "theme-light" : "theme-dark"}`}>
             {/* <h1 className="sales-title">Aplicaciones Webs Disponibles:</h1> */}
+            <div className={`dd-grid-overlay ${theme}`}></div> 
             <div className="sales-grid">
                 {plans.map((plan, index) => (
                     <SalesCard key={index} {...plan} />
@@ -86,6 +88,7 @@ const Sales = () => {
             </div>
             <TubesCursor />
         </div>
+        
         </>
     );
 };

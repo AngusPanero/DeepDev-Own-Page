@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/cookies.css"
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 const Cookies = () => {
     const [ visible, setVisible ] = useState(false);
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
 
     useEffect(() => {
         const accepted = localStorage.getItem("cookiesAccepted");

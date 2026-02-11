@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import "../../styles/ambientOverlay.css";
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
+
 
 const AmbientOverlay = () => {
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
 
     const ref = useRef<HTMLDivElement | null>(null);
 

@@ -1,9 +1,19 @@
-import React from 'react';
 import '../../styles/creditCard.css';
 
-const CreditCard = ({ data, isFlipped }) => {
-  // Función para formatear el número de tarjeta con espacios cada 4 dígitos
-  const formatCardNumber = (number) => {
+interface CardData {
+  tarjetaNumero: string;
+  nombre: string;
+  añoVencimiento: string;
+  mesVencimiento: string;
+  cvv: string;
+}
+interface CreditProps {
+  data: CardData;       
+  isFlipped: boolean;
+}
+
+const CreditCard = ({ data, isFlipped }: CreditProps) => {
+  const formatCardNumber = (number: any) => {
     return number ? number.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim() : "#### #### #### ####";
   };
 
@@ -13,9 +23,9 @@ const CreditCard = ({ data, isFlipped }) => {
         
         {/* FRENTE */}
         <div className="card-front">
-          <div className="border-glow"></div> {/* Detrás del contenido */}
+          <div className="border-glow"></div>
           
-          <div className="card-content"> {/* <-- ESTO FALTABA: Envuelve todo */}
+          <div className="card-content"> 
             <div className="card-chip"></div>
             <div className="card-brand">VISA</div>
             
@@ -31,7 +41,7 @@ const CreditCard = ({ data, isFlipped }) => {
               <div className="card-expiration">
                 <span className="card-label">Vence</span>
                 <div className="card-value">
-                  {data.mesVencimiento || "MM"}/{data.anioVencimiento || "YY"}
+                  {data.mesVencimiento || "MM"}/{data.añoVencimiento || "YY"}
                 </div>
               </div>
             </div>

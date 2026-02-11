@@ -1,9 +1,9 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 const Scene = ({ children }: any) => {
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
     
     return (
         <Canvas gl={{ alpha: true }} style={{ pointerEvents: "none", background: theme === "dark" ? "black" : "#F0F4F8", position: "relative", zIndex: 2 }}>

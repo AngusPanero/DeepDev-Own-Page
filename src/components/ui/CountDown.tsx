@@ -1,7 +1,11 @@
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
+import { UseLanguage }   from "../../contexts/LanguageContext";
 
-const CountDown = ({ timeLeft }) => {
-    const { language, texts } = useLanguage() as LanguageContextType
+interface CountProps{
+    timeLeft: any;
+}
+
+const CountDown = ({ timeLeft }: CountProps) => {
+    const { language, texts } = UseLanguage()  
     return(
         <div className="countdown-display" style={{ marginTop: '10px', marginBottom: '25px', display: 'flex', justifyContent: 'center', gap: '15px', color: 'white', fontFamily: 'Montserrat, Inter, monospace' }}>
             <div className="time-box" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

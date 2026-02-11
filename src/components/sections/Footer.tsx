@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"; // Importación necesaria
 import "../../styles/footer.css";
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 const Footer = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage() 
+    const { theme } = UseTheme()
     return (
-        <footer className="footer" className={`footer ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
+        <footer className={`footer ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
             <div className="footer-grid">
 
                 <div className="footer-brand">
@@ -52,7 +52,7 @@ const Footer = () => {
             </div>
 
             <div className="footer-bottom">
-                <span>© 2026 DeepDev. {texts[language].footer.rights}</span>
+                <span>© {new Date().getFullYear()} DeepDev. {texts[language].footer.rights}</span>
                 <div className="footer-legal">
                     <Link to="/privacy">{texts[language].footer.privacy}</Link>
                     <Link to="/terms">{texts[language].footer.terms}</Link>

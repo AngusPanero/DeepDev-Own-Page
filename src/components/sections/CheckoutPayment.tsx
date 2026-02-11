@@ -1,19 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import useMercadoPago from "../../hooks/useMercadoPago";
-import Error from "./Error";
 import Loader from "./Loader";
 import "../../styles/checkout.css"
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import CreditCard from "../ui/CreditCard";
-import ProcessOk from "./processOk";
+import ProcessOk from "./ProcessOk";
 import { v4 } from 'uuid';
 
-const CheckoutPayment = ({ openPayment, productData }) => {
+interface CheckoutPaymentProps {
+  openPayment: () => void; // antes estaba como boolean en el comment de la funcion anterior
+  productData: any
+}
+
+const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => {
     const checkoutRef = useRef<HTMLDivElement>(null);
     const mp = useMercadoPago();
 
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
     const [ exit, setExit ] = useState(false);
     const [ formData, setFormData ] = useState({ nombre: "", email: "", dni: "", tarjetaNumero: "", mesVencimiento: "", añoVencimiento: "", cvv: "", cuotas: "1" })
     
@@ -27,11 +31,19 @@ const CheckoutPayment = ({ openPayment, productData }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleClose = () => {
+    /* const handleClose = () => {
             setExit(true);
             setTimeout(openPayment, 600);
-        };
-    
+    }; */
+
+    const handleClose = () => {
+        setExit(true);
+        
+        setTimeout(() => {
+            openPayment(); 
+        }, 600);
+    };
+
         useEffect(() => {
             const handleClickOutside = (e: MouseEvent) => {
                 if (checkoutRef.current && !checkoutRef.current.contains(e.target as Node)) {

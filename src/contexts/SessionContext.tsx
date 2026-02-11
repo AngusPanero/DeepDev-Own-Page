@@ -1,14 +1,32 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { auth } from "../firebase/firebase.js"
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { auth } from "../firebase/firebase.ts"
 import { sendPasswordResetEmail } from "firebase/auth";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
-const SessionContext = createContext()
+const SessionContext = createContext<SessionContextType | null>(null);
 
-export const SessionProvider = ({ children }) => {
+interface ProviderProps {
+  children: ReactNode;
+}
+
+interface SessionContextType {
+    handleRegister: (email: string, password: string, loginOpen: any, registerOpen: any) => Promise<void>;
+    handleLogin: (email: string, password: string) => Promise<boolean | undefined>;
+    handleLogout: () => Promise<void>;
+    handleResetPassword: (email: string) => Promise<void>;
+    AutoLogout: (timeout?: number) => void;
+    error: string | boolean | null | number;
+    setError: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
+    loading: string | boolean | null | number;
+    setLoading: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
+    user: any;
+    setUser: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export const SessionProvider = ({ children }: ProviderProps) => {
     const navigate = useNavigate()
 
     const [ error, setError ] = useState<string | boolean | null | number>(false)
@@ -27,7 +45,7 @@ export const SessionProvider = ({ children }) => {
                 registerOpen(false)
                 loginOpen(true)
             }
-        } catch (error) {
+        } catch (error: any) {
             if(error.response?.status === 409){
                 setError(true)
                 return
@@ -72,7 +90,7 @@ export const SessionProvider = ({ children }) => {
                 }
             }
 
-        } catch (error) {
+        } catch (error: any) {
                 if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
                     try {
                         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`,{ email });
@@ -113,7 +131,7 @@ export const SessionProvider = ({ children }) => {
                 setUser(null)
                 navigate("/");
             }
-        } catch (error) {
+        } catch (error: any) {
             setError("Error al cerrar sesión");
             console.error("Error logging out session 🔴", error);
         } finally {
@@ -122,7 +140,7 @@ export const SessionProvider = ({ children }) => {
     }
 
     // Reset Password
-    const handleResetPassword = async (email) => {
+    const handleResetPassword = async (email: string) => {
         try {
             if(!email){
                 alert("Por favor, ingresa tu email para restablecer la contraseña.");
@@ -132,7 +150,7 @@ export const SessionProvider = ({ children }) => {
                 alert("¡Email enviado! Revisa tu bandeja de entrada.");
             }
             
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error al enviar el email:", error.code);
 
             switch (error.code) {
@@ -169,7 +187,7 @@ export const SessionProvider = ({ children }) => {
 
     // Inactivity Context 15 min
     const AutoLogout = (timeout: number = 15 * 60 * 1000) => {
-        const timeRef = useRef<unknown>(null)
+        const timeRef = useRef<any>(null)
 
         const resetTimer = () => {
             if(timeRef.current) clearTimeout(timeRef.current)
@@ -208,7 +226,12 @@ export const SessionProvider = ({ children }) => {
     )
 }
 
-const useSession = () => useContext(SessionContext)
+export const UseSession = () => {
+  const context = useContext(SessionContext);
 
-export default useSession
+  if (!context) {
+    throw new Error("useSession debe ser usado dentro de un SessionProvider");
+  }
+  return context; 
+};
 

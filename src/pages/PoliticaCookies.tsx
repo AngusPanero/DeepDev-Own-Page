@@ -1,8 +1,8 @@
-import useTheme from "../contexts/ThemeContext";
+import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/politicaCookie.css"
 
 const PoliticaCookies = () => {
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
     return (
         <section className={`cookies-page-wrapper ${theme}`}>
             <div className="cookies-container">

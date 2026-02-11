@@ -3,15 +3,15 @@ import { OrbitControls, useFBX } from "@react-three/drei";
 import { Environment } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import useLanguage from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { motion, useScroll, useSpring, useTransform, type TargetAndTransition } from "framer-motion";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import "../../styles/scroll3D.css"
-import { useWidth } from "../../contexts/WidthContext";
+import { UseWidth } from "../../contexts/WidthContext";
 
 export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
-    const { width } = useWidth()
+    const { width } = UseWidth()
 
     const objectSettings = width >= 768 
         ? { scale: 0.048, position: [0.9, 0.6, 0], rotation: [0, 2, 0] } 
@@ -38,9 +38,9 @@ export function MacBookModel() {
     }
 
 const FbxMacBook = () => {
-    const { language, texts } = useLanguage()
-    const { theme } = useTheme()
-    const { width } = useWidth()
+    const { language, texts } = UseLanguage()
+    const { theme } = UseTheme()
+    const { width } = UseWidth()
 
     const gradientBase = {
         background: theme === "dark" ? "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)" :
@@ -50,7 +50,7 @@ const FbxMacBook = () => {
         WebkitTextFillColor: "transparent",
     };
 
-    const gradientAnim = {
+    const gradientAnim: TargetAndTransition = {
         backgroundPosition: ["100% 50%", "100% 50%"],
         transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
     };

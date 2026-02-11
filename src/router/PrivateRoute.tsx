@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react"
-import { auth } from "../firebase/firebase.js"
+import { useEffect, useState, type ReactNode } from "react"
+import { auth } from "../firebase/firebase.ts"
 import Loader from "../components/sections/Loader.js"
 import axios from "axios"
-import useSession from "../contexts/SessionContext.js"
+import { UseSession } from "../contexts/SessionContext.js"
 import Error from "../components/sections/Error.js"
 
-const PrivateRoute = ({ children, adminOnly = false }) => {
-    const { user, loading } = useSession()
+interface PrivateRouteProps{
+    children: ReactNode;
+    adminOnly: boolean
+}
+
+const PrivateRoute = ({ children, adminOnly = false }: PrivateRouteProps) => {
+    const { user, loading } = UseSession()
     const [ status, setStatus ] = useState<string>("loading")
 
     useEffect(() => {
@@ -35,7 +40,7 @@ const PrivateRoute = ({ children, adminOnly = false }) => {
                     setStatus("ok")
                 }
             }
-            catch (error) {
+            catch (error: any) {
                 if (error.response?.status === 403) {
                     setStatus("banned")
                 } else {

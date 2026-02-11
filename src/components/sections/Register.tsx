@@ -2,18 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import logo from "../../../public/images/DeepDev Logo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
-import eyeClose from "../../../public/logos/eye-close.svg"
-import eyeOpen from "../../../public/logos/eye-open.svg"
-import useSession from "../../contexts/SessionContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
+import eyeClose from "/logos/eye-close.svg"
+import eyeOpen from "/logos/eye-open.svg"
+import { UseSession } from "../../contexts/SessionContext";
 import Loader from "./Loader";
 import Error from "./Error";
 
 const Register = ({ openLogin, closeRegister }: any) => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { handleRegister, loading, error } = useSession()
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage()  
+    const { handleRegister, loading, error } = UseSession()
+    const { theme } = UseTheme()
     const registerRef = useRef<HTMLDivElement>(null);
 
     const [ hoverParticles, setHoverParticles ] = useState(false);

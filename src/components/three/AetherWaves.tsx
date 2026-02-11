@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 interface AetherWavesProps {
     position?: [number, number, number];
@@ -9,7 +9,7 @@ interface AetherWavesProps {
 }
 
 const AetherWaves = ({  position = [0.6, 0.8, 0], rotation = [3, 0.5, 0.3] }: AetherWavesProps) => {
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
     const pointsRef = useRef<THREE.Points>(null!);
 
     const texture = useLoader(THREE.TextureLoader, "../../textures/particle.png");
@@ -72,6 +72,7 @@ const AetherWaves = ({  position = [0.6, 0.8, 0], rotation = [3, 0.5, 0.3] }: Ae
 
     return (
         <points ref={pointsRef} position={position} rotation={rotation}>
+            
         <bufferGeometry>
             <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         </bufferGeometry>

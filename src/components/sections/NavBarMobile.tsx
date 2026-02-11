@@ -2,10 +2,20 @@ import { Link } from "react-router-dom";
 import { forwardRef } from "react";
 import moon from "/logos/moon2.svg"
 import sun from "/logos/sun.svg"
-import useSession from "../../contexts/SessionContext";
+import { UseSession } from "../../contexts/SessionContext";
 
-const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }, ref) => {
-    const { user, handleLogout } = useSession()
+interface NavBarMobileProps {
+    closeMenu: () => void;
+    texts: any;
+    language: string;
+    theme: string;
+    handleTheme: () => void;
+    handleLanguage: (e: string) => void;
+    openLogin: () => void;
+}
+
+const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }: NavBarMobileProps, ref: any) => {
+    const { user, handleLogout } = UseSession()
 
     return (
         <div className={`mobile-menu-container ${theme}`} ref={ref}>

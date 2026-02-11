@@ -5,9 +5,10 @@
 }
 
 .raffle-info-container {
+    position: relative;
     max-width: 550px;
     padding: 20px;
-    z-index: 1;
+    z-index: 3;
 }
 
 .badge-new {

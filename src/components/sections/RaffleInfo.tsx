@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import "../../styles/raffleInfo.css"
-import useLanguage, { type LanguageContextType } from '../../contexts/LanguageContext';
-import useTheme from '../../contexts/ThemeContext';
+import { UseLanguage }   from '../../contexts/LanguageContext';
+import { UseTheme } from '../../contexts/ThemeContext';
 
 const RaffleInfo: React.FC = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage()  
+    const { theme } = UseTheme()
   return (
     <motion.div 
       initial={{ opacity: 0, x: -30 }}

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import Tubes from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js';
 import "../../styles/tubesCursor.css";
-import { useWidth } from '../../contexts/WidthContext';
+import { UseWidth } from '../../contexts/WidthContext';
 
 const TubesCursor: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const appRef = useRef<any>(null);
-  const { width } = useWidth()
+  const { width } = UseWidth()
 
   useEffect(() => {
     if (canvasRef.current && !appRef.current) {

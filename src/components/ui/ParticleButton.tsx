@@ -1,4 +1,4 @@
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import "../../styles/particleButton.css";
 
 type CSSVars = React.CSSProperties & {
@@ -10,7 +10,7 @@ type ParticleButtonProps = {
 };
 
 const ParticleButton = ({ active }: ParticleButtonProps) => {
-    const { theme } = useTheme()
+    const { theme } = UseTheme()
 
     if (!active) return null;
 

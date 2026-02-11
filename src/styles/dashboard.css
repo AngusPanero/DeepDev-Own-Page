@@ -59,6 +59,14 @@
     gap: 20px;
 }
 
+/* span.log-plan{
+    width: 110px;
+}
+
+span.log-id{
+    width: 200px;
+} */
+
 .log-status { color: #10b981; } 
 .log-amount { margin-left: auto; font-weight: bold; }
 

@@ -1,8 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-const WidthContext = createContext();
+const WidthContext = createContext<undefined>(undefined)
 
-export const WidthProvider = ({ children }) => {
+interface ProviderProps {
+  children: ReactNode;
+}
+
+export const WidthProvider = ({ children }: ProviderProps) => {
     const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
 
     useEffect(() => {
@@ -21,10 +25,10 @@ export const WidthProvider = ({ children }) => {
     );
 };
 
-export const useWidth = () => {
+export const UseWidth = () => {
     const context = useContext(WidthContext);
     if (!context) {
-        throw new Error("useWidth debe usarse dentro de un WidthProvider");
+        throw new Error("UseWidth debe usarse dentro de un WidthProvider");
     }
     return context;
 };

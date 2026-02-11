@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import useSession from "../contexts/SessionContext";
-import useShopping from "../contexts/ShoppingContext";
-import useTheme from "../contexts/ThemeContext";
+import { UseSession } from "../contexts/SessionContext";
+import { UseShopping } from "../contexts/ShoppingContext";
+import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/dashboard.css"
 
 const Dashboard = () => {
-    const { AutoLogout, user, loading } = useSession()
-    const { purchased, getPurchased } = useShopping()
-    const { theme } = useTheme(); 
+    const { AutoLogout, user, loading } = UseSession()
+    const { purchased, getPurchased } = UseShopping()
+    const { theme } = UseTheme(); 
 
     AutoLogout()
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
         if (user && user.email) {
             getPurchased(user.email);
         }
-    }, [user?.email])
+    }, [user?.email, getPurchased, user])
 
     return(
         <div className={`dd-dashboard ${theme}`}>
@@ -54,11 +54,11 @@ const Dashboard = () => {
                             {loading ? (
                                 <div className="dd-loading-text">FETCHING_DATA...</div>
                             ) : purchased?.length > 0 ? (
-                                purchased.map((item) => (
+                                purchased.map((item: any) => (
                                     <div key={item._id} className="dd-log-entry">
                                         <span className="log-date">[{new Date(item.createdAt).toLocaleDateString()}]</span>
                                         <span className="log-plan">{item.plan}</span>
-                                        <span className="log-plan">{item._id}</span>
+                                        <span className="log-id">{item._id}</span>
                                         <span className="log-status">SUCCESS</span>
                                         <span className="log-amount">${item.amount}</span>
                                     </div>

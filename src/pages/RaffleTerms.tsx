@@ -1,8 +1,8 @@
-import useTheme from "../contexts/ThemeContext";
+import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/raffleTerms.css";
 
 const TerminosSorteo = () => {
-    const { theme } = useTheme();
+    const { theme } = UseTheme();
 
     return (
         <section className={`terminos-page-wrapper ${theme}`}>

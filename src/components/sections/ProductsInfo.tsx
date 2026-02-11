@@ -1,13 +1,13 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, type TargetAndTransition } from "framer-motion";
 import { useRef } from "react";
 import "../../styles/products.css"
 import FloatingIcon from "../ui/FloatingIcon"
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage }   from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
 const ProductsInfo = () => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
+    const { language, texts } = UseLanguage()  
+    const { theme } = UseTheme()
     // Configuración de suavizado
     const springConfig = { stiffness: 50, damping: 25, mass: 0.5 };
 
@@ -65,14 +65,18 @@ const ProductsInfo = () => {
         WebkitTextFillColor: "transparent",
     };
 
-    const gradientAnim = {
+    const gradientAnim: TargetAndTransition = {
         backgroundPosition: ["100% 50%", "100% 50%"],
         transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
     };
 
     return (
-        <>
+        <div className="products-overlay">
+            
         <div className="products-section" style={{ background: theme === "dark" ? "black" : "#F0F4F8" }}>
+
+            <div className={`dd-grid-overlay ${theme}`}></div>
+
             {/* WEB APPLICATIONS */}
             <div className="web-apps-section" ref={textRef}>
                 <motion.h1 className="h1-web" style={{ ...gradientBase, opacity: opacity, x: x }} 
@@ -183,7 +187,7 @@ const ProductsInfo = () => {
                 </div> 
             </div>  
         </div>
-        </>
+        </div>
     );
 };
 

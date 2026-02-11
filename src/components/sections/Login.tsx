@@ -2,18 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import logo from "../../../public/images/DeepDev Logo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
-import useLanguage, { type LanguageContextType } from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
-import eyeClose from "../../../public/logos/eye-close.svg"
-import eyeOpen from "../../../public/logos/eye-open.svg"
-import useSession from "../../contexts/SessionContext";
+import { UseLanguage }   from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
+import eyeClose from "/logos/eye-close.svg"
+import eyeOpen from "/logos/eye-open.svg"
+import { UseSession } from "../../contexts/SessionContext";
 import Loader from "./Loader";
-import Error from "./Error";
 
-const Login = ({ closeLogin, openRegister }: any) => {
-    const { language, texts } = useLanguage() as LanguageContextType
-    const { theme } = useTheme()
-    const { handleLogin, loading, error, handleResetPassword } = useSession()
+interface LoginProps {
+  openRegister: () => void; // antes estaba como boolean en el comment de la funcion anterior
+  closeLogin: () => void
+}
+
+const Login = ({ closeLogin, openRegister }: LoginProps) => {
+    const { language, texts } = UseLanguage()  
+    const { theme } = UseTheme()
+    const { handleLogin, loading, error, handleResetPassword } = UseSession()
     const loginRef = useRef<HTMLDivElement>(null);
 
     const [ hoverParticles, setHoverParticles ] = useState(false);
@@ -22,9 +26,17 @@ const Login = ({ closeLogin, openRegister }: any) => {
     const [ password, setPassword ] = useState("");
     const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false)
 
-    const handleClose = () => {
+    /* const handleClose = () => {
         setExit(true);
         setTimeout(closeLogin, 600);
+    }; */
+
+    const handleClose = () => {
+        setExit(true);
+        
+        setTimeout(() => {
+            closeLogin(); 
+        }, 600);
     };
 
     useEffect(() => {

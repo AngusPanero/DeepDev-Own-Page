@@ -1,21 +1,21 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, type TargetAndTransition } from "framer-motion";
 import { useRef } from "react";
 import Scene from "../three/Scene";
 import AetherWaves from "../three/AetherWaves";
 import LogoCarrousel from "./LogoCarrousel";
 import FbxMacBook from "../ui/macBook";
 import NeuralWaveDome from "../three/NeuralWaveDome";
-import useLanguage from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import "../../styles/scroll3D.css"
-import { useWidth } from "../../contexts/WidthContext";
+import { UseWidth } from "../../contexts/WidthContext";
 
 const Scroll3DSection = () => {
     const textRef = useRef(null);
     const text2Ref = useRef(null);
-    const { width } = useWidth();
-    const { language, texts } = useLanguage()
-    const { theme, handleTheme } = useTheme()
+    const { width } = UseWidth();
+    const { language, texts } = UseLanguage()
+    const { theme } = UseTheme()
 
     const { scrollYProgress } = useScroll({
         target: textRef,
@@ -50,7 +50,7 @@ const Scroll3DSection = () => {
         WebkitTextFillColor: "transparent",
     };
 
-    const gradientAnim = {
+    const gradientAnim: TargetAndTransition = {
         backgroundPosition: ["100% 50%", "100% 50%"],
         transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
     };

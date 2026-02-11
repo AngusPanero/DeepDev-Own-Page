@@ -5,11 +5,11 @@ import "../../styles/navBar.css"
 import Login from "./Login";
 import moon from "/logos/moon2.svg"
 import sun from "/logos/sun.svg"
-import useLanguage from "../../contexts/LanguageContext";
-import useTheme from "../../contexts/ThemeContext";
+import { UseLanguage } from "../../contexts/LanguageContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 import NavBarMobile from "./NavBarMobile";
 import Register from "./Register";
-import useSession from "../../contexts/SessionContext";
+import { UseSession } from "../../contexts/SessionContext";
 
 const NavBar = () => {
     const [ openRegister, setOpenRegister ] = useState<boolean>(false)
@@ -18,11 +18,11 @@ const NavBar = () => {
     const [ menuOpen, setMenuOpen ] = useState(false);
 
     const lastScrollY = useRef(0);
-    const menuRef = useRef(); 
-    const { user, handleLogout } = useSession()
+    const menuRef = useRef<HTMLDivElement>(null); // puse null y html
+    const { user, handleLogout } = UseSession()
 
-    const { language, handleLanguage, texts } = useLanguage()
-    const { theme, handleTheme } = useTheme()
+    const { language, handleLanguage, texts } = UseLanguage()
+    const { theme, handleTheme } = UseTheme()
 
     const openRegisterFromLogin = () => {
         setLoginOpen(false);
@@ -36,7 +36,7 @@ const NavBar = () => {
 
     // Lógica para cerrar menú mobile al hacer clic fuera o scroll fuerte
     useEffect(() => {
-        const handleClickOutside = (e) => {
+        const handleClickOutside = (e: any) => {
             if (menuOpen && menuRef.current && !menuRef.current.contains(e.target) && !e.target.closest('.hamburger-btn')) {
                 setMenuOpen(false);
             }

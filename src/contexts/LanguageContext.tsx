@@ -1,6 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-const LanguageContext = createContext()
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+interface ProviderProps {
+  children: ReactNode;
+}
 
 export interface Translation {
     home: {
@@ -128,10 +132,10 @@ export interface TextsConfig {
 
 export interface LanguageContextType {
     language: string;
-    texts: any; 
-    setLanguage: (lang: string) => void;
+    texts: TextsConfig; 
+    handleLanguage: (lang: string) => void;
 }
-export const LanguageProvider = ({ children }) => {
+export const LanguageProvider = ({ children }: ProviderProps) => {
     const [ language, setLanguage ] = useState(localStorage.getItem("userLanguage") || "es");
 
     useEffect(() => {
@@ -1073,6 +1077,11 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
     )
 }
 
-const useLanguage = () => useContext(LanguageContext);
+export const UseLanguage = () => {
+  const context = useContext(LanguageContext);
 
-export default useLanguage;
+  if (!context) {
+    throw new Error("useLanguage debe ser usado dentro de un ThemeProvider");
+  }
+  return context; 
+};

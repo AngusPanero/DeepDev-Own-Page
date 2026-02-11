@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import "../../styles/Loader.css"; 
-import useTheme from "../../contexts/ThemeContext";
+import { UseTheme } from "../../contexts/ThemeContext";
 
-const Loader = ({ onComplete }) => {
-    const { theme } = useTheme()
+interface LoaderProps {
+  onComplete?: () => void
+};
+
+const Loader = ({ onComplete }: LoaderProps) => {
+    const { theme } = UseTheme()
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {

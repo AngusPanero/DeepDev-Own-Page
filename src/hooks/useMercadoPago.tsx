@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 interface MercadoPagoInstance {
     checkout: (options: any) => any;
     bricks: () => any;
+    createCardToken: (data: any) => Promise<any>;
+    getPaymentMethods: (data: any) => Promise<any>;
 }
 declare global {
     interface Window {

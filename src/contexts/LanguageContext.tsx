@@ -109,7 +109,10 @@ export interface Translation {
         email: string;
         password: string;
         button: string;
-        register: object;
+        register: {
+            before: string;
+            after: string;
+        }
     };
     footer: {
         deepdev: string[];

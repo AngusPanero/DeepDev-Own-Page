@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../../styles/Loader.css"; 
+import "../../styles/loader.css"; 
 import { UseTheme } from "../../contexts/ThemeContext";
 
 interface LoaderProps {

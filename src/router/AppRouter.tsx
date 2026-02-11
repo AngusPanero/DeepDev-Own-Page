@@ -34,7 +34,7 @@ const AppRouter = () => {
                     <Route path="/policy" element={<PoliticaCookies />} />
                     <Route path="/raffle-terms" element={<RaffleTerms />} />
                     <Route path="/*" element={<Error404 errorMessage404={"404 - Página no encontrada."} />} />
-                    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                    <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
                     {/* Tiene Acceso solo el admin con la prop pasada */}
                     <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
                 </Routes>

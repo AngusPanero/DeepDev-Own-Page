@@ -23,11 +23,11 @@ const PrivateRoute = ({ children, adminOnly = false }: PrivateRouteProps) => {
         }
 
         const checkSession = async () => {
-            const idToken = await auth.currentUser.getIdToken()
+            const idToken = await auth.currentUser?.getIdToken()
 
-            const customClaims = await auth.currentUser.getIdTokenResult();
+            const customClaims = await auth.currentUser?.getIdTokenResult();
             {/* Doble negación forza a undefined y null a ser falsos, para solo trabajar con booleanos */}
-            const admin = !!customClaims.claims.admin; // Esto es TRUE como si no tuviera los signos de exclamación
+            const admin = !!customClaims?.claims.admin; // Esto es TRUE como si no tuviera los signos de exclamación
             
             if (adminOnly && !admin){
                     setStatus("no-admin")

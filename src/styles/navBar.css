@@ -21,12 +21,6 @@
 
 .lan{
     appearance: none; /* Quita la flecha original en Chrome, Safari y Firefox */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 2px center;
-    background-size: 25px;
 }
 
 select.nav-buttons.lan{
@@ -155,7 +149,6 @@ li a:hover {
 /* Ajuste del Select de idioma (Flecha en Azul Eléctrico) */
 .theme-light .lan {
     color: #0062FF;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230062FF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
 }
 
 /* Logo en modo claro */

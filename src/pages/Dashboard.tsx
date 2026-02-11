@@ -5,17 +5,15 @@ import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/dashboard.css"
 
 const Dashboard = () => {
-    const { AutoLogout, user, loading } = UseSession()
+    const { user, loading } = UseSession()
     const { purchased, getPurchased } = UseShopping()
     const { theme } = UseTheme(); 
-
-    AutoLogout()
 
     useEffect(() => {
         if (user && user.email) {
             getPurchased(user.email);
         }
-    }, [user?.email, getPurchased, user])
+    }, [user?.email, user])
 
     return(
         <div className={`dd-dashboard ${theme}`}>

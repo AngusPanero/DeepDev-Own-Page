@@ -11,18 +11,6 @@ import axios from 'axios';
 import Error from '../sections/Error';
 import Loader from '../sections/Loader';
 
-interface RaffleTexts {
-  conditions: {
-    before: string;
-  };
-}
-
-interface ITexts {
-  [key: string]: {
-    raffles: RaffleTexts;
-  };
-}
-
 const SorteoDev: React.FC = () => {
     const { language, texts } = UseLanguage() as { texts: Record<string, any>, language: string }; 
     const { theme } = UseTheme()

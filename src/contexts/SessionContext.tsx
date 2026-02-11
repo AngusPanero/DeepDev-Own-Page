@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { auth } from "../firebase/firebase.ts"
 import { sendPasswordResetEmail } from "firebase/auth";
-import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
@@ -17,7 +17,6 @@ interface SessionContextType {
     handleLogin: (email: string, password: string) => Promise<boolean | undefined>;
     handleLogout: () => Promise<void>;
     handleResetPassword: (email: string) => Promise<void>;
-    AutoLogout: (timeout?: number) => void;
     error: string | boolean | null | number;
     setError: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
     loading: string | boolean | null | number;
@@ -28,10 +27,36 @@ interface SessionContextType {
 
 export const SessionProvider = ({ children }: ProviderProps) => {
     const navigate = useNavigate()
+    const timeRef = useRef<any>(null);
 
     const [ error, setError ] = useState<string | boolean | null | number>(false)
     const [ loading, setLoading ] = useState<string | boolean | null | number>(false)
     const [ user, setUser ] = useState<unknown>(null)
+
+    // Auto Logout
+    useEffect(() => {
+        if (!user) return;
+
+        const timeout = 15 * 60 * 1000; // 15 minutos
+
+        const resetTimer = () => {
+            if (timeRef.current) clearTimeout(timeRef.current);
+            timeRef.current = setTimeout(async () => {
+                await auth.signOut();
+                setUser(null);
+                navigate("/");
+            }, timeout);
+        };
+        resetTimer();
+
+        const events = ["mousemove", "mousedown", "keydown", "scroll", "touchstart"];
+        events.forEach((event) => window.addEventListener(event, resetTimer));
+
+        return () => {
+            events.forEach((event) => window.removeEventListener(event, resetTimer));
+            if (timeRef.current) clearTimeout(timeRef.current);
+        };
+    }, [user, navigate]);
 
     // Register
     const handleRegister = async (email: string, password: string, loginOpen: React.Dispatch<React.SetStateAction<boolean>>, registerOpen: React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -122,7 +147,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         try {
             setError(false)
             setLoading(true);
-            const idToken = await auth.currentUser.getIdToken();
+            const idToken = await auth.currentUser?.getIdToken();
 
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/logout`, { idToken }, { withCredentials: true });
 
@@ -185,7 +210,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         return () => unSubscribe()
     }, [])
 
-    // Inactivity Context 15 min
+    /* // Inactivity Context 15 min
     const AutoLogout = (timeout: number = 15 * 60 * 1000) => {
         const timeRef = useRef<any>(null)
 
@@ -217,10 +242,10 @@ export const SessionProvider = ({ children }: ProviderProps) => {
                 if (timeRef.current) clearTimeout(timeRef.current);
             };
         }, [user, timeout]);
-    }
+    } */
 
     return(
-        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, AutoLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser }}>
+        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser }}>
             { children }
         </SessionContext.Provider>
     )

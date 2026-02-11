@@ -1,7 +1,11 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-const WidthContext = createContext<undefined>(undefined)
+interface WidthContextType {
+  width: number;
+  isMobile: boolean;
+}
 
+const WidthContext = createContext<WidthContextType | undefined>(undefined);
 interface ProviderProps {
   children: ReactNode;
 }

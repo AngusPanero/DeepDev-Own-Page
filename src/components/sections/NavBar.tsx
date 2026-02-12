@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import logo from "/images/DeepDev Logo.jpg"
+import logo from "/images/DeepDevLogo.jpg"
 import "../../styles/navBar.css"
 import Login from "./Login";
 import moon from "/logos/moon2.svg"

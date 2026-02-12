@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../../../public/images/DeepDev Logo.jpg"
+import logo from "/images/DeepDevLogo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
 import { UseLanguage }   from "../../contexts/LanguageContext";

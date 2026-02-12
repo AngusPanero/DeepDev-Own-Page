@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/error.css"
 import { UseTheme } from "../contexts/ThemeContext";
 import { UseSession } from "../contexts/SessionContext";
-import "../../public/images/DeepDev Logo.jpg"
+import "/images/DeepDevLogo.jpg"
 
 interface errorProps{
     errorMessage404: string
@@ -26,7 +26,7 @@ const Error404 = ({ errorMessage404 }: errorProps) => {
         <>
         <div className={`error-container ${theme}`}>
             <div className="error-content">
-                        <img src="../../public/images/DeepDev Logo.jpg" alt="deepdev-logo" style={{ border: theme === "dark" ? "2px solid #7701aeff" : "2px solid #0062FF" }} />
+                        <img src="../../public/images/DeepDevLogo.jpg" alt="deepdev-logo" style={{ border: theme === "dark" ? "2px solid #7701aeff" : "2px solid #0062FF" }} />
                         <h1 className={`error-title ${theme}`}>{errorMessage404}</h1>
                 <p className={`error-text small ${theme}`}>Serás redirigido automáticamente al inicio.</p>
             </div>

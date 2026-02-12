@@ -7,6 +7,7 @@ import { UseTheme } from "../../contexts/ThemeContext";
 import CreditCard from "../ui/CreditCard";
 import ProcessOk from "./ProcessOk";
 import { v4 } from 'uuid';
+import { createPortal } from "react-dom";
 
 interface CheckoutPaymentProps {
   openPayment: () => void; // antes estaba como boolean en el comment de la funcion anterior
@@ -130,8 +131,7 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
      if (loading) return <Loader />;
      if(status === "ok") return <ProcessOk processMessage={"Pago procesado exitosamente, Muchas Gracias!"} />
 
-    return(
-        <div ref={checkoutRef} className={`checkout-container ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
+        const content = <div ref={checkoutRef} className={`checkout-container ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
             {/* <h2 className="checkout-title">Checkout</h2> */}
         
@@ -182,7 +182,8 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 <button type="submit" className="checkout-btn" disabled={loading}>{loading ? "Procesando..." : "Procesar Pago"}</button>
             </form>
         </div>
-    )
+    
+    return createPortal(content, document.body);
 }
 
 export default CheckoutPayment

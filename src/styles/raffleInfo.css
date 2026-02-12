@@ -4,7 +4,8 @@
     z-index: 0;
 }
 
-.raffle-info-container {
+div.raffle-info-container.theme-dark {
+    background-color: transparent;
     position: relative;
     max-width: 550px;
     padding: 20px;

@@ -38,7 +38,6 @@
     min-height: 100vh;
     padding-top: 10rem;
     padding-bottom: 4rem;
-    position: relative;
 }
 
 .sales-grid{
@@ -47,7 +46,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    z-index: 999;
+    z-index: 90;
 }
 
 /* Títulos  */

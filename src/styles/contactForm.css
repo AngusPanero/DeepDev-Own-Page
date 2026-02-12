@@ -306,8 +306,7 @@
         margin-bottom: 4rem;
         padding: 2rem 1.5rem; /* Reducimos el padding interno para ganar espacio */
         gap: 1.2rem;
-        width: 100%;
-        max-width: 100%; /* Asegura que ocupe el ancho disponible */
+        max-width: 90vw
     }
 
     .contact-form label {

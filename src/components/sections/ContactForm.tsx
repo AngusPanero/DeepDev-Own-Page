@@ -20,27 +20,33 @@ const ContactForm = () => {
     const [ process, setProcess ] = useState<string>("")
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            setError(false)
-            setLoading(true)
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/contact`, form)
-            if(response.status === 201){
-               TagManager.dataLayer({
-                    event: 'form_contacto_deepdev'
-                }as any);
-                
-                await axios.post(`${import.meta.env.VITE_API_URL}/send-email`, form)
-                setProcess("ok")
-            }
-        } catch (error) {
-            setError(true)
-            console.error("Error submitting the form:", error)
-        } finally {
-            setLoading(false)
-            setError(false)
+    e.preventDefault();
+    
+    // 1. Estados iniciales
+    setError(false);
+    setLoading(true);
+
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/contact`, form);
+        
+        if (response.status === 201) {
+            setProcess("ok");
+            setLoading(false); 
+    
+            TagManager.dataLayer({ event: 'form_contacto_deepdev' } as any);
+
+            axios.post(`${import.meta.env.VITE_API_URL}/send-email`, form)
+                .then(res => console.log("Email enviado:", res.data))
+                .catch(mailErr => {
+                    console.error("El mail falló, pero el cliente no lo nota:", mailErr);
+                });
         }
+    } catch (error) {
+        setLoading(false);
+        setError(true);
+        console.error("Error en la petición inicial:", error);
     }
+}
 
     if(loading) return <Loader />
     if(process === "ok") return <ProcessOk processMessage={"Contacto Enviado Exitosamente."} />

@@ -88,7 +88,6 @@ const Sales = () => {
             </div>
             <TubesCursor />
         </div>
-        
         </>
     );
 };

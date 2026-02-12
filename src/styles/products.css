@@ -6,6 +6,7 @@ body{
     height: 425vh;
     padding-top: 2rem;
     position: relative;
+    overflow-x: hidden;
 }
 
 .dd-grid-overlay.dark{

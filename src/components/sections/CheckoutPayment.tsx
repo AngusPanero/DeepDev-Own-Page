@@ -58,15 +58,17 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
 
 
         const makePayment = async (e: React.FormEvent) => {
-            e.preventDefault()
+            e.preventDefault();
 
-            if(!mp) return
+            if (!mp) return;
+
             try {
-                setError(false)
-                setLoading(true)
-                // Solicitotoken para validar tarjeta
+                setError(false);
+                setLoading(true);
+
+                // 1. Solicitar token para validar tarjeta
                 const cardToken = await mp.createCardToken({
-                    cardNumber: formData.tarjetaNumero.trim().replace(/\s/g, ""), // Trim y quita espacios intermedios
+                    cardNumber: formData.tarjetaNumero.trim().replace(/\s/g, ""), 
                     cardholderName: formData.nombre.trim(),
                     cardExpirationMonth: formData.mesVencimiento.trim(),
                     cardExpirationYear: formData.añoVencimiento.trim(),
@@ -74,13 +76,27 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     identificationType: "DNI",
                     identificationNumber: formData.dni.trim(),
                 });
+
                 console.log("Respuesta de MP Token:", cardToken);
 
-                if(!cardToken || !cardToken.id){
-                    return console.error("Error al generar el token de la tarjeta: ", cardToken);
+                if (!cardToken || !cardToken.id) {
+                    setError("No se pudo validar la tarjeta. Verifique los datos.");
+                    return;
                 }
-                // Una vez obtenido el token borro los datos sensibles
-                if(cardToken && cardToken.id) {
+
+                // 2. Identificar el método de pago dinámicamente usando el BIN (primeros 6 dígitos)
+                const bin = formData.tarjetaNumero.replace(/\s/g, "").substring(0, 6);
+                const pmRes = await mp.getPaymentMethods({ bin });
+                
+                // Tomamos el primer método de pago encontrado (ej. "mastercard", "visa")
+                const methodData = Array.isArray(pmRes) && pmRes.length > 0 ? pmRes[0] : null;
+
+                if (!methodData) {
+                    setError("No se pudo identificar el método de pago de esta tarjeta.");
+                    return;
+                }
+
+                // 3. Limpiar datos sensibles del estado después de obtener el token
                 setFormData(prev => ({
                     ...prev,
                     tarjetaNumero: "",
@@ -89,45 +105,58 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     añoVencimiento: ""
                 }));
 
-                // Usamos los primeros 6 dígitos de la tarjeta para preguntarle a MP qué es
-                const pmRes = await mp.getPaymentMethods({ 
-                    bin: formData.tarjetaNumero.replace(/\s/g, "").substring(0, 6) 
-                });
-                
-                // Si pmRes es un array, tomamos el primer elemento
-                const methodData = Array.isArray(pmRes) ? pmRes[0] : pmRes;
-            
-                // Payload de la compra
+                // 4. Construir el Payload de la compra
                 const payload = {
                     token: cardToken.id,
-                    issuer_id: cardToken.issuer_id ? String(cardToken.issuer_id) : null,
-                    payment_method_id: cardToken.payment_method_id || methodData?.id || "visa",
-                    transaction_amount: productData.price,
+                    // Si el cardToken trae issuer_id lo usamos, sino buscamos en methodData o null
+                    issuer_id: cardToken.issuer_id ? String(cardToken.issuer_id) : (methodData.issuer?.id ? String(methodData.issuer.id) : null),
+                    // AQUÍ ESTÁ EL CAMBIO CLAVE: usamos el ID dinámico (ej: "mastercard")
+                    payment_method_id: methodData.id, 
+                    // Aseguramos que el monto sea un número
+                    transaction_amount: Number(productData.price),
                     installments: Number(formData.cuotas),
                     payer: {
-                    email: formData.email,
-                    identification: { type: "DNI", number: formData.dni },
-                    id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}` // ID interno del comprador en tu sistema, 
+                        email: formData.email,
+                        identification: { 
+                            type: "DNI", 
+                            number: formData.dni 
+                        },
+                        id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`
                     },
                     idempotencyKey: idempotencyKey
                 };
-                console.log("PAYLOAD: ", payload);
-                
+
+                console.log("PAYLOAD A ENVIAR: ", payload);
+
+                // 5. Enviar al Backend
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
+
                 if (response.data.status === "approved") {
-                    await axios.post(`${import.meta.env.VITE_API_URL}/ticket-order`, { name: formData.nombre, plan: productData.title, price: productData.price, email: formData.email });
+                    // Registrar orden exitosa
+                    await axios.post(`${import.meta.env.VITE_API_URL}/ticket-order`, { 
+                        name: formData.nombre, 
+                        plan: productData.title, 
+                        price: productData.price, 
+                        email: formData.email 
+                    });
                     setStatus("ok");
                 } else {
-                    setError("El pago fue rechazado. Verifique sus fondos o tarjeta.");
+                    // Manejo de pagos rechazados, pendientes, etc.
+                    setError(`El pago no fue aprobado. Estado: ${response.data.status}`);
                 }
-            }
-            } catch (error) {
-                setError(true)
-                console.error("Error al procesar el pago: ", error)
-            } finally{
+
+            } catch (error: any) {
+                setError(true);
+                console.error("Error al procesar el pago: ", error);
+                
+                // Si el error viene de Axios, podemos ver qué dijo el backend exactamente
+                if (error.response?.data?.error) {
+                    console.error("Detalle del error del servidor:", error.response.data.error);
+                }
+            } finally {
                 setLoading(false);
             }
-        }
+        };
      if (loading) return <Loader />;
      if(status === "ok") return <ProcessOk processMessage={"Pago procesado exitosamente, Muchas Gracias!"} />
 

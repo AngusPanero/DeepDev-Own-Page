@@ -9,7 +9,7 @@ const Sales = () => {
     const plans = [
     {
         title: "Plan Landing Basic",
-        price: "199000",
+        price: "1500",
         subtitle: "Tu primera huella digital",
         buttonText: "Contratar Ahora",
         features: [
@@ -29,7 +29,7 @@ const Sales = () => {
     },
     {
         title: "Plan Landing Pro",
-        price: "249000",
+        price: "1500",
         subtitle: "Enfocada en conversiones",
         isPopular: true,
         buttonText: "Contratar Ahora",
@@ -51,7 +51,7 @@ const Sales = () => {
     },
     {
         title: "Plan E-Commerce Lite",
-        price: "299000",
+        price: "1500",
         subtitle: "Empieza a vender online",
         buttonText: "Contratar Ahora",
         features: [
@@ -63,7 +63,7 @@ const Sales = () => {
     },
     {
         title: "Plan E-Commerce Full",
-        price: "349000",
+        price: "1500",
         subtitle: "Un ecosistema de ventas",
         buttonText: "Contratar Ahora",
         features: [

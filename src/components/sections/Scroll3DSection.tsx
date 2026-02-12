@@ -57,7 +57,7 @@ const Scroll3DSection = () => {
 
     return (
         <>
-        <section style={{ height: "110vh", position: "relative" }}>
+        <section style={{ height: "110vh", position: "relative", backgroundColor: theme === "dark" ? "black" : "#F0F4F8" }}>
             <div style={{ position: "sticky", top: 0, height: "100vh", width: "100%", zIndex: 2 }}>
                 <Scene> {/*En scene tengo el background them del AetherWaves*/}
                     <AetherWaves />

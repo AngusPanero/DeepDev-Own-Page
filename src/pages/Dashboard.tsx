@@ -56,7 +56,6 @@ const Dashboard = () => {
                                     <div key={item._id} className="dd-log-entry">
                                         <span className="log-date">[{new Date(item.createdAt).toLocaleDateString()}]</span>
                                         <span className="log-plan">{item.plan}</span>
-                                        <span className="log-id">{item._id}</span>
                                         <span className="log-status">SUCCESS</span>
                                         <span className="log-amount">${item.amount}</span>
                                     </div>

@@ -66,12 +66,15 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 setLoading(true);
 
                 const cardNumber = formData.tarjetaNumero.trim().replace(/\s/g, "");
+                console.log("CARD NUMBER", cardNumber);
+                
                 const bin = cardNumber.substring(0, 6);
-
+                console.log("BIN", bin);
                 // 1. Obtener primero el método de pago
                 const paymentMethods = await mp.getPaymentMethods({ bin });
+                console.log("paymentMethods", paymentMethods);
                 const paymentMethod = paymentMethods && paymentMethods.length > 0 ? paymentMethods[0] : null;
-
+                console.log("Method", paymentMethod);
                 if (!paymentMethod) {
                     throw new Error("No se pudo identificar el método de pago.");
                 }
@@ -103,7 +106,7 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     identificationType: "DNI",
                     identificationNumber: formData.dni.trim(),
                 });
-
+                console.log("cardToken", cardToken);
                 if (!cardToken || !cardToken.id) {
                     throw new Error("Error al generar el token de seguridad.");
                 }

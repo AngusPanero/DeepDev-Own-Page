@@ -65,9 +65,32 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 setError(false);
                 setLoading(true);
 
-                // 1. Crear el token de la tarjeta
+                // 1. Limpiamos el número de tarjeta para obtener el BIN
+                const cardNumber = formData.tarjetaNumero.trim().replace(/\s/g, "");
+                console.log("CARD NUMBER:", cardNumber);
+                
+                const bin = cardNumber.substring(0, 6);
+                console.log("BIN:", bin);
+
+                // 2. Obtener el método de pago y el emisor (Transparente para el usuario)
+                // Esto es lo que CardForm hace por detrás y nosotros hacemos manual
+                const [paymentMethods, issuers] = await Promise.all([
+                    mp.getPaymentMethods({ bin }),
+                    mp.getIssuers({ paymentMethodId: '', bin }) // El SDK lo deduce por el BIN
+                ]);
+
+                const paymentMethod = paymentMethods[0];
+                console.log("payment Method:", paymentMethod);
+                const issuer = issuers[0];
+                console.log("ISSUER", issuer);
+                
+                if (!paymentMethod) {
+                    throw new Error("Método de pago no soportado.");
+                }
+
+                // 3. Generar el CardToken (Paso de seguridad obligatorio)
                 const cardToken = await mp.createCardToken({
-                    cardNumber: formData.tarjetaNumero.trim().replace(/\s/g, ""),
+                    cardNumber,
                     cardholderName: formData.nombre.trim(),
                     cardExpirationMonth: formData.mesVencimiento.trim(),
                     cardExpirationYear: formData.añoVencimiento.trim(),
@@ -75,66 +98,46 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     identificationType: "DNI",
                     identificationNumber: formData.dni.trim(),
                 });
+                console.log("cardToken", cardToken);
 
                 if (!cardToken || !cardToken.id) {
-                    setError("Datos de tarjeta inválidos");
-                    return;
+                    throw new Error("Error al generar el token de seguridad.");
                 }
 
-                // 2. Determinar el payment_method_id dinámicamente
-                // Sacamos el primer número del BIN (523937 -> 5)
-                const firstDigit = cardToken.first_six_digits.charAt(0);
-                let detectedMethod = "visa"; // Valor por defecto inicial
-
-                if (firstDigit === '5') {
-                    detectedMethod = "mastercard";
-                } else if (firstDigit === '3') {
-                    detectedMethod = "amex";
-                } else if (firstDigit === '4') {
-                    detectedMethod = "visa";
-                }
-
-                // 3. Limpiar datos sensibles
-                setFormData(prev => ({
-                    ...prev, tarjetaNumero: "", cvv: "", mesVencimiento: "", añoVencimiento: ""
-                }));
-
-                // 4. Armar el Payload
+                // 4. Construir el Payload según la documentación oficial
                 const payload = {
                     token: cardToken.id,
-                    // Aquí usamos el método detectado o lo que devuelva el cardToken
-                    payment_method_id: cardToken.payment_method_id || detectedMethod,
-                    issuer_id: cardToken.issuer_id ? String(cardToken.issuer_id) : null,
-                    transaction_amount: Number(productData.price), // IMPORTANTE: Enviarlo como número
+                    issuer_id: issuer?.id ? String(issuer.id) : undefined, // Importante: no enviar null
+                    payment_method_id: paymentMethod.id, // Ej: 'mastercard'
+                    transaction_amount: Number(productData.price),
                     installments: Number(formData.cuotas),
+                    description: `Plan ${productData.title} - DeepDev`,
                     payer: {
                         email: formData.email,
-                        identification: { type: "DNI", number: formData.dni },
-                        id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`
+                        identification: {
+                            type: "DNI",
+                            number: formData.dni,
+                        },
                     },
-                    idempotencyKey: idempotencyKey
+                    // Metadata extra para tu sistema
+                    id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`,
+                    idempotencyKey: idempotencyKey 
                 };
+                console.log("payload", payload);
 
-                console.log("PAYLOAD LISTO PARA ENVIAR: ", payload);
-
-                // 5. Envío al backend
+                // 5. Envío con Axios a tu Backend en Render
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
-
+                console.log("Response: ", response);
+                
                 if (response.data.status === "approved") {
-                    await axios.post(`${import.meta.env.VITE_API_URL}/ticket-order`, { 
-                        name: formData.nombre, 
-                        plan: productData.title, 
-                        price: productData.price, 
-                        email: formData.email 
-                    });
                     setStatus("ok");
                 } else {
-                    setError(`Pago no aprobado: ${response.data.status}`);
+                    setError(`Estado: ${response.data.status_detail}`);
                 }
 
-            } catch (error) {
-                setError(true);
-                console.error("Error en el proceso de pago:", error);
+            } catch (error: any) {
+                console.error("Error en integración:", error);
+                setError("La tarjeta fue rechazada o los datos son incorrectos.");
             } finally {
                 setLoading(false);
             }

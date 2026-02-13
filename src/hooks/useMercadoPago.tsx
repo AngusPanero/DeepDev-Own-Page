@@ -5,6 +5,7 @@ interface MercadoPagoInstance {
     bricks: () => any;
     createCardToken: (data: any) => Promise<any>;
     getPaymentMethods: (data: any) => Promise<any>;
+    getIssuers: (data: any) => Promise<any>;
 }
 declare global {
     interface Window {

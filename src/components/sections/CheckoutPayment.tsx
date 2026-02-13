@@ -70,42 +70,59 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 
                 const bin = cardNumber.substring(0, 6);
                 console.log("BIN", bin);
+
                 // 1. Obtener primero el método de pago
-                const paymentMethods = await mp.getPaymentMethods({ bin });
-                console.log("paymentMethods", paymentMethods);
-                const paymentMethod = paymentMethods && paymentMethods.length > 0 ? paymentMethods[0] : null;
+                const paymentMethodsResponse = await mp.getPaymentMethods({ bin });
+                console.log("paymentMethods", paymentMethodsResponse);
+
+                // CORRECCIÓN: Acceder a .results[0] según el log que mostraste
+                const paymentMethod = paymentMethodsResponse && paymentMethodsResponse.results && paymentMethodsResponse.results.length > 0 
+                    ? paymentMethodsResponse.results[0] 
+                    : null;
+                    
                 console.log("Method", paymentMethod);
+
                 if (!paymentMethod) {
                     throw new Error("No se pudo identificar el método de pago.");
                 }
 
                 console.log("Método detectado:", paymentMethod.id);
 
-                // 2. Intentar obtener el emisor (opcional, para no romper el flujo)
+                // 2. Intentar obtener el emisor
                 let issuerId = undefined;
                 try {
+                    // Según tu log, el emisor ya viene dentro del paymentMethod: paymentMethod.issuer.id
+                    // Intentamos obtenerlo de la API por seguridad, pero tenemos el fallback del log
                     const issuers = await mp.getIssuers({ 
                         paymentMethodId: paymentMethod.id, 
                         bin 
                     });
+                    
+                    console.log("Respuesta de issuers:", issuers);
+
                     if (issuers && issuers.length > 0) {
                         issuerId = issuers[0].id;
-                        console.log("Emisor detectado:", issuerId);
+                    } else if (paymentMethod.issuer && paymentMethod.issuer.id) {
+                        // Fallback: usar el que ya detectó getPaymentMethods
+                        issuerId = paymentMethod.issuer.id;
                     }
+                    console.log("Emisor detectado:", issuerId);
                 } catch (issuerError) {
                     console.warn("No se pudo obtener el emisor, continuando sin él...", issuerError);
                 }
 
                 // 3. Generar el CardToken
+                // Nota: Asegúrate que identificationType sea dinámico si planeas aceptar otros que no sean DNI
                 const cardToken = await mp.createCardToken({
                     cardNumber,
                     cardholderName: formData.nombre.trim(),
                     cardExpirationMonth: formData.mesVencimiento.trim(),
                     cardExpirationYear: formData.añoVencimiento.trim(),
                     securityCode: formData.cvv.trim(),
-                    identificationType: "DNI",
+                    identificationType: "DNI", 
                     identificationNumber: formData.dni.trim(),
                 });
+                
                 console.log("cardToken", cardToken);
                 if (!cardToken || !cardToken.id) {
                     throw new Error("Error al generar el token de seguridad.");
@@ -125,15 +142,19 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                             type: "DNI",
                             number: formData.dni,
                         },
+                        // Asegúrate que esta variable de entorno esté cargada
                         id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`,
                     },
-                    idempotencyKey: idempotencyKey 
+                    // Asegúrate que esta variable esté definida en tu componente
+                    idempotencyKey: typeof idempotencyKey !== 'undefined' ? idempotencyKey : undefined 
                 };
 
                 console.log("Payload final:", payload);
 
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
                 
+                console.log("Respuesta del servidor:", response.data);
+
                 if (response.data.status === "approved") {
                     setStatus("ok");
                 } else {
@@ -141,8 +162,8 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 }
 
             } catch (error: any) {
-                // Esto imprimirá el error real en la consola para saber qué falló
                 console.error("Error detallado en integración:", error);
+                // Si el error viene de MP, a veces está en error.message o error[0].description
                 setError("Error al procesar el pago. Verifique los datos de su tarjeta.");
             } finally {
                 setLoading(false);

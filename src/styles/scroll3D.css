@@ -36,6 +36,24 @@
     font-family: "Montserrat", "Inter", "Poppins", "sans-serif";
 }
 
+@media (max-width: 1024px) {
+    .h1-reinventing {
+        font-size: 3.5rem; 
+        text-align: start;
+    }
+    
+    .real-3d{
+        font-size: 3.3rem; 
+        margin-top: -65vh; 
+        text-align: start;
+    }
+
+    .h1-ai-3d{
+        font-size: 3.5rem; 
+        text-align: end;
+    }
+}
+
 @media (max-width: 767px) {
     .h1-reinventing {
         font-size: 2.5rem; 

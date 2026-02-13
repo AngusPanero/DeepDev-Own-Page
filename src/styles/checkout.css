@@ -206,6 +206,10 @@ button.checkout-btn {
         padding: 2.5rem 2rem;
     }
 
+    input.checkout-input.cuotas{
+        width: 100%;
+    }
+
     .checkout-title {
         font-size: 2.5rem;
     }

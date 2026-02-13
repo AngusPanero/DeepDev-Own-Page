@@ -18,7 +18,7 @@ const NavBar = () => {
     const [ menuOpen, setMenuOpen ] = useState(false);
 
     const lastScrollY = useRef(0);
-    const menuRef = useRef<HTMLDivElement>(null); // puse null y html
+    const menuRef = useRef<HTMLDivElement>(null);
     const { user, handleLogout } = UseSession()
 
     const { language, handleLanguage, texts } = UseLanguage()

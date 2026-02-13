@@ -13,9 +13,22 @@ export function MacBookModel() {
     const model = useFBX("/3dmodels/MacBook.fbx");
     const { width } = UseWidth()
 
-    const objectSettings = width >= 768 
+    let objectSettings;
+
+    if (width >= 1024) {
+        // Escritorio 
+        objectSettings = { scale: 0.048, position: [0.9, 0.6, 0], rotation: [0, 2, 0] }
+    } else if (width >= 768) {
+        // Tablets 
+        objectSettings = { scale: 0.033, position: [0.2, 1.2, 0], rotation: [-0.1, 2.1, 0] };
+    } else {
+        // Mobile
+        objectSettings = { scale: 0.03, position: [0.2, 1.2, 0], rotation: [-0.1, 2.1, 0] };
+    }
+
+    /* const objectSettings = width >= 768 
         ? { scale: 0.048, position: [0.9, 0.6, 0], rotation: [0, 2, 0] } 
-        : { scale: 0.03, position: [0.2, 1.2, 0], rotation: [-0.1, 2.1, 0] };
+        : { scale: 0.03, position: [0.2, 1.2, 0], rotation: [-0.1, 2.1, 0] }; */
 
     useEffect(() => {
         model.traverse((child: any) => {

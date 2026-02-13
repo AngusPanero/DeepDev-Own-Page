@@ -8,5 +8,14 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173
-  }
+  },
+  build: {
+    
+    minify: 'esbuild',
+    sourcemap: false, 
+  },
+  esbuild: {
+    
+    drop: ['console', 'debugger'],
+  },
 })

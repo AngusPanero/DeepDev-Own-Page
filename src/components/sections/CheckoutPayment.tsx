@@ -32,10 +32,15 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    /* const handleClose = () => {
-            setExit(true);
-            setTimeout(openPayment, 600);
-    }; */
+    let priceQuote
+
+    if(formData.cuotas === "1"){
+        priceQuote = `1 Pago de $${productData.price}`
+    } else if(formData.cuotas === "3"){
+        priceQuote = `3 Pagos de $${productData.price / 3}`
+    } else{
+        priceQuote = `6 Pagos de $${productData.price / 6}`
+    }
 
     const handleClose = () => {
         setExit(true);
@@ -66,27 +71,20 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 setLoading(true);
 
                 const cardNumber = formData.tarjetaNumero.trim().replace(/\s/g, "");
-                console.log("CARD NUMBER", cardNumber);
                 
                 const bin = cardNumber.substring(0, 6);
-                console.log("BIN", bin);
 
                 // 1. Obtener primero el método de pago
                 const paymentMethodsResponse = await mp.getPaymentMethods({ bin });
-                console.log("paymentMethods", paymentMethodsResponse);
 
                 // CORRECCIÓN: Acceder a .results[0] según el log que mostraste
                 const paymentMethod = paymentMethodsResponse && paymentMethodsResponse.results && paymentMethodsResponse.results.length > 0 
                     ? paymentMethodsResponse.results[0] 
                     : null;
-                    
-                console.log("Method", paymentMethod);
 
                 if (!paymentMethod) {
                     throw new Error("No se pudo identificar el método de pago.");
                 }
-
-                console.log("Método detectado:", paymentMethod.id);
 
                 // 2. Intentar obtener el emisor
                 let issuerId = undefined;
@@ -97,8 +95,6 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                         paymentMethodId: paymentMethod.id, 
                         bin 
                     });
-                    
-                    console.log("Respuesta de issuers:", issuers);
 
                     if (issuers && issuers.length > 0) {
                         issuerId = issuers[0].id;
@@ -106,7 +102,6 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                         // Fallback: usar el que ya detectó getPaymentMethods
                         issuerId = paymentMethod.issuer.id;
                     }
-                    console.log("Emisor detectado:", issuerId);
                 } catch (issuerError) {
                     console.warn("No se pudo obtener el emisor, continuando sin él...", issuerError);
                 }
@@ -123,7 +118,6 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     identificationNumber: formData.dni.trim(),
                 });
                 
-                console.log("cardToken", cardToken);
                 if (!cardToken || !cardToken.id) {
                     throw new Error("Error al generar el token de seguridad.");
                 }
@@ -136,6 +130,7 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     transaction_amount: Number(productData.price),
                     installments: Number(formData.cuotas),
                     description: `Plan ${productData.title} - DeepDev`,
+                    plan: productData.title,
                     payer: {
                         email: formData.email,
                         identification: {
@@ -149,11 +144,7 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     idempotencyKey: typeof idempotencyKey !== 'undefined' ? idempotencyKey : undefined 
                 };
 
-                console.log("Payload final:", payload);
-
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
-                
-                console.log("Respuesta del servidor:", response.data);
 
                 if (response.data.status === "approved") {
                     setStatus("ok");
@@ -163,7 +154,6 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
 
             } catch (error: any) {
                 console.error("Error detallado en integración:", error);
-                // Si el error viene de MP, a veces está en error.message o error[0].description
                 setError("Error al procesar el pago. Verifique los datos de su tarjeta.");
             } finally {
                 setLoading(false);
@@ -175,11 +165,10 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
 
         const content = <div ref={checkoutRef} className={`checkout-container ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
             <button className="close-button" onClick={handleClose}>✕</button>
-            {/* <h2 className="checkout-title">Checkout</h2> */}
         
             <CreditCard data={formData} isFlipped={isFlipped} />
 
-            <p className="checkout-subtitle">{productData.name} — ${productData.price}</p>
+            <p className="checkout-subtitle">{productData.name} — {priceQuote}</p>
 
             <form className="checkout-form" onSubmit={makePayment}>
                 
@@ -200,10 +189,10 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     </div>
                     <div className="checkout-input-group" style={{ flex: 1 }}>
                         <label>Cuotas</label>
-                        <select name="cuotas" onChange={handleChange} className="checkout-input">
-                            <option value="1">1 Pago ${productData.price}</option>
-                            <option value="3">3 Pagos ${Math.round(productData.price / 3)}</option>
-                            <option value="6">6 Pagos ${Math.round(productData.price / 6)}</option>
+                        <select name="cuotas" onChange={handleChange} className="checkout-input cuotas">
+                            <option value="1">1 Pago</option>
+                            <option value="3">3 Pagos</option>
+                            <option value="6">6 Pagos</option>
                         </select>
                     </div>
                 </div>

@@ -65,30 +65,35 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                 setError(false);
                 setLoading(true);
 
-                // 1. Limpiamos el número de tarjeta para obtener el BIN
                 const cardNumber = formData.tarjetaNumero.trim().replace(/\s/g, "");
-                console.log("CARD NUMBER:", cardNumber);
-                
                 const bin = cardNumber.substring(0, 6);
-                console.log("BIN:", bin);
 
-                // 2. Obtener el método de pago y el emisor (Transparente para el usuario)
-                // Esto es lo que CardForm hace por detrás y nosotros hacemos manual
-                const [paymentMethods, issuers] = await Promise.all([
-                    mp.getPaymentMethods({ bin }),
-                    mp.getIssuers({ paymentMethodId: '', bin }) // El SDK lo deduce por el BIN
-                ]);
+                // 1. Obtener primero el método de pago
+                const paymentMethods = await mp.getPaymentMethods({ bin });
+                const paymentMethod = paymentMethods && paymentMethods.length > 0 ? paymentMethods[0] : null;
 
-                const paymentMethod = paymentMethods[0];
-                console.log("payment Method:", paymentMethod);
-                const issuer = issuers[0];
-                console.log("ISSUER", issuer);
-                
                 if (!paymentMethod) {
-                    throw new Error("Método de pago no soportado.");
+                    throw new Error("No se pudo identificar el método de pago.");
                 }
 
-                // 3. Generar el CardToken (Paso de seguridad obligatorio)
+                console.log("Método detectado:", paymentMethod.id);
+
+                // 2. Intentar obtener el emisor (opcional, para no romper el flujo)
+                let issuerId = undefined;
+                try {
+                    const issuers = await mp.getIssuers({ 
+                        paymentMethodId: paymentMethod.id, 
+                        bin 
+                    });
+                    if (issuers && issuers.length > 0) {
+                        issuerId = issuers[0].id;
+                        console.log("Emisor detectado:", issuerId);
+                    }
+                } catch (issuerError) {
+                    console.warn("No se pudo obtener el emisor, continuando sin él...", issuerError);
+                }
+
+                // 3. Generar el CardToken
                 const cardToken = await mp.createCardToken({
                     cardNumber,
                     cardholderName: formData.nombre.trim(),
@@ -98,17 +103,16 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                     identificationType: "DNI",
                     identificationNumber: formData.dni.trim(),
                 });
-                console.log("cardToken", cardToken);
 
                 if (!cardToken || !cardToken.id) {
                     throw new Error("Error al generar el token de seguridad.");
                 }
 
-                // 4. Construir el Payload según la documentación oficial
+                // 4. Construir Payload
                 const payload = {
                     token: cardToken.id,
-                    issuer_id: issuer?.id ? String(issuer.id) : undefined, // Importante: no enviar null
-                    payment_method_id: paymentMethod.id, // Ej: 'mastercard'
+                    issuer_id: issuerId ? String(issuerId) : undefined, 
+                    payment_method_id: paymentMethod.id,
                     transaction_amount: Number(productData.price),
                     installments: Number(formData.cuotas),
                     description: `Plan ${productData.title} - DeepDev`,
@@ -118,26 +122,25 @@ const CheckoutPayment = ({ openPayment, productData }: CheckoutPaymentProps) => 
                             type: "DNI",
                             number: formData.dni,
                         },
+                        id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`,
                     },
-                    // Metadata extra para tu sistema
-                    id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`,
                     idempotencyKey: idempotencyKey 
                 };
-                console.log("payload", payload);
 
-                // 5. Envío con Axios a tu Backend en Render
+                console.log("Payload final:", payload);
+
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
-                console.log("Response: ", response);
                 
                 if (response.data.status === "approved") {
                     setStatus("ok");
                 } else {
-                    setError(`Estado: ${response.data.status_detail}`);
+                    setError(`Estado: ${response.data.status_detail || response.data.status}`);
                 }
 
             } catch (error: any) {
-                console.error("Error en integración:", error);
-                setError("La tarjeta fue rechazada o los datos son incorrectos.");
+                // Esto imprimirá el error real en la consola para saber qué falló
+                console.error("Error detallado en integración:", error);
+                setError("Error al procesar el pago. Verifique los datos de su tarjeta.");
             } finally {
                 setLoading(false);
             }

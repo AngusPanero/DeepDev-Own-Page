@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="footer-grid">
 
                 <div className="footer-brand">
-                    <h3 className="footer-logo">DeepDev</h3>
+                    <h2 className="footer-logo">DeepDev</h2>
                     <p className="footer-tagline">{texts[language].footer.deepdev[0]}</p>
                     <p className="footer-description">{texts[language].footer.deepdev[1]}</p>
                 </div>
@@ -19,12 +19,13 @@ const Footer = () => {
                 <div className="footer-section">
                     <h4 className="footer-title">{texts[language].footer.navigationTitle}</h4>
                     <ul className="footer-list">
-                    <li><Link to="/">{texts[language].footer.navigation[0]}</Link></li>
-                    <li><Link to="/products">{texts[language].footer.navigation[1]}</Link></li>
-                    <li><Link to="/sales">Ventas</Link></li>
-                    <li><Link to="/company">{texts[language].footer.navigation[2]}</Link></li>
-                    <li><Link to="/raffles">{texts[language].footer.navigation[3]}</Link></li>
-                    <li><Link to="/contact">{texts[language].footer.navigation[4]}</Link></li>
+                        {/*Uso a potr el footer y nav que estan siempre no me lleva arriba solo renderizaba el contenido*/}
+                    <li><a href="/">{texts[language].footer.navigation[0]}</a></li>
+                    <li><a href="/products">{texts[language].footer.navigation[1]}</a></li>
+                    <li><a href="/sales">{texts[language].footer.navigation[2]}</a></li>
+                    <li><a href="/company">{texts[language].footer.navigation[3]}</a></li>
+                    <li><a href="/raffles">{texts[language].footer.navigation[4]}</a></li>
+                    <li><a href="/contact">{texts[language].footer.navigation[5]}</a></li>
                     </ul>
                 </div>
         
@@ -54,8 +55,8 @@ const Footer = () => {
             <div className="footer-bottom">
                 <span>© {new Date().getFullYear()} DeepDev. {texts[language].footer.rights}</span>
                 <div className="footer-legal">
-                    <Link to="/privacy">{texts[language].footer.privacy}</Link>
-                    <Link to="/terms">{texts[language].footer.terms}</Link>
+                    {/* <Link to="/privacy">{texts[language].footer.privacy}</Link>
+                    <Link to="/terms">{texts[language].footer.terms}</Link> */}
                 </div>
             </div>
         </footer>

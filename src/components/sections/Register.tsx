@@ -31,10 +31,10 @@ const Register = ({ openLogin, closeRegister }: any) => {
     };
     // Pass Requerida
     const passwordRequirements = [
-        { label: "Mínimo 10 caracteres", test: (pass: string) => pass.length >= 10 },
-        { label: "Una mayúscula", test: (pass: string) => /[A-Z]/.test(pass) },
-        { label: "Un número", test: (pass: string) => /\d/.test(pass) },
-        { label: "Carácter especial (@$!%*?&)", test: (pass: string) => /[@$!%*?&]/.test(pass) },
+        { label: `${texts[language].register.reqMinChars}`, test: (pass: string) => pass.length >= 10 },
+        { label: `${texts[language].register.reqUpper}`, test: (pass: string) => /[A-Z]/.test(pass) },
+        { label: `${texts[language].register.reqNumber}`, test: (pass: string) => /\d/.test(pass) },
+        { label: `${texts[language].register.reqSpecial}`, test: (pass: string) => /[@$!%*?&]/.test(pass) },
     ];
 
     // Form Válido
@@ -44,7 +44,8 @@ const Register = ({ openLogin, closeRegister }: any) => {
     const validatePassword = (pass: string) => {
     const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
     if (!regex.test(pass)) {
-        setPasswordError("Error en la codificación de la contraseña.");
+        {/* ERROR CODIFICACIÓN */}
+        setPasswordError(`${texts[language].register.passError}`);
         return false;
     }
     setPasswordError("");
@@ -63,7 +64,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
     }, []);
 
     if(loading) return <Loader />
-    if(error)return <Error errorMessage={"Error al registrar usuario."} />
+    if(error)return <Error errorMessage={`${texts[language].register.errorRegister}`} />
 
     return (
         <div ref={registerRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
@@ -71,12 +72,13 @@ const Register = ({ openLogin, closeRegister }: any) => {
 
             <img className="img-logo-login" src={logo} alt="logo" />
             
-            <h2 className="login-title">Crear Sesión</h2>
+            {/*Nuevo Usuario*/}
+            <h2 className="login-title">{texts[language].register.title}</h2>
 
             <form className="login-form" onSubmit={(e) => {e.preventDefault(); if (!validatePassword(password)) return; handleRegister(email, password, openLogin, closeRegister)}}>
                 {/*EMAIL*/}
                 <div className="input-group">
-                    <label htmlFor="email">{texts[language].login.email}</label>
+                    <label htmlFor="email">{texts[language].register.email}</label>
                     <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 
@@ -102,7 +104,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
                     )}
                     {/*PASS 1*/}
                     <div className="input-group">
-                        <label htmlFor="password">{texts[language].login.password}</label>
+                        <label htmlFor="password">{texts[language].register.password}</label>
 
                         <div className="div-password">
                             <input id="password" type={visiblePassword === true ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} onFocus={() => setShowRequirements(true)} onBlur={() => setShowRequirements(false)} required />
@@ -111,7 +113,7 @@ const Register = ({ openLogin, closeRegister }: any) => {
                     </div>
                     {/*PASS 2*/}
                     <div className="input-group pass-group-2">
-                        <label htmlFor="password2">Verificar Contraseña:</label>
+                        <label htmlFor="password2">{texts[language].register.verifyPassword}</label>
                         
                         <div className="div-password">    
                             <input id="password2" type={visiblePassword === true ? "text" : "password"} value={password2} onChange={(e) => setPassword2(e.target.value)} required />
@@ -120,13 +122,13 @@ const Register = ({ openLogin, closeRegister }: any) => {
                     </div>
                 </div>
                 {/*COINCIDEN*/}
-                {password === password2 ? "" : <span className="check-password">Las contraseñas no coinciden!</span>}
+                {password === password2 ? "" : <span className="check-password">{texts[language].register.passMismatch}</span>}
                 {/*REGEX*/}
                 {passwordError && <span className="check-password">{passwordError}</span>}
-                { password === password2 && <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)} disabled={!isFormValid}>Registrarse</button>}
+                { password === password2 && <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)} disabled={!isFormValid}>{texts[language].register.btnRegister}</button>}
             </form>
 
-            <p className="login-footer" onClick={openLogin} style={{ whiteSpace: "pre-line" }}>Ya eres usuario DeepDev?<span className="login-link">Iniciar Sesión</span></p>
+            <p className="login-footer" onClick={openLogin} style={{ whiteSpace: "pre-line" }}>{texts[language].register.footerText}<span className="login-link">{texts[language].register.footerLink}</span></p>
             <ParticleButton active={hoverParticles} />
         </div>
     );

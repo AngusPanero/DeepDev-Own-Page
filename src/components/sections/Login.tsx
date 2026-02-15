@@ -10,7 +10,7 @@ import { UseSession } from "../../contexts/SessionContext";
 import Loader from "./Loader";
 
 interface LoginProps {
-  openRegister: () => void; // antes estaba como boolean en el comment de la funcion anterior
+  openRegister: () => void;
   closeLogin: () => void
 }
 
@@ -25,11 +25,6 @@ const Login = ({ closeLogin, openRegister }: LoginProps) => {
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false)
-
-    /* const handleClose = () => {
-        setExit(true);
-        setTimeout(closeLogin, 600);
-    }; */
 
     const handleClose = () => {
         setExit(true);
@@ -95,7 +90,7 @@ const Login = ({ closeLogin, openRegister }: LoginProps) => {
             <p className="login-footer" onClick={openRegister} style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>
             
             {/* RESET PASSWORD */}
-            <p className="reset-password" onClick={() => handleResetPassword(email)} style={{ whiteSpace: "pre-line" }}>¿Olvidó su contraseña?</p>
+            <p className="reset-password" onClick={() => handleResetPassword(email)} style={{ whiteSpace: "pre-line" }}>{texts[language].login.forgot}</p>
             <ParticleButton active={hoverParticles} />
         </div>
     );

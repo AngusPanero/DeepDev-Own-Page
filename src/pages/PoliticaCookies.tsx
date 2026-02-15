@@ -1,33 +1,37 @@
+import { UseLanguage } from "../contexts/LanguageContext";
 import { UseTheme } from "../contexts/ThemeContext";
 import "../styles/politicaCookie.css"
 
 const PoliticaCookies = () => {
     const { theme } = UseTheme()
+    const { texts, language } = UseLanguage()
     return (
         <section className={`cookies-page-wrapper ${theme}`}>
             <div className="cookies-container">
-                <h1 className="cookies-title">Política de Cookies</h1>
+
+                <h1 className="cookies-title">{texts[language].cookies.title}</h1>
+
                 <p className="cookies-text">
-                    En <strong>DeepDev</strong> utilizamos cookies para mejorar tu experiencia de navegación y ofrecerte un servicio personalizado. Al continuar navegando en nuestro sitio, entendemos que aceptás su uso.
+                    {texts[language].cookies.intro}
                 </p>
 
                 <div className="cookies-content-body">
-                    <h3>¿Qué son las cookies?</h3>
+                    <h3>{texts[language].cookies.questionWhat}</h3>
                     <p className="cookies-text">
-                        Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitás un sitio web. Sirven para recordar tus preferencias y ayudarte a tener una experiencia más fluida.
+                        {texts[language].cookies.answerWhat}
                     </p>
 
-                    <h3>¿Qué tipos de cookies usamos?</h3>
+                    <h3>{texts[language].cookies.questionTypes}</h3>
                     <ul className="cookies-list">
-                        <li><strong>Cookies esenciales:</strong> Necesarias para que el sitio funcione.</li>
-                        <li><strong>Cookies de rendimiento:</strong> Analizan el uso del sitio.</li>
-                        <li><strong>Cookies de funcionalidad:</strong> Recuerdan tus preferencias.</li>
-                        <li><strong>Cookies de terceros:</strong> Servicios externos como redes sociales.</li>
+                        <li>{texts[language].cookies.typeEssential}</li>
+                        <li>{texts[language].cookies.typeEssential}</li>
+                        <li>{texts[language].cookies.typePerformance}</li>
+                        <li>{texts[language].cookies.typeFunctionality}</li>
                     </ul>
 
-                    <h3>¿Cómo puedo gestionar las cookies?</h3>
+                    <h3><li>{texts[language].cookies.questionManage}</li></h3>
                     <p className="cookies-text">
-                        Podés configurar tu navegador para aceptar o rechazar cookies. Tené en cuenta que desactivar ciertas cookies puede afectar la funcionalidad del sitio.
+                        <li>{texts[language].cookies.answerManage}</li>
                     </p>
                 </div>
             </div>

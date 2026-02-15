@@ -199,13 +199,16 @@ select.nav-buttons.lan{
 
 @media (max-width: 768px) {
     select.nav-buttons.lan{
-    width: 100%;
-}
+        width: 100%;
+    }
 }
 
 @media (max-width: 1024px) {
     .nav-promo{
         font-size: 15px;
+    }
+    select.nav-buttons.lan{
+        width: 100%;
     }
 }
 

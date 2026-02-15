@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
+import { UseLanguage } from "./LanguageContext.tsx";
 
 const SessionContext = createContext<SessionContextType | null>(null);
 
@@ -18,7 +19,7 @@ interface SessionContextType {
     handleLogout: () => Promise<void>;
     handleResetPassword: (email: string) => Promise<void>;
     error: string | boolean | null | number;
-    setError: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
+    setError: React.Dispatch<React.SetStateAction<string | boolean | null | number | object>>;
     loading: string | boolean | null | number;
     setLoading: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
     user: any;
@@ -28,6 +29,7 @@ interface SessionContextType {
 export const SessionProvider = ({ children }: ProviderProps) => {
     const navigate = useNavigate()
     const timeRef = useRef<any>(null);
+    const { texts, language } = UseLanguage()
 
     const [ error, setError ] = useState<string | boolean | null | number>(false)
     const [ loading, setLoading ] = useState<string | boolean | null | number>(false)
@@ -65,7 +67,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
             setLoading(true)
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/register`, { email, password })
             if(response.status === 201){
-                console.log(`User created successfully! 🟢`);
+                /* console.log(`User created successfully! 🟢`); */
                 
                 registerOpen(false)
                 loginOpen(true)
@@ -76,7 +78,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
                 return
             }
             setError(true)
-            console.error("Internal error creating user! 🔴", error)
+            /* console.error("Internal error creating user! 🔴", error) */
         } finally {
             setLoading(false)
         }
@@ -100,7 +102,8 @@ export const SessionProvider = ({ children }: ProviderProps) => {
             if(customClaims.claims.banned){
                 await auth.signOut(); 
                 setUser(null);
-                setError("Usuario baneado. Contactate con DeepDev.");    
+                
+                setError(texts[language].sessionErrors.loginBanned); // Usuario Banneado    
                 return
             }
 
@@ -121,23 +124,23 @@ export const SessionProvider = ({ children }: ProviderProps) => {
                         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`,{ email });
                         
                         if (data.banned) {
-                            setError("Tu cuenta fue bloqueada por demasiados intentos fallidos.");
+                            setError(texts[language].sessionErrors.loginTooManyAttempts); // Demasiados intentos
                             return;
                         }
                         if (data.attempts < 5) {
-                            setError(`Credenciales inválidas. Te quedan ${5 - data.attempts} intento(s).`);
+                            setError(texts[language].sessionErrors.loginAttemptsLeft); // Restantes
                         } else {
-                            setError("Credenciales inválidas.");
+                            setError(texts[language].sessionErrors.loginInvalidCredentials); // Credenciales Invalidas);
                         }
 
                     } catch (error){
-                        setError("Credenciales inválidas.");
+                        setError(texts[language].sessionErrors.loginInvalidCredentials); // Credenciales Invalidas
                         console.error("Login error:", error);
                     }
                     return;
                 }
             console.error("Login error:", error);
-            setError("Error al iniciar sesión. Intentá más tarde.");
+            setError(texts[language].sessionErrors.loginGeneralError); // Intenta más tarde
         } finally {
             setLoading(false)
         }
@@ -157,7 +160,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
                 navigate("/");
             }
         } catch (error: any) {
-            setError("Error al cerrar sesión");
+            setError(texts[language].sessionErrors.logoutError); // Error al cerrar
             console.error("Error logging out session 🔴", error);
         } finally {
             setLoading(false)
@@ -168,11 +171,11 @@ export const SessionProvider = ({ children }: ProviderProps) => {
     const handleResetPassword = async (email: string) => {
         try {
             if(!email){
-                alert("Por favor, ingresa tu email para restablecer la contraseña.");
+                alert(texts[language].sessionErrors.resetEmailRequired); // Ingresá mail
                 return;
             } else {
                 await sendPasswordResetEmail(auth, email);
-                alert("¡Email enviado! Revisa tu bandeja de entrada.");
+                alert(texts[language].sessionErrors.resetEmailSent); // Mail enviado
             }
             
         } catch (error: any) {
@@ -180,16 +183,16 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
             switch (error.code) {
                 case "auth/user-not-found":
-                    alert("No existe ninguna cuenta vinculada a este correo electrónico.");
+                    alert(texts[language].sessionErrors.resetUserNotFound); // No Existe usuario
                     break;
                 case "auth/invalid-email":
-                    alert("El formato del correo no es válido.");
+                    alert(texts[language].sessionErrors.resetInvalidEmail); // Formato mail invalido
                     break;
                 case "auth/too-many-requests":
-                    alert("Demasiados intentos. Por favor, intenta más tarde.");
+                    alert(texts[language].sessionErrors.resetTooManyRequests); // Demasiados Intentos
                     break;
                 default:
-                    alert("Ocurrió un error inesperado. Inténtalo de nuevo.");
+                    alert("Default Error.");
             }
         }
     }

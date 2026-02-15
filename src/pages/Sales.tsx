@@ -14,17 +14,18 @@ const Sales = () => {
         buttonText: "Contratar Ahora",
         features: [
             { text: "Interfaz de usuario moderna", included: true },
-            { text: "Acceso a catálogo 3D", included: true },
-            { text: "Mailing profesional", included: false },
-            { text: "Experiencia de usuario pro", included: true },
-            { text: "Optimización SEO básica", included: true },
-            { text: "4 secciones personalizadas", included: true },
-            { text: "Optimización SEO básica", included: true },
-            { text: "Formulario de contacto", included: true },
-            { text: "Panel de administrador", included: false },
-            { text: "Modo claro/oscuro", included: false },
+            { text: "Responsive para celulares", included: true },
             { text: "Chat-Bot Inteligencia Artificial", included: false },
-            { text: "Reseñas de Google", included: false },
+            { text: "4 secciones personalizadas", included: true },
+            { text: "Optimización SEO Pro", included: false },
+            { text: "Integración con Analytics", included: false },
+            { text: "Acceso a catálogo 3D", included: true },
+            { text: "Panel de administrador", included: true },
+            { text: "Modo Claro-Oscuro", included: false },
+            { text: "Mailing profesional", included: false },
+            { text: "Experiencia de usuario", included: true },
+            { text: "Formulario de contacto", included: true },
+            { text: "Reseñas de Google", included: true },
         ]
     },
     {
@@ -36,16 +37,16 @@ const Sales = () => {
         features: [
             { text: "Interfaz de usuario moderna", included: true },
             { text: "Responsive para celulares", included: true },
-            { text: "Acceso a catálogo 3D", included: true },
-            { text: "Mailing profesional", included: true },
-            { text: "Experiencia de usuario pro", included: true },
+            { text: "Chat-Bot Inteligencia Artificial", included: true },
             { text: "5 secciones personalizadas", included: true },
             { text: "Optimización SEO avanzada", included: true },
-            { text: "Integración con Analytics/Pixel", included: true },
-            { text: "Formulario de contacto", included: true },
+            { text: "Integración con Analytics", included: true },
+            { text: "Acceso a catálogo 3D", included: true },
             { text: "Panel de administrador", included: true },
             { text: "Modo Claro-Oscuro", included: true },
-            { text: "Chat-Bot Inteligencia Artificial", included: true },
+            { text: "Mailing profesional", included: true },
+            { text: "Experiencia de usuario pro", included: true },
+            { text: "Formulario de contacto", included: true },
             { text: "Reseñas de Google", included: true },
         ]
     },
@@ -79,7 +80,7 @@ const Sales = () => {
         <>
         
         <div className={`sales-page-container ${theme === "light" ? "theme-light" : "theme-dark"}`}>
-            {/* <h1 className="sales-title">Aplicaciones Webs Disponibles:</h1> */}
+            
             <div className={`dd-grid-overlay ${theme}`}></div> 
             <div className="sales-grid">
                 {plans.map((plan, index) => (

@@ -98,6 +98,7 @@ export interface Translation {
     nav: {
         promo: string;
         products: string;
+        sales: string;
         company: string;
         raffles: string;
         contact: string;
@@ -112,7 +113,24 @@ export interface Translation {
         register: {
             before: string;
             after: string;
-        }
+        },
+        forgot: string;
+    };
+    register:{
+        title: string
+        email: string
+        password: string
+        verifyPassword: string
+        passMismatch: string
+        passError: string
+        btnRegister: string
+        footerText: string
+        footerLink: string
+        reqMinChars: string
+        reqUpper: string
+        reqNumber: string
+        reqSpecial: string
+        errorRegister: string
     };
     footer: {
         deepdev: string[];
@@ -126,7 +144,52 @@ export interface Translation {
         expertiseTitle: string,
         connectTitle: string,
     };
-    language: string
+    language: string;
+    raffleTerm:{
+        terms_title: string;
+        terms_subtitle: string
+        term1_title: string;
+        term1_text: string;   
+        term2_title: string;
+        term2_text: string;   
+        term3_title: string;
+        term3_text: string;   
+        term4_title: string;
+        term4_text: string;   
+        term5_title: string;
+        term5_text: string;   
+        terms_footer: string;
+    };
+    error404:{
+        title: string
+        errorMessage: string
+    };
+    cookies: {
+    title: string;
+    intro: string;
+    questionWhat: string;
+    answerWhat: string;
+    questionTypes: string;
+    typeEssential: string;
+    typePerformance: string;
+    typeFunctionality: string;
+    typeThirdParty: string;
+    questionManage: string;
+    answerManage: string;
+    };
+    sessionErrors: {
+        loginBanned: string,
+        loginTooManyAttempts: string
+        loginInvalidCredentials: string
+        loginAttemptsLeft: string
+        loginGeneralError: string
+        resetEmailRequired: string
+        resetEmailSent: string
+        resetUserNotFound: string
+        resetInvalidEmail: string
+        resetTooManyRequests: string
+        logoutError: string
+        }
 }
 
 export interface TextsConfig {
@@ -272,6 +335,7 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
         nav: {
             promo: `Check out our sweepstakes section to participate in prize draws and get great discounts on our products.`,
             products: `Products`,
+            sales: `Sales`,
             company: `Company`,
             raffles: `Raffles`,
             contact: `Contact`,
@@ -287,20 +351,82 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
                 before: `New to DeepDev? `,
                 after: `Create an account`
             },
+            forgot: `Forgot your password?`
+        },
+        register: {
+            title: "New User",
+            email: "Email",
+            password: "Password",
+            verifyPassword: "Verify Password:",
+            passMismatch: "Passwords do not match!",
+            passError: "Password encoding error.",
+            btnRegister: "Register",
+            footerText: "Already a DeepDev user?",
+            footerLink: "Log In",
+            reqMinChars: "Minimum 10 characters",
+            reqUpper: "One uppercase letter",
+            reqNumber: "One number",
+            reqSpecial: "Special character (@$!%*?&)",
+            errorRegister: "Error registering user."
         },
         footer: {
             deepdev: [`Reinventing Digital Experiences`, `Engineering immersive interfaces where design, motion and intelligence converge.`],
             navigationTitle: `NAVIGATION`,
             expertiseTitle: `EXPERTISE`,
             connectTitle: `CONNECT`,
-            navigation: [`Home`, `Products`, `Company`, `Raffles`, `Contact`],
+            navigation: [`Home`, `Products`, `Sales`, `Company`, `Raffles`, `Contact`],
             expertise: [`Frontend Engineering`, `3D Web Experiences`, `AI Integrations`, `Backend Systems`],
             connect: [`Global Remote`, `Phone`],
             rights: `All rights reserved.`,
             privacy: `Privacy Policy`,
             terms: `Terms`
         },
-        language: `Lan`
+        language: `Lan`,
+        raffleTerm:{
+            terms_title: "Terms and Conditions",
+            terms_subtitle: "By participating in the DeepDev giveaway, you fully accept the terms and conditions detailed below.",
+            term1_title: "Participation Requirements",
+            term1_text: "To participate, it is mandatory to be over 18 years old. Since a Landing Page or eCommerce can have lucrative and/or economic purposes, the participant must have legal capacity to manage these types of digital assets.",
+            term2_title: "The Prize and Scope",
+            term2_text: "The prize consists exclusively of the development and delivery of a Landing Page or eCommerce based on our sales section models. DeepDev is responsible only for creating the site. Management costs, hosting, database maintenance, and domain acquisition are solely and exclusively the winner's financial responsibility.",
+            term3_title: "Disclaimer",
+            term3_text: "DeepDev provides the technical tool but disclaims all responsibility for the purpose, content, or future use of the website. We are not responsible for malicious use, illegal activities, or any economic management derived from the site once delivered.",
+            term4_title: "Veracity and Claim",
+            term4_text: "Any non-veracious data in the form voids the winner. After notification, the winner has 72 hours to claim the prize; otherwise, a new selection will be made.",
+            term5_title: "Data Consent",
+            term5_text: "Data will be used only for giveaway and DeepDev advertising purposes. By participating, you consent to the processing of such information and to receive communications from the company.",
+            terms_footer: "DeepDev reserves the right of interpretation of these rules."
+        },
+        error404: {
+            title: "404 - Page not found.",
+            errorMessage: "You will be automatically redirected to the home page."
+        },
+        cookies: {
+            title: "Cookie Policy",
+            intro: "At DeepDev we use cookies to improve your browsing experience and offer you a personalized service. By continuing to browse our site, we understand that you accept their use.",
+            questionWhat: "What are cookies?",
+            answerWhat: "Cookies are small text files that are stored on your device when you visit a website. They serve to remember your preferences and help you have a smoother experience.",
+            questionTypes: "What types of cookies do we use?",
+            typeEssential: "Essential cookies: Necessary for the site to function.",
+            typePerformance: "Performance cookies: They analyze the use of the site.",
+            typeFunctionality: "Functionality cookies: They remember your preferences.",
+            typeThirdParty: "Third-party cookies: External services such as social networks.",
+            questionManage: "How can I manage cookies?",
+            answerManage: "You can configure your browser to accept or reject cookies. Please note that disabling certain cookies may affect the functionality of the site."
+        },
+        sessionErrors: {
+            loginBanned: "User banned. Contact DeepDev.",
+            loginTooManyAttempts: "Your account was blocked due to too many failed attempts.",
+            loginInvalidCredentials: "Invalid credentials.",
+            loginAttemptsLeft: "Invalid credentials. You have {{attempts}} attempt(s) left.",
+            loginGeneralError: "Error logging in. Try again later.",
+            resetEmailRequired: "Please enter your email to reset your password.",
+            resetEmailSent: "Email sent! Check your inbox.",
+            resetUserNotFound: "No account linked to this email exists.",
+            resetInvalidEmail: "The email format is invalid.",
+            resetTooManyRequests: "Too many attempts. Try again later.",
+            logoutError: "Error logging out."
+        },
     },
     es: {
         home: {
@@ -428,6 +554,7 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
         nav: {
             promo: `Visita nuestra sección de sorteos para participar por premios y obtener grandes descuentos en nuestros productos.`,
             products: `Productos`,
+            sales: `Ventas`,
             company: `Compañía`,
             raffles: `Sorteos`,
             contact: `Contacto`,
@@ -444,6 +571,23 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
                 `,
                 after: `Crea una cuenta`
             },
+            forgot: "¿Olvidaste tu contraseña?"
+        },
+        register:{
+            title: "Nuevo Usuario",
+            email: "Email",
+            password: "Contraseña",
+            verifyPassword: "Verificar Contraseña:",
+            passMismatch: "¡Las contraseñas no coinciden!",
+            passError: "Error en la codificación de la contraseña.",
+            btnRegister: "Registrarse",
+            footerText: "Ya eres usuario DeepDev?",
+            footerLink: "Iniciar Sesión",
+            reqMinChars: "Mínimo 10 caracteres",
+            reqUpper: "Una mayúscula",
+            reqNumber: "Un número",
+            reqSpecial: "Carácter especial (@$!%*?&)",
+            errorRegister: "Error al registrar usuario."
         },
         footer: {
             deepdev: [`Reinventando Experiencias Digitales`, `Ingeniería de interfaces inmersivas donde convergen el diseño, el movimiento y la inteligencia.`],
@@ -457,7 +601,52 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
             privacy: `Política de Privacidad`,
             terms: `Términos y Condiciones`
         },
-        language: `Len`
+        language: `Len`,
+        raffleTerm:{
+            "terms_title": "Términos y Condiciones",
+            "terms_subtitle": "Al participar en el sorteo de DeepDev, aceptás de manera íntegra las bases y condiciones detalladas a continuación.",
+            "term1_title": "Requisitos de Participación",
+            "term1_text": "Para participar, es obligatorio ser mayor de 18 años. Dado que una Landing Page o eCommerce puede tener fines lucrativos y/o económicos, el participante debe contar con capacidad legal para administrar este tipo de activos digitales.",
+            "term2_title": "El Premio y Alcance",
+            "term2_text": "El premio consiste exclusivamente en el desarrollo y entrega de una Landing Page o eCommerce basado en los modelos de nuestra sección de ventas. DeepDev se encarga únicamente de la creación del sitio. Los gastos de gestión, publicación en servidores (hosting), mantenimiento de bases de datos y adquisición de dominio web son pura y exclusivamente responsabilidad económica del ganador.",
+            "term3_title": "Deslinde de Responsabilidad",
+            "term3_text": "DeepDev entrega la herramienta técnica, pero se desliga completamente de la finalidad, contenido o uso que el ganador le dé al sitio web en el futuro. No somos responsables por usos malintencionados, actividades ilícitas o cualquier gestión económica derivada del sitio una vez entregado.",
+            "term4_title": "Veracidad y Reclamo",
+            "term4_text": "Cualquier dato no verídico en el formulario anula al ganador. Tras la notificación, el ganador dispone de 72 horas para reclamar su premio; de lo contrario, se procederá a una nueva selección.",
+            "term5_title": "Consentimiento de Datos",
+            "term5_text": "Los datos se usarán solo para fines del sorteo y publicidad de DeepDev. Al participar, das tu consentimiento para el tratamiento de dicha información y para recibir comunicaciones de la empresa.",
+            "terms_footer": "DeepDev se reserva el derecho de interpretación de las presentes bases."
+        },
+        error404: {
+            title: "404 - Página no encontrada.",
+            errorMessage: "Serás redirigido automáticamente al inicio."
+        },
+        cookies: {
+            title: "Política de Cookies",
+            intro: "En DeepDev utilizamos cookies para mejorar tu experiencia de navegación y ofrecerte un servicio personalizado. Al continuar navegando en nuestro sitio, entendemos que aceptás su uso.",
+            questionWhat: "¿Qué son las cookies?",
+            answerWhat: "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitás un sitio web. Sirven para recordar tus preferencias y ayudarte a tener una experiencia más fluida.",
+            questionTypes: "¿Qué tipos de cookies usamos?",
+            typeEssential: "Cookies esenciales: Necesarias para que el sitio funcione.",
+            typePerformance: "Cookies de rendimiento: Analizan el uso del sitio.",
+            typeFunctionality: "Cookies de funcionalidad: Recuerdan tus preferencias.",
+            typeThirdParty: "Cookies de terceros: Servicios externos como redes sociales.",
+            questionManage: "¿Cómo puedo gestionar las cookies?",
+            answerManage: "Podés configurar tu navegador para aceptar o rechazar cookies. Tené en cuenta que desactivar ciertas cookies puede afectar la funcionalidad del sitio."
+        },
+        sessionErrors: {
+            loginBanned: "Usuario baneado. Contactate con DeepDev.",
+            loginTooManyAttempts: "Tu cuenta fue bloqueada por demasiados intentos fallidos.",
+            loginInvalidCredentials: "Credenciales inválidas.",
+            loginAttemptsLeft: "Credenciales inválidas. Te quedan {{attempts}} intento(s).",
+            loginGeneralError: "Error al iniciar sesión. Intentá más tarde.",
+            resetEmailRequired: "Por favor, ingresa tu email para restablecer la contraseña.",
+            resetEmailSent: "¡Email enviado! Revisa tu bandeja de entrada.",
+            resetUserNotFound: "No existe cuenta vinculada a este correo.",
+            resetInvalidEmail: "El formato del correo no es válido.",
+            resetTooManyRequests:  "Demasiados intentos. Intenta más tarde.",
+            logoutError: "Error al cerrar sesión.",
+        }
     },
     it: {
         home: {
@@ -585,6 +774,7 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
         nav: {
             promo: `Visita la nostra sezione sorteggi per partecipare all'estrazione di premi e ottenere grandi sconti sui nostri prodotti.`,
             products: `Prodotti`,
+            sales: `Vendite`,
             company: `Azienda`,
             raffles: `Sorteggi`,
             contact: `Contatti`,
@@ -600,20 +790,82 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
                 before: `Nuovo in DeepDev? `,
                 after: `Crea un account`
             },
+            forgot: "Password dimenticata?"
+        },
+        register:{
+            title: "Nuovo Utente",
+            email: "Email",
+            password: "Password",
+            verifyPassword: "Verifica Password:",
+            passMismatch: "Le password non corrispondono!",
+            passError: "Errore di codifica della password.",
+            btnRegister: "Registrati",
+            footerText: "Sei già un utente DeepDev?",
+            footerLink: "Accedi",
+            reqMinChars: "Minimo 10 caratteri",
+            reqUpper: "Una lettera maiuscola",
+            reqNumber: "Un numero",
+            reqSpecial: "Carattere speciale (@$!%*?&)",
+            errorRegister: "Errore durante la registrazione."
         },
         footer: {
             deepdev: [`Reinventando le Esperienze Digitali`, `Ingegneria di interfacce immersive dove convergono design, movimento e intelligenza.`],
             navigationTitle: `NAVIGAZIONE`,
             expertiseTitle: `COMPETENZE`,
             connectTitle: `CONTATTI`,
-            navigation: [`Home`, `Prodotti`, `Azienda`, `Sorteggi`, `Contatti`],
+            navigation: [`Home`, `Prodotti`, "Vendite", `Azienda`, `Sorteggi`, `Contatti`],
             expertise: [`Ingegneria Frontend`, `Esperienze Web 3D`, `Integrazioni IA`, `Sistemas Backend`],
             connect: [`Remoto Globale`, `Telefono`],
             rights: `Tutti i diritti riservati.`,
             privacy: `Informativa sulla Privacy`,
             terms: `Termini e Condizioni`
         },
-        language: `Lin`
+        language: `Lin`,
+        raffleTerm:{
+            "terms_title": "Termini e Condizioni",
+            "terms_subtitle": "Partecipando al sorteggio di DeepDev, accetti integralmente i termini e le condizioni dettagliate di seguito.",
+            "term1_title": "Requisiti di Partecipazione",
+            "term1_text": "Per partecipare è obbligatorio essere maggiorenni (18+). Poiché una Landing Page o un eCommerce possono avere scopi lucrativi e/o economici, il partecipante deve avere la capacità legale di gestire questo tipo di asset digitali.",
+            "term2_title": "Il Premio e l'Ambito",
+            "term2_text": "Il premio consiste esclusivamente nello sviluppo e nella consegna di una Landing Page o eCommerce basata sui modelli della nostra sezione vendite. DeepDev si occupa solo della creazione del sito. I costi di gestione, hosting, manutenzione del database e acquisizione del dominio sono pura ed esclusiva responsabilità economica del vincitore.",
+            "term3_title": "Esclusione di Responsabilità",
+            "term3_text": "DeepDev fornisce lo strumento tecnico, ma declina ogni responsabilità per lo scopo, il contenuto o l'uso futuro del sito web. Non siamo responsabili per usi malevoli, attività illecite o qualsiasi gestione economica derivante dal sito dopo la consegna.",
+            "term4_title": "Veridicità e Reclamo",
+            "term4_text": "Qualsiasi dato non veritiero nel modulo annulla il vincitore. Dopo la notifica, il vincitore ha 72 ore per richiedere il premio, altrimenti si procederà a una nuova selezione.",
+            "term5_title": "Consenso ai Dati",
+            "term5_text": "I dati verranno utilizzati solo per il sorteggio e la pubblicità di DeepDev. Partecipando, acconsenti al trattamento di tali informazioni e a ricevere comunicazioni dall'azienda.",
+            "terms_footer": "DeepDev si riserva il diritto di interpretazione delle presenti basi."
+        },
+        error404: {
+            title: "404 - Pagina non trovata.",
+            errorMessage: "Verrai reindirizzato automaticamente alla pagina iniziale."
+        },
+        cookies: {
+            title: "Politica sui Cookie",
+            intro: "In DeepDev utilizziamo i cookie per migliorare la tua esperienza di navigazione e offrirti un servizio personalizzato. Continuando a navigare sul nostro sito, intendiamo che ne accetti l'utilizzo.",
+            questionWhat: "Cosa sono i cookie?",
+            answerWhat: "I cookie sono piccoli file di testo che vengono memorizzati sul tuo dispositivo quando visiti un sito web. Servono a ricordare le tue preferenze e ad aiutarti ad avere un'esperienza più fluida.",
+            questionTypes: "Che tipi di cookie utilizziamo?",
+            typeEssential: "Cookie essenziali: Necessari per il funzionamento del sito.",
+            typePerformance: "Cookie di prestazione: Analizzano l'utilizzo del sito.",
+            typeFunctionality: "Cookie di funzionalità: Ricordano le tue preferenze.",
+            typeThirdParty: "Cookie di terze parti: Servizi esterni come i social network.",
+            questionManage: "Come posso gestire i cookie?",
+            answerManage: "Puoi configurare il tuo browser per accettare o rifiutare i cookie. Tieni presente che la disattivazione di alcuni cookie potrebbe influire sulla funzionalità del sito."
+        },
+        sessionErrors: {
+            loginBanned: "Utente bannato. Contatta DeepDev.",
+            loginTooManyAttempts: "Il tuo account è stato bloccato per troppi tentativi falliti.",
+            loginInvalidCredentials: "Credenziali non valide.",
+            loginAttemptsLeft: "Credenziali non valide. Ti rimangono {{attempts}} tentativi.",
+            loginGeneralError: "Errore durante l'accesso. Riprova più tardi.",
+            resetEmailRequired: "Per favore, inserisci la tua email per reimpostare la password.",
+            resetEmailSent: "Email inviata! Controlla la tua posta in arrivo.",
+            resetUserNotFound: "Non esiste un account collegato a questa email.",
+            resetInvalidEmail: "Il formato dell'email non è valido.",
+            resetTooManyRequests: "Troppi tentativi. Riprova più tardi.",
+            logoutError: "Errore durante la disconnessione."
+        },
     },
     fr: {
         home: {
@@ -737,6 +989,7 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
         nav: {
             promo: `Consultez notre section concours pour participer aux tirages au sort et obtenir des réductions.`,
             products: `Produits`,
+            sales: `Ventes`,
             company: `Entreprise`,
             raffles: `Concours`,
             contact: `Contact`,
@@ -753,20 +1006,82 @@ Il nostro approccio assicura che ogni informazione arrivi nel posto giusto al mo
                 `,
                 after: `Créer un compte`
             },
+            forgot: "Mot de passe oublié ?"
+        },
+        register:{
+            title: "Nouvel Utilisateur",
+            email: "E-mail",
+            password: "Mot de passe",
+            verifyPassword: "Vérifier le mot de passe :",
+            passMismatch: "Les mots de passe ne correspondent pas !",
+            passError: "Erreur d'encodage du mot de passe.",
+            btnRegister: "S'inscrire",
+            footerText: "Déjà utilisateur DeepDev ?",
+            footerLink: "Se connecter",
+            reqMinChars: "Minimum 10 caractères",
+            reqUpper: "Une majuscule",
+            reqNumber: "Un chiffre",
+            reqSpecial: "Caractère spécial (@$!%*?&)",
+            errorRegister: "Erreur lors de l'inscription."
         },
         footer: {
             deepdev: [`Réinventer les Expériences Numériques`, `Ingénierie d'interfaces inmersives où convergent design, mouvement et intelligence.`],
             navigationTitle: `NAVIGATION`,
             expertiseTitle: `EXPERTISE`,
             connectTitle: `CONTACT`,
-            navigation: [`Accueil`, `Produits`, `Entreprise`, `Concours`, `Contact`],
+            navigation: [`Accueil`, `Produits`, "Ventes", `Entreprise`, `Concours`, `Contact`],
             expertise: [`Ingénierie Frontend`, `Expériences Web 3D`, `Intégrations IA`, `Systèmes Backend`],
             connect: [`Remote Global`, `Téléphone`],
             rights: `Tous droits réservés.`,
             privacy: `Politique de Confidentialité`,
             terms: `Conditions Générales`
         },
-        language: `Lan`
+        language: `Lan`,
+        raffleTerm:{
+            "terms_title": "Conditions Générales",
+            "terms_subtitle": "En participant au tirage au sort de DeepDev, vous acceptez pleinement les conditions générales détaillées ci-dessous.",
+            "term1_title": "Conditions de Participation",
+            "term1_text": "Pour participer, il est obligatoire d'avoir plus de 18 ans. Étant donné qu'une Landing Page ou un eCommerce peut avoir des fins lucratives et/ou économiques, le participant doit avoir la capacité juridique de gérer ce type d'actifs numériques.",
+            "term2_title": "Le Prix et la Portée",
+            "term2_text": "Le prix consiste exclusivement en le développement et la livraison d'une Landing Page ou d'un eCommerce basé sur les modèles de notre section de vente. DeepDev est responsable uniquement de la création du site. Les frais de gestion, d'hébergement, de maintenance et d'acquisition de domaine sont exclusivement la responsabilité financière du gagnant.",
+            "term3_title": "Exclusion de Responsabilité",
+            "term3_text": "DeepDev fournit l'outil technique mais décline toute responsabilité quant à la finalité, au contenu ou à l'utilisation future du site web. Nous ne sommes pas responsables des utilisations malveillantes, activités illicites ou gestion économique découlant du site après livraison.",
+            "term4_title": "Véracité et Réclamation",
+            "term4_text": "Toute donnée non véridique dans le formulaire annule le gagnant. Après notification, le gagnant dispose de 72 heures pour réclamer son prix, faute de quoi une nouvelle sélection sera effectuée.",
+            "term5_title": "Consentement des Données",
+            "term5_text": "Les données seront utilisées uniquement pour le tirage au sort et la publicité de DeepDev. En participant, vous consentez au traitement de ces informations et à la réception de communications de l'entreprise.",
+            "terms_footer": "DeepDev se réserve le droit d'interprétation des présentes bases."
+        },
+        error404: {
+            title: "404 - Page non trouvée.",
+            errorMessage: "Vous serez automatiquement redirigé vers la page d'accueil."
+        },
+         cookies: {
+            title: "Politique relative aux Cookies",
+            intro: "Chez DeepDev, nous utilisons des cookies pour améliorer votre expérience de navigation et vous offrir un service personnalisé. En continuant à naviguer sur notre site, nous considérons que vous acceptez leur utilisation.",
+            questionWhat: "Que sont les cookies ?",
+            answerWhat: "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils servent à mémoriser vos préférences et à vous aider à avoir une expérience plus fluide.",
+            questionTypes: "Quels types de cookies utilisons-nous ?",
+            typeEssential: "Cookies essentiels : Nécessaires au fonctionnement du site.",
+            typePerformance: "Cookies de performance : Ils analysent l'utilisation du site.",
+            typeFunctionality: "Cookies de fonctionnalité : Ils mémorisent vos préférences.",
+            typeThirdParty: "Cookies tiers : Services externes tels que les réseaux sociaux.",
+            questionManage: "Comment puis-je gérer les cookies ?",
+            answerManage: "Vous pouvez configurer votre navigateur pour accepter ou refuser les cookies. Notez que la désactivation de certains cookies peut affecter la fonctionnalité du site."
+        },
+        sessionErrors: {
+            loginBanned: "Utilisateur banni. Contactez DeepDev.",
+            loginTooManyAttempts: "Votre compte a été bloqué suite à trop de tentatives infructueuses.",
+            loginInvalidCredentials: "Identifiants invalides.",
+            loginAttemptsLeft: "Identifiants invalides. Il vous reste {{attempts}} tentative(s).",
+            loginGeneralError: "Erreur lors de la connexion. Réessayez plus tard.",
+            resetEmailRequired: "Veuillez saisir votre e-mail pour réinitialiser le mot de passe.",
+            resetEmailSent: "E-mail envoyé ! Vérifiez votre boîte de réception.",
+            resetUserNotFound: "Aucun compte n'est lié à cet e-mail.",
+            resetInvalidEmail: "Le format de l'e-mail n'est pas valide.",
+            resetTooManyRequests: "Trop de tentatives. Réessayez plus tard.",
+            logoutError: "Erreur lors de la déconnexion."
+        },
     },
     de: {
         home: {
@@ -890,6 +1205,7 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
         nav: {
             promo: `Besuchen Sie unseren Gewinnspiel-Bereich und gewinnen Sie tolle Preise oder Rabatte auf unsere Produkte.`,
             products: `Produkte`,
+            sales: `Verkäufe`,
             company: `Unternehmen`,
             raffles: `Gewinnspiele`,
             contact: `Kontakt`,
@@ -905,20 +1221,82 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
                 before: `Neu bei DeepDev? `,
                 after: `Konto erstellen`
             },
+            forgot: "Passwort vergessen?"
+        },
+        register:{
+            title: "Neuer Benutzer",
+            email: "E-Mail",
+            password: "Passwort",
+            verifyPassword: "Passwort bestätigen:",
+            passMismatch: "Passwörter stimmen nicht überein!",
+            passError: "Fehler bei der Passwortkodierung.",
+            btnRegister: "Registrieren",
+            footerText: "Bereits DeepDev-Nutzer?",
+            footerLink: "Anmelden",
+            reqMinChars: "Mindestens 10 Zeichen",
+            reqUpper: "Ein Großbuchstabe",
+            reqNumber: "Eine Zahl",
+            reqSpecial: "Sonderzeichen (@$!%*?&)",
+            errorRegister: "Fehler bei der Registrierung."
         },
         footer: {
             deepdev: [`Digitale Erlebnisse neu definiert`, `Engineering von immersiven Interfaces, in denen Design, Motion und Intelligenz verschmelzen.`],
             navigationTitle: `NAVIGATION`,
             expertiseTitle: `EXPERTISE`,
             connectTitle: `KONTAKT`,
-            navigation: [`Home`, `Produkte`, `Unternehmen`, `Gewinnspiele`, `Kontakt`],
+            navigation: [`Home`, `Produkte`,"Verkäufe", `Unternehmen`, `Gewinnspiele`, `Kontakt`],
             expertise: [`Frontend Engineering`, `3D Web Experiences`, `KI-Integration`, `Backend Systeme`],
             connect: [`Global Remote`, `Telefon`],
             rights: `Alle Rechte vorbehalten.`,
             privacy: `Datenschutzerklärung`,
             terms: `AGB`
         },
-        language: `Spr`
+        language: `Spr`,
+        raffleTerm:{
+            "terms_title": "Allgemeine Geschäftsbedingungen",
+            "terms_subtitle": "Durch die Teilnahme am Gewinnspiel von DeepDev akzeptieren Sie die unten aufgeführten Bedingungen in vollem Umfang.",
+            "term1_title": "Teilnahmevoraussetzungen",
+            "term1_text": "Um teilzunehmen, ist ein Mindestalter von 18 Jahren erforderlich. Da eine Landingpage oder ein eCommerce lukrativen Zwecken dienen kann, muss der Teilnehmer über die Rechtsfähigkeit verfügen, diese Art von digitalen Vermögenswerten zu verwalten.",
+            "term2_title": "Der Preis und Umfang",
+            "term2_text": "Der Preis besteht ausschließlich aus der Entwicklung und Lieferung einer Landingpage oder eines eCommerce basierend auf den Modellen unserer Verkaufsabteilung. DeepDev ist nur für die Erstellung der Website verantwortlich. Kosten für Verwaltung, Hosting, Datenbankpflege und Domainregistrierung liegen einzig und allein in der finanziellen Verantwortung des Gewinners.",
+            "term3_title": "Haftungsausschluss",
+            "term3_text": "DeepDev stellt das technische Werkzeug zur Verfügung, lehnt jedoch jede Verantwortung für den Zweck, den Inhalt oder die zukünftige Nutzung der Website ab. Wir haften nicht für missbräuchliche Verwendung, rechtswidrige Aktivitäten oder die wirtschaftliche Verwaltung nach der Übergabe.",
+            "term4_title": "Wahrhaftigkeit und Anspruch",
+            "term4_text": "Falsche Angaben im Formular führen zum Ausschluss des Gewinners. Nach der Benachrichtigung hat der Gewinner 72 Stunden Zeit, den Preis zu beanspruchen; andernfalls erfolgt eine Neuauswahl.",
+            "term5_title": "Dateneinwilligung",
+            "term5_text": "Die Daten werden nur für Gewinnspiel- und Werbezwecke von DeepDev verwendet. Durch die Teilnahme willigen Sie in die Verarbeitung dieser Informationen und den Erhalt von Mitteilungen des Unternehmens ein.",
+            "terms_footer": "DeepDev behält sich das Recht zur Interpretation dieser Regeln vor."
+        },
+        error404:{
+            title: "404 - Seite nicht gefunden.",
+            errorMessage: "Sie werden automatisch zur Startseite weitergeleitet."
+        },
+        cookies: {
+            title: "Cookie-Richtlinie",
+            intro: "Bei DeepDev verwenden wir Cookies, um Ihr Surferlebnis zu verbessern und Ihnen einen personalisierten Service zu bieten. Durch die weitere Nutzung unserer Website gehen wir davon aus, dass Sie deren Verwendung akzeptieren.",
+            questionWhat: "Was sind Cookies?",
+            answerWhat: "Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie dienen dazu, Ihre Präferenzen zu speichern und Ihnen ein reibungsloses Erlebnis zu ermöglichen.",
+            questionTypes: "Welche Arten von Cookies verwenden wir?",
+            typeEssential: "Essenziell Cookies: Notwendig für das Funktionieren der Website.",
+            typePerformance: "Leistungs-Cookies: Sie analysieren die Nutzung der Website.",
+            typeFunctionality: "Funktionalitäts-Cookies: Sie speichern Ihre Präferenzen.",
+            typeThirdParty: "Cookies von Drittanbietern: Externe Dienste wie soziale Netzwerke.",
+            questionManage: "Wie kann ich Cookies verwalten?",
+            answerManage: "Sie können Ihren Browser so konfigurieren, dass er Cookies akzeptiert oder ablehnt. Bitte beachten Sie, dass die Deaktivierung bestimmter Cookies die Funktionalität der Website beeinträchtigen kann."
+        },
+        sessionErrors: {
+            loginBanned: "Benutzer gesperrt. Kontaktieren Sie DeepDev.",
+            loginTooManyAttempts: "Ihr Konto wurde wegen zu vieler fehlgeschlagener Versuche gesperrt.",
+            loginInvalidCredentials: "Ungültige Anmeldedaten.",
+            loginAttemptsLeft: "Ungültige Anmeldedaten. Sie haben noch {{attempts}} Versuch(e).",
+            loginGeneralError: "Fehler beim Anmelden. Versuchen Sie es später erneut.",
+            resetEmailRequired: "Bitte geben Sie Ihre E-Mail ein, um das Passwort zurückzusetzen.",
+            resetEmailSent: "E-Mail gesendet! Überprüfen Sie Ihren Posteingang.",
+            resetUserNotFound: "Es gibt kein mit dieser E-Mail verknüpftes Konto.",
+            resetInvalidEmail: "Das E-Mail-Format ist ungültig.",
+            resetTooManyRequests: "Zu viele Versuche. Versuchen Sie es später erneut.",
+            logoutError: "Fehler beim Abmelden."
+        },
     },
     ru: {
         home: {
@@ -1041,6 +1419,7 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
         nav: {
             promo: `Загляните в раздел розыгрышей, чтобы выиграть призы и получить скидки.`,
             products: `Продукты`,
+            sales: `Продажи`,
             company: `Компания`,
             raffles: `Розыгрыши`,
             contact: `Контакты`,
@@ -1056,21 +1435,83 @@ Durch die Integration Ihrer Tools helfen wir Ihrem Unternehmen, die Effizienz zu
                 before: `Впервые в DeepDev? 
                 `,
                 after: `Создать аккаунт`
-            }
+            },
+            forgot: "Забыли пароль?"
+        },
+        register:{
+            title: "Новый пользователь",
+            email: "Email",
+            password: "Пароль",
+            verifyPassword: "Подтвердите пароль:",
+            passMismatch: "Пароли не совпадают!",
+            passError: "Ошибка кодирования пароля.",
+            btnRegister: "Зарегистрироваться",
+            footerText: "Уже есть аккаунт DeepDev?",
+            footerLink: "Войти",
+            reqMinChars: "Минимум 10 символов",
+            reqUpper: "Одна заглавная буква",
+            reqNumber: "Одна цифра",
+            reqSpecial: "Спецсимвол (@$!%*?&)",
+            errorRegister: "Ошибка при регистрации."
         },
         footer: {
             deepdev: [`Переосмысление цифрового опыта`, `Инженерия иммерсивных интерфейсов: дизайн, движение и интеллект.`],
             navigationTitle: `НАВИГАЦИЯ`,
             expertiseTitle: `ЭКСПЕРТИЗА`,
             connectTitle: `СВЯЗЬ`,
-            navigation: [`Главная`, `Продукты`, `Компания`, `Розыгрыши`, `Контакты`],
+            navigation: [`Главная`, `Продукты`,"Продажи", `Компания`, `Розыгрыши`, `Контакты`],
             expertise: [`Frontend-инженерия`, `3D Web-опыт`, `Интеграция ИИ`, `Backend-системы`],
             connect: [`Удаленно по всему миру`, `Телефон`],
             rights: `Все права защищены.`,
             privacy: `Политика конфиденциальности`,
             terms: `Условия использования`
         },
-        language: `Язы`
+        language: `Язы`,
+        raffleTerm: {
+            "terms_title": "Условия и положения",
+            "terms_subtitle": "Участвуя в розыгрыше от DeepDev, вы полностью принимаете условия и положения, изложенные ниже.",
+            "term1_title": "Требования к участию",
+            "term1_text": "Для участия необходимо быть старше 18 лет. Поскольку целевая страница или интернет-магазин могут преследовать коммерческие цели, участник должен обладать дееспособностью для управления такими цифровыми активами.",
+            "term2_title": "Приз и сфера действия",
+            "term2_text": "Приз заключается исключительно в разработке и предоставлении целевой страницы или интернет-магазина на основе моделей нашего раздела продаж. DeepDev отвечает только за создание сайта. Расходы на управление, хостинг, обслуживание баз данных и приобретение домена являются исключительной финансовой ответственностью победителя.",
+            "term3_title": "Отказ от ответственности",
+            "term3_text": "DeepDev предоставляет технический инструмент, но снимает с себя всякую ответственность за цель, контент или дальнейшее использование веб-сайта. Мы не несем ответственности за неправомерное использование или незаконную деятельность после передачи сайта.",
+            "term4_title": "Достоверность и претензии",
+            "term4_text": "Любые недостоверные данные в форме аннулируют победу. После уведомления у победителя есть 72 часа, чтобы заявить права на приз; в противном случае будет выбран новый победитель.",
+            "term5_title": "Согласие на обработку данных",
+            "term5_text": "Данные будут использоваться только для целей розыгрыша и рекламы DeepDev. Участвуя, вы даете согласие на обработку информации и получение сообщений от компании.",
+            "terms_footer": "DeepDev оставляет за собой право толкования данных правил."
+        },
+        error404: {
+            title: "404 - Страница не найдена.",
+            errorMessage: "Вы будете автоматически перенаправлены на главную страницу."
+        },
+        cookies: {
+            title: "Политика в отношении файлов cookie",
+            intro: "В DeepDev мы используем файлы cookie для улучшения вашего опыта просмотра и предложения персонализированного обслуживания. Продолжая просматривать наш сайт, вы подтверждаете свое согласие на их использование.",
+            questionWhat: "Что такое файлы cookie?",
+            answerWhat: "Файлы cookie — это небольшие текстовые файлы, которые сохраняются на вашем устройстве при посещении веб-сайта. Они служат для запоминания ваших предпочтений и помогают сделать работу с сайтом более удобной.",
+            questionTypes: "Какие типы файлов cookie мы используем?",
+            typeEssential: "Основные файлы cookie: Необходимы для работы сайта.",
+            typePerformance: "Эксплуатационные файлы cookie: Анализируют использование сайта.",
+            typeFunctionality: "Функциональные файлы cookie: Запоминают ваши предпочтения.",
+            typeThirdParty: "Файлы cookie сторонних лиц: Внешние сервисы, такие как социальные сети.",
+            questionManage: "Как я могу управлять файлами cookie?",
+            answerManage: "Вы можете настроить свой браузер так, чтобы он принимал или отклонял файлы cookie. Имейте в виду, что отключение определенных файлов cookie может повлияen на функциональность сайта."
+        },
+        sessionErrors: {
+            loginBanned: "Пользователь заблокирован. Свяжитесь с DeepDev.",
+            loginTooManyAttempts: "Ваш аккаунт заблокирован из-за слишком большого количества неудачных попыток.",
+            loginInvalidCredentials: "Неверные учетные данные.",
+            loginAttemptsLeft: "Неверные учетные данные. У вас осталось {{attempts}} попыток.",
+            loginGeneralError: "Ошибка при входе в систему. Попробуйте позже.",
+            resetEmailRequired: "Пожалуйста, введите свой email для сброса пароля.",
+            resetEmailSent: "Email отправлен! Проверьте папку входящие.",
+            resetUserNotFound: "Аккаунта с такой почтой не существует.",
+            resetInvalidEmail: "Неверный формат электронной почты.",
+            resetTooManyRequests: "Слишком много попыток. Попробуйте позже.",
+            logoutError: "Ошибка при выходе из системы."
+        }
     }
 };
     return(
@@ -1088,3 +1529,4 @@ export const UseLanguage = () => {
   }
   return context; 
 };
+

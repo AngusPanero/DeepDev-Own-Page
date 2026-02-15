@@ -19,7 +19,7 @@ interface SessionContextType {
     handleLogout: () => Promise<void>;
     handleResetPassword: (email: string) => Promise<void>;
     error: string | boolean | null | number;
-    setError: React.Dispatch<React.SetStateAction<string | boolean | null | number | object>>;
+    setError: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
     loading: string | boolean | null | number;
     setLoading: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
     user: any;

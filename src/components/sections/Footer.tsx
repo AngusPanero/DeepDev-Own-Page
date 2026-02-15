@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"; // Importación necesaria
 import "../../styles/footer.css";
 import { UseLanguage } from "../../contexts/LanguageContext";
 import { UseTheme } from "../../contexts/ThemeContext";

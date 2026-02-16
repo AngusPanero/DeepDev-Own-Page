@@ -4,11 +4,11 @@ import { UseTheme } from '../../contexts/ThemeContext';
 import CheckoutPayment from './CheckoutPayment';
 import "../../styles/sales.css"
 
-interface Feature { text: string;included: boolean; }
+interface Feature { text: string; included: boolean; }
 
-interface SalesCardProps { title: string; price: any; description?: string; features: Feature[]; buttonText: string; isFeatured?: boolean; }
+interface SalesCardProps { title: string; price: any; isPopular?: boolean, description?: string; features: Feature[]; buttonText: string; isFeatured?: boolean; }
 
-const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, features, buttonText, isFeatured }) => {
+const SalesCard: React.FC<SalesCardProps> = ({ title, price, isPopular, description, features, buttonText, isFeatured }) => {
     const { theme } = UseTheme();
     const [ openCheck, setOpenCheck ] = useState<boolean>(false)
 
@@ -29,11 +29,13 @@ const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, featur
                     <span className="m-dot m-green"></span>
                 </div>
                 <p className="mac-filename">{title.toLowerCase()}.tsx</p>
+                
             </div>
 
             <div className="sales-card-body">
-                <h2 className="sales-plan-name">Plan {title}</h2>
+                <h2 className="sales-plan-name">{title}: <span>{isPopular === true && "⭐️ Best Seller"}</span></h2>
                 <div className="sales-price-section">
+                    
                     <span className="sales-amount">${price},-</span>
                 </div>
                 <h2 className="sales-description">{description}6 Cuotas Sin Interes</h2>
@@ -41,7 +43,7 @@ const SalesCard: React.FC<SalesCardProps> = ({ title, price, description, featur
                 <div className="sales-features-list">
                     {features.map((item, index) => (
                         <div key={index} className={`sales-feature-row ${!item.included ? 'disabled' : ''}`}>
-                            <span className="sales-icon">{item.included ? '⚡' : '×'}</span>
+                            <span className="sales-icon">{item.included ? '⚡' : '❌'}</span>
                             <span className="sales-text">{item.text}</span>
                         </div>
                     ))}

@@ -36,7 +36,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding-top: 10rem;
+    padding-top: 7.5rem;
     padding-bottom: 4rem;
 }
 
@@ -96,17 +96,27 @@
 .mac-filename {
     margin: 0 auto 0 12px;
     font-size: 11px;
-    font-family: monospace;
+    font-family: "Montserrat";
     opacity: 0.6;
 }
 
+.best-seller{
+    font-family: "Montserrat";
+    font-weight: 400;
+    font-size: 1rem;
+    padding-left: 10px;
+    margin: 0;
+    margin-top: 10px;
+}
+
 /* --- CONTENT --- */
-.sales-card-body { padding: 25px; }
+.sales-card-body { padding: 25px; /* display: flex; flex-direction: column; justify-content: flex-end; */ }
 .sales-plan-name { font-size: 1.2rem; margin: 0; font-weight: 700; }
+.sales-plan-name span { color: white; }
 .sales-price-section { margin: 15px 0; font-weight: 800; }
 .sales-amount { font-size: 2.2rem; }
 .sales-period { opacity: 0.6; font-size: 0.9rem; }
-.sales-description { font-size: 1rem; opacity: 0.8; margin-bottom: 2rem; }
+h2.sales-description { font-size: 1rem; opacity: 0.8; margin-bottom: 2rem; color: white; }
 
 /* --- FEATURES --- */
 .sales-features-list { margin-bottom: 25px; }

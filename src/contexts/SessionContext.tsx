@@ -23,7 +23,11 @@ interface SessionContextType {
     loading: string | boolean | null | number;
     setLoading: React.Dispatch<React.SetStateAction<string | boolean | null | number>>;
     user: any;
+    isAdmin: boolean | null;
     setUser: React.Dispatch<React.SetStateAction<any>>;
+    handleUnbanUser: (uid: any) => Promise<void>
+    handleBanUser: (email: any) => Promise<void>
+    verifyIsAdmin: () => void
 }
 
 export const SessionProvider = ({ children }: ProviderProps) => {
@@ -34,6 +38,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
     const [ error, setError ] = useState<string | boolean | null | number>(false)
     const [ loading, setLoading ] = useState<string | boolean | null | number>(false)
     const [ user, setUser ] = useState<unknown>(null)
+    const [ isAdmin, setIsAdmin ] = useState<boolean | null>(null)
 
     // Auto Logout
     useEffect(() => {
@@ -44,7 +49,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         const resetTimer = () => {
             if (timeRef.current) clearTimeout(timeRef.current);
             timeRef.current = setTimeout(async () => {
-                await auth.signOut();
+                handleLogout()
                 setUser(null);
                 navigate("/");
             }, timeout);
@@ -128,7 +133,9 @@ export const SessionProvider = ({ children }: ProviderProps) => {
                             return;
                         }
                         if (data.attempts < 5) {
-                            setError(texts[language].sessionErrors.loginAttemptsLeft); // Restantes
+                            setError(
+                                `${texts[language].sessionErrors.loginAttemptsLeft} ${5 - data.attempts} ${texts[language].sessionErrors.loginAttemptsLeftAfter}`
+                            ); // Restantes
                         } else {
                             setError(texts[language].sessionErrors.loginInvalidCredentials); // Credenciales Invalidas);
                         }
@@ -197,6 +204,61 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         }
     }
 
+    const handleBanUser = async (email: string) => {
+        const confirmUnban = confirm("¿Estás seguro de que quieres bannear este usuario?");
+            if(confirmUnban){
+                try {
+                setError(false)
+                setLoading(true)
+
+                const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin/ban-user`, { email }, { withCredentials: true })
+                if(response.status === 200){
+                    alert("¡Usuario banneado con éxito!");
+                    navigate("/admin")
+                }
+            } catch (error: any) {
+                setError(true)
+                console.error("Error al bannear usuario! 🔴", error)
+            } finally{
+                setLoading(true)
+            }
+        }
+    }
+
+     const handleUnbanUser = async (uid: any) => {
+        const confirmUnban = confirm("¿Estás seguro de que quieres desbannear este usuario?");
+        if(confirmUnban){
+            try {
+            setError(false)
+            setLoading(true)
+
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/unban-user`, { uid }, { withCredentials: true })
+            if(response.status === 200){
+                alert("¡Usuario desbanneado con éxito!");
+                navigate("/admin")
+            }
+        } catch (error: any) {
+            setError(true)
+            console.error("Error al desbannear usuario! 🔴", error)
+        } finally{
+            setLoading(true)
+        }
+        }
+    }
+
+    // Para el renderizado del ul li del nav
+    const verifyIsAdmin = async () => {
+        const customClaims = await auth.currentUser?.getIdTokenResult();
+        {/* Doble negación forza a undefined y null a ser falsos, para solo trabajar con booleanos */}
+        const isAdmin = !!customClaims?.claims.admin; // Esto es TRUE como si no tuviera los signos de exclamación
+
+        if(isAdmin){
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }
+
     // Refresh
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -213,42 +275,8 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         return () => unSubscribe()
     }, [])
 
-    /* // Inactivity Context 15 min
-    const AutoLogout = (timeout: number = 15 * 60 * 1000) => {
-        const timeRef = useRef<any>(null)
-
-        const resetTimer = () => {
-            if(timeRef.current) clearTimeout(timeRef.current)
-            
-             timeRef.current = setTimeout(async () => {
-                await auth.signOut()
-                setUser(null)
-                navigate("/");
-             }, timeout)   
-        }
-
-        useEffect(() => {
-            if (!user) return;
-
-            resetTimer();
-
-            const events = [ "mousemove", "mousedown", "keydown", "scroll", "touchstart" ];
-
-            events.forEach((event) =>
-                window.addEventListener(event, resetTimer)
-            );
-
-            return () => {
-                events.forEach((event) =>
-                    window.removeEventListener(event, resetTimer)
-                );
-                if (timeRef.current) clearTimeout(timeRef.current);
-            };
-        }, [user, timeout]);
-    } */
-
     return(
-        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser }}>
+        <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser, handleUnbanUser, verifyIsAdmin, isAdmin, handleBanUser }}>
             { children }
         </SessionContext.Provider>
     )

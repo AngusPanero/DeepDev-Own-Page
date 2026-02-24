@@ -11,7 +11,7 @@ interface PrivateRouteProps{
 }
 
 const PrivateRoute = ({ children, adminOnly = false }: PrivateRouteProps) => {
-    const { user, loading } = UseSession()
+    const { user, loading, /* handleLogout */ } = UseSession()
     const [ status, setStatus ] = useState<string>("loading")
 
     useEffect(() => {

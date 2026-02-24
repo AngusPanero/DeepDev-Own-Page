@@ -17,7 +17,7 @@ interface ProviderProps {
 
 export const ShoppingProvider = ({ children }: ProviderProps) => {
     const [ purchased, setPurchased ] = useState("")
-    const [ allTickets, setAllTickets ] = useState("")
+    const [ allTickets, setAllTickets ] = useState<any[]>([])
     const [ error, setError ] = useState<boolean>(false)
     const [ loading, setLoading ] = useState<boolean>(false)
 

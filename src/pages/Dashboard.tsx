@@ -6,12 +6,14 @@ import "../styles/dashboard.css"
 
 const Dashboard = () => {
     const { user, loading } = UseSession()
-    const { allTickets, getAllTickets } = UseShopping()
+    const { purchased, getPurchased } = UseShopping()
     const { theme } = UseTheme(); 
 
     useEffect(() => {
         if (user) {
-            getAllTickets();
+            console.log(user);
+            
+            getPurchased(user.email);
         }
     }, [user])
 
@@ -30,7 +32,7 @@ const Dashboard = () => {
                     <div className="dd-terminal-card">
                         <div className="card-header">CORE_STATUS</div>
                         <div className="card-body">
-                            <p>ACCESS_LEVEL: <span>{allTickets?.length > 0 ? "CLIENT_USER" : "GUEST_USER"}</span></p>
+                            <p>ACCESS_LEVEL: <span>{purchased?.length > 0 ? "CLIENT_USER" : "GUEST_USER"}</span></p>
                             <p>ENCRYPTION: <span>ACTIVE</span></p>
                             <div className="dd-progress-bar"><div className="fill"></div></div>
                         </div>
@@ -40,7 +42,7 @@ const Dashboard = () => {
                     <div className="dd-terminal-card highlight">
                         <div className="card-header">DATA_INDEX</div>
                         <div className="card-body">
-                            <span className="dd-big-number">{allTickets?.length || 0}</span>
+                            <span className="dd-big-number">{purchased?.length || 0}</span>
                             <span className="dd-unit">TICKETS_FOUND</span>
                         </div>
                     </div>
@@ -51,15 +53,17 @@ const Dashboard = () => {
                         <div className="dd-logs-wrapper">
                             {loading ? (
                                 <div className="dd-loading-text">FETCHING_DATA...</div>
-                            ) : allTickets?.length > 0 ? (
-                                allTickets.map((item: any) => (
-                                    <div key={item._id} className="dd-log-entry">
-                                        <span className="log-date">[{new Date(item.createdAt).toLocaleDateString()}]</span>
-                                        <span className="log-plan">{item.plan}</span>
-                                        <span className="log-status">SUCCESS</span>
-                                        <span className="log-amount">${item.amount}</span>
-                                    </div>
-                                ))
+                            ) : (Array.isArray(purchased) && purchased.filter(pur => pur.email === user.email).length > 0) ? (
+                                purchased
+                                    .filter((pur: any) => pur.email === user.email)
+                                    .map((item: any) => (
+                                        <div key={item._id} className="dd-log-entry">
+                                            <span className="log-date">[{new Date(item.createdAt).toLocaleDateString()}]</span>
+                                            <span className="log-plan">{item.plan}</span>
+                                            <span className="log-status">SUCCESS</span>
+                                            <span className="log-amount">${item.amount}</span>
+                                        </div>
+                                    ))
                             ) : (
                                 <div className="dd-empty">NO_DATA_LOGGED_UNITS</div>
                             )}

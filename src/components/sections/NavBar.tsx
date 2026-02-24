@@ -19,7 +19,7 @@ const NavBar = () => {
 
     const lastScrollY = useRef(0);
     const menuRef = useRef<HTMLDivElement>(null);
-    const { user, handleLogout } = UseSession()
+    const { user, handleLogout, verifyIsAdmin, isAdmin } = UseSession()
 
     const { language, handleLanguage, texts } = UseLanguage()
     const { theme, handleTheme } = UseTheme()
@@ -33,6 +33,16 @@ const NavBar = () => {
         setLoginOpen(true);
         setOpenRegister(false);
     };
+
+    // si no hay user cierro para evitar el mal renderizaco del ul li del nav dashboard
+    useEffect(() => {
+        verifyIsAdmin()
+        console.log(isAdmin);
+        
+        /* if(!user){
+            handleLogout()
+        } */
+    }, [ user ])
 
     // Lógica para cerrar menú mobile al hacer clic fuera o scroll fuerte
     useEffect(() => {
@@ -82,7 +92,7 @@ const NavBar = () => {
                         <li><Link to="/company">{texts[language].nav.company}</Link></li>
                         <li><Link to="/raffles">{texts[language].nav.raffles}</Link></li>
                         <li><Link to="/contact">{texts[language].nav.contact}</Link></li>
-                        {user && <li><Link to="/dashboard">Dashboard</Link></li>}
+                        {user && <li><Link to={`/${isAdmin === true ? "admin" : "dashboard" }`}>{isAdmin === true ? "Admin" : "Dashboard"}</Link></li>}
                     </ul>   
                 </nav>
 

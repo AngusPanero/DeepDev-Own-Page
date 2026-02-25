@@ -13,8 +13,9 @@ interface ProviderProps {
 }
 
 export const UsersProvider = ({ children }: ProviderProps) => {
-    const [ error, setError ] = useState<boolean>(false)
-    const [ loading, setLoading ] = useState<boolean>(false)
+    // Como no uso error y loading, pongo así sin la primera posición asi no da error .tsx pero uso [1], para que tome el valor que le doy por defecto
+    const setError = useState<boolean>(false)[1];
+    const setLoading = useState<boolean>(false)[1];
     const [ users, setUsers ] = useState<any>("")
 
     const getUsers = async () => {

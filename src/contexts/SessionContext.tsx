@@ -213,7 +213,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin/ban-user`, { email }, { withCredentials: true })
                 if(response.status === 200){
-                    alert("¡Usuario banneado con éxito!");
+                    setLoading(false)
                     navigate("/admin")
                 }
             } catch (error: any) {
@@ -234,7 +234,7 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/unban-user`, { uid }, { withCredentials: true })
             if(response.status === 200){
-                alert("¡Usuario desbanneado con éxito!");
+                setLoading(false)
                 navigate("/admin")
             }
         } catch (error: any) {

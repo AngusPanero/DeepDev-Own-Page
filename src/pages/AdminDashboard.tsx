@@ -171,7 +171,7 @@ const AdminDashboard = () => {
                                     </div>
                                 ))
                             ) : (
-                                <div className="dd-empty">NO_SALES_RECORDED</div>
+                                <div className="dd-empty">NO_USERS_RECORDED</div>
                             )}
                         </div>
                     </div>

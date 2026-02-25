@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { forwardRef } from "react";
 import moon from "/logos/moon2.svg"
 import sun from "/logos/sun.svg"
@@ -15,18 +14,18 @@ interface NavBarMobileProps {
 }
 
 const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }: NavBarMobileProps, ref: any) => {
-    const { user, handleLogout } = UseSession()
+    const { user, handleLogout, isAdmin } = UseSession()
 
     return (
         <div className={`mobile-menu-container ${theme}`} ref={ref}>
             <nav className="mobile-nav-links">
-                <Link to="/" onClick={closeMenu}> {texts[language].footer.navigation[0]}</Link>
-                <Link to="/products" onClick={closeMenu}>{texts[language].nav.products}</Link>
-                <Link to="/sales" onClick={closeMenu}>{texts[language].nav.sales}</Link>
-                <Link to="/company" onClick={closeMenu}>{texts[language].nav.company}</Link>
-                <Link to="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</Link>
-                <Link to="/contact" onClick={closeMenu}>{texts[language].nav.contact}</Link>
-                {user && <li><Link to="/dashboard" onClick={closeMenu}>Dashboard</Link></li>}
+                <a href="/" onClick={closeMenu}> {texts[language].footer.navigation[0]}</a>
+                <a href="/products" onClick={closeMenu}>{texts[language].nav.products}</a>
+                <a href="/sales" onClick={closeMenu}>{texts[language].nav.sales}</a>
+                <a href="/company" onClick={closeMenu}>{texts[language].nav.company}</a>
+                <a href="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</a>
+                <a href="/contact" onClick={closeMenu}>{texts[language].nav.contact}</a>
+                {user && <li><a href={`/${isAdmin === true ? "admin" : "dashboard" }`}onClick={closeMenu}>{isAdmin === true ? "Admin" : "Dashboard"}</a></li>}
             </nav>
 
             <div className="mobile-extra-actions">

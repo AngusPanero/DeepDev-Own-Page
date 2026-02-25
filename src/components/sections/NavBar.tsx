@@ -37,7 +37,6 @@ const NavBar = () => {
     // si no hay user cierro para evitar el mal renderizaco del ul li del nav dashboard
     useEffect(() => {
         verifyIsAdmin()
-        console.log(isAdmin);
         
         /* if(!user){
             handleLogout()
@@ -87,12 +86,12 @@ const NavBar = () => {
                 {/* NAVEGACIÓN DESKTOP */}
                 <nav className="nav-desktop">
                     <ul style={{ display: "flex", gap: "4rem"}}>
-                        <li><Link to="/products">{texts[language].nav.products}</Link></li>
-                        <li><Link to="/products">{texts[language].nav.sales}</Link></li>
-                        <li><Link to="/company">{texts[language].nav.company}</Link></li>
-                        <li><Link to="/raffles">{texts[language].nav.raffles}</Link></li>
-                        <li><Link to="/contact">{texts[language].nav.contact}</Link></li>
-                        {user && <li><Link to={`/${isAdmin === true ? "admin" : "dashboard" }`}>{isAdmin === true ? "Admin" : "Dashboard"}</Link></li>}
+                        <li><a href="/products">{texts[language].nav.products}</a></li>
+                        <li><a href="/products">{texts[language].nav.sales}</a></li>
+                        <li><a href="/company">{texts[language].nav.company}</a></li>
+                        <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
+                        <li><a href="/contact">{texts[language].nav.contact}</a></li>
+                        {user && <li><a href={`/${isAdmin === true ? "admin" : "dashboard" }`}>{isAdmin === true ? "Admin" : "Dashboard"}</a></li>}
                     </ul>   
                 </nav>
 

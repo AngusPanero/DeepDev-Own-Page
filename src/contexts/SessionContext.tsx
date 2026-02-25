@@ -102,7 +102,6 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
             {/* CUSTOM CLAIMS */}
             const customClaims = await userCredentials.user.getIdTokenResult();
-            console.log("Admin: ", customClaims.claims.admin);
             
             if(customClaims.claims.banned){
                 await auth.signOut(); 

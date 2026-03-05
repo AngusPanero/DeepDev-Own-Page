@@ -87,7 +87,7 @@ const NavBar = () => {
                 <nav className="nav-desktop">
                     <ul style={{ display: "flex", gap: "4rem"}}>
                         <li><a href="/products">{texts[language].nav.products}</a></li>
-                        <li><a href="/products">{texts[language].nav.sales}</a></li>
+                        <li><a href="/sales">{texts[language].nav.sales}</a></li>
                         <li><a href="/company">{texts[language].nav.company}</a></li>
                         <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
                         <li><a href="/contact">{texts[language].nav.contact}</a></li>

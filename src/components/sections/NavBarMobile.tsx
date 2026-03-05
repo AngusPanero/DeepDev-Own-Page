@@ -14,7 +14,7 @@ interface NavBarMobileProps {
 }
 
 const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleTheme, handleLanguage, openLogin }: NavBarMobileProps, ref: any) => {
-    const { user, handleLogout, isAdmin } = UseSession()
+    const { user, handleLogout } = UseSession()
 
     return (
         <div className={`mobile-menu-container ${theme}`} ref={ref}>
@@ -25,7 +25,7 @@ const NavBarMobile = forwardRef(({ closeMenu, texts, language, theme, handleThem
                 <a href="/company" onClick={closeMenu}>{texts[language].nav.company}</a>
                 <a href="/raffles" onClick={closeMenu}>{texts[language].nav.raffles}</a>
                 <a href="/contact" onClick={closeMenu}>{texts[language].nav.contact}</a>
-                {user && <li><a href={`/${isAdmin === true ? "admin" : "dashboard" }`}onClick={closeMenu}>{isAdmin === true ? "Admin" : "Dashboard"}</a></li>}
+                {user && <li><a href={`/${user.admin === true ? "admin" : "dashboard" }`}>{user.admin === true ? "Admin" : "Dashboard"}</a></li>}
             </nav>
 
             <div className="mobile-extra-actions">

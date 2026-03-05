@@ -19,7 +19,7 @@ const NavBar = () => {
 
     const lastScrollY = useRef(0);
     const menuRef = useRef<HTMLDivElement>(null);
-    const { user, handleLogout, verifyIsAdmin, isAdmin } = UseSession()
+    const { user, handleLogout, verifyIsAdmin } = UseSession()
 
     const { language, handleLanguage, texts } = UseLanguage()
     const { theme, handleTheme } = UseTheme()

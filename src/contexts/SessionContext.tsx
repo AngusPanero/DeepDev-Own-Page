@@ -1,10 +1,8 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { auth } from "../firebase/firebase.ts"
 import { sendPasswordResetEmail } from "firebase/auth";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
 import { UseLanguage } from "./LanguageContext.tsx";
 
 const SessionContext = createContext<SessionContextType | null>(null);
@@ -90,67 +88,62 @@ export const SessionProvider = ({ children }: ProviderProps) => {
     }
 
     // Login
-    const handleLogin = async ( email: string, password: string, ) => {
-        try {
-            setLoading(true)
-            setError(null)
+    const handleLogin = async (email: string, password: string) => {
+    try {
+        setLoading(true);
+        setError(null);
+
+        // 1. Llamada única al backend
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { email, password }, { withCredentials: true });
+
+        if (response.status === 200) {
+            const { user, isAdmin } = response.data;
+            console.log("USER", user);
             
-            const userCredentials = await signInWithEmailAndPassword(auth, email, password)
-            setUser(userCredentials.user)
-        
-            const idToken = await userCredentials.user.getIdToken(true) // El true obliga a buscar siempre tokens nuevas no antiguas que no hayan expirado
-
-            {/* CUSTOM CLAIMS */}
-            const customClaims = await userCredentials.user.getIdTokenResult();
             
-            if(customClaims.claims.banned){
-                await auth.signOut(); 
-                setUser(null);
-                
-                setError(texts[language].sessionErrors.loginBanned); // Usuario Banneado    
-                return
+            setUser(user);
+
+            if (isAdmin) {
+                navigate("/admin");
+            } else {
+                navigate("/dashboard");
             }
-
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { idToken }, { withCredentials: true })
-            if(response.status === 200){
-                if(customClaims.claims.admin === true){
-                    navigate("/admin")
-                    return true
-                } else {
-                    navigate("/dashboard")
-                    return true
-                }
-            }
-
-        } catch (error: any) {
-                if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found" || error.code === "auth/invalid-credential"){
-                    try {
-                        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`,{ email });
-                        
-                        if (data.banned) {
-                            setError(texts[language].sessionErrors.loginTooManyAttempts); // Demasiados intentos
-                            return;
-                        }
-                        if (data.attempts < 5) {
-                            setError(
-                                `${texts[language].sessionErrors.loginAttemptsLeft} ${5 - data.attempts} ${texts[language].sessionErrors.loginAttemptsLeftAfter}`
-                            ); // Restantes
-                        } else {
-                            setError(texts[language].sessionErrors.loginInvalidCredentials); // Credenciales Invalidas);
-                        }
-
-                    } catch (error){
-                        setError(texts[language].sessionErrors.loginInvalidCredentials); // Credenciales Invalidas
-                        console.error("Login error:", error);
-                    }
-                    return;
-                }
-            console.error("Login error:", error);
-            setError(texts[language].sessionErrors.loginGeneralError); // Intenta más tarde
-        } finally {
-            setLoading(false)
+            return true;
         }
+
+    } catch (error: any) {
+        const serverCode = error.response?.data?.code;
+
+        // 4. Respetar tu lógica de intentos fallidos
+        if (serverCode === "auth/invalid-credential" || error.response?.status === 401) {
+            try {
+                const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/login-failed`, { email });
+                
+                if (data.banned) {
+                    setError(texts[language].sessionErrors.loginTooManyAttempts);
+                } else if (data.attempts < 5) {
+                    setError(`${texts[language].sessionErrors.loginAttemptsLeft} ${5 - data.attempts} ${texts[language].sessionErrors.loginAttemptsLeftAfter}`);
+                } else {
+                    setError(texts[language].sessionErrors.loginInvalidCredentials);
+                }
+            } catch (error) {
+                setError(texts[language].sessionErrors.loginInvalidCredentials);
+                console.error("Login error:", error);
+            }
+            return;
+        }
+
+        if (serverCode === "auth/user-banned") {
+            setError(texts[language].sessionErrors.loginBanned);
+            return;
+        }
+
+        console.error("Login error:", error);
+        setError(texts[language].sessionErrors.loginGeneralError);
+    } finally {
+        setLoading(false);
     }
+};
     // Logout
     const handleLogout = async () => {
         try {
@@ -212,14 +205,13 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/admin/ban-user`, { email }, { withCredentials: true })
                 if(response.status === 200){
-                    setLoading(false)
                     navigate("/admin")
                 }
             } catch (error: any) {
                 setError(true)
                 console.error("Error al bannear usuario! 🔴", error)
             } finally{
-                setLoading(true)
+                setLoading(false)
             }
         }
     }
@@ -233,14 +225,13 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/unban-user`, { uid }, { withCredentials: true })
             if(response.status === 200){
-                setLoading(false)
                 navigate("/admin")
             }
         } catch (error: any) {
             setError(true)
             console.error("Error al desbannear usuario! 🔴", error)
         } finally{
-            setLoading(true)
+            setLoading(false)
         }
         }
     }
@@ -258,21 +249,30 @@ export const SessionProvider = ({ children }: ProviderProps) => {
         }
     }
 
-    // Refresh
+   // Refresh
     useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-            if(firebaseUser){
+        const checkSession = async () => {
+            try {
+                setLoading(true);
                 
-                setUser(firebaseUser)
-                await firebaseUser.getIdToken()
-                
-            } else {
-                setUser(null)
+                // Llamamos a nuestro backend para ver si la cookie es válida
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/check-auth`, { withCredentials: true });
+
+                if (data.authenticated) {
+                    setUser(data.user);
+                } else {
+                    setUser(null);
+                }
+            } catch (error) {
+                setUser(null);
+                console.error("Error checking session on refresh 🔴", error);
+            } finally {
+                setLoading(false);
             }
-            setLoading(false)
-        })
-        return () => unSubscribe()
-    }, [])
+        };
+
+        checkSession();
+    }, []);
 
     return(
         <SessionContext.Provider value={{ handleRegister , handleLogin, handleLogout, handleResetPassword, error, setError, loading, setLoading, user, setUser, handleUnbanUser, verifyIsAdmin, isAdmin, handleBanUser }}>

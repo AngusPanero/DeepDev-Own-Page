@@ -91,7 +91,7 @@ const NavBar = () => {
                         <li><a href="/company">{texts[language].nav.company}</a></li>
                         <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
                         <li><a href="/contact">{texts[language].nav.contact}</a></li>
-                        {user && <li><a href={`/${isAdmin === true ? "admin" : "dashboard" }`}>{isAdmin === true ? "Admin" : "Dashboard"}</a></li>}
+                        {user && <li><a href={`/${user.admin === true ? "admin" : "dashboard" }`}>{user.admin === true ? "Admin" : "Dashboard"}</a></li>}
                     </ul>   
                 </nav>
 

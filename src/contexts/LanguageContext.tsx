@@ -438,7 +438,7 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
             real: `Interacción 3D en tiempo real`,
             ai: `Experiencias
              mejoradas con IA`,
-            automate: `Automatiza tu trabajo, un clic y listo.`,
+            automate: `Automatiza tu trabajo, un click y listo.`,
         },
         products: {
             webTitle: `Hacemos Aplicaciones Web.`,

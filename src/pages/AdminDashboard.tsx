@@ -5,6 +5,9 @@ import { UseTheme } from "../contexts/ThemeContext";
 import { UseUsers } from "../contexts/UsersContext";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import "../styles/adminDashboard.css"
+import CreateProduct from "../components/sections/CreateProduct";
+import CategoryManager from "../components/sections/CategoryManage";
+import ProductAdminManager from "../components/sections/ProductAdminManager";
 
 const AdminDashboard = () => {
     const { user, handleUnbanUser, handleBanUser } = UseSession();
@@ -12,7 +15,6 @@ const AdminDashboard = () => {
     const { allTickets, getAllTickets } = UseShopping();
     const { users, getUsers } = UseUsers()
 
-    // 1. Definición de la función procesadora
     const processChartData = (tickets: any[]) => {
         if (!Array.isArray(tickets)) return [];
         const months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
@@ -55,6 +57,7 @@ const AdminDashboard = () => {
     }, [user]);
 
     return (
+        <>
         <div className={`dd-dashboard ${theme}`}>
             <div className="dd-grid-overlay"></div>
             
@@ -177,6 +180,12 @@ const AdminDashboard = () => {
                     </div>
             </section>
         </div>
+        <CategoryManager />
+
+        <CreateProduct />
+
+        <ProductAdminManager />
+        </>
     );
 };
 

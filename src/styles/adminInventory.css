@@ -1,0 +1,364 @@
+/* ============================================================
+   1. VARIABLES Y RESET DE ALTA ESPECIFICIDAD
+   ============================================================ */
+.admin-inventory-wrapper {
+    --bg-black: #050505;
+    --bg-card: #0c0c0c;
+    --bg-input: #000000;
+    --accent: #a855f7;
+    --accent-dim: rgba(168, 85, 247, 0.15);
+    --success: #22c55e;
+    --danger: #ef4444;
+    --border: #222222;
+    --text: #e2e8f0;
+    --text-dim: #64748b;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    
+    background-color: var(--bg-black);
+    color: var(--text);
+    padding: 20px;
+    font-family: var(--font-mono);
+}
+
+/* RESET TOTAL DE INPUTS PARA QUE NADA SEA BLANCO */
+.admin-inventory-wrapper input,
+.admin-inventory-wrapper textarea,
+.admin-inventory-wrapper select {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border) !important;
+    color: var(--accent) !important;
+    font-family: var(--font-mono) !important;
+    padding: 10px !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+}
+
+.admin-inventory-wrapper input:focus,
+.admin-inventory-wrapper textarea:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 5px var(--accent-dim);
+}
+
+/* BOTONES GENERALES */
+.admin-inventory-wrapper button {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 15px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.admin-inventory-wrapper button:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* ============================================================
+   2. DASHBOARD DE ESTADOS (CARDS)
+   ============================================================ */
+.admin-inventory-wrapper .admin-stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.admin-inventory-wrapper .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-inventory-wrapper .stat-card.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.admin-inventory-wrapper .stat-label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+.admin-inventory-wrapper .stat-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--accent);
+    margin-top: 5px;
+}
+
+/* ============================================================
+   3. TOOLBAR Y FILTROS
+   ============================================================ */
+.admin-inventory-wrapper .admin-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    padding: 20px;
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+}
+
+.admin-inventory-wrapper .filter-group {
+    display: flex;
+    gap: 15px;
+}
+
+.admin-inventory-wrapper .search-admin { width: 350px !important; }
+.admin-inventory-wrapper .category-filter { width: 200px !important; }
+
+.admin-inventory-wrapper .btn-csv {
+    background: transparent !important;
+    border: none !important;
+    color: var(--text-dim) !important;
+    font-size: 0.75rem !important;
+    text-decoration: underline;
+}
+
+/* ============================================================
+   4. PANEL DE ACCIONES MASIVAS
+   ============================================================ */
+.admin-inventory-wrapper .bulk-actions-panel {
+    display: none;
+    background: var(--bg-card);
+    border: 1px solid var(--accent);
+    margin-bottom: 15px;
+    animation: fadeIn 0.3s;
+}
+
+.admin-inventory-wrapper .bulk-actions-panel.active { display: block; }
+
+.admin-inventory-wrapper .bulk-header {
+    background: var(--accent);
+    color: #000;
+    padding: 6px 15px;
+    font-weight: bold;
+    font-size: 0.7rem;
+}
+
+.admin-inventory-wrapper .bulk-controls {
+    display: flex;
+    padding: 20px;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.admin-inventory-wrapper .bulk-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-inventory-wrapper .btn-apply-promo { border-color: var(--success) !important; color: var(--success) !important; }
+.admin-inventory-wrapper .btn-bulk-delete { background: var(--danger) !important; color: #fff !important; border: none !important; }
+
+/* ============================================================
+   5. TABLA: HEADER Y FILAS
+   ============================================================ */
+.admin-inventory-wrapper .inventory-list-container {
+    border: 1px solid var(--border);
+}
+
+.admin-inventory-wrapper .list-header {
+    display: grid;
+    grid-template-columns: 40px 70px 2fr 1fr 150px 200px;
+    padding: 15px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.admin-inventory-wrapper .main-row {
+    display: grid;
+    grid-template-columns: 40px 70px 2fr 1fr 150px 200px;
+    padding: 15px;
+    align-items: center;
+    gap: 15px;
+}
+
+/* IMAGEN PORTADA */
+.admin-inventory-wrapper .img-container-main {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.admin-inventory-wrapper .admin-row-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+img.img-preview{
+    height: 100%;
+    width: 100%;
+}
+
+.input-with-label-stack{
+    margin-top: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-starts;
+}
+
+.input-url-new{ height: 40px;  width: 250px;}
+
+.image-add-card{
+    display: flex;
+}
+
+.btn-add-img-confirm{ height: 40px;}
+
+/* INPUTS DENTRO DE LA FILA */
+.admin-inventory-wrapper .name-input {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 1rem !important;
+    font-weight: bold;
+}
+
+.admin-inventory-wrapper .sku-tag {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-top: 4px;
+}
+
+.invisible-input.name-input{
+    width: 100%;
+}
+
+/* ============================================================
+   6. PANEL DE EDICIÓN FULL (EXPANDIDO)
+   ============================================================ */
+.admin-inventory-wrapper .admin-full-edit-panel {
+    background: #080808;
+    padding: 25px;
+    border-top: 1px solid var(--border);
+    border-bottom: 2px solid var(--accent);
+}
+
+.admin-inventory-wrapper .section-label {
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    display: block;
+    border-left: 3px solid var(--accent);
+    padding-left: 10px;
+}
+
+/* GRID DE EDICIÓN */
+.admin-inventory-wrapper .edit-section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.admin-inventory-wrapper .edit-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-inventory-wrapper .edit-box label {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+}
+
+.admin-inventory-wrapper .medidas-inputs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* GALERÍA */
+.admin-inventory-wrapper .images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    background: #000;
+    padding: 15px;
+    border: 1px solid var(--border);
+}
+
+.admin-inventory-wrapper .image-manage-card {
+    height: 120px;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+.admin-inventory-wrapper .image-controls-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+/* VARIANTES */
+.admin-inventory-wrapper .variant-edit-row-detailed {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 60px 80px 100px 120px 40px;
+    gap: 10px;
+    align-items: center;
+    background: #0f0f0f;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid var(--border);
+}
+
+.admin-inventory-wrapper .variant-edit-row-detailed input {
+    padding: 5px !important;
+}
+
+/* ============================================================
+   7. BOTONES DE ACCIÓN (GUARDAR / ELIMINAR)
+   ============================================================ */
+.admin-inventory-wrapper .btn-save-row.ready {
+    background: var(--success) !important;
+    color: #000 !important;
+    font-weight: bold;
+    border-color: var(--success) !important;
+}
+
+.admin-inventory-wrapper .btn-delete-full {
+    background: transparent !important;
+    color: var(--danger) !important;
+    border: 1px solid var(--danger) !important;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.admin-inventory-wrapper .btn-delete-full:hover {
+    background: var(--danger) !important;
+    color: #fff !important;
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.blink { animation: blinker 1s linear infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
+

@@ -1,0 +1,130 @@
+/* --- ESTILOS COMPARTIDOS --- */
+.card-header {
+    font-size: 1rem;
+}
+
+.dd-dashboard{margin-top: 0;}
+
+.product-form-clean {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-section label {
+    font-size: 1rem;
+    font-family: monospace;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.terminal-input {
+    max-width: 100%;
+    border: 1px solid #1f1f1f;
+    padding: 12px;
+    font-family: inherit;
+    transition: all 0.2s;
+    font-size: 18px;
+}
+
+.variante-item input {
+    color: white;
+    background-color: transparent;
+    border: 1px solid rgba(179, 77, 208, 0.715);
+    padding: 8px;
+    font-size: 16px;
+}
+
+.variante-item input::placeholder{
+    color: #d1d5db7c;
+}
+
+/* --- LIGHT MODE (Blancos y Azules) --- */
+.dd-dashboard.light .terminal-input {
+    background: #ffffff;
+    border: 1px solid #d1d5db; /* Gris suave */
+    color: #111827; /* Texto casi negro */
+}
+
+.dd-dashboard.light .terminal-input:focus {
+    border-color: #0062FF; /* Tu azul principal */
+    box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.1);
+    outline: none;
+}
+
+.dd-dashboard.light .section-subtitle {
+    color: #0062FF;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dd-dashboard.light .variante-item input {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    color: #111827;
+}
+
+.dd-dashboard.light .form-section label {
+    color: #4b5563; /* Label un poco más oscuro para lectura */
+}
+
+/* --- DARK MODE (Se mantiene igual) --- */
+.dd-dashboard.dark .terminal-input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #1f1f1f;
+    color: #fff;
+}
+
+.dd-dashboard.dark .terminal-input:focus {
+    border-color: #a855f7;
+}
+
+.dd-dashboard.dark .section-subtitle {
+    color: #a855f7;
+}
+
+/* --- GRID Y ESTRUCTURA --- */
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+.variante-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid #1f1f1f;
+    padding-top: 2rem;
+}
+
+.dd-dashboard.light .form-footer {
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .form-grid-4 { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    .form-grid-2, .form-grid-4, .variante-item {
+        grid-template-columns: 1fr;
+    }
+    .form-footer {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: stretch;
+    }
+}

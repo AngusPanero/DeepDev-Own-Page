@@ -185,24 +185,24 @@ p.error-password{
 }
 
 .input-group label{
-    margin-bottom: .8rem;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.2rem;
-    color: #cfcfcf;
+    margin-bottom: .8rem !important;
+    text-align: center !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1.2rem !important;
+    color: #cfcfcf !important;
 }
 
 .input-group input{
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    padding: 0.8rem 0.9rem;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.14);
-    background: rgba(255,255,255,0.07);
-    color: #fff;
-    outline: none;
+    font-family: 'Montserrat', sans-serif !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+    letter-spacing: 1px !important;
+    padding: 0.8rem 0.9rem !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    background: rgba(255,255,255,0.07) !important;
+    color: #fff !important;
+    outline: none !important;
 }
 
 .input-group input::placeholder{

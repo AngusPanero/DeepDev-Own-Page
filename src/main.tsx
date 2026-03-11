@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import TagManager from 'react-gtm-module';
+import { Provider } from "react-redux"
+import store from "./redux/store.ts"
 
 const tagManagerArgs = {
     gtmId: `${import.meta.env.VITE_GTM_ID}`
@@ -12,6 +14,8 @@ TagManager.initialize(tagManagerArgs);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 )

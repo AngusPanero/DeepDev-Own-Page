@@ -46,12 +46,10 @@ export const ShoppingProvider = ({ children }: ProviderProps) => {
             const response = await axios.get(`${import.meta.env.VITE_API_URL}/all-tickets`, { withCredentials: true });
             if(!response){
                 console.log("SIN RESPUESTA");
-                
             }
 
             if(response.status === 200){
                 setAllTickets(response.data);
-                console.log("DATOS_RECUPERADOS:", response.data);
             }
         } catch (error: any) {
             setError(true);

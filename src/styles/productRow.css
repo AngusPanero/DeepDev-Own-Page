@@ -1,8 +1,7 @@
 /* ================================================================
-   SISTEMA DE GESTIÓN DE PRODUCTOS - ESTILO INDUSTRIAL DARK
+   SISTEMA DE GESTIÓN DE PRODUCTOS - ESTILO INDUSTRIAL DARK (CLEAN)
    ================================================================ */
 
-/* --- VARIABLES Y RESET --- */
 :root {
     --bg-main: #000000;
     --bg-panel: #0a0a0a;
@@ -25,7 +24,6 @@
     transition: all 0.2s ease;
 }
 
-/* Indicador de cambios sin guardar */
 .row-master.modified {
     border-left: 6px solid var(--text-white);
 }
@@ -38,7 +36,6 @@
 /* --- LÍNEA PRINCIPAL (MODO TABLA) --- */
 .main-horizontal-bar {
     display: grid;
-    /* Ajuste de columnas: Check | Foto | Nombre | Precio | Estado | Botones */
     grid-template-columns: 50px 80px 2.5fr 160px 150px 240px;
     align-items: center;
     padding: 20px;
@@ -51,7 +48,6 @@
     justify-content: center;
 }
 
-/* Etiquetas pequeñas de referencia */
 .field-hint {
     font-size: 10px;
     color: var(--text-dim);
@@ -62,15 +58,12 @@
     display: block;
 }
 
-/* Tipografía Grande para Inputs Principales */
-.white-text {
-    color: var(--text-white) !important;
-}
+.white-text { color: var(--text-white) !important; }
 
 .input-name-main {
     background: transparent;
     border: none;
-    font-size: 22px; /* Super legible */
+    font-size: 22px;
     font-weight: 700;
     width: 100%;
     outline: none;
@@ -92,7 +85,6 @@
     font-weight: 600;
 }
 
-/* Contenedores de inputs */
 .input-group-dark {
     background: var(--bg-input);
     border: 1px solid var(--border-color);
@@ -118,7 +110,6 @@
     font-weight: 900;
 }
 
-/* Selector de Estado */
 .select-status-white {
     background: var(--text-white);
     color: #000;
@@ -131,10 +122,7 @@
     text-transform: uppercase;
 }
 
-/* Imagen Principal */
-.cell-img {
-    position: relative;
-}
+.cell-img { position: relative; }
 
 .cell-img img {
     width: 65px;
@@ -188,7 +176,7 @@
     margin-top: 8px;
 }
 
-/* --- PANEL DETALLADO (EXPANDIDO) --- */
+/* --- PANEL DETALLADO --- */
 .detail-drop-panel {
     border-top: 1px solid #222;
     padding: 40px;
@@ -212,11 +200,8 @@
     gap: 40px;
 }
 
-.full-width {
-    grid-column: 1 / -1;
-}
+.full-width { grid-column: 1 / -1; }
 
-/* Inputs con etiqueta arriba */
 .input-with-label {
     display: flex;
     flex-direction: column;
@@ -230,7 +215,7 @@
     text-transform: uppercase;
 }
 
-.input-with-label input, .description-area {
+.input-with-label input {
     background: var(--bg-input);
     border: 1px solid var(--border-color);
     color: #fff;
@@ -246,38 +231,17 @@
     gap: 15px;
 }
 
-/* --- SECCIÓN PROMOCIÓN --- */
-.promo-control-row {
+.promo-controls-row {
     display: flex;
-    align-items: flex-end;
-    gap: 25px;
-    background: #111;
-    padding: 20px;
-    border-radius: 4px;
-}
-
-.btn-promo-toggle-pro {
-    background: #222;
-    border: 1px solid #444;
-    color: #fff;
-    padding: 14px 25px;
-    font-weight: 900;
-    font-size: 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.2s;
-}
-
-.btn-promo-toggle-pro.active {
-    background: var(--accent-red);
-    border-color: var(--accent-red);
+    align-items: center;
+    gap: 15px;
 }
 
 .final-price-preview {
     color: var(--accent-green);
     font-weight: 900;
-    font-size: 16px;
-    padding-bottom: 10px;
+    font-size: 14px;
+    margin-top: 8px;
 }
 
 /* --- VARIANTES --- */
@@ -344,7 +308,7 @@
     cursor: pointer;
 }
 
-/* DESCRIPCION */
+/* --- DESCRIPCIÓN --- */
 .description-textarea {
     width: 100%;
     min-height: 120px;
@@ -356,18 +320,11 @@
     font-size: 14px;
     line-height: 1.5;
     border-radius: 4px;
-    resize: vertical; /* Permite al usuario agrandarlo hacia abajo */
+    resize: vertical;
     outline: none;
-    transition: border-color 0.2s;
 }
 
-.description-textarea:focus {
-    border-color: #fff;
-}
-
-.full-width {
-    grid-column: 1 / -1; /* Ocupa las dos columnas de la grid */
-}
+.description-textarea:focus { border-color: #fff; }
 
 /* --- ZONA DE PELIGRO --- */
 .danger-zone-footer {
@@ -389,74 +346,114 @@
 }
 
 .btn-destroy-pro:hover {
+    background: var(--accent-red);
     color: white;
 }
 
-/* CATEGORIAS e IMAGENES */
-
-.category-chip.active {
-    background-color: #28a745 !important; /* Verde */
-    border-color: #00ff41 !important;
-}
-
-/* Gestión de Imágenes */
+/* --- GESTIÓN DE IMÁGENES (CORREGIDO) --- */
 .image-grid-preview {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     margin-bottom: 15px;
+    padding: 10px 0;
 }
 
 .image-thumb-wrapper {
     position: relative;
-    width: 80px;
-    height: 80px;
-    border: 1px solid #444;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    overflow: visible; /* Para permitir que la X sobresalga un poco */
+    background: #000;
 }
 
 .image-thumb-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 3px;
 }
 
+.image-thumb-wrapper.is-thumbnail {
+    border: 2px solid var(--accent-green);
+    box-shadow: 0 0 10px rgba(0, 255, 170, 0.2);
+}
+
+/* Badge de Portada - Esquina superior izquierda */
+.thumbnail-badge {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: var(--accent-green);
+    color: #000;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 2px;
+    z-index: 10;
+    text-transform: uppercase;
+}
+
+/* Botón de eliminar (X) - Esquina superior derecha */
 .btn-remove-img {
     position: absolute;
-    font-size: 20px;
     top: -10px;
-    right: 3px;
-    background: transparent !important;
-    color: rgb(255, 0, 0) !important;
-    border: none !important;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-}
-
-.add-image-input-group {
+    right: -10px;
+    background: #000 !important;
+    color: var(--accent-red) !important;
+    border: 1px solid var(--accent-red) !important;
+    width: 22px;
+    height: 22px;
     display: flex;
-    gap: 10px;
-}
-
-/* Chips de Categorías */
-.category-db-box{
-    display: flex;
-    gap: 0.8rem;
-    flex-wrap: wrap;
-}
-
-.category-db{
-    width: 130px;
-    text-align: center;
-    background: #1a1a1a;
-    border: 1px solid #333;
-    color: #888;
-    padding: 5px 12px;
-    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
     cursor: pointer;
+    z-index: 20;
     transition: all 0.2s;
 }
 
+.btn-remove-img:hover {
+    background: var(--accent-red) !important;
+    color: white !important;
+}
+
+/* Contenedor de acciones inferiores (Estrella de portada) */
+.thumb-actions {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    padding: 4px 0;
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.2s;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.image-thumb-wrapper:hover .thumb-actions {
+    opacity: 1; /* Aparece al hacer hover */
+}
+
+.btn-set-thumbnail {
+    background: transparent;
+    border: none;
+    color: #ffcc00;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.btn-set-thumbnail:hover {
+    transform: scale(1.2);
+}
+
+/* --- CATEGORÍAS --- */
 .categories-chip-container {
     display: flex;
     flex-wrap: wrap;
@@ -474,19 +471,19 @@
 }
 
 .category-chip.active {
-    background: #00ff88;
+    background: var(--accent-green);
     color: #000;
-    border-color: #00ff88;
+    border-color: var(--accent-green);
     font-weight: bold;
 }
 
-/* Animaciones */
+/* --- ANIMACIONES --- */
 @keyframes slideDown {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsive básico para celdas */
+/* --- RESPONSIVE --- */
 @media (max-width: 1200px) {
     .main-horizontal-bar {
         grid-template-columns: 40px 60px 1.5fr 120px 120px 180px;

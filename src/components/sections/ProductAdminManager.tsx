@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { type AppDispatch } from "../../redux/store";
@@ -11,15 +11,15 @@ const AdminInventory = () => {
     
     const { loading, error, products } = useSelector((state: any) => state.productSelector);
 
-    const [categories, setCategories] = useState<any[]>([]);
-    const [search, setSearch] = useState("");
-    const [categoryFilter, setCategoryFilter] = useState("all");
-    const [statusFilter, setStatusFilter] = useState("todos");
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [ categories, setCategories ] = useState<any[]>([]);
+    const [ search, setSearch ] = useState("");
+    const [ categoryFilter, setCategoryFilter ] = useState("all");
+    const [ statusFilter, setStatusFilter ] = useState("todos");
+    const [ selectedIds, setSelectedIds ] = useState<string[]>([]);
     
     // Estados para cambios masivos
-    const [bulkPriceChange, setBulkPriceChange] = useState<number>(0);
-    const [bulkPromoPercent, setBulkPromoPercent] = useState<number>(0);
+    const [ bulkPriceChange, setBulkPriceChange ] = useState<number>(0);
+    const [ bulkPromoPercent, setBulkPromoPercent ] = useState<number>(0);
 
     useEffect(() => {
         dispatch(readAllProduct());
@@ -29,7 +29,6 @@ const AdminInventory = () => {
     const fetchCategories = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, { withCredentials: true });
-            console.log(res.data.categorias);
             
             setCategories(res.data.categorias);
         } catch (err) { console.error(err); }

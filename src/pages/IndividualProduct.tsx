@@ -4,6 +4,7 @@ import ProductCard from "../components/sections/ProductCard";
 import "../styles/productCard.css"
 import { UseTheme } from "../contexts/ThemeContext";
 import Loader from "../components/sections/Loader";
+import Error from "../components/sections/Error";
 
 const IndividualProduct = () => {
     const { theme } = UseTheme()
@@ -30,7 +31,7 @@ const IndividualProduct = () => {
             const offset = (page - 1) * limit;
 
             const response = await axios.get(
-                `${import.meta.env.VITE_API_URL}/api/products?limit=${limit}&offset=${offset}`, 
+                `${import.meta.env.VITE_API_URL}/api/products/limit?limit=${limit}&offset=${offset}`, 
                 { withCredentials: true }
             );
 
@@ -47,6 +48,8 @@ const IndividualProduct = () => {
     };
 
     const totalPages = Math.ceil(totalProducts / limit);
+
+    if(error) return <Error errorMessage="No hay productos disponibles" />
 
     return (
         <div className="products-view-wrapper" style={{ backgroundColor: theme === "dark" ? "#000000" : "#ffffff" }}>

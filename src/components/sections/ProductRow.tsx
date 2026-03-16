@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { type AppDispatch } from "../../redux/store";
 import { updateProduct, deleteProduct } from '../../redux/slice';
@@ -16,13 +16,13 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
     const dispatch: AppDispatch = useDispatch();
 
     // Estado para las categorías globales del sistema
-    const [allCategories, setAllCategories] = useState<any[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
     
     // Estado local con los datos del producto
     const [ localData, setLocalData ] = useState({ ...product });
     const [ hasChanges, setHasChanges ] = useState(false);
-    const [ newImageUrl, setNewImageUrl ] = useState("");
+    const [ newImagesFiles, setNewImagesFiles ] = useState<File[]>([]);
+    const [ newUrl, setNewUrl ] = useState<string | string[]>([])
 
     // Sincronizar si el producto padre cambia
     useEffect(() => {
@@ -61,20 +61,6 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
         handleFieldChange('categorias', updatedCats);
     };
 
-    // --- GESTIÓN DE IMÁGENES ---
-    const addImage = () => {
-        if (newImageUrl.trim() !== "") {
-            const currentImages = Array.isArray(localData.imagenes_generales) ? localData.imagenes_generales : [];
-            handleFieldChange('imagenes_generales', [...currentImages, newImageUrl.trim()]);
-            setNewImageUrl("");
-        }
-    };
-
-    const removeImage = (index: number) => {
-        const updatedImages = localData.imagenes_generales.filter((_: any, i: number) => i !== index);
-        handleFieldChange('imagenes_generales', updatedImages);
-    };
-
     // --- VARIANTES ---
     const handleVariantChange = (index: number, field: string, value: any) => {
         const updatedVariants = [...localData.variantes];
@@ -98,6 +84,11 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
         }
     };
 
+    const removeImage = (index: number) => {
+        const updatedImages = localData.imagenes_generales.filter((_: any, i: number) => i !== index);
+        handleFieldChange('imagenes_generales', updatedImages);
+    };
+
     // --- GUARDADO DEFINITIVO EN DB ---
     const saveChanges = () => {
         dispatch(updateProduct({ id: product._id, formData: localData }))
@@ -109,9 +100,74 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
             .catch(err => alert("ERROR_AL_GUARDAR: " + err));
     };
 
-    const precioConDescuento = localData.en_promocion 
-        ? localData.precio_base - (localData.precio_base * (localData.porcentaje_promo / 100))
-        : localData.precio_base;
+    const precioConDescuento = localData.en_promocion ? localData.precio_base - (localData.precio_base * (localData.porcentaje_promo / 100)) : localData.precio_base;
+
+    /* Sumar Imagenes */    
+    const processFiles = (files: File[]) => {
+    // Validar límite de 10
+    if (newImagesFiles.length + files.length > 10) {
+        alert("Solo puedes subir hasta 10 imágenes");
+        return;
+    }
+        setNewImagesFiles((prev) => [...prev, ...files]);
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            processFiles(Array.from(e.target.files));
+        }
+    };
+
+    const uploadImagesCloudinary = async () => {
+        if (newImagesFiles.length === 0) return;
+
+        const urls: string[] = [];
+        try {
+            // 1. Subir archivos
+            for (const file of newImagesFiles) {
+                const imgData = new FormData();
+                imgData.append("file", file);
+                imgData.append("upload_preset", "product-images");
+
+                const response = await axios.post(
+                    `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, 
+                    imgData
+                );
+                urls.push(response.data.secure_url);
+            }
+
+            // 2. ACTUALIZAR localData sumando los nuevos URLs al array existente
+            setLocalData((prev: any) => ({
+                ...prev,
+                imagenes_generales: [...(prev.imagenes_generales || []), ...urls]
+            }));
+
+            // 3. Notificar que hay cambios pendientes de guardar en DB
+            setHasChanges(true);
+
+            // 4. Limpiar la lista de archivos pendientes de subir
+            setNewImagesFiles([]);
+            setNewUrl([]); // Opcional, si ya no necesitas mostrar la lista de "URLs recién obtenidos"
+            
+            alert("SISTEMA: IMÁGENES_AÑADIDAS_A_LA_GALERÍA");
+
+        } catch (error) {
+            console.error("Error subiendo imagen a Cloudinary:", error);
+            alert("ERROR_CLOUDINARY_UPLOAD");
+        }
+    };
+
+    const setAsThumbnail = (index: number) => {
+        if (index === 0) return; // Ya es la portada
+
+        const updatedImages = [...localData.imagenes_generales];
+        // Extraemos la imagen de su posición actual
+        const [selectedImage] = updatedImages.splice(index, 1);
+        // La insertamos en la posición 0
+        updatedImages.unshift(selectedImage);
+
+        handleFieldChange('imagenes_generales', updatedImages);
+    };
 
     return (
         <div className={`row-master ${hasChanges ? 'modified' : ''} ${isExpanded ? 'is-open' : ''}`}>
@@ -184,25 +240,36 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                         {/* SECCIÓN: GALERÍA */}
                         <div className="detail-section full-width">
                             <span className="section-title">GALERÍA DE IMÁGENES</span>
-                            <div className="image-manager-container">
-                                <div className="image-grid-preview">
-                                    {localData.imagenes_generales?.map((img: string, idx: number) => (
-                                        <div key={idx} className="image-thumb-wrapper">
-                                            <img src={img} alt={`prod-${idx}`} />
+                            <div className="image-grid-preview">
+                                {localData.imagenes_generales?.map((img: string, idx: number) => (
+                                    <div key={idx} className={`image-thumb-wrapper ${idx === 0 ? 'is-thumbnail' : ''}`}>
+                                        <img src={img} alt={`prod-${idx}`} />
+                                        
+                                        {/* Badge de Portada */}
+                                        {idx === 0 && <div className="thumbnail-badge">PORTADA</div>}
+                                        
+                                        <div className="thumb-actions">
+                                            {/* Botón para mover a portada (solo si no es la 0) */}
+                                            {idx !== 0 && (
+                                                <button 
+                                                    className="btn-set-thumbnail" 
+                                                    onClick={() => setAsThumbnail(idx)}
+                                                    title="Usar como portada"
+                                                >
+                                                    ⭐
+                                                </button>
+                                            )}
                                             <button className="btn-remove-img" onClick={() => removeImage(idx)}>×</button>
                                         </div>
-                                    ))}
-                                </div>
-                                <div className="add-image-input-group">
-                                    <input 
-                                        type="text" 
-                                        placeholder="URL de imagen..." 
-                                        value={newImageUrl}
-                                        onChange={(e) => setNewImageUrl(e.target.value)}
-                                    />
-                                    <button onClick={addImage} className="btn-add-img">AÑADIR</button>
-                                </div>
+                                    </div>
+                                ))}
                             </div>
+
+                            <label>Nuevos Url de Imagen</label>   
+                            <input type="file" accept="image/*" multiple onChange={handleImageChange} className="terminal-file-input" /> 
+                            
+                            <button onClick={uploadImagesCloudinary}>Obtener Url`s</button>
+                            {Array.isArray(newUrl) && newUrl.length > 0 && newUrl.map((url: string) => <p>{url}</p> )}
                         </div>
 
                         {/* SECCIÓN: PROMO */}
@@ -241,7 +308,7 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                             <div className="categories-chip-container">
                                 {categoriesProp.length > 0 ? (
                                     categoriesProp.map((cat: any) => {
-                                        // 1) Renderizado en verde (clase 'active') si ya existe en la DB del producto
+                                        
                                         const isAssigned = localData.categorias.includes(cat.nombre);
                                         return (
                                             <button 

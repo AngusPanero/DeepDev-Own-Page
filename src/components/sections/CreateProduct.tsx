@@ -125,10 +125,7 @@ const CreateProduct = () => {
             imgData.append("file", file);
             imgData.append("upload_preset", "product-images");
 
-            const response = await axios.post(
-                `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, 
-                imgData
-            );
+            const response = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, imgData);
             urls.push(response.data.secure_url);
         }
         return urls;

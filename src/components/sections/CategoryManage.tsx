@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../../styles/categoryManager.css';
+import { Loader } from '@react-three/drei';
+import Error from './Error';
 
 const CategoryManager = ({ theme = 'dark' }: { theme?: 'light' | 'dark' }) => {
     const [ categories, setCategories ] = useState<any>([]);
@@ -67,6 +69,9 @@ const CategoryManager = ({ theme = 'dark' }: { theme?: 'light' | 'dark' }) => {
             alert("Error"); 
         }
     };
+
+    if(loading) return <Loader />
+    if(error) return <Error errorMessage='Error al crear categoría' />
 
    return (
         <div className={`dd-dashboard ${theme} category-page-container`}>

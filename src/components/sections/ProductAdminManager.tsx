@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { type AppDispatch } from "../../redux/store";
-import { 
-    readAllProduct, 
-    exportProductsCSV, 
-    importProductsCSV, 
-    bulkDeleteProducts,
-    bulkUpdateProducts 
-} from '../../redux/slice';
+import { readAllProduct, exportProductsCSV, importProductsCSV, bulkDeleteProducts,bulkUpdateProducts } from '../../redux/slice';
 import ProductRow from './ProductRow';
 import "../../styles/adminInventory.css";
 
@@ -35,6 +29,8 @@ const AdminInventory = () => {
     const fetchCategories = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, { withCredentials: true });
+            console.log(res.data.categorias);
+            
             setCategories(res.data.categorias);
         } catch (err) { console.error(err); }
     };
@@ -49,8 +45,9 @@ const AdminInventory = () => {
 
     // --- 2. FILTRADO INTELIGENTE ---
     const filteredProducts = products?.filter((p: any) => {
-        const matchesName = p.nombre.toLowerCase().includes(search.toLowerCase()) || 
-                           p.sku_padre.toLowerCase().includes(search.toLowerCase());
+        const matchesName = p.nombre?.toLowerCase().includes(search.toLowerCase()) || 
+                            p.marca?.toLowerCase().includes(search.toLowerCase()) || 
+                           p.sku_padre?.toLowerCase().includes(search.toLowerCase());
         const matchesCategory = categoryFilter === "all" || p.categories?.includes(categoryFilter);
         
         // El filtro de estado ahora incluye la opción de ver solo los "En Promo"
@@ -68,7 +65,7 @@ const AdminInventory = () => {
     const handleSelectAll = () => {
         const allFilteredIds = filteredProducts.map((p: any) => p._id);
         const areAllVisibleSelected = allFilteredIds.length > 0 && 
-            allFilteredIds.every(id => selectedIds.includes(id));
+            allFilteredIds.every((id: string) => selectedIds.includes(id));
 
         if (areAllVisibleSelected) {
             setSelectedIds(prev => prev.filter(id => !allFilteredIds.includes(id)));
@@ -212,7 +209,7 @@ const AdminInventory = () => {
                         <div className="terminal-loader">CARGANDO_DATOS...</div>
                     ) : filteredProducts.length > 0 ? (
                         filteredProducts.map((prod: any) => (
-                            <ProductRow 
+                            <ProductRow categoriesProp={categories}
                                 key={prod._id} 
                                 product={prod} 
                                 isSelected={selectedIds.includes(prod._id!)}

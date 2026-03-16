@@ -241,7 +241,7 @@ img.img-preview{
 }
 
 .invisible-input.name-input{
-    width: 100%;
+    width: 400px;
 }
 
 /* ============================================================
@@ -353,6 +353,240 @@ img.img-preview{
     color: #fff !important;
 }
 
+/* VARIANTES */
+/* Contenedor principal de variantes */
+.variantes-container {
+    border: 1px solid var(--accent-dim); /* O el color de borde que uses */
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* Fila de cada variante */
+.variante-item-create {
+    display: grid;
+    /* Definimos columnas: SKU ancho, Talle/Color/Stock/Extra iguales, Botón pequeño */
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 40px;
+    gap: 12px;
+    align-items: end;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(168, 85, 247, 0.2); /* Estilo terminal */
+    transition: all 0.3s ease;
+}
+
+.variante-item-create:last-of-type {
+    border-bottom: none;
+}
+
+/* Grupos de input (Label + Input) */
+.var-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Los SPAN que funcionan como labels mini */
+.var-input-group span {
+    font-family: 'JetBrains Mono', monospace; /* O tu fuente de sistema */
+    font-size: 0.65rem;
+    color: var(--accent); /* Color neón/destacado */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* Estilo específico para los inputs dentro de la variante */
+.var-input-group input {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #eee;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border-radius: 2px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.var-input-group input:focus {
+    border-color: var(--accent);
+    background: rgba(168, 85, 247, 0.05);
+}
+
+/* Quitar flechas de los inputs number para estética limpia */
+.var-input-group input[type="number"]::-webkit-inner-spin-button,
+.var-input-group input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Botón de eliminar (X) */
+.btn-del-mini {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: #ff4444;
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+.btn-del-mini:hover {
+    background: #ff4444;
+    color: white;
+}
+
+/* INPUT DROP ZONE */
+/* --- CONTENEDOR DROPZONE --- */
+.dropzone {
+    border: 2px dashed var(--accent-dim); /* El color violeta/neón que uses */
+    background: rgba(168, 85, 247, 0.05);
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dropzone:hover {
+    background: rgba(168, 85, 247, 0.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+}
+
+.dropzone p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+}
+
+/* Icono o decoración opcional para el dropzone */
+.dropzone::before {
+    content: "↑";
+    font-size: 2rem;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 5px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* --- CONTENEDOR DE PREVISUALIZACIÓN --- */
+.preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+/* Card individual de imagen */
+.preview-container > div {
+    position: relative;
+    border: 1px solid #333;
+    background: #111;
+    padding: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para que todas midan lo mismo sin deformarse */
+    border-radius: 2px;
+    filter: grayscale(0.3);
+    transition: filter 0.3s;
+}
+
+.preview-container > div:hover .preview-img {
+    filter: grayscale(0);
+}
+
+/* Botón de eliminar sobre la imagen */
+.preview-container button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-weight: bold;
+}
+
+.preview-container > div:hover button {
+    opacity: 1;
+}
+
+.preview-container button:hover {
+    background: #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Indicador de "Imagen Principal" (opcional para la primera) */
+.preview-container > div:first-child {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
+}
+
+.preview-container > div:first-child::after {
+    content: "PRINCIPAL";
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background: var(--accent);
+    color: #000;
+    font-size: 0.5rem;
+    padding: 2px 4px;
+    font-weight: bold;
+    border-radius: 1px;
+}
+
+/* Responsividad: Si la pantalla es chica, se rompe en 2 filas */
+@media (max-width: 900px) {
+    .variante-item-create {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+    }
+    .btn-del-mini {
+        grid-column: span 3;
+        width: 100%;
+    }
+}
+
 /* ANIMACIONES */
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -362,3 +596,4 @@ img.img-preview{
 .blink { animation: blinker 1s linear infinite; }
 @keyframes blinker { 50% { opacity: 0; } }
 
+visible

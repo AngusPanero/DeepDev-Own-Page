@@ -34,7 +34,7 @@ const AppRouter = () => {
                     <Route path="/company" element={<Company />} />
                     <Route path="/policy" element={<PoliticaCookies />} />
                     <Route path="/raffle-terms" element={<RaffleTerms />} />
-                    {/* <Route path="/testproducts" element={<IndividualProduct />} /> */}
+                    <Route path="/testproducts" element={<IndividualProduct />} />
                     <Route path="/*" element={<Error404 />} />
                     <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
                     {/* Tiene Acceso solo el admin con la prop pasada */}

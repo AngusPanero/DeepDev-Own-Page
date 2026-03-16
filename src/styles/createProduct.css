@@ -17,6 +17,16 @@
     flex-direction: column;
     gap: 0.5rem;
 }
+div.form-grid-2.promo-box-create{
+    display: flex;
+    flex-direction: column;
+}
+
+div.form-section.checkbox-section{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
 
 .form-section label {
     font-size: 1rem;

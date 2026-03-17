@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../../styles/productCard.css"
 import { UseTheme } from '../../contexts/ThemeContext';
 
 interface ProductProps {
     product: {
+        _id: string;
         nombre: string;
         sku_padre: string;
         precio_base: number;
@@ -17,7 +18,6 @@ interface ProductProps {
 
 const ProductCard: React.FC<ProductProps> = ({ product }) => {
     const { theme } = UseTheme();
-    const [isFavorite, setIsFavorite] = useState(false);
 
     const mainImage = product.imagenes_generales.length > 0 
         ? product.imagenes_generales[0] 
@@ -29,10 +29,6 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
         ? product.precio_base * (1 - (product.porcentaje_promo ?? 0) / 100)
         : product.precio_base;
 
-    const handleFavorite = (e: React.MouseEvent) => {
-        e.stopPropagation(); 
-        setIsFavorite(!isFavorite);
-    };
 
     return (
         <div className={`product-card-terminal ${theme} ${product.estado} ${tienePromo ? 'is-on-sale' : ''}`}>
@@ -51,12 +47,6 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
                 
                 <div className="product-card-title-row">
                     <h4 className="product-card-title">{product.nombre.toUpperCase()}</h4>
-                    <button 
-                        className={`btn-favorite-terminal ${isFavorite ? 'active' : ''}`}
-                        onClick={handleFavorite}
-                    >
-                        {isFavorite ? '❤️' : '🤍'}
-                    </button>
                 </div>
                 
                 <div className="product-card-footer">
@@ -71,9 +61,7 @@ const ProductCard: React.FC<ProductProps> = ({ product }) => {
                         </span>
                     </div>
                     
-                    <button className="btn-details-terminal">
-                        [ VER_DATOS ]
-                    </button>
+                    <a href={`/product/${product._id}`}><button className="btn-details-terminal">[ VER_MÁS ]</button></a>
                 </div>
             </div>
         </div>

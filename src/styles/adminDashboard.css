@@ -1,150 +1,305 @@
-/* --- Extensiones para el Panel de Admin --- */
+/* ================================================================
+   SISTEMA DE DISEÑO: ADMIN TERMINAL & INDUSTRIAL DARK
+   ================================================================ */
 
-.log-user {
-    width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 500;
+:root {
+    /* DARK MODE (Default) */
+    --bg-main: #000000;
+    --bg-panel: #0a0a0a;
+    --bg-input: #111111;
+    --border-color: #333333;
+    --text-white: #ffffff;
+    --text-dim: #777777;
+    --accent-primary: #a855f7; /* Purple */
+    --accent-secondary: #00ffaa; /* Green */
+    --accent-alert: #ff4444;
+    --grid-opacity: 0.3;
 }
 
-.log-banned{
-    color: red;
-    font-weight: 500;
+/* ELECTRIC LIGHT MODE */
+.light-mode {
+    --bg-main: #f4f7ff;
+    --bg-panel: #ffffff;
+    --bg-input: #eef2ff;
+    --border-color: #d1d9e6;
+    --text-white: #1a1f36;
+    --text-dim: #697386;
+    --accent-primary: #0055ff; /* Electric Blue */
+    --accent-secondary: #00d4ff; /* Cyan */
+    --accent-alert: #ef4444;
+    --grid-opacity: 0.1;
 }
 
-.log-id { width: 120px; color: #6b7280; font-family: monospace; }
-
-.dd-dashboard{
+/* --- CORE LAYOUT --- */
+.dd-dashboard {
+    background-color: var(--bg-main);
+    color: var(--text-white);
+    min-height: 100vh;
+    padding: 2rem;
     padding-bottom: 6rem;
+    font-family: var(--font-main);
+    position: relative;
+    overflow-x: hidden;
 }
 
-.dd-logs-container{
-    margin-top: 3rem;
+.dd-grid-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(var(--bg-input) 1px, transparent 1px), 
+        linear-gradient(90deg, var(--bg-input) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
 }
 
-/* Botón con estilo terminal */
-.unban-btn{
-    font-family: "Montserrat";
-    background: transparent;
-    padding: 2px 10px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-radius: 2px;
-    margin-left: auto;
+.dd-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.ban-btn{
-    font-family: "Montserrat";
-    background: transparent;
-    padding: 2px 10px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-radius: 2px;
-    margin-left: auto;
-}
-
-/* Colores de estado */
-.status-red { color: #ef4444 !important; font-weight: bold; }
-.status-green { color: #10b981 !important; }
-
-/* Ajustes según el tema */
-.dd-dashboard.dark .ban-btn {
-    color: #10b981;
-    border: 1px solid #10b981;
-}
-
-.dd-dashboard.dark .ban-btn:hover {
-    background: #10b981;
-    color: #000;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-}
-
-.dd-dashboard.light .ban-btn {
-    color: #10b981;
-    border: 1px solid #d32f2f;
-}
-
-.dd-dashboard.light .ban-btn:hover {
-    background: #10b981;
-    color: #fff;
-}
-
-.dd-dashboard.dark .unban-btn {
-    color: #ef4444;
-    border: 1px solid #ef4444;
-}
-
-.dd-dashboard.dark .unban-btn:hover {
-    background: #ef4444;
-    color: #000;
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-}
-
-.dd-dashboard.light .unban-btn {
-    color: #d32f2f;
-    border: 1px solid #d32f2f;
-}
-
-.dd-dashboard.light .unban-btn:hover {
-    background: #d32f2f;
-    color: #fff;
-}
-
-/* Fila de usuario baneado */
-.user-row.is-banned {
-    background: rgba(239, 68, 68, 0.05);
-}
-
-/* Scrollbar personalizada para que parezca de consola */
-.dd-logs-wrapper::-webkit-scrollbar {
-    width: 4px;
-}
-.dd-dashboard.dark .dd-logs-wrapper::-webkit-scrollbar-thumb {
-    background: #333;
-}
-.dd-dashboard.light .dd-logs-wrapper::-webkit-scrollbar-thumb {
-    background: #ccc;
-}
-
-.dd-chart-card {
-    min-height: 380px;
+/* --- HEADER & CONTROLS --- */
+.dd-header {
+    margin-top: 12rem;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
-.dd-pie-legend {
-    font-family: "Montserrat";
+.dd-title { font-size: 1.5rem; letter-spacing: 2px; }
+.dd-title span { color: var(--accent-purple); text-shadow: 0 0 10px var(--accent-purple); }
+
+.dd-user-badge {
+    font-size: 0.7rem;
+    background: var(--accent-purple);
+    color: #000;
+    padding: 2px 8px;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    font-weight: 900;
+}
+
+.dd-terminal-controls {
     display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    margin-top: -30px;
-    font-size: 0.75rem;
-    font-family: monospace;
+    gap: 1.5rem;
+    align-items: center;
 }
 
-.dd-pie-legend p {
+.control-group {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    padding: 4px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 5px;
+    border-radius: 4px;
 }
 
-.dot {
-    width: 8px;
-    height: 8px;
+.control-label { font-size: 0.65rem; color: #666; padding: 0 10px; font-weight: bold; }
+
+.control-group button {
+    background: transparent;
+    border: none;
+    color: #666;
+    padding: 6px 15px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.control-group button.active { background: var(--accent-purple); color: #000; font-weight: 900; }
+
+.date-inputs { gap: 10px; padding: 4px 10px !important; }
+.date-inputs input { background: transparent; border: none; color: var(--accent-purple); font-size: 0.8rem; outline: none; font-family: inherit; }
+
+/* --- GRID & CARDS --- */
+.dd-main-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.full-width-grid { grid-column: span 3; }
+
+.dd-terminal-card {
+    background: rgba(10, 10, 10, 0.9);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.dd-terminal-card.highlight { border-top: 4px solid var(--accent-purple); }
+
+.card-header { font-size: 0.65rem; color: var(--text-dim); letter-spacing: 2px; margin-bottom: 1.5rem; text-transform: uppercase; }
+
+.dd-big-number { font-size: 3rem; font-weight: 900; color: #fff; display: block; }
+
+/* --- GRÁFICOS & TOOLTIPS --- */
+.dd-chart-container-pie {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.dd-custom-tooltip {
+    background: #000 !important;
+    border: 1px solid var(--accent-purple) !important;
+    padding: 10px !important;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+    border-radius: 2px;
+}
+
+.dd-custom-tooltip .label { color: #777; font-size: 10px; display: block; margin-bottom: 4px; }
+.dd-custom-tooltip .value { color: #fff; font-size: 12px; font-weight: 800; }
+
+.dd-pie-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-top: 1px solid #1a1a1a;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.dd-pie-legend p { display: flex; align-items: center; font-size: 0.75rem; color: #bbb; margin: 0; }
+.dot { width: 8px; height: 8px; border-radius: 1px; margin-right: 8px; }
+.dot.net { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+.dot.comm { background: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+
+/* --- LOGS & TABLAS --- */
+.dd-logs-container { margin-top: 2rem; }
+.dd-logs-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #1a1a1a;
+    background: #050505;
+}
+
+.dd-log-entry {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #111;
+    font-size: 0.8rem;
+    gap: 1rem;
+}
+
+.log-date { color: #555; width: 120px; }
+.log-user { flex: 1; color: #fff; font-weight: bold; overflow: hidden; text-overflow: ellipsis; }
+.log-status { color: var(--accent-green); width: 100px; }
+.log-banned { color: var(--accent-red); width: 100px; font-weight: bold; }
+
+.btn-group { margin-left: auto; display: flex; gap: 10px; }
+
+.ban-btn, .unban-btn {
+    padding: 4px 12px;
+    font-size: 0.7rem;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 2px;
+    font-family: inherit;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.ban-btn { border: 1px solid var(--accent-red); color: var(--accent-red); }
+.ban-btn:hover { background: var(--accent-red); color: #000; }
+
+.unban-btn { border: 1px solid var(--accent-green); color: var(--accent-green); }
+.unban-btn:hover { background: var(--accent-green); color: #000; }
+
+.dd-empty { padding: 2rem; text-align: center; color: #444; border: 1px dashed #222; margin: 10px; }
+
+/* --- GESTIÓN DE PRODUCTOS (GOP) --- */
+.row-master {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    margin-bottom: 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.image-grid-preview {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+.image-thumb-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #333;
+    background: #000;
+}
+
+.image-thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+.image-thumb-wrapper.is-thumbnail { border: 2px solid var(--accent-green); }
+
+.thumbnail-badge {
+    position: absolute;
+    top: -8px; left: -8px;
+    background: var(--accent-green);
+    color: #000;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    z-index: 10;
+}
+
+.btn-remove-img {
+    position: absolute;
+    top: -10px; right: -10px;
+    background: #000 !important;
+    color: var(--accent-red) !important;
+    border: 1px solid var(--accent-red) !important;
+    width: 22px; height: 22px;
     border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 20;
 }
 
-.dot.net { background: #10b981; box-shadow: 0 0 8px #10b981; }
-.dot.comm { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+.thumb-actions {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center;
+    opacity: 0; transition: 0.2s;
+}
 
+.image-thumb-wrapper:hover .thumb-actions { opacity: 1; }
 
-/* Hacer que los gráficos sean responsive en móviles */
-@media (max-width: 768px) {
-    .dd-chart-card {
-        grid-column: span 1;
-    }
+.btn-set-thumbnail { background: transparent; border: none; color: #ffcc00; font-size: 16px; cursor: pointer; }
+
+/* --- UTILS --- */
+.dd-progress-bar { height: 4px; background: #111; margin-top: 15px; }
+.dd-progress-bar .fill { height: 100%; background: var(--accent-purple); box-shadow: 0 0 10px var(--accent-purple); }
+.green-glow { color: var(--accent-green); text-shadow: 0 0 10px var(--accent-green); }
+.animate-fade { animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Scrollbar Custom */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-purple); }
+
+@media (max-width: 1024px) {
+    .dd-main-grid { grid-template-columns: 1fr; }
+    .full-width-grid { grid-column: span 1; }
+    .dd-header { flex-direction: column; align-items: flex-start; gap: 20px; }
 }

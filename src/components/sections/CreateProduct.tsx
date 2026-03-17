@@ -94,10 +94,7 @@ const CreateProduct = () => {
             alert("Solo puedes subir hasta 10 imágenes");
             return;
         }
-        setFormData((prev: any) => ({ 
-            ...prev, 
-            imagenes_generales: [...prev.imagenes_generales, ...files] 
-        }));
+        setFormData((prev: any) => ({ ...prev, imagenes_generales: [...prev.imagenes_generales, ...files] }));
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

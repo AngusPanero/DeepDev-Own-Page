@@ -129,25 +129,19 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                 imgData.append("file", file);
                 imgData.append("upload_preset", "product-images");
 
-                const response = await axios.post(
-                    `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, 
-                    imgData
-                );
+                const response = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, imgData);
                 urls.push(response.data.secure_url);
             }
 
-            // 2. ACTUALIZAR localData sumando los nuevos URLs al array existente
             setLocalData((prev: any) => ({
                 ...prev,
                 imagenes_generales: [...(prev.imagenes_generales || []), ...urls]
             }));
 
-            // 3. Notificar que hay cambios pendientes de guardar en DB
             setHasChanges(true);
 
-            // 4. Limpiar la lista de archivos pendientes de subir
             setNewImagesFiles([]);
-            setNewUrl([]); // Opcional, si ya no necesitas mostrar la lista de "URLs recién obtenidos"
+            setNewUrl([]); 
             
             alert("SISTEMA: IMÁGENES_AÑADIDAS_A_LA_GALERÍA");
 
@@ -265,7 +259,7 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                                 ))}
                             </div>
 
-                            <label>Nuevos Url de Imagen</label>   
+                            <label>Añadir Imágenes</label>   
                             <input type="file" accept="image/*" multiple onChange={handleImageChange} className="terminal-file-input" /> 
                             
                             <button onClick={uploadImagesCloudinary}>Obtener Url`s</button>

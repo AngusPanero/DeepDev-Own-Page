@@ -19,9 +19,9 @@ const App = () => {
           <ShoppingProvider>
             <AmbientOverlay />
             <UsersProvider>
-              <AppRouter>
-              
-              </AppRouter>
+                <AppRouter>
+
+                </AppRouter>
             </UsersProvider>
           </ShoppingProvider>
         </ThemeProvider>

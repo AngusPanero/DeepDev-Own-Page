@@ -1,0 +1,181 @@
+/* --- SELECTOR MAESTRO --- */
+div.ur-container.ur-container {
+    --ur-bg: var(--dd-bg, #000000);
+    --ur-card: var(--dd-card, #0a0a0a);
+    --ur-border: var(--dd-border, #1f1f1f);
+    --ur-text: var(--dd-text, #ffffff);
+    --ur-text-dim: var(--dd-text-dim, #6b7280);
+    --ur-accent: var(--dd-accent, #a855f7);
+    
+    background-color: var(--ur-card) !important;
+    border: 1px solid var(--ur-border) !important;
+    padding: 20px 40px;
+
+    margin: 40px auto !important; /* Despega 40px arriba/abajo y centra lateralmente */
+    width: calc(100% - 70px) !important; /* Deja 20px de aire a cada lado */
+    max-width: 1400px;
+    
+    font-family: 'Montserrat', sans-serif !important;
+    position: relative;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* --- SOPORTE LIGHT MODE (100% Ajustado) --- */
+div.ur-container.light {
+    --ur-bg: #F4F7FA;
+    --ur-card: #ffffff;
+    --ur-border: rgba(0, 98, 255, 0.15);
+    --ur-text: #0A192F;
+    --ur-text-dim: #476582;
+    --ur-accent: #0062FF; /* Azul corporativo para light mode */
+}
+
+div.ur-container.ur-container * {
+    font-family: 'Montserrat', sans-serif !important;
+    box-sizing: border-box;
+}
+
+/* --- HEADER & SEARCH --- */
+div.ur-container .ur-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.dark .ur-badge.user{ color: rgb(150, 150, 255); }
+.dark .ur-badge.admin{ color: rgb(0, 206, 0); }
+
+.dark .ur-date{ color: white; margin-right: 15px; }
+
+div.ur-container .ur-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin: 0;
+    color: var(--ur-text);
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+div.ur-container .ur-title span {
+    color: var(--ur-accent);
+}
+
+div.ur-container .ur-input {
+    width: 100%;
+    max-width: 400px;
+    background: var(--ur-bg) !important;
+    border: 1px solid var(--ur-border) !important;
+    color: var(--ur-text) !important; /* Texto legible en ambos modos */
+    padding: 12px 18px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* --- LISTA Y FILAS --- */
+div.ur-container .ur-card-header {
+    font-size: 0.7rem;
+    color: var(--ur-text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--ur-border);
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+}
+
+div.ur-container .ur-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 10px;
+    border-bottom: 1px solid var(--ur-border);
+}
+
+div.ur-container.light .ur-row:hover {
+    background: rgba(0, 98, 255, 0.03);
+}
+
+div.ur-container .ur-email {
+    margin-left: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ur-text);
+}
+
+/* --- BOTONES DE ACCIÓN (BAN/UNBAN) --- */
+div.ur-container .ur-btn {
+    background: transparent;
+    border: 1px solid var(--ur-accent);
+    color: var(--ur-accent);
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+/* --- PAGINACIÓN (Nuevos Estilos) --- */
+div.ur-container .ur-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ur-border);
+}
+
+div.ur-container .ur-pag-btn {
+    background: var(--ur-bg) !important;
+    border: 1px solid var(--ur-accent) !important;
+    color: var(--ur-accent) !important;
+    padding: 8px 20px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+div.ur-container .ur-pag-btn:hover:not(:disabled) {
+    background: var(--ur-accent) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px var(--ur-accent);
+}
+
+div.ur-container .ur-pag-btn:disabled {
+    opacity: 0.3;
+    border-color: var(--ur-text-dim) !important;
+    color: var(--ur-text-dim) !important;
+    cursor: not-allowed;
+}
+
+div.ur-container .ur-pag-info {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--ur-text);
+    text-transform: uppercase;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+    div.ur-container .ur-header { flex-direction: column; align-items: flex-start; }
+    div.ur-container .ur-input { max-width: 100%; }
+}
+
+@media (max-width: 768px) {
+    div.ur-container.ur-container { padding: 15px; }
+    div.ur-container .ur-row { flex-direction: column; align-items: flex-start; gap: 15px; }
+    div.ur-container .ur-actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 12px;
+        border-top: 1px dashed var(--ur-border);
+    }
+}

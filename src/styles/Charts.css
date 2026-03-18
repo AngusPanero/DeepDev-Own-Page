@@ -1,0 +1,136 @@
+div.dc-wrapper.dc-wrapper {
+    margin-top: 6rem;
+    padding: 20px;
+    --dc-bg: #000;
+    --dc-card: #0a0a0a;
+    --dc-border: #1f1f1f;
+    --dc-text: #ffffff; /* Blanco para Dark */
+    --dc-accent: #a855f7;
+    --dc-text-dim: #6b7280;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+div.dc-wrapper.dc-wrapper.light {
+    --dc-bg: #F4F7FA;
+    --dc-card: #ffffff;
+    --dc-border: rgba(0, 98, 255, 0.15);
+    --dc-text: #0A192F; /* Azul oscuro para Light */
+    --dc-accent: #0062FF;
+    --dc-text-dim: #476582;
+}
+
+.dc-big-number{
+    font-weight: 600;
+    font-size: 2rem;
+}
+/* CUADRADOS */
+.dc-terminal-card.highlight{ padding: 20px; }
+.dc-terminal-card{ padding: 20px; }
+
+/* 2. BLINDAJE DE TEXTO (ALTA ESPECIFICIDAD) */
+/* Esto obliga a que CUALQUIER texto dentro del componente sea visible */
+
+/* Modo Dark: Forzamos Blanco */
+div.dc-wrapper.dc-wrapper:not(.light) *,
+div.dc-wrapper.dc-wrapper:not(.light) h1,
+div.dc-wrapper.dc-wrapper:not(.light) span,
+div.dc-wrapper.dc-wrapper:not(.light) p,
+div.dc-wrapper.dc-wrapper:not(.light) div {
+    color: #ffffff !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Modo Light: Forzamos Oscuro */
+div.dc-wrapper.dc-wrapper.light *,
+div.dc-wrapper.dc-wrapper.light h1,
+div.dc-wrapper.dc-wrapper.light span,
+div.dc-wrapper.dc-wrapper.light p,
+div.dc-wrapper.dc-wrapper.light div {
+    color: #0A192F !important;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+/* 3. EXCEPCIONES DE COLORES ESPECÍFICOS (PISAN EL BLINDAJE ANTERIOR) */
+
+div.dc-wrapper.dc-wrapper .dc-card-header,
+div.dc-wrapper.dc-wrapper .dc-big-number,
+div.dc-wrapper.dc-wrapper .dc-accent-text {
+    color: var(--dc-accent) !important;
+    
+}
+
+div.dc-wrapper.dc-wrapper .dc-text-dim,
+div.dc-wrapper.dc-wrapper .dc-control-label,
+div.dc-wrapper.dc-wrapper .dc-label,
+div.dc-wrapper.dc-wrapper .dc-unit {
+    color: var(--dc-text-dim) !important;
+}
+
+div.dc-wrapper.dc-wrapper .dc-green-glow {
+    color: #10b981 !important;
+}
+
+/* 4. FILTROS Y BOTONES */
+div.dc-wrapper.dc-wrapper .dc-filter-header {
+    margin: 10px 20px 20px 20px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+div.dc-wrapper.dc-wrapper .dc-btn-group {
+    display: flex;
+    gap: 5px;
+    background: var(--dc-border) !important;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+div.dc-wrapper.dc-wrapper .dc-filter-btn {
+    background: transparent !important;
+    border: none !important;
+    color: var(--dc-text-dim) !important;
+    padding: 6px 15px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+div.dc-wrapper.dc-wrapper .dc-filter-btn.active {
+    background: var(--dc-accent) !important;
+    color: #ffffff !important; /* Siempre blanco en activo */
+}
+
+/* 5. INPUTS DE FECHA */
+div.dc-wrapper.dc-wrapper .dc-date-field {
+    background: var(--dc-bg) !important;
+    border: 1px solid var(--dc-border) !important;
+    color: var(--dc-text) !important; /* Texto del input */
+    padding: 5px 10px;
+}
+
+/* 6. GRILLA Y CARDS */
+div.dc-wrapper.dc-wrapper .dc-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 0 20px 25px 20px !important;
+}
+
+div.dc-wrapper.dc-wrapper .dc-terminal-card {
+    background: var(--dc-card) !important;
+    border: 1px solid var(--dc-border) !important;
+}
+
+/* 7. RESPONSIVE */
+@media (max-width: 1024px) {
+    div.dc-wrapper.dc-wrapper .dc-charts-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 768px) {
+    div.dc-wrapper.dc-wrapper .dc-btn-group { width: 100% !important; justify-content: space-between !important; }
+    div.dc-wrapper.dc-wrapper .dc-date-inputs { width: 100% !important; flex-direction: column !important; }
+    div.dc-wrapper.dc-wrapper .dc-date-field { width: 100% !important; }
+}

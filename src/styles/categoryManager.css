@@ -1,97 +1,147 @@
-/* --- RESET ESTRUCTURAL --- */
-.category-page-container {
-    height: auto;
-    padding: 3rem 1rem; 
-    display: flex;
-    justify-content: center; 
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
-/* --- LA CARD (CON MAX-WIDTH Y PADDING INTERNO) --- */
-.category-card {/* 
-    height: 600px;
-    overflow-y: scroll; */
-    width: 100%;
-    max-width: 1150px; /* Evita que se estire al infinito */
-    padding: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    border: 1px solid #1f1f1f;
-}
+/* SELECTOR MAESTRO */
+div.cm-container.cm-container {
+    --cm-bg: var(--dd-bg, #000);
+    --cm-card: var(--dd-card, #0a0a0a);
+    --cm-border: var(--dd-border, #1f1f1f);
+    --cm-text: var(--dd-text, #fff);
+    --cm-accent: var(--dd-accent, #a855f7);
+    --cm-text-dim: var(--dd-text-dim, #6b7280);
 
-/* --- INPUTS CON WIDTH CONTROLADO --- */
-.terminal-input {
-    width: 100%;
-    box-sizing: border-box; /* Fundamental para que el padding no lo pegue al borde */
-    padding: 15px;
-    font-family: 'Montserrat', courier;
-    font-size: 16px;
-    outline: none;
-    border: 1px solid #1f1f1f;
-}
+    margin: 40px auto !important; /* Despega 40px arriba/abajo y centra lateralmente */
+    width: calc(100% - 70px) !important; /* Deja 20px de aire a cada lado */
+    max-width: 1400px;
 
-/* --- LISTADO (FILAS CON PADDING) --- */
-.category-list-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 1rem;
-}
-
-.category-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px; /* Padding interno para que el texto no toque el borde */
-    border: 1px solid #1f1f1f;
+    background: var(--cm-card) !important;
+    border: 1px solid var(--cm-border) !important;
+    padding: 25px;
+    font-family: 'Montserrat', sans-serif !important;
     box-sizing: border-box;
 }
 
-/* --- THEMES (LIGHT / DARK) --- */
-/* DARK */
-.dd-dashboard.dark.category-page-container { background-color: #000; }
-.dd-dashboard.dark .category-card { background: #0a0a0a; border-color: #1f1f1f; }
-.dd-dashboard.dark .terminal-input { background: #141414; color: #fff; border-color: #1f1f1f; }
-.dd-dashboard.dark .category-row { background: #111; color: #d1d5db; border-color: #1f1f1f; }
-.dd-dashboard.dark .section-subtitle { color: #a855f7; border-bottom: 1px solid #1f1f1f; }
+/* Soporte Light Mode */
+div.cm-container.cm-container.light {
+    --cm-bg: #f4f7fa;
+    --cm-card: #ffffff;
+    --cm-border: rgba(0, 98, 255, 0.1);
+    --cm-text: #0a192f;
+    --cm-accent: #0062ff;
+}
 
-/* LIGHT */
-.dd-dashboard.light.category-page-container { background-color: #f0f2f5; }
-.dd-dashboard.light .category-card { background: #fff; border-color: #e5e7eb; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-.dd-dashboard.light .terminal-input { background: #fff; color: #000; border-color: #d1d5db; }
-.dd-dashboard.light .category-row { background: #f9fafb; color: #111; border-color: #e5e7eb; }
-.dd-dashboard.light .section-subtitle { color: #0062FF; border-bottom: 1px solid #e5e7eb; }
+div.cm-container .cm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
 
-/* --- BOTONES --- */
-.btn-submit-terminal {
-    background: #a855f7;
+div.cm-container .cm-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--cm-text);
+    text-transform: uppercase;
+}
+
+div.cm-container .cm-title span { color: var(--cm-accent); }
+
+/* --- BUSCADOR Y FORM --- */
+div.cm-container .cm-input-search,
+div.cm-container .cm-input-add {
+    background: var(--cm-bg) !important;
+    border: 1px solid var(--cm-border) !important;
+    color: var(--cm-text) !important;
+    padding: 10px 15px;
+    font-size: 0.75rem;
+    font-family: 'Montserrat', sans-serif !important;
+    outline: none;
+    border-radius: 4px;
+}
+
+div.cm-container .cm-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+div.cm-container .cm-input-add { flex: 1; }
+
+div.cm-container .cm-btn-add {
+    background: var(--cm-accent);
     color: white;
-    font-family: "Montserrat";
-    font-weight: bold;
     border: none;
-    padding: 15px;
+    padding: 0 20px;
+    font-weight: 900;
     cursor: pointer;
-    transition: opacity 0.2s;
+    border-radius: 4px;
+    transition: transform 0.2s;
 }
 
-.dd-dashboard.light .btn-submit-terminal { background: #0062FF; }
+div.cm-container .cm-btn-add:hover { transform: scale(1.05); }
 
-.btn-delete-terminal {
-    background: transparent;
-    border: 1px solid #ef4444;
-    color: #ef4444;
-    padding: 5px 12px;
-    font-family: "Montserrat";
+/* --- TAGS SYSTEM --- */
+div.cm-container .cm-divider {
+    font-size: 0.6rem;
+    color: var(--cm-text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--cm-border);
+    padding-bottom: 5px;
+}
+
+div.cm-container .cm-tags-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Esto hace que se vean como tags uno al lado del otro */
+    gap: 10px;
+}
+
+div.cm-container .cm-tag {
+    background: var(--cm-bg);
+    border: 1px solid var(--cm-border);
+    padding: 5px 10px 5px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+div.cm-container .cm-tag:hover {
+    border-color: var(--cm-accent);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.1);
+}
+
+div.cm-container .cm-tag-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cm-text);
+    text-transform: uppercase;
+}
+
+div.cm-container .cm-tag-remove {
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
     cursor: pointer;
+    font-weight: 900;
+    transition: all 0.2s;
 }
 
-.btn-delete-terminal:hover {
-    background: #ef4444;
-    color: #fff;
+div.cm-container .cm-tag-remove:hover {
+    background: #ff4444;
+    color: white;
 }
 
-/* RESPONSIVE */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    .form-grid-2 { display: flex; flex-direction: column; gap: 1rem; }
-    .category-card { padding: 1.5rem; }
+    div.cm-container .cm-header { flex-direction: column; align-items: stretch; }
+    div.cm-container .cm-input-search { max-width: 100%; }
 }

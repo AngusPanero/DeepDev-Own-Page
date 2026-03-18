@@ -1,0 +1,139 @@
+/* SELECTOR MAESTRO */
+div.sh-container.sh-container {
+    --sh-bg: var(--dd-bg, #000);
+    --sh-card: var(--dd-card, #0a0a0a);
+    --sh-border: var(--dd-border, #1f1f1f);
+    --sh-text: var(--dd-text, #fff);
+    --sh-accent: var(--dd-accent, #a855f7);
+    --sh-text-dim: var(--dd-text-dim, #6b7280);
+
+    /* --- SOLUCIÓN: MARGEN Y ANCHO --- */
+    margin: 40px auto !important; /* Despega 40px arriba/abajo y centra lateralmente */
+    width: calc(100% - 70px) !important; /* Deja 20px de aire a cada lado */
+    max-width: 1400px; /* Evita que en monitores gigantes se estire infinito */
+    
+    background-color: var(--sh-card) !important;
+    border: 1px solid var(--sh-border) !important;
+    padding: 30px;
+    font-family: 'Montserrat', sans-serif !important;
+    box-sizing: border-box;
+    border-radius: 4px; /* Un pequeño redondeado para que no sea tan brusco */
+}
+
+div.sh-container.sh-container.light {
+    --sh-bg: #F4F7FA;
+    --sh-card: #ffffff;
+    --sh-border: rgba(0, 98, 255, 0.15);
+    --sh-text: #0A192F;
+    --sh-accent: #0062FF;
+    --sh-text-dim: #476582;
+}
+
+/* BLINDAJE DE COLOR DE TEXTO (Para que se vea en Dark/Light) */
+div.sh-container.sh-container:not(.light) span,
+div.sh-container.sh-container:not(.light) h2,
+div.sh-container.sh-container:not(.light) div {
+    color: #ffffff;
+}
+
+div.sh-container.sh-container.light span,
+div.sh-container.sh-container.light h2,
+div.sh-container.sh-container.light div {
+    color: #0A192F;
+}
+
+/* REGLAS ESPECÍFICAS QUE PISAN EL BLINDAJE */
+div.sh-container .sh-accent, 
+div.sh-container .sh-amount, 
+div.sh-container .sh-title span {
+    color: var(--sh-accent) !important;
+}
+
+div.sh-container .sh-text-dim, 
+div.sh-container .sh-count, 
+div.sh-container .sh-date {
+    color: var(--sh-text-dim) !important;
+}
+
+/* HEADER DINÁMICO */
+div.sh-container .sh-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 20px;
+}
+
+div.sh-container .sh-title {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+/* CONTROLES */
+div.sh-container .sh-controls {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+div.sh-container .sh-search-input,
+div.sh-container .sh-select {
+    background: var(--sh-bg) !important;
+    border: 1px solid var(--sh-border) !important;
+    color: var(--sh-text) !important;
+    padding: 10px 15px;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* FILAS */
+div.sh-container .sh-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--sh-border);
+}
+
+div.sh-container .sh-main-info span,
+div.sh-container .sh-details span {
+    margin-right: 15px;
+}
+
+/* PAGINACIÓN */
+div.sh-container .sh-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+div.sh-container .sh-pag-btn {
+    background: transparent !important;
+    border: 1px solid var(--sh-accent) !important;
+    color: var(--sh-accent) !important;
+    padding: 8px 20px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+div.sh-container .sh-pag-btn:hover:not(:disabled) {
+    background: var(--sh-accent) !important;
+    color: white !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    div.sh-container.sh-container {
+        margin: 20px 10px !important;
+        width: calc(100% - 20px) !important;
+        padding: 15px;
+    }
+    div.sh-container .sh-header { flex-direction: column; align-items: stretch; }
+    div.sh-container .sh-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+}

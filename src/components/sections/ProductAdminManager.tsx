@@ -5,9 +5,11 @@ import { type AppDispatch } from "../../redux/store";
 import { readAllProduct, exportProductsCSV, importProductsCSV, bulkDeleteProducts,bulkUpdateProducts } from '../../redux/slice';
 import ProductRow from './ProductRow';
 import "../../styles/adminInventory.css";
+import { UseTheme } from '../../contexts/ThemeContext';
 
 const AdminInventory = () => {
     const dispatch: AppDispatch = useDispatch();
+    const { theme } = UseTheme()
     
     const { loading, error, products } = useSelector((state: any) => state.productSelector);
 
@@ -89,7 +91,7 @@ const AdminInventory = () => {
         filteredProducts.every((p: any) => selectedIds.includes(p._id));
 
     return (
-        <div className="admin-inventory-wrapper">
+        <div className={`admin-inventory-wrapper ${theme}`}>
             {error && <div className="terminal-error">SYSTEM_FAILURE_🔴: {error}</div>}
 
             {/* DASHBOARD DE ESTADOS */}

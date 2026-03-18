@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap');
 
 /* Selector de máxima especificidad para resetear el contenedor */
-div.dd-dashboard.dd-dashboard {
+div.dd-dashboard {
+    padding: 0;
+    margin-top: 8rem;
     /* Variables Default (Dark) */
     --dd-bg: #000000;
     --dd-card: #0a0a0a;
@@ -12,8 +14,8 @@ div.dd-dashboard.dd-dashboard {
     --dd-accent-alt: #8c00ff;
     --dd-font: 'Montserrat', sans-serif;
     
-    margin: 0;
-    padding: 80px 0 60px 0;
+    
+    /* padding: 80px 0 60px 0; */
     min-height: 100vh;
     width: 100%;
     background-color: var(--dd-bg) !important;
@@ -55,7 +57,6 @@ div.dd-dashboard.dd-dashboard.light {
 }
 
 .dd-dashboard .dd-content {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     position: relative;

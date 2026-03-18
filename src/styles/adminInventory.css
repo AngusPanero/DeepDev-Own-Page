@@ -16,7 +16,7 @@
     
     background-color: var(--bg-black);
     color: var(--text);
-    padding: 20px;
+    padding: 40px;
     font-family: var(--font-mono);
 }
 
@@ -596,4 +596,32 @@ img.img-preview{
 .blink { animation: blinker 1s linear infinite; }
 @keyframes blinker { 50% { opacity: 0; } }
 
-visible
+/* ============================================================
+   8. COMPLEMENTO THEME LIGHT (ESPECIFICIDAD MÁXIMA)
+   ============================================================ */
+.admin-inventory-wrapper.light {
+    --bg-black: #F4F7FA;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    --accent: #0062FF;
+    --accent-dim: rgba(0, 98, 255, 0.1);
+    --border: rgba(0, 98, 255, 0.15);
+    --text: #0A192F;
+    --text-dim: #476582;
+}
+
+/* Ajustes de fondo y bordes para paneles internos en modo light */
+.admin-inventory-wrapper.light .admin-full-edit-panel { background: #fcfcfc; }
+.admin-inventory-wrapper.light .images-grid { background: #f8f9fa; }
+.admin-inventory-wrapper.light .variant-edit-row-detailed { background: #ffffff; }
+.admin-inventory-wrapper.light .preview-container { background: rgba(0, 0, 0, 0.03); }
+.admin-inventory-wrapper.light .preview-container > div { background: #fff; border-color: #ddd; }
+.admin-inventory-wrapper.light .var-input-group input { background: #fff; border-color: #ddd; color: #333; }
+.admin-inventory-wrapper.light .dropzone { background: rgba(0, 98, 255, 0.03); }
+.admin-inventory-wrapper.light .admin-toolbar { box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+/* Ajuste de colores específicos en modo light */
+.admin-inventory-wrapper.light .bulk-header { color: #ffffff; }
+.admin-inventory-wrapper.light .btn-csv { color: var(--accent) !important; }
+.admin-inventory-wrapper.light .image-controls-overlay { background: rgba(255,255,255,0.9); }
+.admin-inventory-wrapper.light .stat-card.active { background: var(--accent-dim); }

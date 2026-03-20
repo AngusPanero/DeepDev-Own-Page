@@ -1,0 +1,268 @@
+/* ROOT VARIABLES PARA MANTENER CONSISTENCIA */
+:root {
+    --deep-bg: #0d1117;
+    --deep-card: #161b22;
+    --deep-border: #30363d;
+    --deep-blue: #58a6ff;
+    --deep-green: #238636;
+    --deep-red: #f85149;
+    --deep-text: #e6edf3;
+    --deep-muted: #8b949e;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.cart-container {
+    background-color: var(--deep-bg);
+    color: var(--deep-text);
+    font-family: var(--font-mono);
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+@media (min-width: 1024px) {
+    .cart-container {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* LISTA DE PRODUCTOS */
+.cart-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--deep-blue);
+    border-bottom: 2px solid var(--deep-border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cart-item-card {
+    background-color: var(--deep-card);
+    border: 1px solid var(--deep-border);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 15px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.cart-item-card:hover {
+    border-color: var(--deep-blue);
+    transform: translateX(5px);
+}
+
+.product-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--deep-border);
+}
+
+.product-name {
+    color: var(--deep-text);
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.product-price {
+    color: var(--deep-muted);
+    font-size: 0.9rem;
+}
+
+/* ALERTAS DE STOCK ESTILO TERMINAL */
+.stock-alert {
+    background: rgba(248, 81, 73, 0.1);
+    color: var(--deep-red);
+    border: 1px solid var(--deep-red);
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+/* CONTROLES DE CANTIDAD */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--deep-bg);
+    padding: 8px;
+    border: 1px solid var(--deep-border);
+    border-radius: 6px;
+}
+
+.btn-qty {
+    background: transparent;
+    border: none;
+    color: var(--deep-blue);
+    font-family: var(--font-mono);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+
+.btn-qty:hover:not(:disabled) {
+    color: white;
+}
+
+.btn-qty:disabled {
+    color: #444;
+    cursor: not-allowed;
+}
+
+.qty-value {
+    color: white;
+    font-weight: bold;
+}
+
+.btn-remove {
+    background: transparent;
+    border: none;
+    color: var(--deep-muted);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-remove:hover {
+    color: var(--deep-red);
+}
+
+/* RESUMEN DE COMPRA */
+.summary-card {
+    background-color: var(--deep-card);
+    border: 1px solid var(--deep-border);
+    padding: 30px;
+    border-radius: 8px;
+    position: sticky;
+    top: 20px;
+}
+
+.summary-card h3 {
+    color: var(--deep-blue);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--deep-border);
+    padding-bottom: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: var(--deep-muted);
+    font-size: 0.9rem;
+}
+
+.discount-text {
+    color: var(--deep-green);
+    font-weight: bold;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--deep-border);
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.total-price {
+    color: var(--deep-blue);
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+/* CUPONES ESTILO INPUT TERMINAL */
+.coupon-section {
+    margin-top: 25px;
+}
+
+.coupon-label {
+    font-size: 0.7rem;
+    color: var(--deep-muted);
+    text-transform: uppercase;
+}
+
+.coupon-input {
+    background: var(--deep-bg);
+    border: 1px solid var(--deep-border);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    outline: none;
+}
+
+.coupon-input:focus {
+    border-color: var(--deep-blue);
+}
+
+.btn-apply {
+    background: var(--deep-border);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-apply:hover {
+    background: #444;
+}
+
+/* BOTÓN FINAL */
+.btn-checkout {
+    width: 100%;
+    background-color: var(--deep-green);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 30px;
+    text-transform: uppercase;
+    transition: background 0.3s;
+}
+
+.btn-checkout:hover:not(:disabled) {
+    background-color: #2ea043;
+}
+
+.btn-checkout:disabled {
+    background-color: var(--deep-border);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ESTADO VACÍO */
+.empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 12rem;
+    height: 50vh;
+    width: 100vw;
+    background-color: var(--deep-card);
+    border: 2px dashed var(--deep-border);
+
+    text-align: center;
+    color: var(--deep-muted);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+}

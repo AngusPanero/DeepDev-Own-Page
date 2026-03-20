@@ -9,6 +9,7 @@ import "../styles/productParams.css";
 import { UseFavorites } from "../contexts/FavoritesContext";
 import { UseSession } from "../contexts/SessionContext";
 import { UseReseñas } from "../contexts/ReseñasContext";
+import { UseCart } from "../contexts/CartContext";
 
 // --- COMPONENTES DE ICONOS ---
 const StarIcon = ({ filled }: { filled: boolean }) => (
@@ -71,6 +72,7 @@ const ParamsProduct = () => {
     const { id } = useParams();
     const { theme } = UseTheme();
     const { user } = UseSession()
+    const { addToCart } = UseCart();
     const { reseñas, createProductReview, fetchReseñas } = UseReseñas()
     const { isFavorite, toggleFavorite } = UseFavorites();
     
@@ -282,7 +284,20 @@ const ParamsProduct = () => {
                         </div>
 
                         <div className="main-btns">
-                            <motion.button whileTap={{ scale: 0.97 }} className="btn-secondary-glass" disabled={currentStock <= 0}>
+                            <motion.button onClick={() => {
+                                if (data) {
+                                    addToCart({
+                                        // Si hay variante, usamos su ID único, si no, el del producto
+                                        id: selectedVariant ? selectedVariant._id : data._id, 
+                                        productId: data._id,  
+                                        nombre: `${data.nombre} ${selectedVariant?.talle || selectedVariant?.color || ""}`.trim(),
+                                        precio: finalPrice, 
+                                        imagen: selectedVariant?.foto_variante || data.imagenes_generales?.[0] || "",
+                                        cantidad: quantity, 
+                                        stockMax: currentStock
+                                    });
+                                }
+                            }} whileTap={{ scale: 0.97 }} className="btn-secondary-glass" disabled={currentStock <= 0}>
                                 Añadir al Carrito
                             </motion.button>
                             {currentStock > 0 && (

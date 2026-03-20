@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import ProductCard from "../components/sections/ProductCard";
 import "../styles/productCard.css";
 import { UseTheme } from "../contexts/ThemeContext";
@@ -102,6 +102,7 @@ const IndividualProduct = () => {
                 setTotalProducts(response.data.total || 0);
             }
         } catch (error: any) {
+            console.error("ERROR_SYSTEM: FALLO_CONEXION_DB", error)
             setError("ERROR_SYSTEM: FALLO_CONEXION_DB");
             setProducts([]);
         } finally {

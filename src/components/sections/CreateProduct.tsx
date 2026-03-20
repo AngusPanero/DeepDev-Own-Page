@@ -220,7 +220,7 @@ const CreateProduct = () => {
                             {formData.en_promocion && (
                                 <div className="form-section">
                                     <label>Porcentaje de Descuento (%)</label>
-                                    <input type="number" min={0} name="porcentaje_promo" onChange={handleChange} value={formData.porcentaje_promo} className="terminal-input" min="0" max="100" />
+                                    <input type="number" name="porcentaje_promo" onChange={handleChange} value={formData.porcentaje_promo} className="terminal-input" min="0" max="100" />
                                 </div>
                             )}
                         </div>

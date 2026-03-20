@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { type AppDispatch } from "../../redux/store";
-import { readAllProduct, exportProductsCSV, importProductsCSV, bulkDeleteProducts,bulkUpdateProducts } from '../../redux/slice';
+import { readAllProduct, exportProductsCSV, importProductsCSV, bulkDeleteProducts, bulkUpdateProducts } from '../../redux/slice';
 import ProductRow from './ProductRow';
 import "../../styles/adminInventory.css";
 import { UseTheme } from '../../contexts/ThemeContext';
@@ -19,6 +19,10 @@ const AdminInventory = () => {
     const [ statusFilter, setStatusFilter ] = useState("todos");
     const [ selectedIds, setSelectedIds ] = useState<string[]>([]);
     
+    // --- ESTADOS DE PAGINACIÓN ---
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 30;
+
     // Estados para cambios masivos
     const [ bulkPriceChange, setBulkPriceChange ] = useState<number>(0);
     const [ bulkPromoPercent, setBulkPromoPercent ] = useState<number>(0);
@@ -28,10 +32,19 @@ const AdminInventory = () => {
         fetchCategories();
     }, [dispatch]);
 
+    // Resetear a la página 1 cuando cambien los filtros
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [search, categoryFilter, statusFilter]);
+
+    // --- SCROLL TO TOP AL CAMBIAR DE PÁGINA ---
+    /* useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]); */
+
     const fetchCategories = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, { withCredentials: true });
-            
             setCategories(res.data.categorias);
         } catch (err) { console.error(err); }
     };
@@ -51,7 +64,6 @@ const AdminInventory = () => {
                            p.sku_padre?.toLowerCase().includes(search.toLowerCase());
         const matchesCategory = categoryFilter === "all" || p.categories?.includes(categoryFilter);
         
-        // El filtro de estado ahora incluye la opción de ver solo los "En Promo"
         let matchesStatus = true;
         if (statusFilter === "promo") {
             matchesStatus = p.en_promocion;
@@ -61,6 +73,12 @@ const AdminInventory = () => {
         
         return matchesName && matchesCategory && matchesStatus;
     }) || [];
+
+    // --- LÓGICA DE PAGINACIÓN ---
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
     // --- 3. GESTIÓN DE SELECCIÓN ---
     const handleSelectAll = () => {
@@ -144,13 +162,12 @@ const AdminInventory = () => {
                 </div>
             </div>
 
-            {/* PANEL DE ACCIONES MASIVAS (CON PROMO) */}
+            {/* PANEL DE ACCIONES MASIVAS */}
             <div className={`bulk-actions-panel ${selectedIds.length > 0 ? 'active' : ''}`}>
                 <div className="bulk-header">
                     <span className="blink">●</span> MODO_EDICIÓN_MASIVA: {selectedIds.length}_ITEMS
                 </div>
                 <div className="bulk-controls">
-                    {/* Sección Promociones Masivas */}
                     <div className="bulk-section promo-mass">
                         <input 
                             type="number" 
@@ -168,7 +185,6 @@ const AdminInventory = () => {
 
                     <div className="bulk-separator"></div>
 
-                    {/* Sección Estados y Precios */}
                     <div className="bulk-section">
                         <button onClick={() => handleBulkUpdate({ estado: 'activo' })}>ACTIVAR</button>
                         <button onClick={() => handleBulkUpdate({ estado: 'pausado' })}>PAUSAR</button>
@@ -208,8 +224,8 @@ const AdminInventory = () => {
                 <div className="list-body">
                     {loading ? (
                         <div className="terminal-loader">CARGANDO_DATOS...</div>
-                    ) : filteredProducts.length > 0 ? (
-                        filteredProducts.map((prod: any) => (
+                    ) : currentProducts.length > 0 ? (
+                        currentProducts.map((prod: any) => (
                             <ProductRow categoriesProp={categories}
                                 key={prod._id} 
                                 product={prod} 
@@ -222,6 +238,29 @@ const AdminInventory = () => {
                     )}
                 </div>
             </div>
+
+            {/* CONTROLES DE PAGINACIÓN */}
+            {filteredProducts.length > itemsPerPage && (
+                <div className="sh-pagination">
+                    <button 
+                        disabled={currentPage === 1} 
+                        onClick={() => setCurrentPage(p => p - 1)} 
+                        className="sh-pag-btn"
+                    >
+                        PREV
+                    </button>
+                    <span className="sh-pag-info">
+                        PAGINA {currentPage} / {totalPages} (TOTAL: {filteredProducts.length})
+                    </span>
+                    <button 
+                        disabled={currentPage === totalPages} 
+                        onClick={() => setCurrentPage(p => p + 1)} 
+                        className="sh-pag-btn"
+                    >
+                        NEXT
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

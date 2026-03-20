@@ -19,33 +19,36 @@ import GTMHandler from "../utils/GTMHandler";
 import IndividualProduct from "../pages/IndividualProduct";
 import ParamsProduct from "../pages/ParamsProduct";
 import { FavoritesProvider } from "../contexts/FavoritesContext";
+import { ReseñasProvider } from "../contexts/ReseñasContext";
 
 const AppRouter = () => {
     return (
         <Router>
             <SessionProvider>
-                <FavoritesProvider>
-                    <Cookies />
-                    <NavBar />
-                    <GTMHandler />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/products" element={<Products />} />
-                        <Route path="/sales" element={<Sales />} />
-                        <Route path="/raffles" element={<Raffles />} />
-                        <Route path="/company" element={<Company />} />
-                        <Route path="/policy" element={<PoliticaCookies />} />
-                        <Route path="/raffle-terms" element={<RaffleTerms />} />
-                        <Route path="/testproducts" element={<IndividualProduct />} />
-                        <Route path="/product/:id" element={<ParamsProduct />} />
-                        <Route path="/*" element={<Error404 />} />
-                        <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
-                        {/* Tiene Acceso solo el admin con la prop pasada */}
-                        <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
-                    </Routes>
-                    <Footer />
-                </FavoritesProvider>
+                <ReseñasProvider>
+                    <FavoritesProvider>
+                        <Cookies />
+                        <NavBar />
+                        <GTMHandler />
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/products" element={<Products />} />
+                            <Route path="/sales" element={<Sales />} />
+                            <Route path="/raffles" element={<Raffles />} />
+                            <Route path="/company" element={<Company />} />
+                            <Route path="/policy" element={<PoliticaCookies />} />
+                            <Route path="/raffle-terms" element={<RaffleTerms />} />
+                            <Route path="/testproducts" element={<IndividualProduct />} />
+                            <Route path="/product/:id" element={<ParamsProduct />} />
+                            <Route path="/*" element={<Error404 />} />
+                            <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
+                            {/* Tiene Acceso solo el admin con la prop pasada */}
+                            <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
+                        </Routes>
+                        <Footer />
+                    </FavoritesProvider>
+                </ReseñasProvider>    
             </SessionProvider>
         </Router>
     );  

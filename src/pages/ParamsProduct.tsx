@@ -7,9 +7,12 @@ import Error from "../components/sections/Error";
 import Loader from "../components/sections/Loader";
 import "../styles/productParams.css";
 import { UseFavorites } from "../contexts/FavoritesContext";
+import { UseSession } from "../contexts/SessionContext";
+import { UseReseñas } from "../contexts/ReseñasContext";
 
+// --- COMPONENTES DE ICONOS ---
 const StarIcon = ({ filled }: { filled: boolean }) => (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "#ffcc00" : "none"} stroke={filled ? "#ffcc00" : "currentColor"} strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? "#ffcc00" : "none"} stroke={filled ? "#ffcc00" : "#ffffff"} strokeWidth="2">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
     </svg>
 );
@@ -31,6 +34,7 @@ const HeartIcon = ({ setFav, filled }: { setFav: (e: React.MouseEvent) => void, 
     </svg>
 );
 
+// --- INTERFACES ---
 interface Variant {
     _id: string;
     sku_variante?: string;
@@ -49,34 +53,41 @@ interface Product {
     sku_padre?: string;
     precio_base?: number;
     en_promocion?: boolean;
+    porcentaje_promo?: number; // Añadido según tu Schema
     descripcion?: string;
     imagenes_generales?: string[];
     variantes?: Variant[];
     categorias?: string[];
     stock_base?: number;
     medidas_empaque?: {
-        largo: string;
-        ancho: string;
-        alto: string;
-        peso: string;
+        largo: number;
+        ancho: number;
+        alto: number;
+        peso: number;
     };
 }
 
 const ParamsProduct = () => {
     const { id } = useParams();
     const { theme } = UseTheme();
+    const { user } = UseSession()
+    const { reseñas, createProductReview, fetchReseñas } = UseReseñas()
     const { isFavorite, toggleFavorite } = UseFavorites();
-    const [data, setData] = useState<Product | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    
+    const [ data, setData ] = useState<Product | null>(null);
+    const [ loading, setLoading ] = useState(true);
+    const [ error, setError ] = useState(false);
 
-    const [selectedImg, setSelectedImg] = useState(0);
-    const [quantity, setQuantity] = useState(1);
-    const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
-    const [rating, setRating] = useState(0);
+    const [ selectedImg, setSelectedImg ] = useState(0);
+    const [ quantity, setQuantity ] = useState(1);
+    const [ selectedVariant, setSelectedVariant ] = useState<Variant | null>(null);
+    const [ rating, setRating ] = useState(0);
+    const [ reseña, setReseña ] = useState<string>("")
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         getProduct();
+        fetchReseñas()
     }, [id]);
 
     const getProduct = async () => {
@@ -87,7 +98,7 @@ const ParamsProduct = () => {
             if (response.status === 200) {
                 const product = response.data.product || response.data;
                 setData(product);
-                if (product.variantes && product.variantes.length > 0) {
+                if (product.variantes && product.variantes.length > 1) {
                     setSelectedVariant(product.variantes[0]);
                 }
             }
@@ -102,9 +113,32 @@ const ParamsProduct = () => {
     if (loading) return <Loader />;
     if (error || !data) return <Error errorMessage="Error al encontrar producto" />;
 
-    const finalPrice = (data.precio_base || 0) + (selectedVariant?.precio_adicional || 0);
+    // --- LÓGICA DE PRECIOS ---
+
+    const fullOriginalPrice = (data.precio_base || 0) + (selectedVariant?.precio_adicional || 0);
+    
+    // 2. Aplicamos el descuento si existe la promoción
+    const hasPromo = data.en_promocion && (data.porcentaje_promo || 0) > 0;
+    const finalPrice = hasPromo 
+        ? fullOriginalPrice * (1 - (data.porcentaje_promo || 0) / 100) 
+        : fullOriginalPrice;
+
     const allImages = [...(data.imagenes_generales || [])];
     const currentStock: any = selectedVariant ? selectedVariant.stock : data.stock_base;
+
+    // PAGINACIÓN REVIEWS
+    const reviewsPerPage = 10;
+
+    const productReviews = reseñas.filter(r => r.productId === id);
+
+    const indexOfLastReview = currentPage * reviewsPerPage;
+    const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+
+    const currentReviews = productReviews
+        .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
+        .slice(indexOfFirstReview, indexOfLastReview);
+
+    const totalPages = Math.ceil(productReviews.length / reviewsPerPage);
 
     return (
         <section className={`product-detail-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
@@ -153,7 +187,6 @@ const ParamsProduct = () => {
                         <div className="header-top-row">
                             <div className="badge-new">SKU: {selectedVariant?.sku_variante || data.sku_padre}</div>
                             <button className="btn-wishlist-icon" title="Agregar a favoritos">
-
                                 <HeartIcon 
                                     filled={data?._id ? isFavorite(data._id) : false} 
                                     setFav={(e) => { e.preventDefault(); 
@@ -168,13 +201,20 @@ const ParamsProduct = () => {
                         <h1 className="product-title">{data.nombre}</h1>
                         
                         <div className="price-tag">
-                            {data.en_promocion && <span className="old-price">${(finalPrice * 1.2).toFixed(0)}</span>}
-                            <span className="currency">$</span>
-                            <span className="amount">{finalPrice.toLocaleString()}</span>
+                            {hasPromo && (
+                                <div className="promo-container">
+                                    <span className="old-price">${fullOriginalPrice.toLocaleString()}</span>
+                                    <span className="discount-percentage">-{data.porcentaje_promo}% OFF</span>
+                                </div>
+                            )}
+                            <div className="current-price">
+                                <span className="currency">$</span>
+                                <span className="amount">{finalPrice.toLocaleString()}</span>
+                            </div>
                         </div>
                     </div>
 
-                    <p className="product-description">{data.descripcion}</p>
+                    {/* <p className="product-description">{data.descripcion}</p> */}
 
                     {/* DIMENSIONES */}
                     <div className="product-specs-box">
@@ -182,22 +222,24 @@ const ParamsProduct = () => {
                         <div className="specs-grid">
                             <div className="spec-item">
                                 <span className="spec-label">Largo</span>
-                                <span className="spec-value">{data.medidas_empaque?.largo|| "N/A"} CM</span>
+                                <span className="spec-value">{data.medidas_empaque?.largo || "0"} CM</span>
                             </div>
                             <div className="spec-item">
                                 <span className="spec-label">Ancho</span>
-                                <span className="spec-value">{data.medidas_empaque?.ancho || "N/A"} CM</span>
+                                <span className="spec-value">{data.medidas_empaque?.ancho || "0"} CM</span>
                             </div>
                             <div className="spec-item">
                                 <span className="spec-label">Alto</span>
-                                <span className="spec-value">{data.medidas_empaque?.alto || "N/A"} CM</span>
+                                <span className="spec-value">{data.medidas_empaque?.alto || "0"} CM</span>
                             </div>
                             <div className="spec-item">
                                 <span className="spec-label">Peso</span>
-                                <span className="spec-value">{data.medidas_empaque?.alto || "N/A"} GR</span>
+                                <span className="spec-value">{data.medidas_empaque?.peso || "0"} GR</span>
                             </div>
                         </div>
                     </div>
+
+                    <p>{data.descripcion}</p>
 
                     {/* VARIANTES */}
                     {data.variantes && data.variantes.length > 0 && (
@@ -266,11 +308,78 @@ const ParamsProduct = () => {
                                 </button>
                             ))}
                         </div>
-                        <textarea className="review-textarea" placeholder="Escribe tu opinión aquí..."></textarea>
-                        <button className="btn-submit-review">Publicar Reseña</button>
+                        <textarea className="review-textarea" value={reseña} placeholder="Escribe tu opinión aquí..." onChange={(e) => setReseña(e.target.value)} minLength={0} maxLength={500} required></textarea>
+                        
+                        <button onClick={() => { if (!user) return alert("Debes iniciar sesión"); createProductReview(reseña, rating, user?.email || "", id || "");}} className="btn-submit-review"disabled={!reseña || rating === 0} >
+                            Publicar Reseña
+                        </button>
+
                     </div>
-                    <div className="reviews-list">
-                        <div className="empty-reviews">Aún no hay reseñas para este producto. Sé el primero en opinar.</div>
+                    {/* RESEÑAS */}
+                    <div className={`reviews-list ${theme}`}>
+                        {currentReviews.length > 0 ? (
+                            <>
+                                {currentReviews.map((r, idx) => (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        key={r._id || idx} 
+                                        className={`review-item-card ${theme}`}
+                                    >
+                                        <div className="review-item-header">
+                                            <div className="user-info">
+                                                <div className={`user-avatar-mini ${theme}`}>
+                                                    {r.userEmail.charAt(0).toUpperCase()}
+                                                </div>
+                                                <div className="user-meta-data">
+                                                    <span className={`user-email-text ${theme}`}>{r.userEmail}</span>
+                                                    <span className={`review-date ${theme}`}>
+                                                        {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : 'Reciente'}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="review-stars-display">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <StarIcon key={star} filled={star <= r.rating} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="review-body">
+                                            <p className={`review-text-content ${theme}`}>"{r.reseña}"</p>
+                                        </div>
+                                    </motion.div>
+                                ))}
+
+                                {/* CONTROLES DE PAGINACIÓN */}
+                                {totalPages > 1 && (
+                                    <div className={`pagination-controls ${theme}`}>
+                                        <button 
+                                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                            disabled={currentPage === 1}
+                                            className="btn-pagination"
+                                        >
+                                            &lt; ANTERIOR
+                                        </button>
+                                        
+                                        <span className="page-indicator">
+                                            PÁGINA {currentPage} DE {totalPages}
+                                        </span>
+
+                                        <button 
+                                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                            disabled={currentPage === totalPages}
+                                            className="btn-pagination"
+                                        >
+                                            SIGUIENTE &gt;
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        ) : (
+                            <div className={`empty-reviews-state ${theme}`}>
+                                <p>Aún no hay valoraciones para este producto.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

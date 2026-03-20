@@ -13,7 +13,6 @@ const CreateProduct = () => {
     const dispatch: AppDispatch = useDispatch();
     const { loading, error } = useSelector((state: any) => state.productSelector);
 
-    // Estado para controlar la subida a Cloudinary localmente
     const [ isUploading, setIsUploading ] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -25,7 +24,7 @@ const CreateProduct = () => {
         stock_base: 0,
         descripcion: "",
         precio_base: 0,
-        imagenes_generales: [] as any[], // Puede contener File u objetos de Cloudinary
+        imagenes_generales: [] as any[], 
         categorias: [] as string[],
         variantes: [] as any[],
         medidas_empaque: { peso: 0, ancho: 0, alto: 0, largo: 0 },
@@ -82,12 +81,18 @@ const CreateProduct = () => {
         setFormData({ ...formData, variantes: nuevasVariantes });
     };
 
+    // Función para borrar variante sin afectar imágenes
+    const removeVariante = (index: number) => {
+        setFormData({
+            ...formData,
+            variantes: formData.variantes.filter((_, i) => i !== index)
+        });
+    };
+
     const handleMultiSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const values = Array.from(e.target.selectedOptions, option => option.value);
         setFormData({ ...formData, categorias: values });
     };
-
-    // --- LÓGICA DE IMÁGENES ---
 
     const processFiles = (files: File[]) => {
         if (formData.imagenes_generales.length + files.length > 10) {
@@ -110,7 +115,6 @@ const CreateProduct = () => {
         }));
     };
 
-    // SUBIDA A CLOUDINARY
     const uploadImagesCloudinary = async (files: any[]) => {
         const urls = [];
         for (const file of files) {
@@ -128,10 +132,15 @@ const CreateProduct = () => {
         return urls;
     };
 
-    // SUBMIT FINAL
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
         
+        // --- CONDICIONAL DE VALIDACIÓN DE VARIANTES ---
+        // Si hay variantes cargadas, deben ser al menos 2.
+        if (formData.variantes.length > 0 && formData.variantes.length < 2) {
+            return alert("Error: No se permite crear un producto con una sola variante. Si el producto es único, elimina la variante. Si tiene opciones, agrega al menos dos.");
+        }
+
         if (!window.confirm("¿Confirmar creación de producto?")) return;
 
         try {
@@ -144,7 +153,7 @@ const CreateProduct = () => {
             }
 
             const finalData = { ...formData, imagenes_generales: uploadedUrls };
-
+          
             await dispatch(createProduct(finalData)).unwrap();
             
             setIsUploading(false);
@@ -198,7 +207,7 @@ const CreateProduct = () => {
                             </div>
                             <div className="form-section">
                                 <label>Precio Base ($)</label>
-                                <input type="number" name="precio_base" onChange={handleChange} value={formData.precio_base} className="terminal-input" required />
+                                <input type="number" min={0} name="precio_base" onChange={handleChange} value={formData.precio_base} className="terminal-input" required />
                             </div>
                         </div>
 
@@ -211,7 +220,7 @@ const CreateProduct = () => {
                             {formData.en_promocion && (
                                 <div className="form-section">
                                     <label>Porcentaje de Descuento (%)</label>
-                                    <input type="number" name="porcentaje_promo" onChange={handleChange} value={formData.porcentaje_promo} className="terminal-input" min="0" max="100" />
+                                    <input type="number" min={0} name="porcentaje_promo" onChange={handleChange} value={formData.porcentaje_promo} className="terminal-input" min="0" max="100" />
                                 </div>
                             )}
                         </div>
@@ -221,7 +230,6 @@ const CreateProduct = () => {
                             <textarea name="descripcion" onChange={handleChange} value={formData.descripcion} className="terminal-input" rows={3} />
                         </div>
 
-                        {/* SECCIÓN IMÁGENES */}
                         <div className="form-section">
                             <label>Galería de Imágenes (Máx 10)</label>   
                             <input type="file" accept="image/*" multiple onChange={handleImageChange} className="terminal-file-input" /> 
@@ -256,7 +264,7 @@ const CreateProduct = () => {
                             {["peso", "ancho", "alto", "largo"].map((dim) => (
                                 <div className="form-section" key={dim}>
                                     <label>{dim.charAt(0).toUpperCase() + dim.slice(1)} {dim === "peso" ? "(kg)" : "(cm)"}</label>
-                                    <input type="number" name={`medida_${dim}`} onChange={handleChange} className="terminal-input" />
+                                    <input type="number" min={0} name={`medida_${dim}`} onChange={handleChange} className="terminal-input" />
                                 </div>
                             ))}
                         </div>
@@ -279,13 +287,13 @@ const CreateProduct = () => {
                                     </div>
                                     <div className="var-input-group">
                                         <span className="stock-label-span">Stock</span>
-                                        <input type="number" value={v.stock} onChange={(e) => handleVarianteChange(index, "stock", Number(e.target.value))} />
+                                        <input type="number" min={0} value={v.stock} onChange={(e) => handleVarianteChange(index, "stock", Number(e.target.value))} />
                                     </div>
                                     <div className="var-input-group">
                                         <span>Extra $</span>
-                                        <input type="number" value={v.precio_adicional} onChange={(e) => handleVarianteChange(index, "precio_adicional", Number(e.target.value))} />
+                                        <input type="number" min={0} value={v.precio_adicional} onChange={(e) => handleVarianteChange(index, "precio_adicional", Number(e.target.value))} />
                                     </div>
-                                    <button type="button" onClick={() => handleRemoveImage(index)} className="btn-del-mini">✖</button>
+                                    <button type="button" onClick={() => removeVariante(index)} className="btn-del-mini">✖</button>
                                 </div>
                             ))}
                             <button type="button" onClick={addVariante} className="unban-btn" style={{marginTop: '10px'}}>+ AGREGAR VARIANTE</button>

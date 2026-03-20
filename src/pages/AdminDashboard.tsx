@@ -28,11 +28,11 @@ const AdminDashboard = () => {
         // CAMBIO: Envolver en un div con el tema para que las secciones ocupen todo
         <div className={`dd-dashboard ${theme}`}>
             <Charts allTickets={allTickets} />
+            <CreateProduct />
+            <ProductAdminManager />
             <SalesHistory allTickets={allTickets} />
             <UsersRegistered users={users} handleBanUser={handleBanUser} handleUnbanUser={handleUnbanUser} />
             <CategoryManager />
-            <CreateProduct />
-            <ProductAdminManager />
         </div>
     );
 };

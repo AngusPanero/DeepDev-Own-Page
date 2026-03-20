@@ -91,6 +91,9 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
 
     // --- GUARDADO DEFINITIVO EN DB ---
     const saveChanges = () => {
+        if (localData.variantes && localData.variantes.length > 0 && localData.variantes.length < 2) {
+            return alert("SISTEMA_ERROR: No se permite actualizar un producto con una sola variante. \n\nDebe tener al menos 2 variantes o ninguna (Producto Único).");
+        }
         dispatch(updateProduct({ id: product._id, formData: localData }))
             .unwrap()
             .then(() => {
@@ -199,6 +202,7 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                             className="white-text"
                             value={localData.precio_base || 0} 
                             onChange={(e) => handleFieldChange('precio_base', Number(e.target.value))} 
+                            min={0}
                         />
                     </div>
                 </div>
@@ -284,6 +288,7 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                                             placeholder="%"
                                             value={localData.porcentaje_promo || 0} 
                                             onChange={(e) => handleFieldChange('porcentaje_promo', Number(e.target.value))} 
+                                            min={0}
                                         />
                                         <span className="unit">%</span>
                                     </div>
@@ -336,7 +341,7 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                             <span className="section-title">ATRIBUTOS</span>
                             <div className="logistics-inputs-grid">
                                 <div className="input-with-label"><span>SKU PADRE</span><input value={localData.sku_padre || ""} onChange={(e) => handleFieldChange('sku_padre', e.target.value)} /></div>
-                                <div className="input-with-label"><span>STOCK BASE</span><input type="number" value={localData.stock_base} onChange={(e) => handleFieldChange('stock_base', Number(e.target.value))} /></div>
+                                <div className="input-with-label"><span>STOCK BASE</span><input type="number" min={0} value={localData.stock_base} onChange={(e) => handleFieldChange('stock_base', Number(e.target.value))} /></div>
                                 <div className="input-with-label"><span>MARCA</span><input value={localData.marca} onChange={(e) => handleFieldChange('marca', e.target.value)} /></div>
                             </div>
                         </div>
@@ -345,10 +350,10 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                         <div className="detail-section">
                             <span className="section-title">LOGÍSTICA / EMPAQUE</span>
                             <div className="logistics-inputs-grid">
-                                <div className="input-with-label"><span>PESO</span><input type="number" value={localData.medidas_empaque?.peso || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'peso', Number(e.target.value))} /></div>
-                                <div className="input-with-label"><span>ANCHO</span><input type="number" value={localData.medidas_empaque?.ancho || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'ancho', Number(e.target.value))} /></div>
-                                <div className="input-with-label"><span>ALTO</span><input type="number" value={localData.medidas_empaque?.alto || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'alto', Number(e.target.value))} /></div>
-                                <div className="input-with-label"><span>LARGO</span><input type="number" value={localData.medidas_empaque?.largo || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'largo', Number(e.target.value))} /></div>
+                                <div className="input-with-label"><span>PESO</span><input type="number" min={0} value={localData.medidas_empaque?.peso || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'peso', Number(e.target.value))} /></div>
+                                <div className="input-with-label"><span>ANCHO</span><input type="number" min={0} value={localData.medidas_empaque?.ancho || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'ancho', Number(e.target.value))} /></div>
+                                <div className="input-with-label"><span>ALTO</span><input type="number" min={0} value={localData.medidas_empaque?.alto || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'alto', Number(e.target.value))} /></div>
+                                <div className="input-with-label"><span>LARGO</span><input type="number" min={0} value={localData.medidas_empaque?.largo || 0} onChange={(e) => handleNestedChange('medidas_empaque', 'largo', Number(e.target.value))} /></div>
                             </div>
                         </div>
 
@@ -364,8 +369,8 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                                         <div className="v-cell"><span>SKU VAR</span><input value={v.sku_variante} onChange={(e) => handleVariantChange(index, 'sku_variante', e.target.value)} /></div>
                                         <div className="v-cell"><span>TALLE</span><input value={v.talle || ""} onChange={(e) => handleVariantChange(index, 'talle', e.target.value)} /></div>
                                         <div className="v-cell"><span>COLOR</span><input value={v.color || ""} onChange={(e) => handleVariantChange(index, 'color', e.target.value)} /></div>
-                                        <div className="v-cell"><span>STOCK</span><input type="number" value={v.stock} onChange={(e) => handleVariantChange(index, 'stock', Number(e.target.value))} /></div>
-                                        <div className="v-cell"><span>EXTRA $</span><input type="number" value={v.precio_adicional} onChange={(e) => handleVariantChange(index, 'precio_adicional', Number(e.target.value))} /></div>
+                                        <div className="v-cell"><span>STOCK</span><input type="number" min={0} value={v.stock} onChange={(e) => handleVariantChange(index, 'stock', Number(e.target.value))} /></div>
+                                        <div className="v-cell"><span>EXTRA $</span><input type="number" min={0} value={v.precio_adicional} onChange={(e) => handleVariantChange(index, 'precio_adicional', Number(e.target.value))} /></div>
                                         <button className="btn-del-v" onClick={() => removeVariant(index)}>✖</button>
                                     </div>
                                 ))}

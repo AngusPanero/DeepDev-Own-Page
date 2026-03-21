@@ -11,17 +11,38 @@
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
+.cart-container.light {
+    --deep-bg: #f9f9f9;
+    --deep-card: #ffffff;
+    --deep-border: #e2e8f0;
+    --deep-blue: #3b82f6; /* AZUL ELÉCTRICO */
+    --deep-green: #10b981;
+    --deep-red: #ef4444;
+    --deep-text: #1e293b;
+    --deep-muted: #64748b;
+    color: black;
+}
+
+.light span.qty-value{
+    color: black;
+}
+
+.light input.coupon-input{
+    color: black;
+}
+
 /* CONTENEDOR PRINCIPAL */
-.cart-container {
+div.cart-container {
     background-color: var(--deep-bg);
     color: var(--deep-text);
     font-family: var(--font-mono);
-    max-width: 1200px;
-    margin: 40px auto;
+    max-width: 100%;
     padding: 20px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 32px;
+    padding-top: 11rem;
+    padding-bottom: 5rem;
 }
 
 @media (min-width: 1024px) {
@@ -42,14 +63,14 @@
     letter-spacing: 1px;
 }
 
-.cart-item-card {
+div.cart-item-card {
     background-color: var(--deep-card);
     border: 1px solid var(--deep-border);
     border-radius: 8px;
     padding: 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
     margin-bottom: 15px;
     transition: transform 0.2s, border-color 0.2s;
 }
@@ -78,6 +99,17 @@
     font-size: 0.9rem;
 }
 
+.product-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+h3.product-name{
+    margin: 0;
+}
+
 /* ALERTAS DE STOCK ESTILO TERMINAL */
 .stock-alert {
     background: rgba(248, 81, 73, 0.1);
@@ -90,6 +122,10 @@
 }
 
 /* CONTROLES DE CANTIDAD */
+.btn-apply{
+    margin-left: 1rem;
+}
+
 .quantity-controls {
     display: flex;
     align-items: center;
@@ -260,7 +296,6 @@
     width: 100vw;
     background-color: var(--deep-card);
     border: 2px dashed var(--deep-border);
-
     text-align: center;
     color: var(--deep-muted);
     border-radius: 8px;

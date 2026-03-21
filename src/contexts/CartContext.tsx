@@ -5,10 +5,10 @@ import { UseSession } from "./SessionContext";
 interface Coupon {
     code: string;
     discount: number; 
-    type: 'single_use' | 'date_limited';
+    type: 'single_use' | 'date_limited'; // Sigue siendo obligatorio según tu interfaz
     expiryDate?: Date;
+    appliedAt?: Date; // <--- Añade esto
     isUsed?: boolean;
-    appliedCoupon?: string | string[]
 }
 
 interface CartItem {
@@ -50,46 +50,54 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     // CARGAR CARRITO
     useEffect(() => {
-        const loadCart = async () => {
-            if(user){
-                try {
-                    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/cart/${user.email}`, { withCredentials: true });
-                    
-                    setCart(response.data.items);
-                    
-                    if (response.data.appliedCoupon) {
-                        applyCoupon(response.data.appliedCoupon);
-                    }
-                } catch (error: any) {
-                    console.error("Error al consultar carrito", error);
-                }
-            } else {
-                const localData = localStorage.getItem("terminal_cart");
-                if(localData) setCart(JSON.parse(localData));
-            }
-        };
-        loadCart();
-    }, [user]);
-    
-    // SINCRONIZAR CARRITO
-    useEffect(() => {
-        if(isLocked) return;
+        const syncAndLoad = async () => {
+            const localData = localStorage.getItem("terminal_cart");
+            const localItems = localData ? JSON.parse(localData) : [];
 
-        const syncData = async () => {
             if (user) {
                 try {
-                    await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { email: user.email, items: cart, appliedCoupon: appliedCoupon?.code || null }, { withCredentials: true });
+                    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { email: user.email, items: localItems, merge: true }, { withCredentials: true });
+                    
+                    setCart(response.data.items);
+                    if (response.data.appliedCoupon) {
+                        setAppliedCoupon(response.data.appliedCoupon);
+                    }
+                    localStorage.removeItem("terminal_cart"); 
                 } catch (error) {
-                    console.error("Error al sincronizar", error);
+                    console.error("Error al sincronizar/cargar", error);
+                }
+            } else {
+                setCart(localItems);
+            }
+        };
+        syncAndLoad();
+    }, [user]);
+
+    // PERSISTENCIA 
+    useEffect(() => {
+        if (isLocked || !cart) return;
+
+        const persistData = async () => {
+            if (user) {
+                try {
+                    await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { 
+                        email: user.email, 
+                        items: cart, 
+                        appliedCoupon, 
+                        merge: false 
+                    }, { withCredentials: true });
+                } catch (error) {
+                    console.error("Error en persistencia", error);
                 }
             } else {
                 localStorage.setItem("terminal_cart", JSON.stringify(cart));
+                if (appliedCoupon) localStorage.setItem("terminal_coupon", JSON.stringify(appliedCoupon));
             }
         };
 
-        const timeoutId = setTimeout(syncData, 1000);
+        const timeoutId = setTimeout(persistData, 1000);
         return () => clearTimeout(timeoutId);
-    }, [cart, user, isLocked, appliedCoupon]); 
+    }, [cart, user, isLocked, appliedCoupon]);
 
     // SUMAR A CARRITO
     const addToCart = async (newItem: CartItem) => {
@@ -129,14 +137,31 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
     // SISTEMA DE CUPONES
     const applyCoupon = async (code: string) => {
+        if (!user) {
+            return "Debes iniciar sesión para aplicar cupones 🔴";
+        }
         try {
-            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/coupons/validate`, {
-                code,
-                email: user?.email || "guest" 
-            });
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/coupons/validate`, { code, email: user.email }, { withCredentials: true });
 
             if (response.status === 200) {
-                setAppliedCoupon(response.data.coupon);
+                const couponData: Coupon = {
+                    code: response.data.coupon.code,
+                    discount: response.data.coupon.discount,
+                    type: response.data.coupon.type, 
+                    appliedAt: new Date() 
+                };
+                console.log("CUPON DATA", couponData);
+                
+                setAppliedCoupon(couponData);
+
+                if (user) {
+                    await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { 
+                        email: user.email, 
+                        items: cart, 
+                        appliedCoupon: couponData, 
+                        merge: false 
+                    }, { withCredentials: true });
+                }
                 return response.data.message;
             }
             return "Error inesperado";

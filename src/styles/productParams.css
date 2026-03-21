@@ -362,3 +362,16 @@
     .qty-wrapper { flex-direction: column; align-items: flex-start; }
     .specs-grid { grid-template-columns: 1fr; }
 }
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+.cart-btn-animated.loading {
+    cursor: wait;
+    opacity: 0.8;
+}
+
+.cart-btn-animated.success {
+    border-color: #10b981 !important;
+}

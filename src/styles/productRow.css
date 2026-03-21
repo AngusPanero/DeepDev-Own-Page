@@ -4,7 +4,7 @@
 
 :root {
     --bg-main: #000000;
-    --bg-panel: #0a0a0a;
+    --bg-panel: #000000;
     --bg-input: #111111;
     --border-color: #333333;
     --text-white: #ffffff;
@@ -12,6 +12,156 @@
     --accent-green: #00ffaa;
     --accent-red: #ff4444;
     --font-main: 'Inter', -apple-system, sans-serif;
+}
+:root .light {
+    --bg-main: #f8fafc;         /* Fondo sutil gris azulado */
+    --bg-panel: #ffffff;        /* Paneles blanco puro */
+    --bg-input: #ffffff;        /* Inputs blancos */
+    --border-color: #e2e8f0;    /* Bordes suaves */
+    --text-white: #1e293b;      /* Texto principal (Slate 800) */
+    --text-dim: #64748b;        /* Texto secundario */
+    --accent-blue: #3b82f6;     /* Azul Eléctrico Principal */
+    --accent-green: #10b981;    /* Verde éxito para botones/precios */
+    --accent-red: #ef4444;      /* Rojo alerta */
+    --font-main: 'Inter', sans-serif;
+}
+
+/* --- RE-ESTILIZACIÓN ESPECÍFICA PARA LIGHT MODE --- */
+
+.light .row-master {
+    background: var(--bg-panel);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra en lugar de borde fuerte */
+    color: var(--text-white);
+}
+
+.light .row-master.modified {
+    border-left: 6px solid var(--accent-blue); /* Eléctrico para lo modificado */
+}
+
+.light .row-master.is-open {
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+}
+
+.light .input-name-main {
+    color: var(--text-white);
+}
+
+.light .input-group-dark {
+    background: #f1f5f9;
+    border: 1px solid var(--border-color);
+}
+
+.light .input-group-dark input {
+    color: var(--text-white);
+}
+
+.light .tag-white {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.light .select-status-white {
+    background: var(--accent-blue);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+
+.light .field-hint {
+    color: var(--accent-blue); /* Hints en azul para destacar */
+}
+
+/* --- PANEL DE DETALLE LIGHT --- */
+.light .detail-drop-panel {
+    background: #ffffff;
+    border-top: 1px solid var(--border-color);
+}
+
+.light .section-title {
+    color: var(--text-white);
+    border-left: 4px solid var(--accent-blue);
+}
+
+.light .input-with-label input, 
+.light .description-textarea,
+.light .v-cell input {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-white);
+}
+
+.light .input-with-label input:focus,
+.light .description-textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* --- VARIANTES Y BOTONES LIGHT --- */
+.light .variant-row-modern {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+}
+
+.light .btn-add-variant-pro {
+    background: var(--accent-blue);
+    color: #ffffff;
+}
+
+.light .btn-action-save.ready {
+    background: var(--accent-blue);
+    color: #ffffff;
+    border-color: var(--accent-blue);
+}
+
+.light .btn-action-edit {
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.light .btn-action-edit:hover {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+.light .btn-destroy-pro:hover{
+    color: white;
+    background-color: rgb(56, 12, 12);
+}
+
+/* --- IMÁGENES --- */
+.light .image-thumb-wrapper {
+    background: #f1f5f9;
+    border-color: var(--border-color);
+}
+
+.light .image-thumb-wrapper.is-thumbnail {
+    border-color: var(--accent-blue);
+}
+
+.light .thumbnail-badge {
+    background: var(--accent-blue);
+    color: #fff;
+}
+
+/* --- CATEGORÍAS --- */
+.light .category-chip {
+    background: #f1f5f9;
+    border-color: var(--border-color);
+    color: var(--text-dim);
+}
+
+.light .category-chip.active {
+    background: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-blue);
+}
+
+/* --- ZONA DE PELIGRO --- */
+.light .danger-zone-footer {
+    border-top: 1px solid #fee2e2;
+    background: #fff5f5;
+    padding: 20px;
+    border-radius: 4px;
 }
 
 .row-master {

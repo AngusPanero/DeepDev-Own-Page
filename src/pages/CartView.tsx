@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { UseSession } from '../contexts/SessionContext';
 import { UseCart } from '../contexts/CartContext';
 import '../styles/cartView.css';
+import { UseTheme } from '../contexts/ThemeContext';
 
 const CartView: React.FC = () => {
+    const { theme } = UseTheme()
     const { cart, removeFromCart, updateQuantity, totalAmount, finalAmount, appliedCoupon, applyCoupon, handlePaymentSuccess, isLocked } = UseCart();
     
-    const { user } = UseSession();
+    /* const { user } = UseSession(); */
     const [ couponInput, setCouponInput ] = useState('');
     const [ couponMsg, setCouponMsg ] = useState({ text: '', isError: false });
     const [ loading, setLoading ] = useState(false);
@@ -15,7 +17,7 @@ const CartView: React.FC = () => {
         if (!couponInput.trim()) return;
         setLoading(true);
         const message = await applyCoupon(couponInput);
-        const isError = message.includes('🔴') || message.includes('Error') || message.includes('expirado');
+        const isError = message.includes('sesión') || message.includes('Error') || message.includes('expirado') || message.includes('inactivo');
         setCouponMsg({ text: message, isError });
         setLoading(false);
     };
@@ -33,15 +35,13 @@ const CartView: React.FC = () => {
         return (
             <div className="empty-cart">
                 <p>Tu carrito está vacío 🛒</p>
-                <button className="btn-qty" >
-                    Ir a la tienda
-                </button>
+                <a href="/testproducts"><button className="btn-qty" >Ir a la tienda</button></a>
             </div>
         );
     }
 
     return (
-        <div className="cart-container">
+        <div className={`cart-container ${theme}`}>
             
             {/* LISTA DE PRODUCTOS */}
             <div className="cart-items-section">
@@ -123,11 +123,9 @@ const CartView: React.FC = () => {
                                 placeholder="CODIGO10"
                                 className="coupon-input"
                             />
-                            <button 
-                                onClick={handleApplyCoupon}
-                                disabled={loading || !user}
-                                className="btn-apply"
-                            > {loading ? '...' : 'Aplicar'} </button>
+                            <button onClick={handleApplyCoupon} disabled={loading} className="btn-apply"> 
+                                {loading ? '...' : 'Aplicar'} 
+                            </button>
                         </div>
                         {couponMsg.text && (
                             <p style={{ 

@@ -10,6 +10,7 @@ import UsersRegistered from "../components/sections/UsersRegistered";
 import SalesHistory from "../components/sections/SalesHistory";
 import Charts from "../components/sections/Charts";
 import { UseTheme } from "../contexts/ThemeContext";
+import CouponCreator from "../components/sections/CouponCreator";
 
 const AdminDashboard = () => {
     const { user, handleUnbanUser, handleBanUser } = UseSession();
@@ -25,7 +26,6 @@ const AdminDashboard = () => {
     }, [user]);
 
     return (
-        // CAMBIO: Envolver en un div con el tema para que las secciones ocupen todo
         <div className={`dd-dashboard ${theme}`}>
             <Charts allTickets={allTickets} />
             <CreateProduct />
@@ -33,6 +33,7 @@ const AdminDashboard = () => {
             <SalesHistory allTickets={allTickets} />
             <UsersRegistered users={users} handleBanUser={handleBanUser} handleUnbanUser={handleUnbanUser} />
             <CategoryManager />
+            <CouponCreator />
         </div>
     );
 };

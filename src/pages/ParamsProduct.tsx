@@ -35,6 +35,19 @@ const HeartIcon = ({ setFav, filled }: { setFav: (e: React.MouseEvent) => void, 
     </svg>
 );
 
+const LoadingIcon = () => (
+    <svg className="spinner-icon" width="18" height="18" viewBox="0 0 50 50" style={{ marginRight: '8px' }}>
+        <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" style={{ opacity: 0.3 }}></circle>
+        <circle cx="25" cy="25" r="20" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeDasharray="80" strokeDashoffset="60" style={{ animation: 'rotate 1s linear infinite' }}></circle>
+    </svg>
+);
+
+const CheckIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+        <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+);
+
 // --- INTERFACES ---
 interface Variant {
     _id: string;
@@ -54,7 +67,7 @@ interface Product {
     sku_padre?: string;
     precio_base?: number;
     en_promocion?: boolean;
-    porcentaje_promo?: number; // Añadido según tu Schema
+    porcentaje_promo?: number;
     descripcion?: string;
     imagenes_generales?: string[];
     variantes?: Variant[];
@@ -71,9 +84,9 @@ interface Product {
 const ParamsProduct = () => {
     const { id } = useParams();
     const { theme } = UseTheme();
-    const { user } = UseSession()
+    const { user } = UseSession();
     const { addToCart } = UseCart();
-    const { reseñas, createProductReview, fetchReseñas } = UseReseñas()
+    const { reseñas, createProductReview, fetchReseñas } = UseReseñas();
     const { isFavorite, toggleFavorite } = UseFavorites();
     
     const [ data, setData ] = useState<Product | null>(null);
@@ -84,12 +97,15 @@ const ParamsProduct = () => {
     const [ quantity, setQuantity ] = useState(1);
     const [ selectedVariant, setSelectedVariant ] = useState<Variant | null>(null);
     const [ rating, setRating ] = useState(0);
-    const [ reseña, setReseña ] = useState<string>("")
-    const [currentPage, setCurrentPage] = useState(1);
+    const [ reseña, setReseña ] = useState<string>("");
+    const [ currentPage, setCurrentPage ] = useState(1);
+
+    // Estado para la animación del botón de carrito
+    const [ cartStatus, setCartStatus ] = useState<'idle' | 'loading' | 'success'>('idle');
 
     useEffect(() => {
         getProduct();
-        fetchReseñas()
+        fetchReseñas();
     }, [id]);
 
     const getProduct = async () => {
@@ -100,7 +116,7 @@ const ParamsProduct = () => {
             if (response.status === 200) {
                 const product = response.data.product || response.data;
                 setData(product);
-                if (product.variantes && product.variantes.length > 1) {
+                if (product.variantes && product.variantes.length > 0) {
                     setSelectedVariant(product.variantes[0]);
                 }
             }
@@ -110,16 +126,36 @@ const ParamsProduct = () => {
         } finally {
             setLoading(false);
         }
-    }
+    };
+
+    const handleAddToCart = async () => {
+        if (!data || cartStatus !== 'idle') return;
+
+        setCartStatus('loading');
+        
+        try {
+            await addToCart({
+                id: selectedVariant ? selectedVariant._id : data._id, 
+                productId: data._id,  
+                nombre: `${data.nombre} ${selectedVariant?.talle || selectedVariant?.color || ""}`.trim(),
+                precio: finalPrice, 
+                imagen: selectedVariant?.foto_variante || data.imagenes_generales?.[0] || "",
+                cantidad: quantity, 
+                stockMax: currentStock
+            });
+
+            setCartStatus('success');
+            setTimeout(() => setCartStatus('idle'), 2000);
+        } catch (err) {
+            console.error("Error al añadir", err);
+            setCartStatus('idle');
+        }
+    };
 
     if (loading) return <Loader />;
     if (error || !data) return <Error errorMessage="Error al encontrar producto" />;
 
-    // --- LÓGICA DE PRECIOS ---
-
     const fullOriginalPrice = (data.precio_base || 0) + (selectedVariant?.precio_adicional || 0);
-    
-    // 2. Aplicamos el descuento si existe la promoción
     const hasPromo = data.en_promocion && (data.porcentaje_promo || 0) > 0;
     const finalPrice = hasPromo 
         ? fullOriginalPrice * (1 - (data.porcentaje_promo || 0) / 100) 
@@ -128,19 +164,12 @@ const ParamsProduct = () => {
     const allImages = [...(data.imagenes_generales || [])];
     const currentStock: any = selectedVariant ? selectedVariant.stock : data.stock_base;
 
-    // PAGINACIÓN REVIEWS
     const reviewsPerPage = 10;
-
     const productReviews = reseñas.filter(r => r.productId === id);
-
-    const indexOfLastReview = currentPage * reviewsPerPage;
-    const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-
+    const totalPages = Math.ceil(productReviews.length / reviewsPerPage);
     const currentReviews = productReviews
         .sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime())
-        .slice(indexOfFirstReview, indexOfLastReview);
-
-    const totalPages = Math.ceil(productReviews.length / reviewsPerPage);
+        .slice((currentPage - 1) * reviewsPerPage, currentPage * reviewsPerPage);
 
     return (
         <section className={`product-detail-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}>
@@ -216,32 +245,17 @@ const ParamsProduct = () => {
                         </div>
                     </div>
 
-                    {/* <p className="product-description">{data.descripcion}</p> */}
-
-                    {/* DIMENSIONES */}
                     <div className="product-specs-box">
                         <span className="section-label">Especificaciones de Tamaño</span>
                         <div className="specs-grid">
-                            <div className="spec-item">
-                                <span className="spec-label">Largo</span>
-                                <span className="spec-value">{data.medidas_empaque?.largo || "0"} CM</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">Ancho</span>
-                                <span className="spec-value">{data.medidas_empaque?.ancho || "0"} CM</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">Alto</span>
-                                <span className="spec-value">{data.medidas_empaque?.alto || "0"} CM</span>
-                            </div>
-                            <div className="spec-item">
-                                <span className="spec-label">Peso</span>
-                                <span className="spec-value">{data.medidas_empaque?.peso || "0"} GR</span>
-                            </div>
+                            <div className="spec-item"><span className="spec-label">Largo</span><span className="spec-value">{data.medidas_empaque?.largo || "0"} CM</span></div>
+                            <div className="spec-item"><span className="spec-label">Ancho</span><span className="spec-value">{data.medidas_empaque?.ancho || "0"} CM</span></div>
+                            <div className="spec-item"><span className="spec-label">Alto</span><span className="spec-value">{data.medidas_empaque?.alto || "0"} CM</span></div>
+                            <div className="spec-item"><span className="spec-label">Peso</span><span className="spec-value">{data.medidas_empaque?.peso || "0"} GR</span></div>
                         </div>
                     </div>
 
-                    <p>{data.descripcion}</p>
+                    <p className="product-description">{data.descripcion}</p>
 
                     {/* VARIANTES */}
                     {data.variantes && data.variantes.length > 0 && (
@@ -251,10 +265,7 @@ const ParamsProduct = () => {
                                 {data.variantes.map((v, i) => (
                                     <button 
                                         key={i}
-                                        onClick={() => {
-                                            setSelectedVariant(v);
-                                            setQuantity(1);
-                                        }}
+                                        onClick={() => { setSelectedVariant(v); setQuantity(1); }}
                                         className={`variant-pill ${selectedVariant?.sku_variante === v.sku_variante ? "active" : ""}`}
                                     >
                                         {v.color && <span className="v-color-dot" style={{background: v.color}}></span>}
@@ -276,7 +287,6 @@ const ParamsProduct = () => {
                                     disabled={quantity >= currentStock}
                                 >+</button>
                             </div>
-                            
                             <motion.div key={selectedVariant?.sku_variante} className={`stock-indicator ${currentStock < 5 ? 'stock-low' : ''}`}>
                                 <span className="stock-dot"></span>
                                 <span className="stock-text">{currentStock > 0 ? `${currentStock} disponibles` : "Sin stock"}</span>
@@ -284,22 +294,31 @@ const ParamsProduct = () => {
                         </div>
 
                         <div className="main-btns">
-                            <motion.button onClick={() => {
-                                if (data) {
-                                    addToCart({
-                                        // Si hay variante, usamos su ID único, si no, el del producto
-                                        id: selectedVariant ? selectedVariant._id : data._id, 
-                                        productId: data._id,  
-                                        nombre: `${data.nombre} ${selectedVariant?.talle || selectedVariant?.color || ""}`.trim(),
-                                        precio: finalPrice, 
-                                        imagen: selectedVariant?.foto_variante || data.imagenes_generales?.[0] || "",
-                                        cantidad: quantity, 
-                                        stockMax: currentStock
-                                    });
-                                }
-                            }} whileTap={{ scale: 0.97 }} className="btn-secondary-glass" disabled={currentStock <= 0}>
-                                Añadir al Carrito
+                            <motion.button 
+                                onClick={handleAddToCart}
+                                whileTap={{ scale: 0.97 }} 
+                                className={`btn-secondary-glass cart-btn-animated ${cartStatus}`}
+                                disabled={currentStock <= 0 || cartStatus !== 'idle'}
+                            >
+                                <AnimatePresence mode="wait">
+                                    {cartStatus === 'idle' && (
+                                        <motion.span key="idle" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                                            Añadir al Carrito
+                                        </motion.span>
+                                    )}
+                                    {cartStatus === 'loading' && (
+                                        <motion.span key="loading" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} style={{ display: 'flex', alignItems: 'center' }}>
+                                            <LoadingIcon /> Procesando...
+                                        </motion.span>
+                                    )}
+                                    {cartStatus === 'success' && (
+                                        <motion.span key="success" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} style={{ display: 'flex', alignItems: 'center', color: '#10b981' }}>
+                                            <CheckIcon /> ¡Añadido!
+                                        </motion.span>
+                                    )}
+                                </AnimatePresence>
                             </motion.button>
+                            
                             {currentStock > 0 && (
                                 <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }} className="btn-primary-glow">
                                     Comprar Ahora
@@ -310,7 +329,7 @@ const ParamsProduct = () => {
                 </motion.div>
             </div>
 
-            {/* RESEÑAS */}
+            {/* SECCIÓN RESEÑAS */}
             <div className="reviews-section">
                 <div className="reviews-container">
                     <h2 className="section-title">Valoraciones de Clientes</h2>
@@ -323,83 +342,48 @@ const ParamsProduct = () => {
                                 </button>
                             ))}
                         </div>
-                        <textarea className="review-textarea" value={reseña} placeholder="Escribe tu opinión aquí..." onChange={(e) => setReseña(e.target.value)} minLength={0} maxLength={500} required></textarea>
-                        
-                        <button onClick={() => { if (!user) return alert("Debes iniciar sesión"); createProductReview(reseña, rating, user?.email || "", id || "");}} className="btn-submit-review"disabled={!reseña || rating === 0} >
+                        <textarea className="review-textarea" value={reseña} placeholder="Escribe tu opinión aquí..." onChange={(e) => setReseña(e.target.value)} maxLength={500}></textarea>
+                        <button onClick={() => { if (!user) return alert("Debes iniciar sesión"); createProductReview(reseña, rating, user?.email || "", id || ""); }} className="btn-submit-review" disabled={!reseña || rating === 0}>
                             Publicar Reseña
                         </button>
-
                     </div>
-                    {/* RESEÑAS */}
+
                     <div className={`reviews-list ${theme}`}>
                         {currentReviews.length > 0 ? (
                             <>
                                 {currentReviews.map((r, idx) => (
-                                    <motion.div 
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        key={r._id || idx} 
-                                        className={`review-item-card ${theme}`}
-                                    >
+                                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} key={r._id || idx} className={`review-item-card ${theme}`}>
                                         <div className="review-item-header">
                                             <div className="user-info">
-                                                <div className={`user-avatar-mini ${theme}`}>
-                                                    {r.userEmail.charAt(0).toUpperCase()}
-                                                </div>
+                                                <div className={`user-avatar-mini ${theme}`}>{r.userEmail.charAt(0).toUpperCase()}</div>
                                                 <div className="user-meta-data">
                                                     <span className={`user-email-text ${theme}`}>{r.userEmail}</span>
-                                                    <span className={`review-date ${theme}`}>
-                                                        {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : 'Reciente'}
-                                                    </span>
+                                                    <span className={`review-date ${theme}`}>{r.createdAt ? new Date(r.createdAt).toLocaleDateString() : 'Reciente'}</span>
                                                 </div>
                                             </div>
                                             <div className="review-stars-display">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <StarIcon key={star} filled={star <= r.rating} />
-                                                ))}
+                                                {[1, 2, 3, 4, 5].map((star) => (<StarIcon key={star} filled={star <= r.rating} />))}
                                             </div>
                                         </div>
-                                        <div className="review-body">
-                                            <p className={`review-text-content ${theme}`}>"{r.reseña}"</p>
-                                        </div>
+                                        <div className="review-body"><p className={`review-text-content ${theme}`}>"{r.reseña}"</p></div>
                                     </motion.div>
                                 ))}
-
-                                {/* CONTROLES DE PAGINACIÓN */}
                                 {totalPages > 1 && (
                                     <div className={`pagination-controls ${theme}`}>
-                                        <button 
-                                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                            disabled={currentPage === 1}
-                                            className="btn-pagination"
-                                        >
-                                            &lt; ANTERIOR
-                                        </button>
-                                        
-                                        <span className="page-indicator">
-                                            PÁGINA {currentPage} DE {totalPages}
-                                        </span>
-
-                                        <button 
-                                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                            disabled={currentPage === totalPages}
-                                            className="btn-pagination"
-                                        >
-                                            SIGUIENTE &gt;
-                                        </button>
+                                        <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} disabled={currentPage === 1} className="btn-pagination">&lt; ANTERIOR</button>
+                                        <span className="page-indicator">PÁGINA {currentPage} DE {totalPages}</span>
+                                        <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} disabled={currentPage === totalPages} className="btn-pagination">SIGUIENTE &gt;</button>
                                     </div>
                                 )}
                             </>
                         ) : (
-                            <div className={`empty-reviews-state ${theme}`}>
-                                <p>Aún no hay valoraciones para este producto.</p>
-                            </div>
+                            <div className={`empty-reviews-state ${theme}`}><p>Aún no hay valoraciones para este producto.</p></div>
                         )}
                     </div>
                 </div>
             </div>
         </section>
     );
-}
+};
 
 export default ParamsProduct;

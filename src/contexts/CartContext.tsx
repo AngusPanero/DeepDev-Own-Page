@@ -5,10 +5,9 @@ import { UseSession } from "./SessionContext";
 interface Coupon {
     code: string;
     discount: number; 
-    type: 'single_use' | 'date_limited'; // Sigue siendo obligatorio según tu interfaz
+    type: 'single_use' | 'date_limited';
     expiryDate?: Date;
-    appliedAt?: Date; // <--- Añade esto
-    isUsed?: boolean;
+    appliedAt?: Date;
 }
 
 interface CartItem {
@@ -27,122 +26,110 @@ interface CartContextType {
     removeFromCart: (id: string) => void;
     updateQuantity: (id: string, qty: number) => void;
     clearCart: () => void;
-    
     totalAmount: number;    
     finalAmount: number;    
     totalItems: number;
-    
     isLocked: boolean;
     setLock: (status: boolean) => void;
-    
     appliedCoupon: Coupon | null;
     applyCoupon: (code: string) => Promise<string>; 
     handlePaymentSuccess: () => Promise<void>;
+    priceAlert: string | null;
+    setPriceAlert: (msg: string | null) => void;
+    refreshCartPrices: (currentItems: CartItem[]) => Promise<CartItem[]>;
+    isInitialized: boolean;
 }
 
-const CartContext = createContext<CartContextType | null>(null)
+const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-    const { user } = UseSession()
-    const [ cart, setCart ] = useState<CartItem[]>([])
-    const [ isLocked, setIsLocked ] = useState<boolean>(false)
-    const [ appliedCoupon, setAppliedCoupon ] = useState<Coupon | null>(null)
+    const { user } = UseSession();
+    const [cart, setCart] = useState<CartItem[]>([]);
+    const [isLocked, setIsLocked] = useState<boolean>(false);
+    const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+    const [priceAlert, setPriceAlert] = useState<string | null>(null);
+    const [isInitialized, setIsInitialized] = useState(false);
 
-    // CARGAR CARRITO
     useEffect(() => {
         const syncAndLoad = async () => {
+            let itemsToProcess: CartItem[] = [];
             const localData = localStorage.getItem("terminal_cart");
             const localItems = localData ? JSON.parse(localData) : [];
+            itemsToProcess = localItems;
 
             if (user) {
                 try {
-                    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { email: user.email, items: localItems, merge: true }, { withCredentials: true });
-                    
-                    setCart(response.data.items);
-                    if (response.data.appliedCoupon) {
-                        setAppliedCoupon(response.data.appliedCoupon);
-                    }
-                    localStorage.removeItem("terminal_cart"); 
-                } catch (error) {
-                    console.error("Error al sincronizar/cargar", error);
-                }
-            } else {
-                setCart(localItems);
+                    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, 
+                        { email: user.email, items: localItems, merge: true }, 
+                        { withCredentials: true }
+                    );
+                    itemsToProcess = res.data.items || [];
+                    if (res.data.appliedCoupon) setAppliedCoupon(res.data.appliedCoupon);
+                    localStorage.removeItem("terminal_cart");
+                } catch (e) { console.error(e); }
             }
+
+            const finalItems = await refreshCartPrices(itemsToProcess);
+            setCart(finalItems);
+            setIsInitialized(true);
         };
         syncAndLoad();
     }, [user]);
 
-    // PERSISTENCIA 
     useEffect(() => {
-        if (isLocked || !cart) return;
-
+        if (!isInitialized || isLocked) return;
         const persistData = async () => {
             if (user) {
-                try {
-                    await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { 
-                        email: user.email, 
-                        items: cart, 
-                        appliedCoupon, 
-                        merge: false 
-                    }, { withCredentials: true });
-                } catch (error) {
-                    console.error("Error en persistencia", error);
-                }
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { 
+                    email: user.email, items: cart, appliedCoupon, merge: false 
+                }, { withCredentials: true });
             } else {
                 localStorage.setItem("terminal_cart", JSON.stringify(cart));
-                if (appliedCoupon) localStorage.setItem("terminal_coupon", JSON.stringify(appliedCoupon));
             }
         };
-
         const timeoutId = setTimeout(persistData, 1000);
         return () => clearTimeout(timeoutId);
-    }, [cart, user, isLocked, appliedCoupon]);
+    }, [cart, user, isInitialized]);
 
-    // SUMAR A CARRITO
-    const addToCart = async (newItem: CartItem) => {
-        if(isLocked) return
-
-        setCart((prev: CartItem[]) => {
-            const exist = prev.find((i: CartItem) => i.id === newItem.id)
+    const addToCart = (newItem: CartItem) => {
+        if(isLocked) return;
+        setCart((prev) => {
+            const exist = prev.find((i) => i.id === newItem.id);
+            const qtyToAdd = newItem.cantidad > 0 ? newItem.cantidad : 1;
             if(exist){
-                return prev.map((i) => i.id === newItem.id ? { ...i, cantidad: Math.min(i.cantidad + newItem.cantidad, i.stockMax)} : i)
+                return prev.map((i) => i.id === newItem.id 
+                    ? { ...i, cantidad: Math.min(i.cantidad + qtyToAdd, i.stockMax)} 
+                    : i
+                );
             }
-            return [...prev, newItem]
-        })
-    } 
+            return [...prev, { ...newItem, cantidad: qtyToAdd }];
+        });
+    };
 
-    // SUMAR CANTIDADES
     const updateQuantity = (id: string, qty: number) => {
-        if(isLocked) return
+        if(isLocked) return;
+        setCart(prev => prev.map(i => {
+            if (i.id !== id) return i;
+            const newQty = Math.max(1, Math.min(qty, i.stockMax));
+            return { ...i, cantidad: newQty };
+        }));
+    };
 
-        setCart(prev => prev.map(i => i.id === id ? { ...i, cantidad: Math.min(qty, i.stockMax) } : i));
-    }
-
-    // BORRAR DEL CARRITO
     const removeFromCart = (id: string) => {
-        if(isLocked) return
-
+        if(isLocked) return;
         setCart(prev => prev.filter(i => i.id !== id));
-    }
+    };
 
-    // LIMPIAR CARRITO POST CHECKOUT
     const clearCart = () => {
         setCart([]);
         setAppliedCoupon(null);
-        if (!user) {
-            localStorage.removeItem("terminal_cart");
-        }
+        localStorage.removeItem("terminal_cart");
     };
 
-    // SISTEMA DE CUPONES
     const applyCoupon = async (code: string) => {
-        if (!user) {
-            return "Debes iniciar sesión para aplicar cupones 🔴";
-        }
+        if (!user) return "Debes iniciar sesión para aplicar cupones 🔴";
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/coupons/validate`, { code, email: user.email }, { withCredentials: true });
-
             if (response.status === 200) {
                 const couponData: Coupon = {
                     code: response.data.coupon.code,
@@ -150,53 +137,83 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                     type: response.data.coupon.type, 
                     appliedAt: new Date() 
                 };
-                console.log("CUPON DATA", couponData);
-                
                 setAppliedCoupon(couponData);
-
-                if (user) {
-                    await axios.post(`${import.meta.env.VITE_API_URL}/api/cart/sync`, { 
-                        email: user.email, 
-                        items: cart, 
-                        appliedCoupon: couponData, 
-                        merge: false 
-                    }, { withCredentials: true });
-                }
                 return response.data.message;
             }
             return "Error inesperado";
         } catch (error: any) {
-            const msg = error.response?.data?.message || "Error al validar cupón 🔴";
             setAppliedCoupon(null);
-            return msg;
+            return error.response?.data?.message || "Error al validar cupón 🔴";
         }
     };
 
-    // PRECIO FINAL
     const totalAmount = useMemo(() => cart.reduce((acc, i) => acc + (i.precio * i.cantidad), 0), [cart]);
-    
     const finalAmount = useMemo(() => {
         if (!appliedCoupon) return totalAmount;
         return totalAmount * (1 - appliedCoupon.discount / 100);
     }, [totalAmount, appliedCoupon]);
-
     const totalItems = useMemo(() => cart.reduce((acc, i) => acc + i.cantidad, 0), [cart]);
 
     const handlePaymentSuccess = async () => {
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/checkout/success`, { email: user.email, couponCode: appliedCoupon?.code || null, items: cart }, { withCredentials: true });
             clearCart(); 
-        } catch (error: any) {
-            console.error("Error al cerrar la orden", error);
+        } catch (error: any) { console.error(error); }
+    };
+
+    // VALIDAR PRECIO PRODUCTOS
+    const refreshCartPrices = async (currentItems: CartItem[]) => {
+        if (!currentItems || currentItems.length === 0) return [];
+        try {
+            const productIds = currentItems.map(item => item.id); 
+            
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/products/validate-prices`, { 
+                productIds 
+            });
+
+            const dbData = response.data; 
+            let hasChanges = false;
+
+            const validatedCart = currentItems.map(item => {
+                // Buscamos en la respuesta del servidor por el ID que enviamos
+                const dbProduct = dbData.find((p: any) => p.productId === item.id);
+                if (!dbProduct) return item;
+
+                const priceInDB = dbProduct.precio;
+                const stockInDB = dbProduct.stockMax;
+                
+                // Validamos cantidad contra el stock real de la variante (o padre)
+                const safeQty = Math.max(1, Math.min(item.cantidad, stockInDB));
+
+                if (priceInDB !== item.precio || stockInDB !== item.stockMax || safeQty !== item.cantidad) {
+                    hasChanges = true;
+                    return { 
+                        ...item, 
+                        precio: priceInDB, 
+                        stockMax: stockInDB, 
+                        cantidad: safeQty 
+                    };
+                }
+                return item;
+            });
+
+            if (hasChanges) {
+                setPriceAlert("Actualizamos precios y stock según disponibilidad de variantes. ⚠️");
+                setCart(validatedCart);
+            }
+            return validatedCart;
+        } catch (error) {
+            console.error("Error al validar productos", error)
+            return currentItems;
         }
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart: () => setCart([]), totalAmount, finalAmount, totalItems, isLocked, setLock: setIsLocked, appliedCoupon, applyCoupon, handlePaymentSuccess, clearCart }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, refreshCartPrices, priceAlert, setPriceAlert, clearCart, totalAmount, finalAmount, totalItems, isLocked, setLock: setIsLocked, appliedCoupon, applyCoupon, handlePaymentSuccess, isInitialized }}>
             {children}
         </CartContext.Provider>
     );
-}
+};
 
 export const UseCart = () => {
     const context = useContext(CartContext);

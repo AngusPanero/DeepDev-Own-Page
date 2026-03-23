@@ -22,6 +22,7 @@ import { FavoritesProvider } from "../contexts/FavoritesContext";
 import { ReseñasProvider } from "../contexts/ReseñasContext";
 import { CartProvider } from "../contexts/CartContext";
 import CartView from "../pages/CartView";
+import CheckoutPage from "../checkout/CheckOutPage";
 
 const AppRouter = () => {
     return (
@@ -45,6 +46,7 @@ const AppRouter = () => {
                                 <Route path="/testproducts" element={<IndividualProduct />} />
                                 <Route path="/product/:id" element={<ParamsProduct />} />
                                 <Route path="/cart-products-view" element={<CartView />} />
+                                <Route path="/checkout" element={<CheckoutPage />} />
                                 <Route path="/*" element={<Error404 />} />
                                 <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
                                 {/* Tiene Acceso solo el admin con la prop pasada */}

@@ -73,120 +73,120 @@ const CouponCreator = () => {
 
     return (
         <div className={`admin-inventory-wrapper ${theme}`}>
-        <div className="coupon-admin-container">
-            <div className="coupon-card">
-            <div className="coupon-card-header">
-                <h2><Ticket size={20} strokeWidth={3} /> NEW_COUPON_GENERATOR</h2>
-            </div>
-
-            <form onSubmit={handleSubmit} className="coupon-form-grid">
-                
-                <div className="input-with-label-stack">
-                <label className="stat-label">COUPON_CODE</label>
-                <input
-                    type="text"
-                    name="code"
-                    value={formData.code}
-                    onChange={handleChange}
-                    placeholder="EJ: WINTER_2026"
-                    className="code-input"
-                    required
-                />
+            <div className="coupon-admin-container">
+                <div className="coupon-card">
+                <div className="coupon-card-header">
+                    <h2><Ticket size={20} strokeWidth={3} /> NEW_COUPON_GENERATOR</h2>
                 </div>
 
-                <div className="input-with-label-stack">
-                <label className="stat-label">DISCOUNT_PERCENT (%)</label>
-                <input
-                    type="number"
-                    name="discount"
-                    min="1"
-                    max="100"
-                    value={formData.discount}
-                    onChange={handleChange}
-                    placeholder="00"
-                    required
-                />
-                </div>
-
-                <div className="input-with-label-stack full-width-mobile">
-                <label className="stat-label">USAGE_POLICY</label>
-                <div className="admin-stats-bar" style={{ marginBottom: 0, marginTop: '5px' }}>
-                    <div 
-                    className={`stat-card ${formData.type === 'single_use' ? 'active' : ''}`}
-                    onClick={() => setFormData({ ...formData, type: 'single_use' })}
-                    style={{ padding: '10px', textAlign: 'center' }}
-                    >
-                    <User size={18} style={{ marginBottom: '5px' }} />
-                    <span className="stat-label" style={{ fontSize: '0.7rem' }}>SINGLE_USE</span>
-                    </div>
-                    <div 
-                    className={`stat-card ${formData.type === 'date_limited' ? 'active' : ''}`}
-                    onClick={() => setFormData({ ...formData, type: 'date_limited' })}
-                    style={{ padding: '10px', textAlign: 'center' }}
-                    >
-                    <Calendar size={18} style={{ marginBottom: '5px' }} />
-                    <span className="stat-label" style={{ fontSize: '0.7rem' }}>DATE_LIMITED</span>
-                    </div>
-                </div>
-                </div>
-
-                {formData.type === 'date_limited' && (
-                <div className="input-with-label-stack full-width-mobile date-input-section">
-                    <label className="stat-label">EXPIRATION_DATE</label>
+                <form onSubmit={handleSubmit} className="coupon-form-grid">
+                    
+                    <div className="input-with-label-stack">
+                    <label className="stat-label">COUPON_CODE</label>
                     <input
-                    type="date"
-                    name="expiryDate"
-                    value={formData.expiryDate}
-                    onChange={handleChange}
-                    required
+                        type="text"
+                        name="code"
+                        value={formData.code}
+                        onChange={handleChange}
+                        placeholder="EJ: WINTER_2026"
+                        className="code-input"
+                        required
                     />
-                </div>
-                )}
+                    </div>
 
-                {status.message && (
-                <div className={`status-banner full-width-mobile ${status.type}`}>
-                    {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-                    {status.message}
-                </div>
-                )}
+                    <div className="input-with-label-stack">
+                    <label className="stat-label">DISCOUNT_PERCENT (%)</label>
+                    <input
+                        type="number"
+                        name="discount"
+                        min="1"
+                        max="100"
+                        value={formData.discount}
+                        onChange={handleChange}
+                        placeholder="00"
+                        required
+                    />
+                    </div>
 
-                <div className="full-width-mobile">
-                <button 
-                    type="submit" 
-                    className={`btn-generate ${status.type === 'success' ? 'ready' : ''}`}
-                    disabled={status.loading}
-                >
-                    {status.loading ? '> PROCESSING...' : '> GENERATE_COUPON'}
-                </button>
-                </div>
-            </form>
-            </div>
-
-            {/* CUPONES TAGS --- */}
-            <div className="active-coupons-section" style={{ marginTop: '30px' }}>
-            <label className="stat-label" style={{ marginBottom: '15px', display: 'block' }}>ACTIVE_COUPONS_LIST</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {coupons.map((coupon) => (
-                <div key={coupon._id} className="coupon-tag">
-                    <div className="tag-info">
-                    <span className="tag-code">{coupon.code}</span>
-                    <span className="tag-discount">{coupon.discount}%</span>
-                    <div className="tag-policy">
-                        {coupon.type === 'single_use' ? (
-                        <><User size={12} /> SINGLE</>
-                        ) : (
-                        <><Clock size={12} /> {new Date(coupon.expiryDate).toLocaleDateString()}</>
-                        )}
+                    <div className="input-with-label-stack full-width-mobile">
+                    <label className="stat-label">USAGE_POLICY</label>
+                    <div className="admin-stats-bar" style={{ marginBottom: 0, marginTop: '5px' }}>
+                        <div 
+                        className={`stat-card ${formData.type === 'single_use' ? 'active' : ''}`}
+                        onClick={() => setFormData({ ...formData, type: 'single_use' })}
+                        style={{ padding: '10px', textAlign: 'center' }}
+                        >
+                        <User size={18} style={{ marginBottom: '5px' }} />
+                        <span className="stat-label" style={{ fontSize: '0.7rem' }}>SINGLE_USE</span>
+                        </div>
+                        <div 
+                        className={`stat-card ${formData.type === 'date_limited' ? 'active' : ''}`}
+                        onClick={() => setFormData({ ...formData, type: 'date_limited' })}
+                        style={{ padding: '10px', textAlign: 'center' }}
+                        >
+                        <Calendar size={18} style={{ marginBottom: '5px' }} />
+                        <span className="stat-label" style={{ fontSize: '0.7rem' }}>DATE_LIMITED</span>
+                        </div>
                     </div>
                     </div>
-                    <button onClick={() => handleDelete(coupon._id)} className="tag-delete-btn">
-                    <Trash2 size={14} />
+
+                    {formData.type === 'date_limited' && (
+                    <div className="input-with-label-stack full-width-mobile date-input-section">
+                        <label className="stat-label">EXPIRATION_DATE</label>
+                        <input
+                        type="date"
+                        name="expiryDate"
+                        value={formData.expiryDate}
+                        onChange={handleChange}
+                        required
+                        />
+                    </div>
+                    )}
+
+                    {status.message && (
+                    <div className={`status-banner full-width-mobile ${status.type}`}>
+                        {status.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+                        {status.message}
+                    </div>
+                    )}
+
+                    <div className="full-width-mobile">
+                    <button 
+                        type="submit" 
+                        className={`btn-generate ${status.type === 'success' ? 'ready' : ''}`}
+                        disabled={status.loading}
+                    >
+                        {status.loading ? '> PROCESSING...' : '> GENERATE_COUPON'}
                     </button>
+                    </div>
+                </form>
                 </div>
-                ))}
+
+                {/* CUPONES TAGS --- */}
+                <div className="active-coupons-section" style={{ marginTop: '30px' }}>
+                    <label className="stat-label" style={{ marginBottom: '15px', display: 'block' }}>ACTIVE_COUPONS_LIST</label>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                        {coupons.map((coupon) => (
+                        <div key={coupon._id} className="coupon-tag">
+                            <div className="tag-info">
+                                <span className="tag-code">{coupon.code}</span>
+                                <span className="tag-discount">{coupon.discount}%</span>
+                                <div className="tag-policy">
+                                    {coupon.type === 'single_use' ? (
+                                    <><User size={12} /> SINGLE</>
+                                    ) : (
+                                    <><Clock size={12} /> {new Date(coupon.expiryDate).toLocaleDateString()}</>
+                                    )}
+                                </div>
+                            </div>
+                            <button onClick={() => handleDelete(coupon._id)} className="tag-delete-btn">
+                            <Trash2 size={14} />
+                            </button>
+                        </div>
+                        ))}
+                    </div>
+                </div>
             </div>
-            </div>
-        </div>
         </div>
     );
 };

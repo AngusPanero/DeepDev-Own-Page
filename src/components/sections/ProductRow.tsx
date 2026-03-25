@@ -343,6 +343,22 @@ const ProductRow = ({ categoriesProp, product, isSelected, onSelect }: ProductRo
                                 <div className="input-with-label"><span>SKU PADRE</span><input value={localData.sku_padre || ""} onChange={(e) => handleFieldChange('sku_padre', e.target.value)} /></div>
                                 <div className="input-with-label"><span>STOCK BASE</span><input type="number" min={0} value={localData.stock_base} onChange={(e) => handleFieldChange('stock_base', Number(e.target.value))} /></div>
                                 <div className="input-with-label"><span>MARCA</span><input value={localData.marca} onChange={(e) => handleFieldChange('marca', e.target.value)} /></div>
+                                
+                                {/* --- NUEVO CAMPO: CUOTAS SIN INTERÉS --- */}
+                                <div className="input-with-label">
+                                    <span>CUOTAS S/I</span>
+                                    <select 
+                                        value={localData.cuotas_sin_interes || 0} 
+                                        onChange={(e) => handleFieldChange('cuotas_sin_interes', Number(e.target.value))}
+                                        className="terminal-select"
+                                    >
+                                        <option value={0}>SIN CUOTAS</option>
+                                        <option value={3}>3 CUOTAS</option>
+                                        <option value={6}>6 CUOTAS</option>
+                                        <option value={9}>9 CUOTAS</option>
+                                        <option value={12}>12 CUOTAS</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

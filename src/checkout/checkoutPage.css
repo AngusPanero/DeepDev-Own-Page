@@ -1,6 +1,6 @@
 /* VARIABLES DE COLOR - MODO DARK (Default) */
 :root {
-    --ch-bg: #050505;
+    --ch-bg: #000000;
     --ch-sidebar: #080808;
     --ch-card: #000;
     --ch-border: #1a1a1a;
@@ -189,6 +189,12 @@ input:focus {
     padding-bottom: 15px;
 }
 
+.mini-item-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 .mini-item {
     display: flex;
     align-items: center;
@@ -202,6 +208,7 @@ input:focus {
     object-fit: cover;
     border: 1px solid var(--ch-border);
 }
+
 
 .mini-details p {
     font-size: 0.7rem;
@@ -235,6 +242,73 @@ input:focus {
 
 .coupon-status.error { color: #ef4444; }
 .coupon-status.success { color: #10b981; }
+
+.mini-item-container {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+}
+
+.mini-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.item-installment-badge {
+    margin-top: 2px;
+    padding: 6px 10px;
+    background: rgba(16, 185, 129, 0.1); /* Verde éxito muy tenue */
+    border-left: 2px solid #10b981;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-installment-badge.no-benefit p {
+    font-size: 0.65rem;
+    color: #ebebeb;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.item-installment-badge.no-benefit {
+    margin-top: 2px;
+    padding: 6px 10px;
+    background: rgba(10, 16, 106, 0.688); /* Verde éxito muy tenue */
+    border-left: 2px solid #10b9a8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-installment-badge p {
+    font-size: 0.65rem;
+    color: #10b981;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.item-installment-badge strong {
+    font-weight: 800;
+}
+
+/* Animación de pulso sutil para el indicador */
+.badge-pulse {
+    width: 6px;
+    height: 6px;
+    background-color: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
 
 /* EXTENSIÓN DEL LIGHT MODE EN VARIABLES */
 .checkout-screen.light {

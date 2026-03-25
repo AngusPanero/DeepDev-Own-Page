@@ -25,6 +25,7 @@
 
 .product-card-terminal {
     width: 250px;
+    min-height: 400px;
     max-width: 280px; /* Evita que la card se ensanche demasiado */
     border: 1px solid #1f1f1f;
     position: relative;
@@ -325,10 +326,10 @@ h4.product-card-title {
 }
 
 .filters-sidebar {
-    width: 300px;
+    width: 320px;
     background: #080808; 
     border-right: 1px solid #1f1f1f;
-    padding: 140px 20px;
+    padding: 80px 20px;
     height: 100vh;
     position: sticky;
     top: 0;
@@ -516,7 +517,7 @@ h4.product-card-title {
 }
 
 @media (max-width: 768px) {
-    aside.filters-sidebar {
+    side.filters-sidebar {
         height: auto;
         position: relative;
         top: 140px;
@@ -540,4 +541,3 @@ h4.product-card-title {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-

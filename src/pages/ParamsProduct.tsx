@@ -79,6 +79,7 @@ interface Product {
         alto: number;
         peso: number;
     };
+    cuotas_sin_interes?: number
 }
 
 const ParamsProduct = () => {
@@ -104,6 +105,7 @@ const ParamsProduct = () => {
     const [ cartStatus, setCartStatus ] = useState<'idle' | 'loading' | 'success'>('idle');
 
     useEffect(() => {
+        
         getProduct();
         fetchReseñas();
     }, [id]);
@@ -116,6 +118,7 @@ const ParamsProduct = () => {
             if (response.status === 200) {
                 const product = response.data.product || response.data;
                 setData(product);
+
                 if (product.variantes && product.variantes.length > 0) {
                     setSelectedVariant(product.variantes[0]);
                 }
@@ -132,6 +135,8 @@ const ParamsProduct = () => {
         if (!data || cartStatus !== 'idle') return;
 
         setCartStatus('loading');
+        console.log("CUOTAS", typeof data.cuotas_sin_interes);
+        
         
         try {
             await addToCart({
@@ -141,7 +146,8 @@ const ParamsProduct = () => {
                 precio: finalPrice, 
                 imagen: selectedVariant?.foto_variante || data.imagenes_generales?.[0] || "",
                 cantidad: quantity, 
-                stockMax: currentStock
+                stockMax: currentStock,
+                cuotas_sin_interes: Number(data.cuotas_sin_interes),
             });
 
             setCartStatus('success');
@@ -231,17 +237,34 @@ const ParamsProduct = () => {
                         <span className="brand-tag">{data.marca}</span>
                         <h1 className="product-title">{data.nombre}</h1>
                         
-                        <div className="price-tag">
+                        <div className="price-card-v2">
                             {hasPromo && (
-                                <div className="promo-container">
-                                    <span className="old-price">${fullOriginalPrice.toLocaleString()}</span>
-                                    <span className="discount-percentage">-{data.porcentaje_promo}% OFF</span>
+                                <div className="promo-badge-row">
+                                    <span className="old-price-v2">${fullOriginalPrice.toLocaleString()}</span>
+                                    <span className="discount-pill">-{data.porcentaje_promo}%</span>
                                 </div>
                             )}
-                            <div className="current-price">
-                                <span className="currency">$</span>
-                                <span className="amount">{finalPrice.toLocaleString()}</span>
+                            
+                            <div className="main-price-row">
+                                <span className="currency-v2">$</span>
+                                <span className="amount-v2">{finalPrice.toLocaleString()}</span>
                             </div>
+
+                            {data.cuotas_sin_interes && data.cuotas_sin_interes > 0 ? (
+                                <div className="installments-box-v2">
+                                    <div className="inst-icon-v2">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                    </div>
+                                    <div className="inst-text-v2">
+                                        <span className="inst-highlight">{data.cuotas_sin_interes} cuotas sin interés de</span>
+                                        <span className="inst-price">${(finalPrice / data.cuotas_sin_interes).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="payment-methods-hint">
+                                    Ver medios de pago aceptados
+                                </div>
+                            )}
                         </div>
                     </div>
 

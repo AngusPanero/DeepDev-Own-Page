@@ -30,7 +30,9 @@ const CreateProduct = () => {
         medidas_empaque: { peso: 0, ancho: 0, alto: 0, largo: 0 },
         estado: "activo",
         en_promocion: false,
-        porcentaje_promo: 0
+        porcentaje_promo: 0,
+        // --- NUEVO CAMPO ---
+        cuotas_sin_interes: 0 
     });
 
     const [categories, setCategories] = useState<any>([]);
@@ -81,7 +83,6 @@ const CreateProduct = () => {
         setFormData({ ...formData, variantes: nuevasVariantes });
     };
 
-    // Función para borrar variante sin afectar imágenes
     const removeVariante = (index: number) => {
         setFormData({
             ...formData,
@@ -135,8 +136,6 @@ const CreateProduct = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); 
         
-        // --- CONDICIONAL DE VALIDACIÓN DE VARIANTES ---
-        // Si hay variantes cargadas, deben ser al menos 2.
         if (formData.variantes.length > 0 && formData.variantes.length < 2) {
             return alert("Error: No se permite crear un producto con una sola variante. Si el producto es único, elimina la variante. Si tiene opciones, agrega al menos dos.");
         }
@@ -211,8 +210,8 @@ const CreateProduct = () => {
                             </div>
                         </div>
 
-                        <header className="section-subtitle">OFERTAS Y PROMOCIONES</header>
-                        <div className="form-grid-2 promo-box-create">
+                        <header className="section-subtitle">FINANCIACIÓN Y PROMOCIONES</header>
+                        <div className="form-grid-3 promo-box-create">
                             <div className="form-section checkbox-section">
                                 <label>¿Activar Promoción?</label>
                                 <input type="checkbox" name="en_promocion" onChange={handleChange} checked={formData.en_promocion} />
@@ -223,6 +222,17 @@ const CreateProduct = () => {
                                     <input type="number" name="porcentaje_promo" onChange={handleChange} value={formData.porcentaje_promo} className="terminal-input" min="0" max="100" />
                                 </div>
                             )}
+                            {/* --- SELECT DE CUOTAS AÑADIDO --- */}
+                            <div className="form-section">
+                                <label>Cuotas Sin Interés</label>
+                                <select name="cuotas_sin_interes" value={formData.cuotas_sin_interes} onChange={handleChange} className="terminal-input">
+                                    <option value={0}>SOLO 1 PAGO (PRECIO LISTA)</option>
+                                    <option value={3}>3 CUOTAS SIN INTERÉS</option>
+                                    <option value={6}>6 CUOTAS SIN INTERÉS</option>
+                                    <option value={9}>9 CUOTAS SIN INTERÉS</option>
+                                    <option value={12}>12 CUOTAS SIN INTERÉS</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div className="form-section">
@@ -263,7 +273,7 @@ const CreateProduct = () => {
                         <div className="form-grid-4">
                             {["peso", "ancho", "alto", "largo"].map((dim) => (
                                 <div className="form-section" key={dim}>
-                                    <label>{dim.charAt(0).toUpperCase() + dim.slice(1)} {dim === "peso" ? "(kg)" : "(cm)"}</label>
+                                    <label>{dim.charAt(0).toUpperCase() + dim.slice(1)} {dim === "peso" ? "(gr)" : "(cm)"}</label>
                                     <input type="number" min={0} name={`medida_${dim}`} onChange={handleChange} className="terminal-input" />
                                 </div>
                             ))}

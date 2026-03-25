@@ -30,7 +30,8 @@ const IndividualProduct = () => {
         minPrecio: "",
         maxPrecio: "",
         enPromocion: false,
-        soloStock: false 
+        soloStock: false,
+        cuotas: "" // <--- ESTADO AGREGADO
     });
 
     // 1. CARGA DE METADATOS
@@ -76,7 +77,8 @@ const IndividualProduct = () => {
                 filters.minPrecio !== "" || 
                 filters.maxPrecio !== "" || 
                 filters.enPromocion === true ||
-                filters.soloStock === true;
+                filters.soloStock === true ||
+                filters.cuotas !== ""; // <--- VALIDACIÓN AGREGADA
 
             const endpoint = hasActiveFilters 
                 ? `${import.meta.env.VITE_API_URL}/api/products/filter`
@@ -92,7 +94,8 @@ const IndividualProduct = () => {
                 minPre: filters.minPrecio || undefined,
                 maxPre: filters.maxPrecio || undefined,
                 promo: filters.enPromocion ? "true" : undefined,
-                stock: filters.soloStock ? "true" : undefined
+                stock: filters.soloStock ? "true" : undefined,
+                cuotas: filters.cuotas || undefined // <--- PARÁMETRO ENVIADO
             };
 
             const response = await axios.get(endpoint, { params, withCredentials: true });
@@ -127,7 +130,15 @@ const IndividualProduct = () => {
     const clearFilters = () => {
         setSearchTerm(""); // Limpiamos el input visual
         setFilters({
-            search: "", marca: "", categoria: "", talle: "", minPrecio: "", maxPrecio: "", enPromocion: false, soloStock: false
+            search: "", 
+            marca: "", 
+            categoria: "", 
+            talle: "", 
+            minPrecio: "", 
+            maxPrecio: "", 
+            enPromocion: false, 
+            soloStock: false,
+            cuotas: "" 
         });
         setPage(1);
     };
@@ -184,6 +195,18 @@ const IndividualProduct = () => {
                     <select name="talle" value={filters.talle} onChange={handleFilterChange}>
                         <option value="">TODOS</option>
                         <option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
+                    </select>
+                </div>
+
+                {/* --- NUEVO GRUPO DE FILTRO PARA CUOTAS --- */}
+                <div className="filter-group">
+                    <label>CUOTAS SIN INTERÉS</label>
+                    <select name="cuotas" value={filters.cuotas} onChange={handleFilterChange}>
+                        <option value="">CUALQUIER PLAN</option>
+                        <option value="3">3 CUOTAS</option>
+                        <option value="6">6 CUOTAS</option>
+                        <option value="9">9 CUOTAS</option>
+                        <option value="12">12 CUOTAS</option>
                     </select>
                 </div>
 

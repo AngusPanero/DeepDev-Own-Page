@@ -18,6 +18,7 @@ interface CartItem {
     imagen: string;
     cantidad: number;
     stockMax: number;
+    cuotas_sin_interes?: number
 }
 
 interface CartContextType {
@@ -175,24 +176,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             let hasChanges = false;
 
             const validatedCart = currentItems.map(item => {
-                // Buscamos en la respuesta del servidor por el ID que enviamos
                 const dbProduct = dbData.find((p: any) => p.productId === item.id);
                 if (!dbProduct) return item;
 
                 const priceInDB = dbProduct.precio;
                 const stockInDB = dbProduct.stockMax;
-                
-                // Validamos cantidad contra el stock real de la variante (o padre)
+                const cuotasInDB = dbProduct.cuotas_sin_interes;
                 const safeQty = Math.max(1, Math.min(item.cantidad, stockInDB));
 
-                if (priceInDB !== item.precio || stockInDB !== item.stockMax || safeQty !== item.cantidad) {
+                if (priceInDB !== item.precio || stockInDB !== item.stockMax || safeQty !== item.cantidad || cuotasInDB !== item.cuotas_sin_interes) {
                     hasChanges = true;
-                    return { 
-                        ...item, 
-                        precio: priceInDB, 
-                        stockMax: stockInDB, 
-                        cantidad: safeQty 
-                    };
+                    
+                    return { ...item, precio: priceInDB, stockMax: stockInDB, cantidad: safeQty, cuotas_sin_interes: cuotasInDB };
                 }
                 return item;
             });

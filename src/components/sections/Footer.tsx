@@ -18,7 +18,7 @@ const Footer = () => {
                 <div className="footer-section">
                     <h4 className="footer-title">{texts[language].footer.navigationTitle}</h4>
                     <ul className="footer-list">
-                        {/*Uso a potr el footer y nav que estan siempre no me lleva arriba solo renderizaba el contenido*/}
+                        {/*Uso a por el footer y nav que estan siempre no me lleva arriba solo renderizaba el contenido*/}
                     <li><a href="/">{texts[language].footer.navigation[0]}</a></li>
                     <li><a href="/products">{texts[language].footer.navigation[1]}</a></li>
                     <li><a href="/sales">{texts[language].footer.navigation[2]}</a></li>

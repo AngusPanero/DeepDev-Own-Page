@@ -32,7 +32,7 @@ const SalesHistory: React.FC<SalesHistoryProps> = ({ allTickets }) => {
             const matchesEmail = ticket.email?.toLowerCase().includes(searchEmail.toLowerCase());
             if (!matchesEmail) return false;
 
-            // Filtro por Tiempo
+            // Filtro Tiempo
             const ticketDate = new Date(ticket.createdAt);
             if (timeRange === 'day') return ticketDate.toDateString() === now.toDateString();
             if (timeRange === 'month') return ticketDate.getMonth() === now.getMonth() && ticketDate.getFullYear() === now.getFullYear();

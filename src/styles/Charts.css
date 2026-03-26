@@ -14,7 +14,7 @@ div.dc-wrapper.dc-wrapper.light {
     --dc-bg: #F4F7FA;
     --dc-card: #ffffff;
     --dc-border: rgba(0, 98, 255, 0.15);
-    --dc-text: #0A192F; /* Azul oscuro para Light */
+    --dc-text: #0A192F; /* Azul oscuro Light */
     --dc-accent: #0062FF;
     --dc-text-dim: #476582;
 }

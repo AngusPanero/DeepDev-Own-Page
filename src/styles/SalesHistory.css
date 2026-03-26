@@ -7,7 +7,7 @@ div.sh-container.sh-container {
     --sh-accent: var(--dd-accent, #a855f7);
     --sh-text-dim: var(--dd-text-dim, #6b7280);
 
-    /* --- SOLUCIÓN: MARGEN Y ANCHO --- */
+    /* --- SOLUCIÓN: MARGEN ANCHO --- */
     margin: 40px auto !important; /* Despega 40px arriba/abajo y centra lateralmente */
     width: calc(100% - 70px) !important; /* Deja 20px de aire a cada lado */
     max-width: 1400px; /* Evita que en monitores gigantes se estire infinito */

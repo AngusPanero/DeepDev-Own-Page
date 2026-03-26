@@ -28,7 +28,7 @@ const SalesHistory: React.FC<SalesHistoryProps> = ({ allTickets }) => {
         const now = new Date();
         
         return allTickets.filter(ticket => {
-            // Filtro por Email
+            // Filtro  Email
             const matchesEmail = ticket.email?.toLowerCase().includes(searchEmail.toLowerCase());
             if (!matchesEmail) return false;
 

@@ -16,21 +16,21 @@ import Cookies from "../components/sections/Cookies";
 import Sales from "../pages/Sales";
 import RaffleTerms from "../pages/RaffleTerms";
 import GTMHandler from "../utils/GTMHandler";
-import IndividualProduct from "../pages/IndividualProduct";
+/* import IndividualProduct from "../pages/IndividualProduct";
 import ParamsProduct from "../pages/ParamsProduct";
 import { FavoritesProvider } from "../contexts/FavoritesContext";
 import { ReseñasProvider } from "../contexts/ReseñasContext";
 import { CartProvider } from "../contexts/CartContext";
 import CartView from "../pages/CartView";
-import CheckoutPage from "../checkout/CheckOutPage";
+import CheckoutPage from "../checkout/CheckOutPage"; */
 
 const AppRouter = () => {
     return (
         <Router>
             <SessionProvider>
-                <CartProvider>
+                {/* <CartProvider>
                     <ReseñasProvider>
-                        <FavoritesProvider>
+                        <FavoritesProvider> */}
                             <Cookies />
                             <NavBar />
                             <GTMHandler />
@@ -43,19 +43,19 @@ const AppRouter = () => {
                                 <Route path="/company" element={<Company />} />
                                 <Route path="/policy" element={<PoliticaCookies />} />
                                 <Route path="/raffle-terms" element={<RaffleTerms />} />
-                                <Route path="/testproducts" element={<IndividualProduct />} />
-                                <Route path="/product/:id" element={<ParamsProduct />} />
-                                <Route path="/cart-products-view" element={<CartView />} />
-                                <Route path="/checkout" element={<CheckoutPage />} />
+                                {/* <Route path="/testproducts" element={<IndividualProduct />} />
+                                <Route path="/product/:id" element={<ParamsProduct />} /> */}
+                                {/* <Route path="/cart-products-view" element={<CartView />} /> */}
+                                {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
                                 <Route path="/*" element={<Error404 />} />
                                 <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
                                 {/* Tiene Acceso solo el admin con la prop pasada */}
                                 <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
                             </Routes>
                             <Footer />
-                        </FavoritesProvider>
+                     {/*    </FavoritesProvider>
                     </ReseñasProvider>
-                </CartProvider>        
+                </CartProvider>  */}       
             </SessionProvider>
         </Router>
     );  

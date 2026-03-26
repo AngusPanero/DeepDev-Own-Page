@@ -7,13 +7,26 @@ interface CardData {
   mesVencimiento: string;
   cvv: string;
 }
+
 interface CreditProps {
   data: CardData;       
   isFlipped: boolean;
 }
 
 const CreditCard = ({ data, isFlipped }: CreditProps) => {
-  const formatCardNumber = (number: any) => {
+  
+  // Lógica para detectar la marca de la tarjeta
+  const getCardBrand = (number: string) => {
+    const cleanNumber = number.replace(/\s/g, '');
+    if (cleanNumber.startsWith('4')) return 'visa';
+    if (/^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)/.test(cleanNumber)) return 'mastercard';
+    if (/^3[47]/.test(cleanNumber)) return 'amex';
+    return 'default';
+  };
+
+  const brand = getCardBrand(data.tarjetaNumero || "");
+
+  const formatCardNumber = (number: string) => {
     return number ? number.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim() : "#### #### #### ####";
   };
 
@@ -27,7 +40,26 @@ const CreditCard = ({ data, isFlipped }: CreditProps) => {
           
           <div className="card-content"> 
             <div className="card-chip"></div>
-            <div className="card-brand">VISA</div>
+            
+            {/* LOGO CONDICIONAL */}
+            <div className={`card-brand brand-${brand}`}>
+              {brand === 'visa' && <span>VISA</span>}
+              
+              {brand === 'mastercard' && (
+                <div className="master-circles">
+                  <div className="circle-red"></div>
+                  <div className="circle-orange"></div>
+                </div>
+              )}
+              
+              {brand === 'amex' && (
+                <div className="amex-box">
+                  <span>AMEX</span>
+                </div>
+              )}
+
+              {brand === 'default' && <span className="default-label">CARD</span>}
+            </div>
             
             <div className="card-number-display">
               {formatCardNumber(data.tarjetaNumero)}
@@ -52,7 +84,7 @@ const CreditCard = ({ data, isFlipped }: CreditProps) => {
         <div className="card-back">
           <div className="border-glow"></div>
           
-          <div className="card-content"> {/* <-- ESTO FALTABA: Envuelve todo */}
+          <div className="card-content">
             <div className="magnetic-bar"></div>
             <div className="cvv-section">
               <span className="card-label">CVV</span>
@@ -60,7 +92,6 @@ const CreditCard = ({ data, isFlipped }: CreditProps) => {
                 {data.cvv || "•••"}
               </div>
             </div>
-            <div className="card-back-design"></div>
           </div>
         </div>
         

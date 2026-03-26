@@ -67,7 +67,7 @@
 
 .summary-sticky-content {
     position: sticky;
-    top: 60px;
+    top: 100px;
 }
 
 /* ESTILOS DE ELEMENTOS */
@@ -325,12 +325,14 @@ input:focus {
     overflow-y: auto;
     border-bottom: 1px solid var(--ch-border);
     padding-bottom: 15px;
-    padding-right: 5px; /* Espacio para la scrollbar */
+    padding-right: 5px; 
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Scrollbar personalizada para que no rompa la estética */
 .checkout-items-preview::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
 }
 .checkout-items-preview::-webkit-scrollbar-thumb {
     background: var(--ch-accent);

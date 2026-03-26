@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import '../../styles/salesHistory.css';
 import { UseTheme } from '../../contexts/ThemeContext';
+import "../../styles/salesHistory.css"
 
 interface Sale {
     _id: string;

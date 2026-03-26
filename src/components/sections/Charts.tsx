@@ -8,7 +8,7 @@ interface DashboardChartsProps {
 }
 
 const Charts: React.FC<DashboardChartsProps> = ({ allTickets }) => {
-    // ESTADOS INTERNOS DE FILTRADO
+    // ESTADOS DE FILTRADO
     const [timeRange, setTimeRange] = useState<'day' | 'month' | 'year' | 'custom'>('month');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');

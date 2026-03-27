@@ -2,13 +2,13 @@ import { useEffect } from "react";
 import { UseSession } from "../contexts/SessionContext";
 import { UseShopping } from "../contexts/ShoppingContext";
 import { UseTheme } from "../contexts/ThemeContext";
-import { UseFavorites } from "../contexts/FavoritesContext"; 
+/* import { UseFavorites } from "../contexts/FavoritesContext";  */
 import "../styles/dashboard.css"
 
 const Dashboard = () => {
     const { user, loading } = UseSession()
     const { purchased, getPurchased } = UseShopping()
-    const { favorites, loadingFavs } = UseFavorites(); 
+/*     const { favorites, loadingFavs } = UseFavorites();  */
     const { theme } = UseTheme(); 
 
     useEffect(() => {
@@ -54,7 +54,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Sección de Favoritos Actualizada */}
-                    <div className="dd-logs-container">
+                   {/*  <div className="dd-logs-container">
                         <div className="card-header">FAVORITOS_GUARDADOS</div>
                         <div className="dd-logs-wrapper">
                             {loadingFavs ? (
@@ -66,13 +66,13 @@ const Dashboard = () => {
                                             <span className="log-icon">★</span>
                                             
                                             <span className="log-plan">
-                                                {/* Acceso directo a la propiedad del JSON que mostraste */}
+                                         
                                                 {fav.nombre ? fav.nombre.toUpperCase() : "PRODUCTO SIN NOMBRE"}
                                             </span>
 
                                             <span className="log-status">ACTIVO</span>
 
-                                            {/* El link usa el ID del producto guardado en el favorito */}
+                                         
                                             <a href={`/product/${fav.productId}`} className="log-action">
                                                 VER_PRODUCTO
                                             </a>
@@ -83,7 +83,7 @@ const Dashboard = () => {
                                 <div className="dd-empty">NO_DATA_LOGGED</div>
                             )}
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Transactions Log */}
                     <div className="dd-logs-container">

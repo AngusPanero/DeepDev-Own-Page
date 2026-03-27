@@ -3,14 +3,14 @@ import { UseSession } from "../contexts/SessionContext";
 import { UseShopping } from "../contexts/ShoppingContext";
 import { UseUsers } from "../contexts/UsersContext";
 import "../styles/adminDashboard.css"
-import CreateProduct from "../components/sections/CreateProduct";
+/* import CreateProduct from "../components/sections/CreateProduct";
 import CategoryManager from "../components/sections/CategoryManage";
-import ProductAdminManager from "../components/sections/ProductAdminManager";
+import ProductAdminManager from "../components/sections/ProductAdminManager"; */
 import UsersRegistered from "../components/sections/UsersRegistered";
 import SalesHistory from "../components/sections/SalesHistory";
 import Charts from "../components/sections/Charts";
 import { UseTheme } from "../contexts/ThemeContext";
-import CouponCreator from "../components/sections/CouponCreator";
+/* import CouponCreator from "../components/sections/CouponCreator"; */
 
 const AdminDashboard = () => {
     const { user, handleUnbanUser, handleBanUser } = UseSession();
@@ -28,12 +28,12 @@ const AdminDashboard = () => {
     return (
         <div className={`dd-dashboard ${theme}`}>
             <Charts allTickets={allTickets} />
-            <CreateProduct />
-            <ProductAdminManager />
+            {/* <CreateProduct />
+            <ProductAdminManager /> */}
             <SalesHistory allTickets={allTickets} />
             <UsersRegistered users={users} handleBanUser={handleBanUser} handleUnbanUser={handleUnbanUser} />
-            <CategoryManager />
-            <CouponCreator />
+            {/* <CategoryManager />
+            <CouponCreator /> */}
         </div>
     );
 };

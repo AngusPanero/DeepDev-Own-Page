@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell } from 'recharts';
 import { UseTheme } from '../../contexts/ThemeContext';
-import "../../styles/charts.css"
+import "../../styles/chaarts.css"
 
 interface DashboardChartsProps {
     allTickets: any[];

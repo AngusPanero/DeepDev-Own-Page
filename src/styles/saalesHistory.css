@@ -29,7 +29,7 @@ div.sh-container.sh-container.light {
     --sh-text-dim: #476582;
 }
 
-/* BLINDAJE DE COLOR DE TEXTO (Para que se vea en Dark/Light) */
+/* BLINDAJE D COLOR DE TEXTO (Para que se vea en Dark/Light) */
 div.sh-container.sh-container:not(.light) span,
 div.sh-container.sh-container:not(.light) h2,
 div.sh-container.sh-container:not(.light) div {

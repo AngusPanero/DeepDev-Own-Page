@@ -111,7 +111,7 @@ div.dc-wrapper.dc-wrapper .dc-date-field {
     padding: 5px 10px;
 }
 
-/* 6. GRILLA Y CARDS */
+/* 6. GRILLA - CARDS */
 div.dc-wrapper.dc-wrapper .dc-charts-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

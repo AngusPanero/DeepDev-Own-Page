@@ -39,7 +39,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Stats Card (Ahora incluye conteo de Favoritos) */}
-                    <div className="dd-terminal-card highlight">
+                    {/* <div className="dd-terminal-card highlight">
                         <div className="card-header">DATA_INDEX</div>
                         <div className="card-body">
                             <div className="dd-stat-row">
@@ -51,7 +51,7 @@ const Dashboard = () => {
                                 <span className="dd-unit">SAVED_ITEMS</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Sección de Favoritos Actualizada */}
                    {/*  <div className="dd-logs-container">

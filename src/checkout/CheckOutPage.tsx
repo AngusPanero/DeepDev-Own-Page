@@ -4,25 +4,35 @@ import { UseCart } from "../contexts/CartContext";
 import { UseSession } from "../contexts/SessionContext";
 import "./checkoutPage.css";
 import CreditCard from "../components/ui/CreditCard";
+import useMercadoPago from "../hooks/useMercadoPago";
+import { v4 } from 'uuid';
+import axios from "axios";
+import Loader from "../components/sections/Loader";
+import ProcessOk from "../components/sections/ProcessOk";
+import Error from "../components/sections/Error";
 
-// Configuración de tasas de interés según el requerimiento
 const INTERES_RATES: Record<string, number> = {
     "1": 0,
-    "3": 0.05,  // 5%
-    "6": 0.10,  // 10%
-    "9": 0.15,  // 15%
-    "12": 0.20  // 20%
+    "3": 0.05, 
+    "6": 0.10, 
+    "9": 0.15, 
+    "12": 0.20 
 };
 
 const CheckoutPage = () => {
+    const mp = useMercadoPago()
+    const [ idempotencyKey ] = useState(v4());
+
     const { theme } = UseTheme();
     const { user } = UseSession();
-    const { cart, totalAmount, appliedCoupon, applyCoupon, handlePaymentSuccess, priceAlert, setPriceAlert, refreshCartPrices } = UseCart();
+    const { cart, totalAmount, appliedCoupon, applyCoupon, clearCart, priceAlert, setPriceAlert, refreshCartPrices } = UseCart();
     
     const [isFlipped, setIsFlipped] = useState(false);
     const [loading, setLoading] = useState(false);
     const [couponInput, setCouponInput] = useState('');
     const [couponMsg, setCouponMsg] = useState({ text: '', isError: false });
+    const [ error, setError ] = useState<string | null | boolean>(null);
+    const [ status, setStatus ] = useState<string>("");
 
     const [formData, setFormData] = useState({ 
         nombre: "", email: user?.email || "", dni: "", 
@@ -33,6 +43,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         if (cart.length > 0) refreshCartPrices(cart);
+        
     }, []); 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -73,15 +84,111 @@ const CheckoutPage = () => {
         setLoading(false);
     };
 
-    const onCheckoutSubmit = async (e: React.FormEvent) => {
+    const makePayment = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (window.confirm("¿Confirmar el procesamiento del pago?")) {
+        if (!mp) return;
+
+        if (!window.confirm("¿Confirmar el procesamiento del pago?")) {
+            return
+        }
+        try {
+            setError(false);
             setLoading(true);
-            await handlePaymentSuccess();
+
+            const cardNumber = formData.tarjetaNumero.trim().replace(/\s/g, "");
+            
+            const bin = cardNumber.substring(0, 6);
+
+            // 1. Obtener primero el método de pago
+            const paymentMethodsResponse = await mp.getPaymentMethods({ bin });
+
+            // CORRECCIÓN: Acceder a .results[0] según el log que mostraste
+            const paymentMethod = paymentMethodsResponse && paymentMethodsResponse.results && paymentMethodsResponse.results.length > 0 
+                ? paymentMethodsResponse.results[0] 
+                : null;
+
+            if (!paymentMethod) {
+                console.error("No se pudo identificar el método de pago.");
+            }
+
+            // 2. Intentar obtener el emisor
+            let issuerId = undefined;
+            try {
+                // el emisor ya viene dentro del paymentMethod: paymentMethod.issuer.id
+                // Intentamos obtenerlo de la API por seguridad, pero tenemos el fallback del log
+                const issuers = await mp.getIssuers({ 
+                    paymentMethodId: paymentMethod.id, 
+                    bin 
+                });
+
+                if (issuers && issuers.length > 0) {
+                    issuerId = issuers[0].id;
+                } else if (paymentMethod.issuer && paymentMethod.issuer.id) {
+                    // Fallback: usar el que ya detectó getPaymentMethods
+                    issuerId = paymentMethod.issuer.id;
+                }
+            } catch (issuerError) {
+                console.warn("No se pudo obtener el emisor, continuando sin él...", issuerError);
+            }
+
+            // 3. Generar el CardToken
+            // Nota: Asegúrate que identificationType sea dinámico si planeas aceptar otros que no sean DNI
+            const cardToken = await mp.createCardToken({
+                cardNumber,
+                cardholderName: formData.nombre.trim(),
+                cardExpirationMonth: formData.mesVencimiento.trim(),
+                cardExpirationYear: formData.añoVencimiento.trim(),
+                securityCode: formData.cvv.trim(),
+                identificationType: "DNI", 
+                identificationNumber: formData.dni.trim(),
+            });
+            
+            if (!cardToken || !cardToken.id) {
+                console.error("Error al generar el token de seguridad.");
+            }
+
+            // 4. Construir Payload
+            const payload = {
+                token: cardToken.id,
+                issuer_id: issuerId ? String(issuerId) : undefined, 
+                payment_method_id: paymentMethod.id,
+                transaction_amount: Math.round(finalAmountConInteres),
+                installments: Number(formData.cuotas),
+                description: "DeepDev Studio - Servicio Digital",
+                /* plan: productData.title, */
+                payer: {
+                    email: formData.email,
+                    identification: {
+                        type: "DNI",
+                        number: formData.dni,
+                    },
+                    // Asegúrate que esta variable de entorno esté cargada
+                    id_internal: `${import.meta.env.VITE_ID__MP_INTERNAL}`,
+                },
+                // Asegúrate que esta variable esté definida en tu componente
+                idempotencyKey: typeof idempotencyKey !== 'undefined' ? idempotencyKey : undefined 
+            };
+
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/mercado-pago-payments`, payload);
+
+            if (response.data.status === "approved") {
+                clearCart()
+                setStatus("ok");
+            } else {
+                setError(`Estado: ${response.data.status_detail || response.data.status}`);
+            }
+
+        } catch (error: any) {
+            console.error("Error detallado en integración:", error);
+            setError("Error al procesar el pago. Verifique los datos de su tarjeta.");
+        } finally {
             setLoading(false);
-            alert("SISTEMA: Transacción completada con éxito. 🟢");
         }
     };
+
+    if (error) return <Error errorMessage="Error al procesar el pago!"/>
+    if (loading) return <Loader />;
+    if(status === "ok") return <ProcessOk processMessage={"Pago procesado exitosamente, Muchas Gracias!"} />
 
     return (
         <div className={`checkout-screen ${theme}`}>
@@ -92,7 +199,7 @@ const CheckoutPage = () => {
                         <h1>CHECKOUT_PROMPT</h1>
                     </header>
 
-                    <form className="main-checkout-form" onSubmit={onCheckoutSubmit}>
+                    <form className="main-checkout-form" onSubmit={makePayment}>
                         <section className="checkout-section">
                             <h2 className="section-label">01 // IDENTIFICACIÓN</h2>
                             <div className="input-field">
@@ -155,10 +262,15 @@ const CheckoutPage = () => {
                                 </select>
                             </div>
                             <small className="terminal-helper">* El recargo no aplica en productos con beneficio de cuotas sin interés.</small>
+                            <p>Total: ${totalAmount.toLocaleString()}</p>
+                            <p>Cuotas: {formData.cuotas}</p>
+                            <p>Total Cuotas: ${typeof finalAmountConInteres}</p>
+                            {cart.map((item, index) => <p key={index+1}>Prod: {index +1}: ${item.precio.toLocaleString()}</p>)}
+                            
                         </section>
 
-                        <button type="submit" className="final-pay-btn" disabled={loading}>
-                            {loading ? "EXECUTING..." : "CONFIRM_PAYMENT"}
+                        <button type="submit" className="final-pay-btn" disabled={loading || status === "ok"}>
+                            {loading ? ("EJECUTANDO PAGO...") : status === "ok" ? ("PAGO APROBADO!") : ("CONFIRMAR_PAGO")}
                         </button>
                     </form>
                 </div>
@@ -234,7 +346,7 @@ const CheckoutPage = () => {
                             <div className="summary-divider"></div>
                             <div className="summary-line total">
                                 <span>TOTAL FINAL:</span>
-                                <span>${Math.round(finalAmountConInteres).toLocaleString()},00.-</span>
+                                <span>${Math.round(finalAmountConInteres).toLocaleString()},-</span>
                             </div>
                             {cuotasSeleccionadas > 1 && (
                                 <div className="summary-line installment-footer">

@@ -166,7 +166,7 @@ const CouponCreator = () => {
                 <div className="active-coupons-section" style={{ marginTop: '30px' }}>
                     <label className="stat-label" style={{ marginBottom: '15px', display: 'block' }}>ACTIVE_COUPONS_LIST</label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                        {coupons.map((coupon) => (
+                        {Array.isArray(coupons) && coupons.map((coupon) => (
                         <div key={coupon._id} className="coupon-tag">
                             <div className="tag-info">
                                 <span className="tag-code">{coupon.code}</span>

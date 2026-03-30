@@ -45,8 +45,17 @@ const AdminInventory = () => {
     const fetchCategories = async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, { withCredentials: true });
-            setCategories(res.data.categorias);
-        } catch (err) { console.error(err); }
+            if (res.data && res.data.categorias) {
+                console.log(res.data.categorias);
+                
+                setCategories(res.data.categorias);
+            } else {
+                setCategories([]); // Fallback para evitar undefined
+            }
+        } catch (err) { 
+            console.error(err); 
+            setCategories([]);
+        }
     };
 
     // --- 1. ESTADÍSTICAS ---

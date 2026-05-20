@@ -188,7 +188,6 @@ h4.product-card-title {
     background: rgba(0, 0, 0, 0.75);
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
 }
 
 .product-card-terminal.pausado { opacity: 0.6; }

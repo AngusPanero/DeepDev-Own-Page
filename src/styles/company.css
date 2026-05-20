@@ -1,480 +1,486 @@
-.company-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto; 
-  padding: 170px 20px;
-  color: white;
-  position: relative;
-}
+/* ============================================================
+   company.css — DeepDev · Company narrative page
+   ============================================================ */
 
-.company-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 30px;
-  z-index: 3;
-}
+* { box-sizing: border-box; }
 
-.dd-grid-overlay.dark{
+/* ── ROOT ─────────────────────────────────────────────────── */
+.co-root {
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'Montserrat', 'Montserrat', sans-serif;
+}
+.theme-dark.co-root  { background: #000; color: #fff; }
+.theme-light.co-root { background: #f4f2ff; color: #0a192f; }
+
+/* ── GRID OVERLAY ─────────────────────────────────────────── */
+.dd-grid-overlay.dark {
+    pointer-events: none;
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: linear-gradient(#1f1f1f 1px, transparent 1px), 
+    background-image: linear-gradient(#1f1f1f 1px, transparent 1px),
                       linear-gradient(90deg, #1f1f1f 1px, transparent 1px);
-    background-size: 40px 40px; opacity: 0.2; z-index: 2;
+    background-size: 40px 40px; opacity: 0.18; z-index: 1;
 }
-
-.dd-grid-overlay.light{
+.dd-grid-overlay.light {
+    pointer-events: none;
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: linear-gradient(rgba(0, 98, 255, 0.1) 1px, transparent 1px), 
-                      linear-gradient(90deg, rgba(0, 98, 255, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px; opacity: 0.2; z-index: 2;
+    background-image: linear-gradient(rgba(0,98,255,0.09) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,98,255,0.09) 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.2; z-index: 1;
 }
 
-/* Reutilizando tus clases de título para consistencia */
-.company-header .hero-title {
-  width: auto; /* Ajuste para centrar */
-  margin: 20px auto;
+/* ── SHARED LABEL ─────────────────────────────────────────── */
+.dd-label {
+    font-family: 'Montserrat', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 20px;
+}
+.label-dark  { color: rgba(255,255,255,0.45); }
+.label-light { color: #0062FF; opacity: 0.6; }
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.co-hero {
+    position: relative;
+    z-index: 5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 5rem 6rem;
+    overflow: hidden;
+    text-align: center;
 }
 
-.hero-description{
-  width: 600px;
-  font-size: 20px;
+.co-hero-content { position: relative; z-index: 3; width: 100%; }
+
+/* floating title */
+.dd-massive-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(4rem, 14vw, 12rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -4px;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+}
+.theme-dark .dd-massive-title  { color: #fff; }
+.theme-light .dd-massive-title { color: #0a192f; }
+
+.co-hero-sub {
+    font-family: 'Montserrat', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin: 0;
+}
+.sub-dark  { color: rgba(255,255,255,0.35); }
+.sub-light { color: rgba(10,25,47,0.4); }
+
+/* hero glow */
+.co-hero-glow {
+    position: absolute; inset: 0;
+    pointer-events: none; z-index: 0;
+}
+.glow-dark  { background: radial-gradient(ellipse 65% 55% at 50% 45%, rgba(142,45,226,0.1), transparent 70%); }
+.glow-light { background: radial-gradient(ellipse 65% 55% at 50% 45%, rgba(0,98,255,0.07), transparent 70%); }
+
+/* ── DNA SECTION ──────────────────────────────────────────── */
+.co-dna {
+    padding: 60px 8%;
+    position: relative;
+    z-index: 5;
+}
+.theme-dark .co-dna   { border-top: 1px solid rgba(255,255,255,0.06); }
+.theme-light .co-dna  { border-top: 1px solid rgba(0,98,255,0.08); }
+
+.co-dna-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 40px;
+    align-items: start;
+}
+.co-dna-left { padding-top: 4px; }
+
+.co-dna-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.2rem, 2.8vw, 2.1rem);
+    font-weight: 200;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+.dna-dark  { color: rgba(255,255,255,0.85); }
+.dna-light { color: #1e293b; }
+
+/* ── HIGH PERFORMANCE (WARP) ──────────────────────────────── */
+.dd-warp-section {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+.warp-dark  { background: #000; }
+.warp-light { background: #f4f2ff; }
+
+.dd-warp-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    pointer-events: none;
 }
 
-/* Grid de Métricas */
-.metrics-grid {
-  display: grid;
-  position: relative;
-  z-index: 3;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 80px;
+.dd-warp-block {
+    flex: 1;
+    width: 100%;
+}
+.warp-block-dark  { background: #0a0a12; border-bottom: 1px solid #000; }
+.warp-block-light { background: #e8e4ff; border-bottom: 1px solid #f4f2ff; }
+.dd-warp-block:nth-child(even) { transform-origin: left; }
+.dd-warp-block:nth-child(odd)  { transform-origin: right; }
+
+.dd-warp-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 0 10%;
 }
 
-.metric-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 300px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--glass-border);
-  padding: 30px 20px;
-  border-radius: 20px;
-  text-align: center;
-  backdrop-filter: blur(10px);
+.dd-warp-text-box { display: inline-block; }
+
+.dd-warp-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 0.85;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin: 16px 0 20px;
+}
+.warp-title-dark  { color: #fff; }
+.warp-title-dark span {
+    -webkit-text-stroke: 2px #8e2de2;
+    color: transparent;
+}
+.warp-title-light { color: #0a192f; }
+.warp-title-light span {
+    -webkit-text-stroke: 2px #0062FF;
+    color: transparent;
 }
 
-.metric-number {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #8e2de2, #4a00e0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.dd-warp-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    max-width: 560px;
+    margin: 0 auto;
+}
+.warp-desc-dark  { color: rgba(255,255,255,0.6); }
+.warp-desc-light { color: #476582; }
+
+/* ── EVOLUTION SECTION ────────────────────────────────────── */
+.co-evolution {
+    padding: 80px 8%;
+    position: relative;
+    z-index: 5;
 }
 
-.metric-label {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+.co-evo-list { margin-top: 40px; }
 
-/* Historia Vertical */
-.timeline-container {
-  position: relative;
-  z-index: 3;
-  max-width: 600px;
-  margin: 0 auto 80px;
-  padding-left: 30px;
-  border-left: 2px solid rgba(142, 45, 226, 0.3);
+.co-evo-row {
+    display: flex;
+    align-items: center;
+    padding: 16px 0;
+    gap: 40px;
+    transition: padding-left 0.35s ease;
 }
+.co-evo-row:hover { padding-left: 16px; }
 
-.timeline-item {
-  position: relative;
-  margin-bottom: 40px;
-}
+.evo-dark  { border-bottom: 1px solid rgba(255,255,255,0.06); }
+.evo-light { border-bottom: 1px solid rgba(0,98,255,0.08); }
 
-.timeline-dot {
-  position: absolute;
-  left: -37px;
-  top: 5px;
-  width: 12px;
-  height: 12px;
-  background: #8e2de2;
-  border-radius: 50%;
-  box-shadow: 0 0 15px #8e2de2;
-}
-
-.timeline-year {
-  font-weight: 800;
-  color: var(--violet-soft);
-  font-size: 1.2rem;
-}
-
-.timeline-content h4 {
-  font-size: 1.5rem;
-  margin: 5px 0;
-}
-
-.timeline-content p {
-  color: rgba(255, 255, 255, 0.7);
-  line-height: 1.6;
-}
-
-/* Call to Action */
-.company-cta {
-  position: relative;
-  z-index: 3;
-  margin: 20px auto;
-  width: 800px;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
-  padding: 30px 0 40px 0;
-}
-
-.company-cta p {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-  font-family: "Montserrat", sans-serif;
-}
-
-.cta-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 14px 32px;
-  background: linear-gradient(135deg, #8e2de2, #4a00e0);
-  font-family: "Montserrat", sans-serif;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 50px;
-  transition: 0.3s;
-}
-
-.cta-button:hover {
-  color: white;
-  transform: translateY(-3px);
-}
-
-.presence-container {
-  position: relative;
-  z-index: 3;
-  margin: 60px auto;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
-  text-align: center;
-  max-width: 800px;
-}
-
-.presence-content h3 {
-    font-size: 2rem;
-    margin: 15px 0;
+.co-evo-year {
+    font-family: 'Montserrat', monospace;
+    font-size: 0.85rem;
     font-weight: 700;
+    letter-spacing: 0.1em;
+    min-width: 80px;
+    flex-shrink: 0;
+}
+.year-dark  { color: #a855f7; }
+.year-light { color: #0062FF; }
+
+.co-evo-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-weight: 400;
+    letter-spacing: -0.3px;
+    margin: 0;
+    flex: 1;
+}
+.theme-light .co-evo-title { color: #0a192f; }
+
+.co-evo-line { flex-grow: 1; height: 1px; }
+.evo-line-dark  { background: rgba(255,255,255,0.06); }
+.evo-line-light { background: rgba(0,98,255,0.1); }
+
+/* ── METRIC GRID ──────────────────────────────────────────── */
+.dd-metrics-section {
+    position: relative;
+    z-index: 5;
+}
+.metrics-dark  { background: #000; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.metrics-light { background: #f4f2ff; border-top: 1px solid rgba(0,98,255,0.08); border-bottom: 1px solid rgba(0,98,255,0.08); }
+
+.dd-metrics-grid {
+    display: grid;
+    gap: 1px;
+    background: rgba(128,128,128,0.08);
 }
 
-.presence-content p {
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 600px;
-    margin: 0 auto 30px;
-    line-height: 1.6;
+.dd-metric-card {
+    padding: 48px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+.mcard-dark  { background: #000; }
+.mcard-light { background: #f4f2ff; }
+.mcard-dark:hover  { background: rgba(142,45,226,0.04); }
+.mcard-light:hover { background: rgba(0,98,255,0.04); }
+
+.dd-metric-bar {
+    position: absolute;
+    left: 0; top: 0;
+    width: 3px; height: 100%;
+    transform-origin: bottom;
+    border-radius: 0 2px 2px 0;
 }
 
-.location-tags {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.dd-metric-id {
+    font-family: 'Montserrat', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.3;
+    display: block;
+    margin-bottom: 16px;
 }
 
-.location-tag {
+.dd-metric-value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(3rem, 7vw, 4.5rem);
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -3px;
+    margin: 0 0 32px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+.theme-dark .dd-metric-value  { color: #fff; }
+.theme-light .dd-metric-value { color: #0a192f; }
+
+.dd-metric-suffix {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.dd-metric-info {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 24px;
-    background: rgba(142, 45, 226, 0.1);
-    border: 1px solid rgba(142, 45, 226, 0.3);
-    border-radius: 99px;
-    font-weight: 600;
-    transition: 0.3s ease;
 }
 
-.location-tag span{
-
-  color: white;
+.dd-metric-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.location-tag:hover {
-    background: rgba(142, 45, 226, 0.2);
-    transform: translateY(-5px);
-    border-color: var(--violet-soft);
+.dd-metric-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.45;
+    margin: 0;
 }
 
-.location-tag .flag {
-    font-size: 1.5rem;
+/* ── NETWORK ──────────────────────────────────────────────── */
+.co-network {
+    padding: 80px 8%;
+    position: relative;
+    z-index: 5;
+}
+.network-dark  { border-top: 1px solid rgba(255,255,255,0.06); }
+.network-light { border-top: 1px solid rgba(0,98,255,0.08); }
+
+.co-net-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
 }
 
-a{
-  cursor: pointer;
-  text-decoration: none;
-}
-
-/* LIGHT */
-.theme-light {
-  background: #F4F7FA; /* El blanco azulado que elegimos */
-  color: #0A192F; /* Azul marino profundo en vez de negro */
-}
-
-/* Títulos y Descripciones */
-.theme-light h2.hero-title span {
-  background: linear-gradient(90deg, #afcfff, #0076FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* Reset por si acaso para navegadores antiguos */
-    background-clip: text;
-}
-
-.theme-light .hero-description {
-  color: #334E68; /* Un gris azulado equilibrado */
-}
-
-/* Cards de Métricas */
-.theme-light .metric-card {
-  background: #ffffff1c; /* Blanco sólido para que resalte sobre el fondo F4F7FA */
-  border: 1px solid rgba(0, 98, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 98, 255, 0.05);
-}
-
-.metric-number-light {
-  color: #0062FF; 
-  font-size: 2.5rem;
-  font-weight: 800;
-}
-
-.theme-light .metric-label {
-  color: #0062FF;
-}
-
-/* Timeline */
-.theme-light .timeline-container {
-  border-left: 2px solid rgba(0, 98, 255, 0.2);
-}
-
-.theme-light .timeline-content h4 {
-  color: #0A192F;
-}
-
-.theme-light .timeline-content p {
-  color: #476582;
-}
-
-.theme-light .timeline-year {
-    color: #0062FF; /* Tu nuevo azul eléctrico */
-    font-weight: 700;
-}
-
-/* Presence & CTA Containers */
-.theme-light .presence-container,
-.theme-light .company-cta {
-  background: #ffffff41;
-  border: 1px solid rgba(0, 98, 255, 0.1);
-  box-shadow: 0 15px 35px rgba(10, 25, 47, 0.06);
-  color: #0A192F;
-}
-
-.theme-light .presence-content p {
-  color: #476582;
-}
-
-/* Location Tags */
-.theme-light .location-tag {
-  background: #ffffff3a;
-  border: 1px solid rgba(0, 98, 255, 0.3);
-  color: #0062FF; /* Azul en vez de violeta */
-  transition: all 0.3s ease;
-}
-
-.theme-light .location-tag:hover {
-  background: rgba(0, 98, 255, 0.05);
-  border-color: #00D1FF; /* Toque cian al hover */
-}
-
-/* --- CONFIGURACIÓN DARK MODE --- */
-.theme-dark {
-    background: #000000;
-    color: #ffffff;
-}
-
-.theme-light .badge-new {
-  background: linear-gradient(135deg, #0062FF 0%, #00D1FF 100%);
-  border: 1px solid #b9d4ffbb;
-}
-
-.theme-light .cta-button {
-  background: linear-gradient(135deg, #0062FF 0%, #00D1FF 100%);
-  border: 1px solid #0062ff9c;
-}
-
-.theme-light .timeline-dot {
-  position: absolute;
-  left: -37px;
-  top: 5px;
-  width: 12px;
-  height: 12px;
-  background: #0062FF;
-  border-radius: 50%;
-  box-shadow: 0 0 15px #2d7ee2;
-}
-
-.location-tag-theme-light{
-  color: black;
-}
-
-.location-tag-theme-dark{
-  color: black;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .location-tags {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .company-section{
-    margin-top: 10rem;
-  }
-
-  .theme-light span {
-    color: #0062FF; /* Tu nuevo azul eléctrico */
-    font-weight: 700;
-}
-
-  .company-content{
+.co-net-item {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-  }
-
-  .metrics-grid {
-    align-self: center;
-    grid-template-columns: 1fr;
-    margin-left: 20px;
-  }
-
-  .timeline-dot{
-    margin-left: 5px;
-  }
-
-  .company-header .hero-title {
-    font-size: 2.2rem;
-  }
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
 }
 
-@media (max-width: 1024px) {
-    .company-section {
-        padding: 80px 20px; /* Reducimos el padding exagerado de 170px */
-    }
+.co-net-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
 
-    .hero-description, 
-    .presence-container, 
-    .company-cta {
-        width: 100%; /* Dejamos de usar pixeles fijos */
-        max-width: 90%; /* Les damos un margen para que no toquen el borde */
-    }
+.co-net-desc {
+    font-family: 'Montserrat', monospace;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    opacity: 0.5;
+    line-height: 1.5;
+}
+
+.co-net-link {
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+.co-net-link:hover { opacity: 0.9; }
+.theme-dark .co-net-link  { color: rgba(255,255,255,0.5); }
+.theme-light .co-net-link { color: rgba(10,25,47,0.5); }
+
+/* ── FOOTER BIG LINK ──────────────────────────────────────── */
+.co-footer {
+    padding: 80px 8% 100px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+.footer-dark  { border-top: 1px solid rgba(255,255,255,0.06); }
+.footer-light { border-top: 1px solid rgba(0,98,255,0.08); }
+
+.co-big-link {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(1.8rem, 5.5vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+.big-dark { color: #fff; }
+.big-dark:hover { color: #a855f7; }
+
+.big-light { color: #0a192f; }
+.big-light:hover { color: #0062FF; }
+
+
+/* ── SCROLL HINT ──────────────────────────────────────────── */
+.co-scroll-hint {
+    position: absolute;
+    bottom: 5.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.co-scroll-mouse {
+    width: 22px;
+    height: 34px;
+    border-radius: 11px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 6px;
+}
+.hint-dark  .co-scroll-mouse { border: 1.5px solid rgba(255,255,255,0.25); }
+.hint-light .co-scroll-mouse { border: 1.5px solid rgba(0,98,255,0.35); }
+
+.co-scroll-wheel {
+    width: 3px;
+    height: 7px;
+    border-radius: 2px;
+    animation: scrollWheelMove 1.6s ease-in-out infinite;
+}
+.hint-dark  .co-scroll-wheel { background: rgba(255,255,255,0.5); }
+.hint-light .co-scroll-wheel { background: rgba(0,98,255,0.55); }
+
+.co-scroll-label {
+    font-family: 'Montserrat', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.hint-dark  .co-scroll-label { color: rgba(255,255,255,0.3); }
+.hint-light .co-scroll-label { color: rgba(0,98,255,0.4); }
+
+@keyframes scrollWheelMove {
+    0%   { opacity: 1;   transform: translateY(0); }
+    60%  { opacity: 0;   transform: translateY(8px); }
+    61%  { opacity: 0;   transform: translateY(0); }
+    100% { opacity: 1;   transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
-    /* 1. Header y Texto */
-    .hero-description {
-        width: 100%;
-        font-size: 18px; /* Un poco más pequeña para legibilidad */
-    }
+    .co-scroll-hint { bottom: 4.75rem; }
+}
+@media (max-width: 480px) {
+    .co-scroll-hint { bottom: 8.25rem; }
+    .co-scroll-label { font-size: 0.56rem; }
+}
 
-    .company-header .hero-title {
-        font-size: 2.2rem;
-        padding: 0 10px;
-    }
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .co-dna-grid      { grid-template-columns: 1fr; gap: 20px; }
+    .dd-metrics-grid  { grid-template-columns: 1fr !important; }
+    .co-hero          { padding: 8rem 3rem 5rem; }
+    .co-dna, .co-evolution { padding-left: 5%; padding-right: 5%; }
+    .co-network       { padding: 60px 5%; }
+}
 
-    /* 2. Grid de Métricas (De 3 columnas a 1) */
-    .metrics-grid {
-        grid-template-columns: 1fr; 
-        gap: 15px;
-        width: 100%;
-        max-width: 320px; /* Para que las cards no sean gigantes a lo ancho */
-    }
+@media (max-width: 768px) {
+    .co-hero    { padding: 7rem 1.5rem 4rem; }
+    .co-dna, .co-evolution { padding: 50px 1.5rem; }
+    .co-network { padding: 50px 1.5rem; }
+    .co-footer  { padding: 60px 1.5rem 80px; }
 
-    /* 3. Timeline (Ajuste de espacio) */
-    .timeline-container {
-        margin-left: 10px; /* Le damos aire para que no se pegue al borde izquierdo */
-        padding-left: 25px;
-    }
+    .dd-massive-title { letter-spacing: -2px; }
 
-    .timeline-content h4 {
-        font-size: 1.3rem;
-    }
+    .co-evo-row { gap: 20px; }
+    .co-evo-title { font-size: 0.95rem; }
 
-    /* 4. Presence & CTA (Contenedores) */
-    .presence-container, 
-    .company-cta {
-        width: 100%;
-        max-width: 100%;
-        padding: 30px 15px;
-        border-radius: 20px; /* Bordes un poco más suaves en móvil */
-    }
-
-    .presence-content h3 {
-        font-size: 1.6rem;
-    }
-
-    /* 5. Tags de Ubicación (Acomodarlos para que no se amontonen) */
-    .location-tags {
-        display: flex;
-        flex-wrap: wrap; /* Permite que bajen si no caben */
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .location-tag {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
+    .dd-metric-card { padding: 32px 24px; }
+    .co-net-wrapper { flex-direction: column; gap: 2rem; }
+    .co-big-link { letter-spacing: -1px; }
+    .dd-warp-title { letter-spacing: -1px; }
 }
 
 @media (max-width: 480px) {
-    /* 6. Ajustes finos para móviles pequeños (iPhone SE / Samsung J series) */
-    .company-section {
-        padding: 60px 15px;
-    }
-
-    .metric-number {
-        font-size: 2rem;
-    }
-
-    .company-cta p {
-        font-size: 1rem;
-    }
-
-    .cta-button {
-        width: 100%; /* Botón ancho completo para facilitar el click con el pulgar */
-        text-align: center;
-    }
-
-    .location-tags {
-        flex-direction: column; /* Un tag debajo de otro */
-        align-items: stretch; /* Que todos midan lo mismo */
-    }
-
-    .location-tag {
-        justify-content: center;
-    }
+    .co-hero    { padding: 6rem 1.2rem 3rem; }
+    .co-dna, .co-evolution { padding: 40px 1.2rem; }
+    .co-network { padding: 40px 1.2rem; }
+    .dd-massive-title { letter-spacing: -1.5px; }
+    .dd-metric-card   { padding: 24px 18px; }
 }

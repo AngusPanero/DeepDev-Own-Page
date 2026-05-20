@@ -36,7 +36,7 @@
     width: min(980px, 100%);
     padding: 18px 22px;
     background: transparent;
-    backdrop-filter: blur(14px);
+    
 }
 
 /* SVG */
@@ -136,7 +136,7 @@
 
     .n8n-flow-wrap {
         padding: 10px;
-        backdrop-filter: blur(8px); /* Reducimos desenfoque para ahorrar batería en móviles */
+        
     }
     
     /* Si los iconos se ven muy pequeños, podemos re-ajustar la escala */

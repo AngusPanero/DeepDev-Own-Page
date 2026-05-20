@@ -159,7 +159,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         try {
             await axios.post(`${import.meta.env.VITE_API_URL}/api/checkout/success`, { email: user.email, couponCode: appliedCoupon?.code || null, items: cart }, { withCredentials: true });
             clearCart(); 
-        } catch (error: any) { console.error(error); }
+        } catch(error: any){ 
+            console.error("Error al registrar pago exitoso", error); 
+        }
     };
 
     // VALIDAR PRECIO PRODUCTOS

@@ -13,24 +13,15 @@ import { SessionProvider } from "../contexts/SessionContext";
 import Error404 from "../pages/Error404";
 import PoliticaCookies from "../pages/PoliticaCookies";
 import Cookies from "../components/sections/Cookies";
-import Sales from "../pages/Sales";
 import RaffleTerms from "../pages/RaffleTerms";
 import GTMHandler from "../utils/GTMHandler";
-/* import IndividualProduct from "../pages/IndividualProduct"; */
 import ParamsProduct from "../pages/ParamsProduct";
-/* import { FavoritesProvider } from "../contexts/FavoritesContext";
-import { ReseñasProvider } from "../contexts/ReseñasContext";
-import { CartProvider } from "../contexts/CartContext";
-import CartView from "../pages/CartView";
-import CheckoutPage from "../checkout/CheckOutPage"; */
+
 
 const AppRouter = () => {
     return (
         <Router>
             <SessionProvider>
-                {/* <CartProvider>
-                    <ReseñasProvider>
-                        <FavoritesProvider> */}
                             <Cookies />
                             <NavBar />
                             <GTMHandler />
@@ -38,24 +29,18 @@ const AppRouter = () => {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/contact" element={<Contact />} />
                                 <Route path="/products" element={<Products />} />
-                                <Route path="/sales" element={<Sales />} />
+                                {/* <Route path="/sales" element={<Sales />} /> */}
                                 <Route path="/raffles" element={<Raffles />} />
                                 <Route path="/company" element={<Company />} />
                                 <Route path="/policy" element={<PoliticaCookies />} />
                                 <Route path="/raffle-terms" element={<RaffleTerms />} />
-                                {/* <Route path="/testproducts" element={<IndividualProduct />} /> */}
                                 <Route path="/product/:id" element={<ParamsProduct />} /> 
-                                {/* <Route path="/cart-products-view" element={<CartView />} /> 
-                                <Route path="/checkout" element={<CheckoutPage />} />  */}
                                 <Route path="/*" element={<Error404 />} />
                                 <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />
                                 Tiene Acceso solo el admin con la prop pasada 
                                 <Route path="/admin" element={<PrivateRoute adminOnly={true}><AdminDashboard /></PrivateRoute>} />
                             </Routes>
-                            <Footer />
-                        {/* </FavoritesProvider>
-                    </ReseñasProvider>
-                </CartProvider>  */}      
+                            <Footer />    
             </SessionProvider>
         </Router>
     );  

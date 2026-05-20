@@ -10,8 +10,7 @@
 }
 
 .cookie-banner {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    
     border-radius: 20px;
     padding: 1rem 2rem;
     display: flex;

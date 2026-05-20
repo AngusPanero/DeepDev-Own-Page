@@ -98,8 +98,6 @@ export const SessionProvider = ({ children }: ProviderProps) => {
 
         if (response.status === 200) {
             const { user, isAdmin } = response.data;
-            console.log("USER", user);
-            
             
             setUser(user);
 

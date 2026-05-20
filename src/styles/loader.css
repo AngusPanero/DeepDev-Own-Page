@@ -3,7 +3,7 @@
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: radial-gradient(circle at center, #02061780, #0000007f);
-    backdrop-filter: blur(14px);
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,7 +71,7 @@
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: radial-gradient(circle at center, #0f172a74, #02061771);
-    backdrop-filter: blur(12px);
+    
     display: flex;
     flex-direction: column;
     justify-content: center;

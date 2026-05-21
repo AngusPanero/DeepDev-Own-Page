@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "../pages/Home"
 import Contact from "../pages/Contact";
-import Products from "../pages/Products";
 import Raffles from "../pages/Raffles";
 import Company from "../pages/Company";
 import NavBar from "../components/sections/NavBar";
@@ -16,6 +15,7 @@ import Cookies from "../components/sections/Cookies";
 import RaffleTerms from "../pages/RaffleTerms";
 import GTMHandler from "../utils/GTMHandler";
 import ParamsProduct from "../pages/ParamsProduct";
+import ProductsInfoLusion from "../components/ui/LusionHtml";
 
 
 const AppRouter = () => {
@@ -28,7 +28,7 @@ const AppRouter = () => {
                             <Routes>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/contact" element={<Contact />} />
-                                <Route path="/products" element={<Products />} />
+                                <Route path="/products" element={<ProductsInfoLusion />} />
                                 {/* <Route path="/sales" element={<Sales />} /> */}
                                 <Route path="/raffles" element={<Raffles />} />
                                 <Route path="/company" element={<Company />} />

@@ -182,8 +182,8 @@ const ProductPanel = ({ product, isActive, theme }: {
                                         <img
                                             src={src}
                                             alt=""
-                                            width={44}
-                                            height={44}
+                                            width={64}
+                                            height={64}
                                             style={{
                                                 opacity: isDark ? 0.9 : 0.85,
                                                 filter: isDark

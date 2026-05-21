@@ -8,6 +8,7 @@ import Loader from "../components/sections/Loader"
 import ProcessOk from "../components/sections/ProcessOk"
 import Error from "../components/sections/Error"
 import ParticleButton from "../components/ui/ParticleButton"
+import TubesCursor from "../components/ui/TubesCursor"
 
 // ── Select data ───────────────────────────────────────────────
 const TIPO_TRABAJO   = ["Nuevo Proyecto", "Rediseño de sitio existente"]
@@ -92,8 +93,9 @@ const Contact = () => {
     }
 
     return (
+        <>
         <div ref={pageRef} className={`ct-page ${isDark ? "ct-dark" : "ct-light"}`}>
-            <div className={`dd-grid-overlay ${theme}`} />
+            {/* <div className={`dd-grid-overlay ${theme}`} /> */}
             <div className="ct-glow" aria-hidden="true" />
 
             {/* ══ HEADER BAR ══════════════════════════════════ */}
@@ -377,6 +379,8 @@ const Contact = () => {
                 </div>
             </div>
         </div>
+        <TubesCursor />
+        </>
     )
 }
 

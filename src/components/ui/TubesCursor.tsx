@@ -2,33 +2,43 @@ import React, { useEffect, useRef } from 'react';
 import Tubes from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js';
 import "../../styles/tubesCursor.css";
 import { UseWidth } from '../../contexts/WidthContext';
+import { UseTheme } from '../../contexts/ThemeContext';
 
 const TubesCursor: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const appRef = useRef<any>(null);
-  const { width } = UseWidth()
+  const { width } = UseWidth();
+  const { theme } = UseTheme();
+  const isDark = theme !== 'light';
+
+  const tubeColors = isDark
+    ? ['#8e2de2', '#a855f7', '#4a00e0']
+    : ['#0062FF', '#0080ff', '#0041cb'];
+
+  const lightColors = isDark
+    ? ['#8e2de2', '#ffffff', '#4a00e0', '#a855f7']
+    : ['#0062FF', '#0041cb', '#e8e4ff', '#0080ff'];
 
   useEffect(() => {
     if (canvasRef.current && !appRef.current) {
       appRef.current = Tubes(canvasRef.current, {
         tubes: {
-          radius: 0.02,     // 0.02 es ideal para líneas finas y tecnológicas.
+          radius: 0.02,
           segments: 64,
-          colors: ['#f967fb', '#53bc28', '#6958d5'],
+          colors: tubeColors,
           lights: {
-            intensity: width >= 768 ? 60 : 20,
-            colors: ['#83f36e', '#fe8a2e', '#ff008a', '#60aed5'],
+            intensity: 5,
+            colors: lightColors,
           },
         },
       });
     }
 
     const handleClick = () => {
-        if (appRef.current) {
-          // cambia de color al hacer clic en cualquier parte
-          const randomColor = () => '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
-          appRef.current.tubes.setColors([randomColor()]);
-        }
+      if (appRef.current) {
+        const pick = tubeColors[Math.floor(Math.random() * tubeColors.length)];
+        appRef.current.tubes.setColors([pick]);
+      }
     };
 
     window.addEventListener('click', handleClick);
@@ -38,9 +48,12 @@ const TubesCursor: React.FC = () => {
       if (appRef.current?.destroy) appRef.current.destroy();
     };
   }, []);
-  
+
+  // Solo desktop
+  if (width <= 768) return null;
+
   return (
-    <canvas id="tubes-cursor-canvas"  ref={canvasRef}></canvas>
+    <canvas id="tubes-cursor-canvas" ref={canvasRef} />
   );
 };
 

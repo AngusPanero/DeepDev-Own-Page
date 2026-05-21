@@ -1,0 +1,342 @@
+.dark {
+  --bg:            #0a0a0a;
+  --bg-card:       #111111;
+  --bg-surface:    #161616;
+  --bg-elevated:   #1c1c1c;
+  --border:        rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.13);
+  --accent:        #fff8ea;
+  --accent-soft:   rgba(200,169,110,0.12);
+  --accent-glow:   rgba(200,169,110,0.25);
+  --text-primary:  #f0ede8;
+  --text-secondary:#9a9590;
+  --text-muted:    #555050;
+  --danger:        #e05c5c;
+  --shadow-card:   0 1px 3px rgba(0,0,0,0.6), 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-hover:  0 2px 8px rgba(0,0,0,0.7), 0 20px 60px rgba(0,0,0,0.5);
+  --radius:        3px;
+  --radius-md:     8px;
+}
+ 
+.light {
+  --bg:            #f8f6f2;
+  --bg-card:       #ffffff;
+  --bg-surface:    #f2efe9;
+  --bg-elevated:   #ebe7df;
+  --border:        rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.13);
+  --accent:        #0d0d0c;
+  --accent-soft:   rgba(139,105,20,0.08);
+  --accent-glow:   rgba(139,105,20,0.2);
+  --text-primary:  #1a1714;
+  --text-secondary:#6b6560;
+  --text-muted:    #b0aba4;
+  --danger:        #c0392b;
+  --shadow-card:   0 1px 3px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.06);
+  --shadow-hover:  0 2px 8px rgba(0,0,0,0.08), 0 20px 60px rgba(0,0,0,0.1);
+  --radius:        3px;
+  --radius-md:     8px;
+}
+ 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+/* ============================================================
+   ROOT DE LA CARD
+   ============================================================ */
+.k-card-premium-unique-root {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+  font-family: "Montserrat", sans-serif;
+}
+ 
+.k-card-premium-unique-root:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-3px);
+}
+ 
+/* ============================================================
+   MEDIA BOX — contiene imágenes, badges, overlay y fav
+   ============================================================ */
+.k-card-premium-unique-media-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--bg-surface);
+  flex-shrink: 0;
+}
+ 
+/* ── Contenedor de imágenes (stacking) ── */
+.k-card-premium-unique-img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+ 
+/* ── Imagen base ── */
+.k-card-premium-unique-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+}
+ 
+/* imagen principal */
+.k-card-premium-unique-img.main {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+ 
+/* al hacer hover + hay imagen secundaria → oculta la principal */
+.k-card-premium-unique-img.main.hidden {
+  opacity: 0;
+  transform: scale(1.04);
+}
+ 
+/* imagen secundaria — siempre presente pero invisible */
+.k-card-premium-unique-img.secondary {
+  opacity: 0;
+  transform: scale(1.04);
+  z-index: 2;
+}
+ 
+/* al hacer hover → aparece la secundaria */
+.k-card-premium-unique-img.secondary.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+ 
+/* si no hay secundaria, la principal hace un zoom sutil en hover */
+.k-card-premium-unique-root:hover .k-card-premium-unique-img.main:not(.hidden) {
+  transform: scale(1.05);
+}
+ 
+/* ── Botón favorito ── */
+.kp-fav-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+ 
+.kp-fav-button:hover {
+  background: var(--bg-elevated);
+  border-color: var(--danger);
+  transform: scale(1.1);
+}
+ 
+.kp-fav-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-secondary);
+  transition: color 0.2s ease, fill 0.2s ease;
+}
+ 
+.kp-fav-icon.active {
+  fill: var(--danger);
+  color: var(--danger);
+  stroke: var(--danger);
+}
+ 
+/* ── Badges ── */
+.k-card-premium-unique-badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.k-card-premium-unique-tag-promo {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #0a0a0a;
+  padding: 4px 9px;
+  border-radius: var(--radius);
+}
+ 
+/* ── Overlay "QUICK_VIEW" ── */
+.k-card-premium-unique-overlay-action {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+ 
+.k-card-premium-unique-root:hover .k-card-premium-unique-overlay-action {
+  opacity: 1;
+}
+ 
+.k-card-premium-unique-action-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 7px 18px;
+  border-radius: var(--radius);
+  backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.07);
+}
+ 
+/* ============================================================
+   DETAILS — nombre, sku, precio
+   ============================================================ */
+.k-card-premium-unique-details {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  background: var(--bg-card);
+}
+ 
+.k-card-premium-unique-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; /* evita overflow del nombre */
+}
+ 
+.k-card-premium-unique-sku {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+ 
+.k-card-premium-unique-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+ 
+/* ── Precios ── */
+.k-card-premium-unique-pricing {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+ 
+.k-card-premium-unique-price-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+ 
+.k-card-premium-unique-from {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+ 
+.k-card-premium-unique-values {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+ 
+.k-card-premium-unique-old {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+ 
+.k-card-premium-unique-current {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+ 
+/* ── Ícono + ── */
+.k-card-premium-unique-icon-add {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+ 
+.k-card-premium-unique-root:hover .k-card-premium-unique-icon-add {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+ 
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .k-card-premium-unique-name {
+    font-size: 12px;
+    max-width: 130px;
+  }
+ 
+  .k-card-premium-unique-current {
+    font-size: 13px;
+  }
+ 
+  .k-card-premium-unique-details {
+    padding: 10px 12px 12px;
+  }
+ 
+  .kp-fav-button {
+    width: 30px;
+    height: 30px;
+  }
+ 
+  .kp-fav-icon {
+    width: 13px;
+    height: 13px;
+  }
+}

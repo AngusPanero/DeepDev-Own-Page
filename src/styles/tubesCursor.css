@@ -2,15 +2,19 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;  /* Ocupa el ancho de la ventana */
-    height: 100vh; /* Ocupa el alto de la ventana */
-    pointer-events: none; /* Deja pasar los clics a las cards */
-    z-index: 9999; /* Asegúrate de que esté por encima de casi todo, o donde prefieras */
-    mix-blend-mode: screen; 
+    /* Lock to viewport — ignores parent dimensions completely */
+    width: 100vw  !important;
+    height: 100vh !important;
+    max-width: 100vw  !important;
+    max-height: 100vh !important;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: screen;
     display: block;
     background: transparent;
-    
-    /* Evita que el navegador intente estirarlo */
     overflow: hidden;
-    contain: strict; 
+    contain: strict;
+    /* Prevent any transform or resize from the parent */
+    transform: none !important;
+    will-change: auto;
 }

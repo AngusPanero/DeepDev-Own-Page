@@ -16,10 +16,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 2.5rem;
     padding: 3rem 2.75rem;
     overflow-y: auto;
     animation: rgSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    font-family: 'Inter', 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .rg-dark {
@@ -96,7 +97,7 @@
 .rg-dot-g { background: #27c93f; }
 .rg-file {
     margin-left: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Montserrat', monospace;
     font-size: 11px;
     opacity: 0.3;
 }

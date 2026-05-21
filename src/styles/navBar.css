@@ -299,7 +299,7 @@
 }
 
 @media (max-width: 480px) {
-    .hero-header     { height: 58px; padding: 0 1.2rem; }
+    .hero-header     { height: 78px; padding: 0 1.2rem; }
     .nav-wordmark    { font-size: 1.15rem; }
     .nav-wordmark-studio { display: none; }
 }

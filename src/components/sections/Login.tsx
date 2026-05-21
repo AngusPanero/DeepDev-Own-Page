@@ -1,96 +1,139 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "/images/DeepDevLogo.jpg"
 import "../../styles/login.css";
 import ParticleButton from "../ui/ParticleButton";
-import { UseLanguage }   from "../../contexts/LanguageContext";
 import { UseTheme } from "../../contexts/ThemeContext";
-import eyeClose from "/logos/eye-close.svg"
-import eyeOpen from "/logos/eye-open.svg"
+import eyeClose from "/logos/eye-close.svg";
+import eyeOpen from "/logos/eye-open.svg";
 import { UseSession } from "../../contexts/SessionContext";
 import Loader from "./Loader";
 
 interface LoginProps {
-  openRegister: () => void;
-  closeLogin: () => void
+    openRegister: () => void;
+    closeLogin: () => void;
 }
 
 const Login = ({ closeLogin, openRegister }: LoginProps) => {
-    const { language, texts } = UseLanguage()  
-    const { theme } = UseTheme()
-    const { handleLogin, loading, error, handleResetPassword } = UseSession()
+    const { theme } = UseTheme();
+    const { handleLogin, loading, error, handleResetPassword } = UseSession();
     const loginRef = useRef<HTMLDivElement>(null);
+    const isDark = theme !== "light";
 
-    const [ hoverParticles, setHoverParticles ] = useState(false);
-    const [ exit, setExit ] = useState(false);
-    const [ email, setEmail ] = useState("");
-    const [ password, setPassword ] = useState("");
-    const [ visiblePassword, setVisiblePassword ] = useState<boolean>(false)
+    const [hoverParticles, setHoverParticles] = useState(false);
+    const [exit, setExit]                     = useState(false);
+    const [email, setEmail]                   = useState("");
+    const [password, setPassword]             = useState("");
+    const [visiblePassword, setVisiblePassword] = useState(false);
 
     const handleClose = () => {
         setExit(true);
-        
-        setTimeout(() => {
-            closeLogin(); 
-        }, 600);
+        setTimeout(closeLogin, 600);
     };
 
     useEffect(() => {
-        const handleClickOutside = (e: MouseEvent) => {
-            if (loginRef.current && !loginRef.current.contains(e.target as Node)) {
-                handleClose();
-            }
+        const fn = (e: MouseEvent) => {
+            if (loginRef.current && !loginRef.current.contains(e.target as Node)) handleClose();
         };
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", fn);
+        return () => document.removeEventListener("mousedown", fn);
     }, []);
 
     const loginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await handleLogin(email, password); 
-                
-        if (response) {
-            closeLogin();
-        }
-    }
+        const ok = await handleLogin(email, password);
+        if (ok) closeLogin();
+    };
 
-    if(loading) return <Loader />
+    if (loading) return <Loader />;
 
     return (
-        <div ref={loginRef} className={`section-login ${exit ? "exit" : ""} ${theme === 'light' ? 'theme-light' : 'theme-dark'}`} style={{ background: theme === "dark" ? "#0000009a" : "#f4f2ffa0" }}>
-            <button className="close-button" onClick={handleClose}>✕</button>
+        <div
+            ref={loginRef}
+            className={`sl-panel ${exit ? "sl-exit" : ""} ${isDark ? "sl-dark" : "sl-light"}`}
+        >
+            {/* close */}
+            <button className="sl-close" onClick={handleClose} aria-label="Cerrar">✕</button>
 
-            <img className="img-logo-login" src={logo} alt="logo" />
-            
-            <h2 className="login-title">{texts[language].login.title}</h2>
-            
-            <p className="login-subtitle">{texts[language].login.text}</p>
+            {/* wordmark */}
+            <div className="sl-wordmark">
+                <span className="sl-wm-deep">Deep</span>
+                <span className="sl-wm-dev" style={{ color: isDark ? "#8e2de2" : "#0062FF" }}>Dev</span>
+                <span className="sl-wm-studio">Studio</span>
+            </div>
 
-            <form className="login-form" onSubmit={loginSubmit}>
-                {/* EMAIL */}
-                <div className="input-group">
-                    <label htmlFor="email">{texts[language].login.email}</label>
-                    <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            {/* terminal dots */}
+            <div className="sl-terminal">
+                <span className="sl-dot sl-dot-r" />
+                <span className="sl-dot sl-dot-y" />
+                <span className="sl-dot sl-dot-g" />
+                <span className="sl-file">auth.jsx</span>
+            </div>
+
+            <h2 className="sl-title">Bienvenido de nuevo</h2>
+            <p className="sl-sub">Accedé a tu cuenta DeepDev</p>
+
+            <form className="sl-form" onSubmit={loginSubmit} noValidate>
+                {/* email */}
+                <div className="sl-field">
+                    <label htmlFor="l-email">Email</label>
+                    <input
+                        id="l-email" type="email" value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        placeholder="hola@empresa.com" required
+                    />
                 </div>
 
-                {/* PASSWORD */}
-                <div className="input-group">
-                    <label htmlFor="password">{texts[language].login.password}</label>
-                    <div className="div-password">
-                        <input id="password" type={visiblePassword === true ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
-                        <img className="eye-password" src={visiblePassword === false ? eyeOpen : eyeClose} alt="eye_password_svg" onClick={() => setVisiblePassword(!visiblePassword)}/>
+                {/* password */}
+                <div className="sl-field">
+                    <label htmlFor="l-pass">Contraseña</label>
+                    <div className="sl-pass-wrap">
+                        <input
+                            id="l-pass"
+                            type={visiblePassword ? "text" : "password"}
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            placeholder="••••••••••" required
+                        />
+                        <img
+                            className="sl-eye"
+                            src={visiblePassword ? eyeClose : eyeOpen}
+                            alt="toggle password"
+                            onClick={() => setVisiblePassword(v => !v)}
+                        />
                     </div>
                 </div>
-                {/* ERROR MSJ */}
-                {error && <p className="error-password">{error}</p>}
-                {/* BOTÓN */}
-                <button type="submit" className="login-btn" onMouseEnter={() => setHoverParticles(true)} onMouseLeave={() => setHoverParticles(false)}>{texts[language].login.button}</button>
+
+                {error && <p className="sl-error">{error}</p>}
+
+                <button
+                    type="submit"
+                    className="sl-btn"
+                    style={{
+                        background: isDark
+                            ? "linear-gradient(135deg,#8e2de2,#4a00e0)"
+                            : "linear-gradient(135deg,#0062FF,#0041cb)",
+                    }}
+                    onMouseEnter={() => setHoverParticles(true)}
+                    onMouseLeave={() => setHoverParticles(false)}
+                >
+                    Ingresar
+                </button>
             </form>
 
-            <p className="login-footer" onClick={openRegister} style={{ whiteSpace: "pre-line" }}>{texts[language].login.register.before}<span className="login-link">{texts[language].login.register.after}</span></p>
-            
-            {/* RESET PASSWORD */}
-            <p className="reset-password" onClick={() => handleResetPassword(email)} style={{ whiteSpace: "pre-line" }}>{texts[language].login.forgot}</p>
+            <p className="sl-footer">
+                ¿Sos nuevo en DeepDev?{" "}
+                <span className="sl-link" style={{ color: isDark ? "#8e2de2" : "#0062FF" }} onClick={openRegister}>
+                    Crear cuenta
+                </span>
+            </p>
+
+            <p
+                className="sl-reset"
+                onClick={() => handleResetPassword(email)}
+                style={{ "--acc": isDark ? "#8e2de2" : "#0062FF" } as any}
+            >
+                ¿Olvidaste tu contraseña?
+            </p>
+
             <ParticleButton active={hoverParticles} />
         </div>
     );

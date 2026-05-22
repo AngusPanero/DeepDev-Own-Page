@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { UseTheme } from "../../contexts/ThemeContext";
 
@@ -8,42 +8,66 @@ interface AetherWavesProps {
     rotation?: [number, number, number];
 }
 
-const AetherWaves = ({
-    position = [1, 2, 0],
-    rotation = [2, 1, 4],
-}: AetherWavesProps) => {
+const AetherWaves = ({ position = [1, 1, 0],rotation = [2, 1, 4]}: AetherWavesProps) => {
     const { theme } = UseTheme();
     const isDark = theme !== "light";
+    const { viewport } = useThree();
 
     const pointsRef  = useRef<THREE.Points>(null!);
     const pointsRef2 = useRef<THREE.Points>(null!);
 
+    // mouse position in world space (smoothed)
+    const mouse      = useRef(new THREE.Vector2(0, 0));
+    const mouseLerp  = useRef(new THREE.Vector2(0, 0));
+
     const texture = useLoader(THREE.TextureLoader, "../../textures/particle.png");
 
-    // ── Ring / spiral geometry ────────────────────────────────
-    // Layer 1: concentric rings radiating outward
-    const RINGS   = 48;
+    // ── Rings ─────────────────────────────────────────────────
+    const RINGS    = 48;
     const PER_RING = 180;
     const count1   = RINGS * PER_RING;
 
-    const positions1 = useMemo(() => {
-        const pos = new Float32Array(count1 * 3);
+    // store base XZ so we can compute distance to mouse
+    const baseXZ1 = useMemo(() => {
+        const arr = new Float32Array(count1 * 2);
         let i = 0;
         for (let r = 0; r < RINGS; r++) {
             const radius = (r / RINGS) * 5.5 + 0.3;
             for (let p = 0; p < PER_RING; p++) {
                 const angle = (p / PER_RING) * Math.PI * 2;
-                pos[i * 3]     = Math.cos(angle) * radius;
-                pos[i * 3 + 1] = 0;
-                pos[i * 3 + 2] = Math.sin(angle) * radius;
+                arr[i * 2]     = Math.cos(angle) * radius;
+                arr[i * 2 + 1] = Math.sin(angle) * radius;
                 i++;
             }
         }
-        return pos;
+        return arr;
     }, []);
 
-    // Layer 2: scattered galaxy-like cloud
+    const positions1 = useMemo(() => {
+        const pos = new Float32Array(count1 * 3);
+        for (let i = 0; i < count1; i++) {
+            pos[i * 3]     = baseXZ1[i * 2];
+            pos[i * 3 + 1] = 0;
+            pos[i * 3 + 2] = baseXZ1[i * 2 + 1];
+        }
+        return pos;
+    }, [baseXZ1]);
+
+    // ── Galaxy cloud ──────────────────────────────────────────
     const COUNT2 = 3200;
+
+    const baseXZ2 = useMemo(() => {
+        const arr = new Float32Array(COUNT2 * 2);
+        for (let i = 0; i < COUNT2; i++) {
+            const r     = Math.pow(Math.random(), 0.55) * 6;
+            const theta = Math.random() * Math.PI * 2;
+            const phi   = (Math.random() - 0.5) * 0.35;
+            arr[i * 2]     = Math.cos(theta) * r * Math.cos(phi);
+            arr[i * 2 + 1] = Math.sin(theta) * r * Math.cos(phi);
+        }
+        return arr;
+    }, []);
+
     const positions2 = useMemo(() => {
         const pos = new Float32Array(COUNT2 * 3);
         for (let i = 0; i < COUNT2; i++) {
@@ -57,56 +81,87 @@ const AetherWaves = ({
         return pos;
     }, []);
 
+    // ── Mouse listener ────────────────────────────────────────
+    useMemo(() => {
+        const onMove = (e: MouseEvent) => {
+            // normalize to [-1, 1] then scale to world units
+            mouse.current.x =  (e.clientX / window.innerWidth  - 0.5) * viewport.width;
+            mouse.current.y = -(e.clientY / window.innerHeight - 0.5) * viewport.height;
+        };
+        window.addEventListener("mousemove", onMove);
+        return () => window.removeEventListener("mousemove", onMove);
+    }, [viewport]);
+
     useFrame(({ clock }) => {
         const t = clock.getElapsedTime();
 
-        // ── Rings: ripple wave + rotation ─────────────────────
+        // smooth mouse
+        mouseLerp.current.lerp(mouse.current, 0.06);
+        const mx = mouseLerp.current.x;
+        const my = mouseLerp.current.y; // y in world = z in 3D plane
+
+        // ── Rings ─────────────────────────────────────────────
         if (pointsRef.current) {
             const pos = pointsRef.current.geometry.attributes.position.array as Float32Array;
-            let i = 0;
-            for (let r = 0; r < RINGS; r++) {
-                const radius = (r / RINGS) * 5.5 + 0.3;
-                for (let p = 0; p < PER_RING; p++) {
-                    const angle = (p / PER_RING) * Math.PI * 2;
-                    // ripple travels outward
-                    const ripple = Math.sin(radius * 1.6 - t * 2.2) * 0.22;
-                    // secondary twist
-                    const twist  = Math.cos(angle * 3 + t * 0.8 + radius * 0.5) * 0.08;
-                    pos[i * 3 + 1] = ripple + twist;
-                    i++;
-                }
-            }
-            pointsRef.current.geometry.attributes.position.needsUpdate = true;
 
-            // slow Y rotation — disc spins
+            for (let i = 0; i < count1; i++) {
+                const px = baseXZ1[i * 2];
+                const pz = baseXZ1[i * 2 + 1];
+
+                const radius = Math.sqrt(px * px + pz * pz);
+
+                // distance from smoothed mouse position (mouse Y → world Z)
+                const dx   = px - mx;
+                const dz   = pz - my;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+
+                // mouse ripple — faster decay with distance
+                const mouseWave = Math.sin(dist * 2.5 - t * 3.5) * Math.exp(-dist * 0.55) * 0.45;
+
+                // background ambient waves
+                const ambient  = Math.sin(radius * 1.6 - t * 2.2) * 0.18;
+                const twist    = Math.cos((px * 0.3 + pz * 0.3) + t * 0.8) * 0.06;
+
+                pos[i * 3 + 1] = ambient + twist + mouseWave;
+            }
+
+            pointsRef.current.geometry.attributes.position.needsUpdate = true;
             pointsRef.current.rotation.x = rotation[0] + Math.sin(t * 0.12) * 0.08;
             pointsRef.current.rotation.y = t * 0.06;
             pointsRef.current.rotation.z = rotation[2] + Math.cos(t * 0.09) * 0.04;
         }
 
-        // ── Galaxy cloud: breathe + counter-rotate ────────────
+        // ── Galaxy cloud ──────────────────────────────────────
         if (pointsRef2.current) {
             const pos2 = pointsRef2.current.geometry.attributes.position.array as Float32Array;
-            for (let i = 0; i < COUNT2; i++) {
-                const ox = pos2[i * 3];
-                const oz = pos2[i * 3 + 2];
-                const r  = Math.sqrt(ox * ox + oz * oz);
-                // gentle vertical pulse per particle
-                pos2[i * 3 + 1] += Math.sin(r * 1.2 + t * 1.4 + i * 0.01) * 0.0006;
-            }
-            pointsRef2.current.geometry.attributes.position.needsUpdate = true;
 
+            for (let i = 0; i < COUNT2; i++) {
+                const px = baseXZ2[i * 2];
+                const pz = baseXZ2[i * 2 + 1];
+
+                const dx   = px - mx;
+                const dz   = pz - my;
+                const dist = Math.sqrt(dx * dx + dz * dz);
+
+                // subtle mouse influence on cloud — softer, slower
+                const mouseWave = Math.sin(dist * 1.8 - t * 2.5) * Math.exp(-dist * 0.4) * 0.2;
+                const pulse     = Math.sin(Math.sqrt(px*px + pz*pz) * 1.2 + t * 1.4 + i * 0.01) * 0.015;
+
+                pos2[i * 3 + 1] += (pulse + mouseWave * 0.003 - pos2[i * 3 + 1]) * 0.05;
+            }
+
+            pointsRef2.current.geometry.attributes.position.needsUpdate = true;
             pointsRef2.current.rotation.x = rotation[0] * 0.6 + Math.sin(t * 0.1) * 0.04;
             pointsRef2.current.rotation.y = -t * 0.03;
         }
     });
 
-    const accentColor  = isDark ? "#8e2de2" : "#0062FF";
-    const cloudColor   = isDark ? "#a855f7" : "#3b82f6";
+    const accentColor = isDark ? "#8e2de2" : "#0062FF";
+    const cloudColor  = isDark ? "#a855f7" : "#3b82f6";
 
     return (
         <group position={position}>
-            {/* rings */}
+            {/* rings with mouse ripple */}
             <points ref={pointsRef}>
                 <bufferGeometry>
                     <bufferAttribute attach="attributes-position" args={[positions1, 3]} />
@@ -146,6 +201,144 @@ const AetherWaves = ({
 };
 
 export default AetherWaves;
+
+/* import { useMemo, useRef } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+import { UseTheme } from "../../contexts/ThemeContext";
+
+interface AetherWavesProps {
+    position?: [number, number, number];
+    rotation?: [number, number, number];
+}
+
+const AetherWaves = ({
+    position = [1, 2, 0],
+    rotation = [2, 1, 4],
+}: AetherWavesProps) => {
+    const { theme } = UseTheme();
+    const isDark = theme !== "light";
+
+    const pointsRef  = useRef<THREE.Points>(null!);
+    const pointsRef2 = useRef<THREE.Points>(null!);
+
+    const texture = useLoader(THREE.TextureLoader, "../../textures/particle.png");
+
+    const RINGS   = 48;
+    const PER_RING = 180;
+    const count1   = RINGS * PER_RING;
+
+    const positions1 = useMemo(() => {
+        const pos = new Float32Array(count1 * 3);
+        let i = 0;
+        for (let r = 0; r < RINGS; r++) {
+            const radius = (r / RINGS) * 5.5 + 0.3;
+            for (let p = 0; p < PER_RING; p++) {
+                const angle = (p / PER_RING) * Math.PI * 2;
+                pos[i * 3]     = Math.cos(angle) * radius;
+                pos[i * 3 + 1] = 0;
+                pos[i * 3 + 2] = Math.sin(angle) * radius;
+                i++;
+            }
+        }
+        return pos;
+    }, []);
+
+    const COUNT2 = 3200;
+    const positions2 = useMemo(() => {
+        const pos = new Float32Array(COUNT2 * 3);
+        for (let i = 0; i < COUNT2; i++) {
+            const r     = Math.pow(Math.random(), 0.55) * 6;
+            const theta = Math.random() * Math.PI * 2;
+            const phi   = (Math.random() - 0.5) * 0.35;
+            pos[i * 3]     = Math.cos(theta) * r * Math.cos(phi);
+            pos[i * 3 + 1] = Math.sin(phi) * r * 0.5;
+            pos[i * 3 + 2] = Math.sin(theta) * r * Math.cos(phi);
+        }
+        return pos;
+    }, []);
+
+    useFrame(({ clock }) => {
+        const t = clock.getElapsedTime();
+
+        if (pointsRef.current) {
+            const pos = pointsRef.current.geometry.attributes.position.array as Float32Array;
+            let i = 0;
+            for (let r = 0; r < RINGS; r++) {
+                const radius = (r / RINGS) * 5.5 + 0.3;
+                for (let p = 0; p < PER_RING; p++) {
+                    const angle = (p / PER_RING) * Math.PI * 2;
+                    const ripple = Math.sin(radius * 1.6 - t * 2.2) * 0.22;
+                    const twist  = Math.cos(angle * 3 + t * 0.8 + radius * 0.5) * 0.08;
+                    pos[i * 3 + 1] = ripple + twist;
+                    i++;
+                }
+            }
+            pointsRef.current.geometry.attributes.position.needsUpdate = true;
+
+            pointsRef.current.rotation.x = rotation[0] + Math.sin(t * 0.12) * 0.08;
+            pointsRef.current.rotation.y = t * 0.06;
+            pointsRef.current.rotation.z = rotation[2] + Math.cos(t * 0.09) * 0.04;
+        }
+
+        if (pointsRef2.current) {
+            const pos2 = pointsRef2.current.geometry.attributes.position.array as Float32Array;
+            for (let i = 0; i < COUNT2; i++) {
+                const ox = pos2[i * 3];
+                const oz = pos2[i * 3 + 2];
+                const r  = Math.sqrt(ox * ox + oz * oz);
+                pos2[i * 3 + 1] += Math.sin(r * 1.2 + t * 1.4 + i * 0.01) * 0.0006;
+            }
+            pointsRef2.current.geometry.attributes.position.needsUpdate = true;
+
+            pointsRef2.current.rotation.x = rotation[0] * 0.6 + Math.sin(t * 0.1) * 0.04;
+            pointsRef2.current.rotation.y = -t * 0.03;
+        }
+    });
+
+    const accentColor  = isDark ? "#8e2de2" : "#0062FF";
+    const cloudColor   = isDark ? "#a855f7" : "#3b82f6";
+
+    return (
+        <group position={position}>
+            <points ref={pointsRef}>
+                <bufferGeometry>
+                    <bufferAttribute attach="attributes-position" args={[positions1, 3]} />
+                </bufferGeometry>
+                <pointsMaterial
+                    map={texture}
+                    size={0.028}
+                    transparent
+                    opacity={isDark ? 0.75 : 0.6}
+                    alphaTest={0.08}
+                    depthWrite={false}
+                    color={accentColor}
+                    blending={THREE.AdditiveBlending}
+                    sizeAttenuation
+                />
+            </points>
+
+            <points ref={pointsRef2}>
+                <bufferGeometry>
+                    <bufferAttribute attach="attributes-position" args={[positions2, 3]} />
+                </bufferGeometry>
+                <pointsMaterial
+                    map={texture}
+                    size={0.018}
+                    transparent
+                    opacity={isDark ? 0.35 : 0.25}
+                    alphaTest={0.05}
+                    depthWrite={false}
+                    color={cloudColor}
+                    blending={THREE.AdditiveBlending}
+                    sizeAttenuation
+                />
+            </points>
+        </group>
+    );
+};
+
+export default AetherWaves; */
 
 /* import { useMemo, useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";

@@ -1,4 +1,5 @@
 import AmbientOverlay from "./components/ui/AmbientOverlat";
+import LiquidOverlay from "./components/ui/LiquidOverlay";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ShoppingProvider } from "./contexts/ShoppingContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -17,6 +18,7 @@ const App = () => {
       <WidthProvider>
         <ThemeProvider>
           <ShoppingProvider>
+            <LiquidOverlay />
             <AmbientOverlay />
             <UsersProvider>
                 <AppRouter>

@@ -1,153 +1,254 @@
-.banner-section{
+/* ============================================================
+   banner.css — DeepDev · automation tree
+   ============================================================ */
+
+.ab-section {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 80vh;
-    background: #000000;
-    /* background: linear-gradient(0deg,rgba(0, 0, 0, 1) 0%, rgba(32, 26, 138, 1) 50%, rgba(0, 0, 0, 1) 100%); */
-    padding: 1rem;
+    min-height: 100vh;
+    padding: 6rem 4% 5rem;
+    overflow: hidden;
+}
+.ab-dark  { background: #000; color: #fff; }
+.ab-light { background: #f4f2ff; color: #0a192f; }
+
+.dd-grid-overlay.dark {
+    pointer-events: none; position: absolute; inset: 0;
+    background-image: linear-gradient(#1f1f1f 1px, transparent 1px),
+                      linear-gradient(90deg, #1f1f1f 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.16; z-index: 0;
+}
+.dd-grid-overlay.light {
+    pointer-events: none; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(0,98,255,0.07) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,98,255,0.07) 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.2; z-index: 0;
 }
 
-.banner-section.theme-light {
-    background: #F0F4F8;
+/* ── HEADER ───────────────────────────────────────────────── */
+.ab-header {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    margin-bottom: 3.5rem; max-width: 720px;
 }
-
-.banner-click{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    font-size: 4.7rem;
+.ab-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Montserrat', monospace;
+    font-size: 0.68rem; letter-spacing: 0.22em;
+    text-transform: uppercase; opacity: 0.45; margin-bottom: 1.5rem;
+}
+.ab-eyebrow-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0; animation: abPulse 2s ease infinite;
+}
+.ab-heading {
+    display: flex; flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    width: 100%;
+    font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+    font-weight: 900; line-height: 0.92;
+    letter-spacing: -2.5px; margin: 0 0 1.5rem;
+}
+.ab-heading span { display: block; }
+.ab-heading-outline { -webkit-text-stroke: 1px; color: transparent; opacity: 0.8;  }
+.ab-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    font-weight: 300; line-height: 1.75; opacity: 0.5; margin: 0;
+}
+.ab-light .ab-desc { color: #334e68; opacity: 0.85; }
+
+/* ── DESKTOP SVG ──────────────────────────────────────────── */
+.ab-viz {
+    position: relative; z-index: 2;
+    width: 100%; max-width: 1200px;
+}
+.ab-svg { width: 100%; height: auto; overflow: visible; }
+
+.ab-pulse-ring {
+    animation: abRingPulse 0.65s ease-out forwards;
+    transform-box: fill-box; transform-origin: center;
+}
+@keyframes abRingPulse {
+    0%   { opacity: 0.8; transform: scale(0.92); }
+    100% { opacity: 0;   transform: scale(1.18); }
 }
 
-.banner-carrousel{
-    display: flex;
-    justify-content: center;
+/* ── MOBILE TREE (HTML) ───────────────────────────────────── */
+.ab-mobile-tree {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
     align-items: center;
     width: 100%;
+    padding: 0 1rem;
 }
 
- /* Wrapper */
-.n8n-flow-wrap {
-    width: min(980px, 100%);
-    padding: 18px 22px;
-    background: transparent;
-    
+/* trigger node */
+.ab-m-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 16px;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.4s ease;
+    margin-bottom: 0;
 }
+.ab-light .ab-m-trigger {
+    background: rgba(255,255,255,0.75);
+    border-color: rgba(0,98,255,0.18);
+}
+.ab-m-label-lg {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: rgba(255,255,255,0.28);
+    transition: color 0.4s ease;
+}
+.ab-light .ab-m-label-lg { color: rgba(10,25,47,0.3); }
 
-/* SVG */
-.n8n-flow {
+/* vertical connector from trigger to branches */
+.ab-m-connector-v {
+    width: 1.5px;
+    height: 28px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.4s ease;
+    flex-shrink: 0;
+}
+.ab-light .ab-m-connector-v { background: rgba(0,98,255,0.15); }
+
+/* 3 branches in a row */
+.ab-m-branches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     width: 100%;
-    height: 120px;
 }
 
-/* Líneas */
-.n8n-line-base {
-    /* Un azul muy oscuro y traslúcido para el camino inactivo */
-    stroke: rgba(16, 42, 67, 0.2); 
-    stroke-width: 7;
-    stroke-linecap: round;
+/* single branch column */
+.ab-m-branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
 }
 
-.n8n-line-progress {
-    /* Azul eléctrico vibrante para el progreso */
-    stroke: #0062FF;
-    stroke-width: 7;
-    stroke-linecap: round;
+/* branch node */
+.ab-m-branch-node {
+    width: 100%;
+    justify-content: center;
 }
 
-/* Puntos */
-.n8n-dot {
-    /* Gris azulado sutil */
-    fill: #B0C4DE; 
+/* vertical connector inside branch */
+.ab-m-connector {
+    width: 1.5px;
+    height: 20px;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.4s ease;
+    flex-shrink: 0;
+}
+.ab-light .ab-m-connector { background: rgba(0,98,255,0.12); }
+
+/* leaf nodes container */
+.ab-m-leaves {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
 }
 
-.n8n-dot-active {
-    /* Cian neón para los puntos activos */
-    fill: #00D1FF;
+/* shared node style */
+.ab-m-node {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    transition: all 0.4s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+.ab-light .ab-m-node {
+    background: rgba(255,255,255,0.72);
+    border-color: rgba(0,98,255,0.14);
 }
 
-/* Nodos */
-.n8n-node {
-    /* Fondo de nodo en modo claro: blanco casi sólido */
-    fill: rgba(255, 255, 255, 0.8);
-    stroke: rgba(0, 98, 255, 0.15);
+.ab-m-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    opacity: 0.3;
+    transition: opacity 0.4s ease;
+}
+.ab-m-active .ab-m-icon { opacity: 1; }
+
+.ab-m-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.22);
+    transition: color 0.4s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ab-light .ab-m-label { color: rgba(10,25,47,0.28); }
+
+/* pulse animation on mobile nodes */
+.ab-m-pulse {
+    animation: abMPulse 0.5s ease-out;
+}
+@keyframes abMPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(142,45,226,0.5); }
+    100% { box-shadow: 0 0 0 10px rgba(142,45,226,0); }
+}
+.ab-light .ab-m-pulse {
+    animation: abMPulseLight 0.5s ease-out;
+}
+@keyframes abMPulseLight {
+    0%   { box-shadow: 0 0 0 0 rgba(0,98,255,0.4); }
+    100% { box-shadow: 0 0 0 10px rgba(0,98,255,0); }
 }
 
-.n8n-node-active {
-    /* Nodo activo con gradiente visual azul */
-    fill: #0062FF;
-    stroke: #00D1FF;
-    stroke-width: 2;
-    transition: opacity 420ms cubic-bezier(0.4, 0, 0.2, 1),
-                transform 420ms cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes abPulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.4; transform:scale(0.65); }
 }
 
-/* Icono */
-.n8n-node-icon {
-    /* Iconos en blanco para que resalten sobre el nodo azul activo */
-    fill: #FFFFFF;
-    transition: opacity 300ms ease;
-    transform: scaleX(1.6) scaleY(1.4);  
-}
-
-/* Ajuste para los iconos dentro de nodos INACTIVOS (Opcional) */
-.n8n-node:not(.n8n-node-active) .n8n-node-icon {
-    fill: #102A43; /* Azul oscuro para ver el icono sobre fondo blanco */
-}
-
-/* --- RESPONSIVE: TABLETS (768px - 1024px) --- */
+/* ── RESPONSIVE ───────────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .banner-click {
-        font-size: 3.5rem; /* Bajamos un poco el impacto para tablets */
-    }
-
-    .n8n-flow-wrap {
-        width: 90%; /* Le damos un poco más de aire a los lados */
-        padding: 15px;
-    }
+    .ab-heading { font-size: clamp(2.4rem, 6vw, 4rem); letter-spacing: -2px; }
+    .ab-section { padding: 5.5rem 3% 4.5rem; }
 }
 
-/* --- RESPONSIVE: MÓVILES (Menos de 768px) --- */
 @media (max-width: 768px) {
-    .banner-section {
-        height: auto; /* Dejamos que el contenido mande sobre la altura */
-        padding: 4rem 1.5rem; /* Más espacio arriba y abajo para que respire */
-    }
-
-    .banner-click {
-        font-size: 2.2rem; /* Tamaño crítico para que no se corte en iPhone SE o similares */
-        line-height: 1.2;
-        margin-bottom: 2rem;
-    }
-
-    /* Ajuste del carrusel/flujo para móviles */
-    .n8n-flow {
-        height: 80px; /* Reducimos la altura del SVG para que no ocupe tanto espacio vertical */
-    }
-
-    .n8n-line-base, .n8n-line-progress {
-        stroke-width: 5; /* Líneas un poco más finas para que no se vea tosco */
-    }
-
-    .n8n-flow-wrap {
-        padding: 10px;
-        
-    }
-    
-    /* Si los iconos se ven muy pequeños, podemos re-ajustar la escala */
-    .n8n-node-icon {
-        transform: scaleX(1.6) scaleY(1.4); 
-    }
+    .ab-section { padding: 4.5rem 1.25rem 4rem; }
+    .ab-header  { margin-bottom: 2.5rem; }
+    .ab-heading { font-size: clamp(2rem, 9vw, 3.2rem); letter-spacing: -1.5px; }
+    .ab-heading-outline { -webkit-text-stroke: 1.5px; }
+    .ab-desc { font-size: 0.9rem; }
+    /* tighter label on very small screens */
+    .ab-m-label { font-size: 0.78rem; }
+    .ab-m-label-lg { font-size: 1.15rem; }
 }
 
-/* --- AJUSTE EXTRA: MÓVILES MUY PEQUEÑOS --- */
+@media (max-width: 480px) {
+    .ab-section { padding: 4rem 1rem 3.5rem; }
+    .ab-heading { font-size: clamp(1.9rem, 10vw, 2.6rem); letter-spacing: -1px; }
+    .ab-m-branches { gap: 7px; }
+    .ab-m-node { padding: 9px 10px; gap: 6px; }
+    .ab-m-label { font-size: 0.72rem; }
+    .ab-m-label-lg { font-size: 1rem; }
+    .ab-m-icon { font-size: 0.85rem; }
+}
+
 @media (max-width: 380px) {
-    .banner-click {
-        font-size: 1.8rem; /* Para dispositivos tipo iPhone 5/SE antiguos */
-    }
+    .ab-heading { font-size: 1.8rem; }
+    .ab-m-label { font-size: 0.65rem; }
+    .ab-m-node  { padding: 8px; gap: 4px; }
 }

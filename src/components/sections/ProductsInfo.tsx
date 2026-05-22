@@ -180,10 +180,11 @@ const ProductPanel = ({ product, isActive, theme }: {
                                         style={{ borderColor: `${accent}33` }}
                                     >
                                         <img
+                                        className="icon-img"
                                             src={src}
-                                            alt=""
+                                            alt=""/* 
                                             width={64}
-                                            height={64}
+                                            height={64} */
                                             style={{
                                                 opacity: isDark ? 0.9 : 0.85,
                                                 filter: isDark

@@ -55,17 +55,22 @@ const FbxMacBook = () => {
     const { theme } = UseTheme()
     const { width } = UseWidth()
 
+    const isDark = theme !== "light";
+
     const gradientBase = {
-        background: theme === "dark" ? "linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 50%, #8B5CF6 100%)" :
-        "linear-gradient(90deg, #102A43 0%, #0062FF 50%, #00D1FF 100%)",
+        background: isDark
+            ? "linear-gradient(135deg, #ffffff 0%, #a855f7 50%, #8e2de2 100%)"
+            : "linear-gradient(135deg, #4891ffff 0%, #0062FF 55%, #0080ff 100%)",
         backgroundSize: "200% 200%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+        color: "transparent",
     };
 
     const gradientAnim: TargetAndTransition = {
-        backgroundPosition: ["100% 50%", "100% 50%"],
-        transition: { duration: 4, repeat: Infinity, ease: "backInOut" }
+        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        transition: { duration: 5, repeat: Infinity, ease: "easeInOut" }
     };
 
     const textRef = useRef(null);

@@ -12,6 +12,7 @@ import Charts from "../components/sections/Charts"; */
 import { UseTheme } from "../contexts/ThemeContext";
 import BusinessScraper from "../businessScrapper/BussinesScrapper";
 import BusinessScraperRest from "../businessScrapperRest/BussinesScrapperRest";
+import RaffleAdmin from "../components/sections/RaffleAdmin";
 /* import CouponCreator from "../components/sections/CouponCreator"; */
 
 const AdminDashboard = () => {
@@ -29,6 +30,7 @@ const AdminDashboard = () => {
 
     return (
         <div className={`dd-dashboard ${theme}`}>
+            <RaffleAdmin />
             <BusinessScraper googleApiKey={import.meta.env.VITE_GOOGLE_MAPS_KEY || ""} emailScraperEndpoint={`${import.meta.env.VITE_API_URL}/api/scrape-email`} maxResults={60} />
             <BusinessScraperRest googleApiKey={import.meta.env.VITE_GOOGLE_MAPS_KEY || ""} emailScraperEndpoint={`${import.meta.env.VITE_API_URL}/api/scrape-email`} maxResults={60} />
             {/* <Charts allTickets={allTickets} /> */}

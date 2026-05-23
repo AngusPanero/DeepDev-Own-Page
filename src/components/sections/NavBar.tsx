@@ -111,6 +111,7 @@ const NavBar = () => {
                     <ul>
                         <li><a href="/products">{texts[language].nav.products}</a></li>
                         <li><a href="/company">{texts[language].nav.company}</a></li>
+                        <li><a href="/pricing">Precios</a></li>
                         <li><a href="/raffles">{texts[language].nav.raffles}</a></li>
                         <li><a href="/contact">{texts[language].nav.contact}</a></li>
                         {user && (

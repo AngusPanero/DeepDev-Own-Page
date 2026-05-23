@@ -16,6 +16,7 @@ import RaffleTerms from "../pages/RaffleTerms";
 import GTMHandler from "../utils/GTMHandler";
 import ParamsProduct from "../pages/ParamsProduct";
 import ProductsInfoLusion from "../components/ui/LusionHtml";
+import Pricing from "../pricing/Pricing";
 
 
 const AppRouter = () => {
@@ -34,6 +35,7 @@ const AppRouter = () => {
                                 <Route path="/company" element={<Company />} />
                                 <Route path="/policy" element={<PoliticaCookies />} />
                                 <Route path="/raffle-terms" element={<RaffleTerms />} />
+                                <Route path="/pricing" element={<Pricing />} />
                                 <Route path="/product/:id" element={<ParamsProduct />} /> 
                                 <Route path="/*" element={<Error404 />} />
                                 <Route path="/dashboard" element={<PrivateRoute adminOnly={false}><Dashboard /></PrivateRoute>} />

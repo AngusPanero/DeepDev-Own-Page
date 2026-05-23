@@ -72,6 +72,7 @@ const NavBarMobile = forwardRef(({
         { href: "/",         label: texts[language].footer?.navigation?.[0] ?? "Home" },
         { href: "/products", label: texts[language].nav.products },
         { href: "/company",  label: texts[language].nav.company  },
+        { href: "/pricing",  label: "Precios"  },
         { href: "/raffles",  label: texts[language].nav.raffles  },
         { href: "/contact",  label: texts[language].nav.contact  },
     ]

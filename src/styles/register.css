@@ -27,15 +27,11 @@
     background: rgba(0,0,0,0.96);
     border-left: 1px solid rgba(142,45,226,0.35);
     color: #fff;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
 }
 .rg-light {
     background: rgba(244,242,255,0.97);
     border-left: 1px solid rgba(0,98,255,0.2);
     color: #0a192f;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
 }
 
 .rg-exit { animation: rgSlideOut 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }

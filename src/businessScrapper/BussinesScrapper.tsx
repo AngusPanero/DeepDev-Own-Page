@@ -155,7 +155,7 @@ interface BulkModalProps {
 }
 
 function BulkModal({ emails, isDark, accent, onClose, onSend, sending, bulkResult, bulkProgress }: BulkModalProps) {
-    const [subject,   setSubject]   = useState("DeepDev — Soluciones Digitales a Medida");
+    const [subject,   setSubject]   = useState("DeepDev Studio — Web Development & Mobile Applications");
     const [message,   setMessage]   = useState("");
     const [testEmail, setTestEmail] = useState(ADMIN_EMAIL);
     const [files,     setFiles]     = useState<File[]>([]);
